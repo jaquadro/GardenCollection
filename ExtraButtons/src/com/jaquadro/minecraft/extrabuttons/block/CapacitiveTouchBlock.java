@@ -1,5 +1,6 @@
-package com.jaquadro.minecraft.extrabuttons;
+package com.jaquadro.minecraft.extrabuttons.block;
 
+import com.jaquadro.minecraft.extrabuttons.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,7 +21,7 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public int tickRate()
+    public int tickRate ()
     {
         return 20;
     }
@@ -32,23 +33,21 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int data)
+    public int onBlockPlaced (World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int data)
     {
         return 0;
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
         int data = world.getBlockMetadata(x, y, z);
         int isPressed = 8 - (data & 8);
 
-        if (isPressed == 0)
-        {
+        if (isPressed == 0) {
             return true;
         }
-        else
-        {
+        else {
             world.setBlockMetadataWithNotify(x, y, z, isPressed);
             notifyNeighbors(world, x, y, z);
             world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
@@ -57,10 +56,9 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, int par5, int data)
+    public void breakBlock (World world, int x, int y, int z, int par5, int data)
     {
-        if ((data & 8) > 0)
-        {
+        if ((data & 8) > 0) {
             this.notifyNeighbors(world, x, y, z);
         }
 
@@ -68,32 +66,30 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public boolean isProvidingWeakPower(IBlockAccess world, int x, int y, int z, int side)
+    public boolean isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side)
     {
         return (world.getBlockMetadata(x, y, z) & 8) > 0;
     }
 
     @Override
-    public boolean isProvidingStrongPower(IBlockAccess world, int x, int y, int z, int side)
+    public boolean isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side)
     {
         return (world.getBlockMetadata(x, y, z) & 8) > 0;
     }
 
     @Override
-    public boolean canProvidePower()
+    public boolean canProvidePower ()
     {
         return true;
     }
 
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand)
+    public void updateTick (World world, int x, int y, int z, Random rand)
     {
-        if (!world.isRemote)
-        {
+        if (!world.isRemote) {
             int data = world.getBlockMetadata(x, y, z);
 
-            if ((data & 8) != 0)
-            {
+            if ((data & 8) != 0) {
                 world.setBlockMetadataWithNotify(x, y, z, data & 7);
                 notifyNeighbors(world, x, y, z);
             }
@@ -101,7 +97,7 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public int getBlockTextureFromSideAndMetadata(int side, int data)
+    public int getBlockTextureFromSideAndMetadata (int side, int data)
     {
         if ((data & 8) > 0)
             return this.blockIndexInTexture + 1;

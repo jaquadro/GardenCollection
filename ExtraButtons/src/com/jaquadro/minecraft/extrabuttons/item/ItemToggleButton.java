@@ -1,5 +1,8 @@
-package com.jaquadro.minecraft.extrabuttons;
+package com.jaquadro.minecraft.extrabuttons.item;
 
+import com.jaquadro.minecraft.extrabuttons.ExtraButtons;
+import com.jaquadro.minecraft.extrabuttons.block.ToggleButton;
+import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +14,9 @@ import net.minecraftforge.common.ForgeDirection;
 
 import static net.minecraftforge.common.ForgeDirection.*;
 
-public class IlluminatedButtonItemBlock extends ItemBlock
+public class ItemToggleButton extends ItemBlock
 {
-    public IlluminatedButtonItemBlock (int id)
+    public ItemToggleButton (int id)
     {
         super(id);
         setHasSubtypes(true);
@@ -24,8 +27,8 @@ public class IlluminatedButtonItemBlock extends ItemBlock
     @Override
     public int getIconFromDamage (int data)
     {
-        IlluminatedButton block = (IlluminatedButton) ExtraButtons.illuminatedButton;
-        return block.getBlockTextureFromIndex(IlluminatedButton.getBlockFromDye(data));
+        ToggleButton block = (ToggleButton) ExtraButtons.illuminatedButton;
+        return block.getBlockTextureFromIndex(ToggleButton.getBlockFromDye(data));
     }
 
     @Override
@@ -37,7 +40,7 @@ public class IlluminatedButtonItemBlock extends ItemBlock
     @Override
     public String getItemNameIS (ItemStack itemStack)
     {
-        return getItemName() + "." + ItemDye.dyeColorNames[IlluminatedButton.getBlockFromDye(itemStack.getItemDamage())];
+        return getItemName() + "." + ItemDye.dyeColorNames[ToggleButton.getBlockFromDye(itemStack.getItemDamage())];
     }
 
     @Override

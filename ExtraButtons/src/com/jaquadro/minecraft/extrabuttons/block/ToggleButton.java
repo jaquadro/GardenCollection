@@ -1,5 +1,7 @@
-package com.jaquadro.minecraft.extrabuttons;
+package com.jaquadro.minecraft.extrabuttons.block;
 
+import com.jaquadro.minecraft.extrabuttons.CommonProxy;
+import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
@@ -19,9 +21,9 @@ import java.util.Random;
 
 import static net.minecraftforge.common.ForgeDirection.*;
 
-public class IlluminatedButton extends BlockContainer
+public class ToggleButton extends BlockContainer
 {
-    public IlluminatedButton (int id, int texture)
+    public ToggleButton (int id, int texture)
     {
         super(id, texture, Material.circuits);
         this.setTickRandomly(true);
@@ -257,6 +259,21 @@ public class IlluminatedButton extends BlockContainer
     public TileEntity createNewTileEntity (World world, int metadata)
     {
         return createNewTileEntity(world);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int getMixedBrightnessForBlock(IBlockAccess blockAccess, int x, int y, int z)
+    {
+        int brightness = super.getMixedBrightnessForBlock(blockAccess, x, y, z);
+
+        TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
+        if (te != null && te.isLatched()) {
+            int blockLight = (brightness & 0xFF) >> 0xF;
+            brightness |= Math.max(10, blockLight) << 4;
+        }
+
+        return brightness;
     }
 
     @SideOnly(Side.CLIENT)

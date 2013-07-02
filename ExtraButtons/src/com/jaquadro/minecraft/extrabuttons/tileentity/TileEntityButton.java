@@ -1,4 +1,4 @@
-package com.jaquadro.minecraft.extrabuttons;
+package com.jaquadro.minecraft.extrabuttons.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;

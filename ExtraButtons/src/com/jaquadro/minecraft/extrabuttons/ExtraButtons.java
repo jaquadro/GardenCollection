@@ -1,5 +1,8 @@
 package com.jaquadro.minecraft.extrabuttons;
 
+import com.jaquadro.minecraft.extrabuttons.block.*;
+import com.jaquadro.minecraft.extrabuttons.item.ItemToggleButton;
+import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -49,7 +52,7 @@ public class ExtraButtons
         playerDetectorRailId = config.getBlock("PlayerDetectorRail", 561).getInt();
         playerPoweredRailId = config.getBlock("PlayerPoweredRail", 562).getInt();
         panelButtonId = config.getBlock("PanelButton", 563).getInt();
-        illuminatedButtonId = config.getBlock("IlluminatedButton", 564).getInt();
+        illuminatedButtonId = config.getBlock("ToggleButton", 564).getInt();
 
         config.save();
 
@@ -78,7 +81,7 @@ public class ExtraButtons
         LanguageRegistry.addName(playerPoweredRail, "Player Powered Rail");
         GameRegistry.registerBlock(playerPoweredRail, "playerPoweredRail");
 
-        GameRegistry.registerBlock(illuminatedButton, IlluminatedButtonItemBlock.class, "illuminatedButton");
+        GameRegistry.registerBlock(illuminatedButton, ItemToggleButton.class, "illuminatedButton");
 
         for (int i = 0; i < 16; i++) {
             ItemStack illumStack = new ItemStack(illuminatedButtonId, 1, i);
@@ -146,7 +149,7 @@ public class ExtraButtons
                     .setBlockName("playerPoweredRail");
 
         if (illuminatedButtonId > -1)
-            illuminatedButton = new IlluminatedButton(illuminatedButtonId, 16)
+            illuminatedButton = new ToggleButton(illuminatedButtonId, 16)
                     .setHardness(0.5f)
                     .setStepSound(Block.soundStoneFootstep)
                     .setRequiresSelfNotify()
