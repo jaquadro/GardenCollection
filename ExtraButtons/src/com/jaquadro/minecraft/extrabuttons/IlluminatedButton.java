@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Random;
 
 import static net.minecraftforge.common.ForgeDirection.*;
-import static net.minecraftforge.common.ForgeDirection.EAST;
 
 public class IlluminatedButton extends BlockContainer
 {
@@ -38,7 +37,7 @@ public class IlluminatedButton extends BlockContainer
     @Override
     public int tickRate ()
     {
-        return 20;
+        return 5;
     }
 
     @Override
@@ -54,13 +53,13 @@ public class IlluminatedButton extends BlockContainer
     }
 
     @Override
-    public boolean canPlaceBlockOnSide (World world, int x, int y, int z, int data)
+    public boolean canPlaceBlockOnSide (World world, int x, int y, int z, int side)
     {
-        ForgeDirection dir = ForgeDirection.getOrientation(data);
+        ForgeDirection dir = ForgeDirection.getOrientation(side);
         return (dir == NORTH && world.isBlockSolidOnSide(x, y, z + 1, NORTH)) ||
                 (dir == SOUTH && world.isBlockSolidOnSide(x, y, z - 1, SOUTH)) ||
-                (dir == WEST  && world.isBlockSolidOnSide(x + 1, y, z, WEST)) ||
-                (dir == EAST  && world.isBlockSolidOnSide(x - 1, y, z, EAST));
+                (dir == WEST && world.isBlockSolidOnSide(x + 1, y, z, WEST)) ||
+                (dir == EAST && world.isBlockSolidOnSide(x - 1, y, z, EAST));
     }
 
     @Override
@@ -73,59 +72,6 @@ public class IlluminatedButton extends BlockContainer
     }
 
     @Override
-    public int onBlockPlaced (World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int sourceData)
-    {
-        int data = world.getBlockMetadata(x, y, z);
-        int isPressed = data & 8;
-        data &= 7;
-
-        ForgeDirection dir = ForgeDirection.getOrientation(side);
-
-        if (dir == NORTH && world.isBlockSolidOnSide(x, y, z + 1, NORTH))
-        {
-            data = 4;
-        }
-        else if (dir == SOUTH && world.isBlockSolidOnSide(x, y, z - 1, SOUTH))
-        {
-            data = 3;
-        }
-        else if (dir == WEST && world.isBlockSolidOnSide(x + 1, y, z, WEST))
-        {
-            data = 2;
-        }
-        else if (dir == EAST && world.isBlockSolidOnSide(x - 1, y, z, EAST))
-        {
-            data = 1;
-        }
-        else
-        {
-            data = this.getOrientation(world, x, y, z);
-        }
-
-        return data + isPressed;
-    }
-
-    @Override
-    public void onPostBlockPlaced(World world, int x, int y, int z, int sourceData)
-    {
-        System.out.println("PostBlock: data=" + sourceData);
-        TileEntityButton te = (TileEntityButton)world.getBlockTileEntity(x, y, z);
-        if (te == null)
-            System.out.println("No TE found");
-        else
-            System.out.println("TE: colorIndex=" + te.colorIndex);
-    }
-
-    private int getOrientation (World world, int x, int y, int z)
-    {
-        if (world.isBlockSolidOnSide(x - 1, y, z, EAST)) return 1;
-        if (world.isBlockSolidOnSide(x + 1, y, z, WEST)) return 2;
-        if (world.isBlockSolidOnSide(x, y, z - 1, SOUTH)) return 3;
-        if (world.isBlockSolidOnSide(x, y, z + 1, NORTH)) return 4;
-        return 1;
-    }
-
-    @Override
     public boolean hasTileEntity (int data)
     {
         return true;
@@ -134,74 +80,66 @@ public class IlluminatedButton extends BlockContainer
     @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, int neighborId)
     {
-        //if (this.redundantCanPlaceBlockAt(world, x, y, z))
-        //{
-            int dir = world.getBlockMetadata(x, y, z) & 7;
-            boolean invalid = false;
+        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
+        int dir = (te != null)
+                ? te.getDirection() : 0;
 
-            if (!world.isBlockSolidOnSide(x - 1, y, z, EAST) && dir == 1)
-            {
-                invalid = true;
-            }
+        boolean invalid = false;
 
-            if (!world.isBlockSolidOnSide(x + 1, y, z, WEST) && dir == 2)
-            {
-                invalid = true;
-            }
+        if (!world.isBlockSolidOnSide(x - 1, y, z, EAST) && dir == 1) {
+            invalid = true;
+        }
 
-            if (!world.isBlockSolidOnSide(x, y, z - 1, SOUTH) && dir == 3)
-            {
-                invalid = true;
-            }
+        if (!world.isBlockSolidOnSide(x + 1, y, z, WEST) && dir == 2) {
+            invalid = true;
+        }
 
-            if (!world.isBlockSolidOnSide(x, y, z + 1, NORTH) && dir == 4)
-            {
-                invalid = true;
-            }
+        if (!world.isBlockSolidOnSide(x, y, z - 1, SOUTH) && dir == 3) {
+            invalid = true;
+        }
 
-            if (invalid)
-            {
-                this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-                world.setBlockWithNotify(x, y, z, 0);
-            }
-        //}
+        if (!world.isBlockSolidOnSide(x, y, z + 1, NORTH) && dir == 4) {
+            invalid = true;
+        }
+
+        if (invalid) {
+            this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+            world.setBlockWithNotify(x, y, z, 0);
+        }
     }
 
     @Override
     public void setBlockBoundsBasedOnState (IBlockAccess blockAccess, int x, int y, int z)
     {
-        int data = blockAccess.getBlockMetadata(x, y, z);
-        this.setBlockBoundsByData(data);
+        TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
+        if (te != null)
+            this.setBlockBoundsByTileEntity(te);
     }
 
-    private void setBlockBoundsByData (int data)
+    private void setBlockBoundsByTileEntity (TileEntityButton te)
     {
-        int dir = data & 7;
-        boolean isPressed = (data & 8) > 0;
+        int dir = te.getDirection();
+        boolean isLatched = te.isDepressed();
+
         float var4 = 0.375F;
         float var5 = 0.625F;
         float var6 = 0.1875F;
         float depth = 0.125F;
 
-        if (isPressed)
-        {
+        if (isLatched) {
             depth = 0.0625F;
         }
 
-        if (dir == 1)
-        {
+        if (dir == 1) {
             this.setBlockBounds(0.0F, var4, 0.5F - var6, depth, var5, 0.5F + var6);
         }
-        else if (dir == 2)
-        {
+        else if (dir == 2) {
             this.setBlockBounds(1.0F - depth, var4, 0.5F - var6, 1.0F, var5, 0.5F + var6);
         }
-        else if (dir == 3)
-        {
+        else if (dir == 3) {
             this.setBlockBounds(0.5F - var6, var4, 0.0F, 0.5F + var6, var5, depth);
         }
-        else if (dir == 4)
-        {
+        else if (dir == 4) {
             this.setBlockBounds(0.5F - var6, var4, 1.0F - depth, 0.5F + var6, var5, 1.0F);
         }
     }
@@ -209,33 +147,32 @@ public class IlluminatedButton extends BlockContainer
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
-        int data = world.getBlockMetadata(x, y, z);
-        int dir = data & 7;
-        int isPressed = 8 - (data & 8);
+        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
+        if (te == null)
+            return false;
 
-        if (isPressed == 0)
-        {
+        if (te.isDepressed())
             return true;
-        }
-        else
-        {
-            world.setBlockMetadataWithNotify(x, y, z, dir + isPressed);
-            world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
-            world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
-            this.updateNeighbors(world, x, y, z, dir);
-            world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
-            return true;
-        }
+
+        int dir = te.getDirection();
+
+        te.setIsDepressed(true);
+        te.setIsLatched(!te.isLatched());
+
+        world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
+        world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
+        this.updateNeighbors(world, x, y, z, dir);
+        world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
+
+        return true;
     }
 
     @Override
     public void breakBlock (World world, int x, int y, int z, int side, int data)
     {
-        if ((data & 8) > 0)
-        {
-            int dir = data & 7;
-            this.updateNeighbors(world, x, y, z, dir);
-        }
+        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
+        if (te != null && te.isLatched())
+            this.updateNeighbors(world, x, y, z, te.getDirection());
 
         super.breakBlock(world, x, y, z, side, data);
     }
@@ -243,23 +180,20 @@ public class IlluminatedButton extends BlockContainer
     @Override
     public boolean isProvidingWeakPower (IBlockAccess blockAccess, int x, int y, int z, int side)
     {
-        return (blockAccess.getBlockMetadata(x, y, z) & 8) > 0;
+        TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
+
+        return (te != null && te.isLatched());
     }
 
     @Override
     public boolean isProvidingStrongPower (IBlockAccess blockAccess, int x, int y, int z, int side)
     {
-        int data = blockAccess.getBlockMetadata(x, y, z);
-
-        if ((data & 8) == 0)
-        {
+        TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
+        if (te == null || !te.isLatched())
             return false;
-        }
-        else
-        {
-            int dir = data & 7;
-            return dir == 5 && side == 1 ? true : (dir == 4 && side == 2 ? true : (dir == 3 && side == 3 ? true : (dir == 2 && side == 4 ? true : dir == 1 && side == 5)));
-        }
+
+        int dir = te.getDirection();
+        return dir == 5 && side == 1 ? true : (dir == 4 && side == 2 ? true : (dir == 3 && side == 3 ? true : (dir == 2 && side == 4 ? true : dir == 1 && side == 5)));
     }
 
     @Override
@@ -271,23 +205,14 @@ public class IlluminatedButton extends BlockContainer
     @Override
     public void updateTick (World world, int x, int y, int z, Random rand)
     {
-        if (!world.isRemote)
-        {
-            int data = world.getBlockMetadata(x, y, z);
+        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
 
-            if ((data & 8) != 0)
-            {
-                //TileEntity te = world.getBlockTileEntity(x, y, z);
+        if (te != null && te.isDepressed()) {
+            if (!world.isRemote) {
+                te.setIsDepressed(false);
 
-                world.setBlockMetadataWithNotify(x, y, z, data & 7);
-                int dir = data & 7;
-                this.updateNeighbors(world, x, y, z, dir);
+                world.markBlockForUpdate(x, y, z);
                 world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.5F);
-
-                /*if (te != null) {
-                    te.validate();
-                    world.setBlockTileEntity(x, y, z, te);
-                }*/
             }
         }
     }
@@ -305,24 +230,19 @@ public class IlluminatedButton extends BlockContainer
     {
         world.notifyBlocksOfNeighborChange(x, y, z, this.blockID);
 
-        if (dir == 1)
-        {
+        if (dir == 1) {
             world.notifyBlocksOfNeighborChange(x - 1, y, z, this.blockID);
         }
-        else if (dir == 2)
-        {
+        else if (dir == 2) {
             world.notifyBlocksOfNeighborChange(x + 1, y, z, this.blockID);
         }
-        else if (dir == 3)
-        {
+        else if (dir == 3) {
             world.notifyBlocksOfNeighborChange(x, y, z - 1, this.blockID);
         }
-        else if (dir == 4)
-        {
+        else if (dir == 4) {
             world.notifyBlocksOfNeighborChange(x, y, z + 1, this.blockID);
         }
-        else
-        {
+        else {
             world.notifyBlocksOfNeighborChange(x, y - 1, z, this.blockID);
         }
     }
@@ -334,10 +254,8 @@ public class IlluminatedButton extends BlockContainer
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)
+    public TileEntity createNewTileEntity (World world, int metadata)
     {
-        System.out.println("createNewTileEntity: data=" + metadata);
-
         return createNewTileEntity(world);
     }
 
@@ -350,76 +268,63 @@ public class IlluminatedButton extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
+    public int getBlockTexture (IBlockAccess world, int x, int y, int z, int side)
     {
         int data = world.getBlockMetadata(x, y, z);
-        TileEntityButton te = (TileEntityButton)world.getBlockTileEntity(x, y, z);
-        int colorIndex = (te != null) ? te.colorIndex : 0;
+        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
 
-        /*if (te == null)
-            System.out.println("Block Placed: ci=" + colorIndex + " NO TE FOUND");
+        if (te != null && te.isLatched())
+            return this.blockIndexInTexture + data;
         else
-            System.out.println("Block Placed: ci=" + colorIndex + " colorIndex=" + te.colorIndex);*/
-
-        if ((data & 8) != 0)
-            return this.blockIndexInTexture + colorIndex;
-        else
-            return this.blockIndexInTexture + 16 + colorIndex;
+            return this.blockIndexInTexture + 16 + data;
     }
 
     @Override
-    public int getBlockTextureFromSideAndMetadata(int side, int data)
+    public int getBlockTextureFromSideAndMetadata (int side, int data)
     {
-        return this.blockIndexInTexture + data;
+        return this.blockIndexInTexture + 16 + data;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBlockTextureFromIndex(int colorIndex)
+    public int getBlockTextureFromIndex (int colorIndex)
     {
-        return this.blockIndexInTexture + colorIndex;
+        return this.blockIndexInTexture + 16 + colorIndex;
     }
 
     @Override
-    public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+    public ArrayList<ItemStack> getBlockDropped (World world, int x, int y, int z, int metadata, int fortune)
     {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 
         int count = quantityDropped(metadata, fortune, world.rand);
-        for(int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             int id = idDropped(metadata, world.rand, fortune);
             if (id > 0)
-            {
-                TileEntityButton te = (TileEntityButton)world.getBlockTileEntity(x, y, z);
-                int damage = (te != null) ? te.colorIndex : 0;
-                ret.add(new ItemStack(id, 1, damage));
-            }
+                ret.add(new ItemStack(id, 1, metadata));
         }
         return ret;
     }
 
     @Override
-    public int damageDropped(int data)
+    public int damageDropped (int data)
     {
-        return 0;
+        return data;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(int blockId, CreativeTabs creativeTabs, List blockList)
+    public void getSubBlocks (int blockId, CreativeTabs creativeTabs, List blockList)
     {
         for (int i = 0; i < 16; ++i)
-        {
             blockList.add(new ItemStack(blockId, 1, i));
-        }
     }
 
-    public static int getBlockFromDye(int data)
+    public static int getBlockFromDye (int data)
     {
         return ~data & 15;
     }
 
-    public static int getDyeFromBlock(int data)
+    public static int getDyeFromBlock (int data)
     {
         return ~data & 15;
     }

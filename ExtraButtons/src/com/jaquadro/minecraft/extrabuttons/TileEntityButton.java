@@ -1,44 +1,74 @@
 package com.jaquadro.minecraft.extrabuttons;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityButton extends TileEntity
 {
-    public byte colorIndex = 0;
+    public byte metadata = 0;
 
     @Override
-    public void writeToNBT(NBTTagCompound tag)
+    public void writeToNBT (NBTTagCompound tag)
     {
         super.writeToNBT(tag);
-        tag.setByte("color", this.colorIndex);
+
+        tag.setByte("meta", this.metadata);
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag)
+    public void readFromNBT (NBTTagCompound tag)
     {
         super.readFromNBT(tag);
-        this.colorIndex = tag.getByte("color");
 
-        if (this.colorIndex < 0)
-            this.colorIndex = 0;
-
-        if (this.colorIndex > 15)
-            this.colorIndex = 15;
+        this.metadata = tag.getByte("meta");
     }
 
-    /*@Override
-    public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt)
+    public int getDirection ()
     {
-        NBTTagCompound tag = pkt.customParam1;
-        this.readFromNBT(tag);
+        return metadata & 0x7;
+    }
+
+    public void setDirection (int direction)
+    {
+        metadata = (byte) ((metadata & ~0x7) | (direction & 0x7));
+    }
+
+    public boolean isLatched ()
+    {
+        return (metadata & 0x8) != 0;
+    }
+
+    public void setIsLatched (boolean latched)
+    {
+        metadata = (byte) ((metadata & ~0x8) | (latched ? 0x8 : 0));
+    }
+
+    public boolean isDepressed ()
+    {
+        return (metadata & 0x10) != 0;
+    }
+
+    public void setIsDepressed (boolean depressed)
+    {
+        metadata = (byte) ((metadata & ~0x10) | (depressed ? 0x10 : 0));
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public Packet getDescriptionPacket ()
     {
         NBTTagCompound tag = new NBTTagCompound();
         this.writeToNBT(tag);
-        return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, tag);
-    }*/
+        return new Packet132TileEntityData(this.xCoord, this.yCoord, this.zCoord, 1, tag);
+    }
+
+    @Override
+    public void onDataPacket (INetworkManager netManager, Packet132TileEntityData packet)
+    {
+        readFromNBT(packet.customParam1);
+
+        getWorldObj().markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+    }
 }
