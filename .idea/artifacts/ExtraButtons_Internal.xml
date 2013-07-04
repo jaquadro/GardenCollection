@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ExtraButtons Internal">
+    <output-path>$PROJECT_DIR$/forge/mcp/jars/mods</output-path>
+    <root id="archive" name="ExtraButtons.jar">
+      <element id="module-output" name="ExtraButtons" />
+      <element id="directory" name="jaquadro">
+        <element id="directory" name="res">
+          <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/res" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
