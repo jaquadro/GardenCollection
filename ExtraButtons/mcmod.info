@@ -1,0 +1,16 @@
+[
+{
+	"modid": "ExtraButtons",
+	"name": "ExtraButtons",
+	"description": "Adds a variety of buttons and switches.",
+	"version": "1.0.0",
+	"credits": "By jaquadro",
+	"logoFile": "",
+
+	"url": "http://www.jaquadro.com/",
+	"authors": [ "jaquadro" ],
+	"dependencies": [
+		"mod_MinecraftForge"
+	]
+}
+]

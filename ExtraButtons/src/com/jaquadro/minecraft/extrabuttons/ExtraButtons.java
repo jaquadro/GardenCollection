@@ -23,11 +23,13 @@ public class ExtraButtons
     private static int capacitiveBlockId;
     private static int playerDetectorRailId;
     private static int playerPoweredRailId;
-    private static int panelButtonId;
+    private static int stonePanelButtonId;
+    private static int woodPanelButtonId;
     private static int illuminatedButtonId;
 
     public static Block capacitiveTouchBlock;
-    public static Block panelButton;
+    public static Block stonePanelButton;
+    public static Block woodPanelButton;
     public static Block playerDetectorRail;
     public static Block playerPoweredRail;
     public static Block illuminatedButton;
@@ -51,8 +53,9 @@ public class ExtraButtons
         capacitiveBlockId = config.getBlock("CapacitiveTouchBlock", 560).getInt();
         playerDetectorRailId = config.getBlock("PlayerDetectorRail", 561).getInt();
         playerPoweredRailId = config.getBlock("PlayerPoweredRail", 562).getInt();
-        panelButtonId = config.getBlock("PanelButton", 563).getInt();
-        illuminatedButtonId = config.getBlock("ToggleButton", 564).getInt();
+        stonePanelButtonId = config.getBlock("StonePanelButton", 563).getInt();
+        woodPanelButtonId = config.getBlock("WoodPanelButton", 564).getInt();
+        illuminatedButtonId = config.getBlock("IlluminatedButton", 565).getInt();
 
         config.save();
 
@@ -72,8 +75,11 @@ public class ExtraButtons
         LanguageRegistry.addName(capacitiveTouchBlock, "Capacitive Touch Block");
         GameRegistry.registerBlock(capacitiveTouchBlock, "capacitiveTouchBlock");
 
-        LanguageRegistry.addName(panelButton, "Panel Button");
-        GameRegistry.registerBlock(panelButton, "panelButton");
+        LanguageRegistry.addName(stonePanelButton, "Stone Panel Button");
+        GameRegistry.registerBlock(stonePanelButton, "stonePanelButton");
+
+        LanguageRegistry.addName(woodPanelButton, "Wood Panel Button");
+        GameRegistry.registerBlock(woodPanelButton, "woodPanelButton");
 
         LanguageRegistry.addName(playerDetectorRail, "Player Detector Rail");
         GameRegistry.registerBlock(playerDetectorRail, "playerDetectorRail");
@@ -86,10 +92,10 @@ public class ExtraButtons
         for (int i = 0; i < 16; i++) {
             ItemStack illumStack = new ItemStack(illuminatedButtonId, 1, i);
 
-            LanguageRegistry.addName(illumStack, colors[i] + " Illuminated Button");
+            LanguageRegistry.addName(illumStack, colors[i] + " Illuminated Toggle Button");
         }
 
-        GameRegistry.registerTileEntity(TileEntityButton.class, "illumButton");
+        GameRegistry.registerTileEntity(TileEntityButton.class, "toggleButton");
 
         ItemStack ironStack = new ItemStack(Item.ingotIron);
         ItemStack torchStack = new ItemStack(Block.torchRedstoneActive);
@@ -110,6 +116,21 @@ public class ExtraButtons
         GameRegistry.addRecipe(new ItemStack(playerPoweredRail), "xwx", "xyx", "xzx",
                 'x', goldStack, 'y', stickStack, 'z', redstoneStack, 'w', stonePlateStack);
 
+        ItemStack stoneButtonStack = new ItemStack(Block.stoneButton);
+        ItemStack glowStoneStack = new ItemStack(Item.lightStoneDust);
+
+        for (int i = 0; i < 16; i++) {
+            ItemStack dyeStack = new ItemStack(Item.dyePowder, 1, 15 - i);
+
+            GameRegistry.addRecipe(new ItemStack(illuminatedButtonId, 1, i), " x ", " y ", " z ",
+                    'x', dyeStack, 'y', glowStoneStack, 'z', stoneButtonStack);
+        }
+
+        ItemStack woodButtonStack = new ItemStack(Block.woodenButton);
+
+        GameRegistry.addRecipe(new ItemStack(stonePanelButton), "xx", 'x', stoneButtonStack);
+        GameRegistry.addRecipe(new ItemStack(woodPanelButton), "xx", 'x', woodButtonStack);
+
         proxy.registerRenderers();
     }
 
@@ -127,12 +148,19 @@ public class ExtraButtons
                     .setRequiresSelfNotify()
                     .setBlockName("capacitiveTouchBlock");
 
-        if (panelButtonId > -1)
-            panelButton = new PanelButton(panelButtonId, Block.stone.blockIndexInTexture)
+        if (stonePanelButtonId > -1)
+            stonePanelButton = new PanelButton(stonePanelButtonId, Block.stone.blockIndexInTexture, false)
                     .setHardness(0.5F)
                     .setStepSound(Block.soundStoneFootstep)
                     .setRequiresSelfNotify()
-                    .setBlockName("panelButton");
+                    .setBlockName("stonePanelButton");
+
+        if (woodPanelButtonId > -1)
+            woodPanelButton = new PanelButton(woodPanelButtonId, Block.planks.blockIndexInTexture, true)
+                    .setHardness(0.5F)
+                    .setStepSound(Block.soundWoodFootstep)
+                    .setRequiresSelfNotify()
+                    .setBlockName("woodPanelButton");
 
         if (playerDetectorRailId > -1)
             playerDetectorRail = new PlayerDetectorRail(playerDetectorRailId, 3)
