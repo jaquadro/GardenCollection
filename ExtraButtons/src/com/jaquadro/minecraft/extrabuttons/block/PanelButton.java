@@ -9,11 +9,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class PanelButton extends BlockButton
+public abstract class PanelButton extends BlockButton
 {
-    public PanelButton (int id, int texture, boolean sensing)
+    public PanelButton (int id, boolean sensing)
     {
-        super(id, texture, sensing);
+        super(id, sensing);
     }
 
     @Override
@@ -66,12 +66,12 @@ public class PanelButton extends BlockButton
         int var6 = var5 & 7;
         boolean var7 = (var5 & 8) != 0;
         this.updateBlockBoundsWithState(var5);
-        List var9 = par1World.getEntitiesWithinAABB(EntityArrow.class, AxisAlignedBB.getAABBPool().addOrModifyAABBInPool((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
+        List var9 = par1World.getEntitiesWithinAABB(EntityArrow.class, AxisAlignedBB.getAABBPool().getAABB((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ));
         boolean var8 = !var9.isEmpty();
 
         if (var8 && !var7)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, var6 | 8);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, var6 | 8, 3);
             this.func_82536_d(par1World, par2, par3, par4, var6);
             par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4);
             par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.6F);
@@ -79,7 +79,7 @@ public class PanelButton extends BlockButton
 
         if (!var8 && var7)
         {
-            par1World.setBlockMetadataWithNotify(par2, par3, par4, var6);
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, var6, 3);
             this.func_82536_d(par1World, par2, par3, par4, var6);
             par1World.markBlockRangeForRenderUpdate(par2, par3, par4, par2, par3, par4);
             par1World.playSoundEffect((double)par2 + 0.5D, (double)par3 + 0.5D, (double)par4 + 0.5D, "random.click", 0.3F, 0.5F);
@@ -87,7 +87,7 @@ public class PanelButton extends BlockButton
 
         if (var8)
         {
-            par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate());
+            par1World.scheduleBlockUpdate(par2, par3, par4, this.blockID, this.tickRate(par1World));
         }
     }
 

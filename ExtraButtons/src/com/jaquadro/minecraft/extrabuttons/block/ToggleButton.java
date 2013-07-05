@@ -1,16 +1,18 @@
 package com.jaquadro.minecraft.extrabuttons.block;
 
-import com.jaquadro.minecraft.extrabuttons.CommonProxy;
+import com.jaquadro.minecraft.extrabuttons.ExtraButtons;
 import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
@@ -23,9 +25,15 @@ import static net.minecraftforge.common.ForgeDirection.*;
 
 public class ToggleButton extends BlockContainer
 {
-    public ToggleButton (int id, int texture)
+    @SideOnly(Side.CLIENT)
+    private Icon[] iconArrayOn;
+
+    @SideOnly(Side.CLIENT)
+    private Icon[] iconArrayOff;
+
+    public ToggleButton (int id)
     {
-        super(id, texture, Material.circuits);
+        super(id, Material.circuits);
         this.setTickRandomly(true);
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
@@ -37,7 +45,7 @@ public class ToggleButton extends BlockContainer
     }
 
     @Override
-    public int tickRate ()
+    public int tickRate (World world)
     {
         return 5;
     }
@@ -106,7 +114,7 @@ public class ToggleButton extends BlockContainer
 
         if (invalid) {
             this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-            world.setBlockWithNotify(x, y, z, 0);
+            world.setBlockToAir(x, y, z);
         }
     }
 
@@ -164,7 +172,7 @@ public class ToggleButton extends BlockContainer
         world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
         this.updateNeighbors(world, x, y, z, dir);
-        world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
+        world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate(world));
 
         return true;
     }
@@ -180,22 +188,22 @@ public class ToggleButton extends BlockContainer
     }
 
     @Override
-    public boolean isProvidingWeakPower (IBlockAccess blockAccess, int x, int y, int z, int side)
+    public int isProvidingWeakPower (IBlockAccess blockAccess, int x, int y, int z, int side)
     {
         TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
 
-        return (te != null && te.isLatched());
+        return (te != null && te.isLatched()) ? 15 : 0;
     }
 
     @Override
-    public boolean isProvidingStrongPower (IBlockAccess blockAccess, int x, int y, int z, int side)
+    public int isProvidingStrongPower (IBlockAccess blockAccess, int x, int y, int z, int side)
     {
         TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
         if (te == null || !te.isLatched())
-            return false;
+            return 0;
 
         int dir = te.getDirection();
-        return dir == 5 && side == 1 ? true : (dir == 4 && side == 2 ? true : (dir == 3 && side == 3 ? true : (dir == 2 && side == 4 ? true : dir == 1 && side == 5)));
+        return (dir == 5 && side == 1 ? 15 : (dir == 4 && side == 2 ? 15 : (dir == 3 && side == 3 ? 15 : (dir == 2 && side == 4 ? 15 : (dir == 1 && side == 5 ? 15 : 0)))));
     }
 
     @Override
@@ -255,12 +263,6 @@ public class ToggleButton extends BlockContainer
         return new TileEntityButton();
     }
 
-    @Override
-    public TileEntity createNewTileEntity (World world, int metadata)
-    {
-        return createNewTileEntity(world);
-    }
-
     @SideOnly(Side.CLIENT)
     @Override
     public int getMixedBrightnessForBlock(IBlockAccess blockAccess, int x, int y, int z)
@@ -278,34 +280,22 @@ public class ToggleButton extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     @Override
-    public String getTextureFile ()
-    {
-        return CommonProxy.BLOCK_PNG;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
-    public int getBlockTexture (IBlockAccess world, int x, int y, int z, int side)
+    public Icon getBlockTexture (IBlockAccess world, int x, int y, int z, int side)
     {
         int data = world.getBlockMetadata(x, y, z);
         TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
 
         if (te != null && te.isLatched())
-            return this.blockIndexInTexture + data;
+            return iconArrayOn[data];
         else
-            return this.blockIndexInTexture + 16 + data;
-    }
-
-    @Override
-    public int getBlockTextureFromSideAndMetadata (int side, int data)
-    {
-        return this.blockIndexInTexture + 16 + data;
+            return iconArrayOff[data];
     }
 
     @SideOnly(Side.CLIENT)
-    public int getBlockTextureFromIndex (int colorIndex)
+    @Override
+    public Icon getIcon (int side, int data)
     {
-        return this.blockIndexInTexture + 16 + colorIndex;
+        return iconArrayOff[data];
     }
 
     @Override
@@ -344,5 +334,17 @@ public class ToggleButton extends BlockContainer
     public static int getDyeFromBlock (int data)
     {
         return ~data & 15;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IconRegister iconRegister) {
+        iconArrayOff = new Icon[16];
+        iconArrayOn = new Icon[16];
+
+        for (int i = 0; i < 16; i++) {
+            iconArrayOff[i] = iconRegister.registerIcon(ExtraButtons.MOD_ID + ":illum_button_off_" + i);
+            iconArrayOn[i] = iconRegister.registerIcon(ExtraButtons.MOD_ID + ":illum_button_on_" + i);
+        }
     }
 }

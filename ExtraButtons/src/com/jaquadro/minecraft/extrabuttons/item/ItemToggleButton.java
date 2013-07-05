@@ -5,10 +5,12 @@ import com.jaquadro.minecraft.extrabuttons.block.ToggleButton;
 import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.BlockCloth;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
@@ -20,15 +22,15 @@ public class ItemToggleButton extends ItemBlock
     {
         super(id);
         setHasSubtypes(true);
-        setItemName("illuminatedButton");
+        setUnlocalizedName("illuminatedButton");
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int getIconFromDamage (int data)
+    public Icon getIconFromDamage (int data)
     {
         ToggleButton block = (ToggleButton) ExtraButtons.illuminatedButton;
-        return block.getBlockTextureFromIndex(ToggleButton.getBlockFromDye(data));
+        return block.getIcon(0, ToggleButton.getBlockFromDye(data));
     }
 
     @Override
@@ -38,9 +40,9 @@ public class ItemToggleButton extends ItemBlock
     }
 
     @Override
-    public String getItemNameIS (ItemStack itemStack)
+    public String getUnlocalizedName(ItemStack par1ItemStack)
     {
-        return getItemName() + "." + ItemDye.dyeColorNames[ToggleButton.getBlockFromDye(itemStack.getItemDamage())];
+        return super.getUnlocalizedName() + "." + ItemDye.dyeColorNames[ToggleButton.getBlockFromDye(par1ItemStack.getItemDamage())];
     }
 
     @Override

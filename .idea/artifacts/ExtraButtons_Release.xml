@@ -9,12 +9,10 @@
     </properties>
     <root id="root">
       <element id="module-output" name="ExtraButtons" />
-      <element id="directory" name="jaquadro">
-        <element id="directory" name="extrabuttons">
-          <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/res" />
-        </element>
-      </element>
       <element id="file-copy" path="$PROJECT_DIR$/ExtraButtons/mcmod.info" />
+      <element id="directory" name="mods">
+        <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/mods" />
+      </element>
     </root>
   </artifact>
 </component>

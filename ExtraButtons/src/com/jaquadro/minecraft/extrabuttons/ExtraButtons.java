@@ -20,9 +20,9 @@ import net.minecraftforge.common.Configuration;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ExtraButtons
 {
-    static final String MOD_ID = "ExtraButtons";
+    public static final String MOD_ID = "ExtraButtons";
     static final String MOD_NAME = "ExtraButtons";
-    static final String MOD_VERSION = "1.4.7.0";
+    static final String MOD_VERSION = "1.5.2.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
     static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
 
@@ -147,45 +147,39 @@ public class ExtraButtons
     private void initializeBlocks ()
     {
         if (capacitiveBlockId > -1)
-            capacitiveTouchBlock = new CapacitiveTouchBlock(capacitiveBlockId, 1)
+            capacitiveTouchBlock = new CapacitiveTouchBlock(capacitiveBlockId)
                     .setHardness(0.5f)
                     .setStepSound(Block.soundMetalFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("capacitiveTouchBlock");
+                    .setUnlocalizedName("capacitiveTouchBlock");
 
         if (stonePanelButtonId > -1)
-            stonePanelButton = new PanelButton(stonePanelButtonId, Block.stone.blockIndexInTexture, false)
+            stonePanelButton = new StonePanelButton(stonePanelButtonId)
                     .setHardness(0.5F)
                     .setStepSound(Block.soundStoneFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("stonePanelButton");
+                    .setUnlocalizedName("stonePanelButton");
 
         if (woodPanelButtonId > -1)
-            woodPanelButton = new PanelButton(woodPanelButtonId, Block.planks.blockIndexInTexture, true)
+            woodPanelButton = new WoodPanelButton(woodPanelButtonId)
                     .setHardness(0.5F)
                     .setStepSound(Block.soundWoodFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("woodPanelButton");
+                    .setUnlocalizedName("woodPanelButton");
 
         if (playerDetectorRailId > -1)
-            playerDetectorRail = new PlayerDetectorRail(playerDetectorRailId, 3)
+            playerDetectorRail = new PlayerDetectorRail(playerDetectorRailId)
                     .setHardness(0.7f)
                     .setStepSound(Block.soundMetalFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("playerDetectorRail");
+                    .setUnlocalizedName("playerDetectorRail");
 
         if (playerPoweredRailId > -1)
-            playerPoweredRail = new PlayerPoweredRail(playerPoweredRailId, 5)
+            playerPoweredRail = new PlayerPoweredRail(playerPoweredRailId)
                     .setHardness(0.7f)
                     .setStepSound(Block.soundMetalFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("playerPoweredRail");
+                    .setUnlocalizedName("playerPoweredRail");
 
         if (illuminatedButtonId > -1)
-            illuminatedButton = new ToggleButton(illuminatedButtonId, 16)
+            illuminatedButton = new ToggleButton(illuminatedButtonId)
                     .setHardness(0.5f)
                     .setStepSound(Block.soundStoneFootstep)
-                    .setRequiresSelfNotify()
-                    .setBlockName("illuminatedButton");
+                    .setUnlocalizedName("illuminatedButton");
     }
 }

@@ -1,10 +1,14 @@
 package com.jaquadro.minecraft.extrabuttons.block;
 
-import com.jaquadro.minecraft.extrabuttons.CommonProxy;
+import com.jaquadro.minecraft.extrabuttons.ExtraButtons;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDetectorRail;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -12,9 +16,12 @@ import java.util.Random;
 
 public class PlayerDetectorRail extends BlockDetectorRail
 {
-    public PlayerDetectorRail (int id, int texture)
+    @SideOnly(Side.CLIENT)
+    private Icon[] iconArray;
+
+    public PlayerDetectorRail (int id)
     {
-        super(id, texture);
+        super(id);
         this.setTickRandomly(true);
     }
 
@@ -42,13 +49,14 @@ public class PlayerDetectorRail extends BlockDetectorRail
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public int getBlockTextureFromSideAndMetadata (int side, int data)
+    public Icon getIcon (int side, int data)
     {
         if ((data & 8) != 0)
-            return this.blockIndexInTexture + 1;
+            return iconArray[1];
         else
-            return this.blockIndexInTexture;
+            return iconArray[0];
     }
 
     private void setStateIfMinecartInteractsWithRail (World world, int x, int y, int z, int data)
@@ -56,7 +64,7 @@ public class PlayerDetectorRail extends BlockDetectorRail
         boolean isPowerBitSet = (data & 8) != 0;
         boolean isValidTarget = false;
         float boundAdjust = 0.125F;
-        List entities = world.getEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getAABBPool().addOrModifyAABBInPool((double) ((float) x + boundAdjust), (double) y, (double) ((float) z + boundAdjust), (double) ((float) (x + 1) - boundAdjust), (double) ((float) (y + 1) - boundAdjust), (double) ((float) (z + 1) - boundAdjust)));
+        List entities = world.getEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getAABBPool().getAABB((double) ((float) x + boundAdjust), (double) y, (double) ((float) z + boundAdjust), (double) ((float) (x + 1) - boundAdjust), (double) ((float) (y + 1) - boundAdjust), (double) ((float) (z + 1) - boundAdjust)));
 
         if (!entities.isEmpty()) {
             for (Object item : entities) {
@@ -67,27 +75,30 @@ public class PlayerDetectorRail extends BlockDetectorRail
         }
 
         if (isValidTarget && !isPowerBitSet) {
-            world.setBlockMetadataWithNotify(x, y, z, data | 8);
+            world.setBlockMetadataWithNotify(x, y, z, data | 8, 3);
             world.notifyBlocksOfNeighborChange(x, y, z, this.blockID);
             world.notifyBlocksOfNeighborChange(x, y - 1, z, this.blockID);
             world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         }
 
         if (!isValidTarget && isPowerBitSet) {
-            world.setBlockMetadataWithNotify(x, y, z, data & 7);
+            world.setBlockMetadataWithNotify(x, y, z, data & 7, 3);
             world.notifyBlocksOfNeighborChange(x, y, z, this.blockID);
             world.notifyBlocksOfNeighborChange(x, y - 1, z, this.blockID);
             world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         }
 
         if (isValidTarget) {
-            world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
+            world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate(world));
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public String getTextureFile ()
-    {
-        return CommonProxy.BLOCK_PNG;
+    public void registerIcons(IconRegister iconRegister) {
+        iconArray = new Icon[] {
+                iconRegister.registerIcon(ExtraButtons.MOD_ID + ":player_detector_rail_off"),
+                iconRegister.registerIcon(ExtraButtons.MOD_ID + ":player_detector_rail_on"),
+        };
     }
 }

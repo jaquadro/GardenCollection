@@ -1,10 +1,14 @@
 package com.jaquadro.minecraft.extrabuttons.block;
 
-import com.jaquadro.minecraft.extrabuttons.CommonProxy;
+import com.jaquadro.minecraft.extrabuttons.ExtraButtons;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -12,16 +16,19 @@ import java.util.Random;
 
 public class CapacitiveTouchBlock extends Block
 {
-    public CapacitiveTouchBlock (int id, int texture)
+    @SideOnly(Side.CLIENT)
+    private Icon[] iconArray;
+
+    public CapacitiveTouchBlock (int id)
     {
-        super(id, texture, Material.circuits);
+        super(id, Material.circuits);
 
         this.setTickRandomly(true);
         this.setCreativeTab(CreativeTabs.tabRedstone);
     }
 
     @Override
-    public int tickRate ()
+    public int tickRate (World world)
     {
         return 20;
     }
@@ -48,9 +55,9 @@ public class CapacitiveTouchBlock extends Block
             return true;
         }
         else {
-            world.setBlockMetadataWithNotify(x, y, z, isPressed);
+            world.setBlockMetadataWithNotify(x, y, z, isPressed, 3);
             notifyNeighbors(world, x, y, z);
-            world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate());
+            world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate(world));
             return true;
         }
     }
@@ -66,15 +73,15 @@ public class CapacitiveTouchBlock extends Block
     }
 
     @Override
-    public boolean isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side)
+    public int isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side)
     {
-        return (world.getBlockMetadata(x, y, z) & 8) > 0;
+        return (world.getBlockMetadata(x, y, z) & 8) > 0 ? 15 : 0;
     }
 
     @Override
-    public boolean isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side)
+    public int isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side)
     {
-        return (world.getBlockMetadata(x, y, z) & 8) > 0;
+        return (world.getBlockMetadata(x, y, z) & 8) > 0 ? 15 : 0;
     }
 
     @Override
@@ -90,19 +97,20 @@ public class CapacitiveTouchBlock extends Block
             int data = world.getBlockMetadata(x, y, z);
 
             if ((data & 8) != 0) {
-                world.setBlockMetadataWithNotify(x, y, z, data & 7);
+                world.setBlockMetadataWithNotify(x, y, z, data & 7, 3);
                 notifyNeighbors(world, x, y, z);
             }
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public int getBlockTextureFromSideAndMetadata (int side, int data)
+    public Icon getIcon (int side, int data)
     {
         if ((data & 8) > 0)
-            return this.blockIndexInTexture + 1;
+            return iconArray[1];
         else
-            return this.blockIndexInTexture;
+            return iconArray[0];
     }
 
     private void notifyNeighbors (World world, int x, int y, int z)
@@ -115,9 +123,12 @@ public class CapacitiveTouchBlock extends Block
         world.notifyBlocksOfNeighborChange(x, y + 1, z, this.blockID);
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
-    public String getTextureFile ()
-    {
-        return CommonProxy.BLOCK_PNG;
+    public void registerIcons(IconRegister iconRegister) {
+        iconArray = new Icon[] {
+                iconRegister.registerIcon(ExtraButtons.MOD_ID + ":captouch_off"),
+                iconRegister.registerIcon(ExtraButtons.MOD_ID + ":captouch_on"),
+        };
     }
 }
