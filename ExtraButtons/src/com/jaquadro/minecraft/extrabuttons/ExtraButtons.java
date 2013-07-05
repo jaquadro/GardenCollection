@@ -16,10 +16,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 
-@Mod(modid = "ExtraButtons", name = "ExtraButtons", version = "0.1.0")
+@Mod(modid = ExtraButtons.MOD_ID, name = ExtraButtons.MOD_NAME, version = ExtraButtons.MOD_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ExtraButtons
 {
+    static final String MOD_ID = "ExtraButtons";
+    static final String MOD_NAME = "ExtraButtons";
+    static final String MOD_VERSION = "1.4.7.0";
+    static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
+    static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
+
     private static int capacitiveBlockId;
     private static int playerDetectorRailId;
     private static int playerPoweredRailId;
@@ -34,11 +40,10 @@ public class ExtraButtons
     public static Block playerPoweredRail;
     public static Block illuminatedButton;
 
-    @Mod.Instance("ExtraButtons")
+    @Mod.Instance(MOD_ID)
     public static ExtraButtons instance;
 
-    @SidedProxy(clientSide = "com.jaquadro.minecraft.extrabuttons.client.ClientProxy",
-            serverSide = "com.jaquadro.minecraft.extrabuttons.CommonProxy")
+    @SidedProxy(clientSide = SOURCE_PATH + "client.ClientProxy", serverSide = SOURCE_PATH + "CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.PreInit

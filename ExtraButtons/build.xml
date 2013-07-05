@@ -1,16 +1,21 @@
 <project>
+    <property name="dir.mcp" value="${user.dir}\..\forge\mcp" />
+    <property name="dir.obf" value="${dir.mcp}\reobf\minecraft" />
+    <property name="dir.resources" value="${dir.obf}\jaquadro\extrabuttons" />
+    <property name="dir.out" value="${user.dir}\..\out\ExtraButtons" />
+
     <target name="package">
-        <delete dir="${user.dir}\..\forge\mcp\reobf\minecraft" />
-        <exec executable="cmd" dir="${user.dir}\..\forge\mcp">
+        <delete dir="${dir.obf}" />
+        <exec executable="cmd" dir="${dir.mcp}">
             <arg value="/c" />
             <arg value="reobfuscate.bat" />
         </exec>
-        <copy file="mcmod.info" todir="${user.dir}\..\forge\mcp\reobf\minecraft" />
-        <copy todir="${user.dir}\..\forge\mcp\reobf\minecraft\jaquadro\res">
+        <copy file="mcmod.info" todir="${dir.obf}" />
+        <copy todir="${dir.resources}">
             <fileset dir="res" />
         </copy>
-        <zip destfile="${user.dir}\..\out\ExtraButtons\ExtraButtons.zip"
-             basedir="${user.dir}\..\forge\mcp\reobf\minecraft"
+        <zip destfile="${dir.out}\ExtraButtons.zip"
+             basedir="${dir.obf}"
              update="true" />
     </target>
 </project>
