@@ -93,7 +93,7 @@ public class PlayerPoweredRail extends PlayerDetectorRail
 
     private void updateMinecart (EntityMinecart entity, int railData)
     {
-        int direction = railData &= 7;
+        int direction = railData & 7;
         boolean isPoweredBitSet = (railData & 8) != 0;
 
         if (entity.shouldDoRailFunctions()) {
@@ -111,18 +111,18 @@ public class PlayerPoweredRail extends PlayerDetectorRail
                 }
                 else if (direction == 1) {
                     if (entity.worldObj.isBlockNormalCube(posX - 1, posY, posZ)) {
-                        entity.motionX = 0.02D;
+                        entity.motionX = 0.04D;
                     }
                     else if (entity.worldObj.isBlockNormalCube(posX + 1, posY, posZ)) {
-                        entity.motionX = -0.02D;
+                        entity.motionX = -0.04D;
                     }
                 }
                 else if (direction == 0) {
                     if (entity.worldObj.isBlockNormalCube(posX, posY, posZ - 1)) {
-                        entity.motionZ = 0.02D;
+                        entity.motionZ = 0.04D;
                     }
                     else if (entity.worldObj.isBlockNormalCube(posX, posY, posZ + 1)) {
-                        entity.motionZ = -0.02D;
+                        entity.motionZ = -0.04D;
                     }
                 }
             }
