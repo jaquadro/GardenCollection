@@ -11,6 +11,7 @@
             <arg value="reobfuscate.bat" />
         </exec>
         <copy file="mcmod.info" todir="${dir.obf}" />
+        <copy file="pack.mcmeta" todir="${dir.obf}" />
         <copy todir="${dir.resources}">
             <fileset dir="assets" />
         </copy>
