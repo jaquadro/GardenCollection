@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/mcp/src/minecraft" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="1.6 (64-bit)" jdkType="JavaSDK" />
+    <orderEntry type="module-library">
+      <library name="jinput">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mcp/jars/bin/jinput.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lwjgl">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mcp/jars/bin/lwjgl.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lwjgl_util">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mcp/jars/bin/lwjgl_util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="minecraft">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mcp/jars/bin/minecraft.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net.sourceforge.argo:argo:2.25" type="repository">
+        <properties maven-id="net.sourceforge.argo:argo:2.25" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/argo-2.25.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="org.ow2.asm:asm-all:4.0" type="repository">
+        <properties maven-id="org.ow2.asm:asm-all:4.0" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/asm-all-4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="org.bouncycastle:bcprov-jdk15on:1.47" type="repository">
+        <properties maven-id="org.bouncycastle:bcprov-jdk15on:1.47" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/bcprov-jdk15on-1.47.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="com.google.guava:guava:12.0.1" type="repository">
+        <properties maven-id="com.google.guava:guava:12.0.1" />
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/guava-12.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../lib/jsr305-1.3.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
