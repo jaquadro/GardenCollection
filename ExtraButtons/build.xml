@@ -1,7 +1,7 @@
 <project>
     <property name="dir.mcp" value="${user.dir}\..\forge\mcp" />
     <property name="dir.obf" value="${dir.mcp}\reobf\minecraft" />
-    <property name="dir.resources" value="${dir.obf}\jaquadro\extrabuttons" />
+    <property name="dir.resources" value="${dir.obf}\mods" />
     <property name="dir.out" value="${user.dir}\..\out\ExtraButtons" />
 
     <target name="package">
@@ -12,7 +12,7 @@
         </exec>
         <copy file="mcmod.info" todir="${dir.obf}" />
         <copy todir="${dir.resources}">
-            <fileset dir="res" />
+            <fileset dir="mods" />
         </copy>
         <zip destfile="${dir.out}\ExtraButtons.zip"
              basedir="${dir.obf}"
