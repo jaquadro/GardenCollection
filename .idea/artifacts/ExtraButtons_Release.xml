@@ -10,8 +10,8 @@
     <root id="root">
       <element id="module-output" name="ExtraButtons" />
       <element id="file-copy" path="$PROJECT_DIR$/ExtraButtons/mcmod.info" />
-      <element id="directory" name="mods">
-        <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/mods" />
+      <element id="directory" name="assets">
+        <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/assets" />
       </element>
     </root>
   </artifact>

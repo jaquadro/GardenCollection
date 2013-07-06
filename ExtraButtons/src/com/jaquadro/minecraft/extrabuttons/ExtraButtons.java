@@ -22,7 +22,7 @@ public class ExtraButtons
 {
     public static final String MOD_ID = "ExtraButtons";
     static final String MOD_NAME = "ExtraButtons";
-    static final String MOD_VERSION = "1.5.2.0";
+    static final String MOD_VERSION = "1.6.1.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
     static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
 
@@ -46,7 +46,7 @@ public class ExtraButtons
     @SidedProxy(clientSide = SOURCE_PATH + "client.ClientProxy", serverSide = SOURCE_PATH + "CommonProxy")
     public static CommonProxy proxy;
 
-    @Mod.PreInit
+    @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event)
     {
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -65,18 +65,7 @@ public class ExtraButtons
         config.save();
 
         initializeBlocks();
-    }
 
-    private static final String[] colors = {
-            "White", "Orange", "Magenta", "Light Blue",
-            "Yellow", "Light Green", "Pink", "Dark Grey",
-            "Light Grey", "Cyan", "Purple", "Blue",
-            "Brown", "Green", "Red", "Black",
-    };
-
-    @Mod.Init
-    public void load (FMLInitializationEvent event)
-    {
         LanguageRegistry.addName(capacitiveTouchBlock, "Capacitive Touch Block");
         GameRegistry.registerBlock(capacitiveTouchBlock, "capacitiveTouchBlock");
 
@@ -139,7 +128,20 @@ public class ExtraButtons
         proxy.registerRenderers();
     }
 
-    @Mod.PostInit
+    private static final String[] colors = {
+            "White", "Orange", "Magenta", "Light Blue",
+            "Yellow", "Light Green", "Pink", "Dark Grey",
+            "Light Grey", "Cyan", "Purple", "Blue",
+            "Brown", "Green", "Red", "Black",
+    };
+
+    @Mod.EventHandler
+    public void load (FMLInitializationEvent event)
+    {
+
+    }
+
+    @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
 
     }

@@ -9,6 +9,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.6 (64-bit)" jdkType="JavaSDK" />
+    <orderEntry type="library" name="1.6.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="jinput" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="lwjgl" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="lwjgl_util" level="project" />

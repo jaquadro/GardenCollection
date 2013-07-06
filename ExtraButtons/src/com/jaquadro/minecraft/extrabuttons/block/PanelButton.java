@@ -1,7 +1,6 @@
 package com.jaquadro.minecraft.extrabuttons.block;
 
 import net.minecraft.block.BlockButton;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
