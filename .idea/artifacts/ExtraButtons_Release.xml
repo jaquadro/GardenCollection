@@ -13,6 +13,7 @@
       <element id="directory" name="assets">
         <element id="dir-copy" path="$PROJECT_DIR$/ExtraButtons/assets" />
       </element>
+      <element id="module-output" name="Forge" />
     </root>
   </artifact>
 </component>
