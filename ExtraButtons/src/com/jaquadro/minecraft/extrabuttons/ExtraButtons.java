@@ -24,7 +24,6 @@ public class ExtraButtons
     static final String MOD_NAME = "ExtraButtons";
     static final String MOD_VERSION = "1.5.2.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
-    static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
 
     private static int capacitiveBlockId;
     private static int playerDetectorRailId;

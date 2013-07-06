@@ -5,7 +5,6 @@ import com.jaquadro.minecraft.extrabuttons.block.ToggleButton;
 import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.BlockCloth;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDye;
