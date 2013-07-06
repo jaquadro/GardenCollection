@@ -24,7 +24,6 @@ public class ExtraButtons
     static final String MOD_NAME = "ExtraButtons";
     static final String MOD_VERSION = "1.6.1.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
-    static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
 
     private static int capacitiveBlockId;
     private static int playerDetectorRailId;
@@ -124,8 +123,6 @@ public class ExtraButtons
 
         GameRegistry.addRecipe(new ItemStack(stonePanelButton), "xx", 'x', stoneButtonStack);
         GameRegistry.addRecipe(new ItemStack(woodPanelButton), "xx", 'x', woodButtonStack);
-
-        proxy.registerRenderers();
     }
 
     private static final String[] colors = {
@@ -137,14 +134,11 @@ public class ExtraButtons
 
     @Mod.EventHandler
     public void load (FMLInitializationEvent event)
-    {
-
-    }
+    { }
 
     @Mod.EventHandler
-    public void postInit (FMLPostInitializationEvent event) {
-
-    }
+    public void postInit (FMLPostInitializationEvent event)
+    { }
 
     private void initializeBlocks ()
     {

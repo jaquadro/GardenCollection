@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="bcprov-debug-jdk15on-148">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/forge/mcp/lib/bcprov-debug-jdk15on-148.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
