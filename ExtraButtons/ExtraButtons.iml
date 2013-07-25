@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.6 (64-bit)" jdkType="JavaSDK" />
-    <orderEntry type="library" name="1.6.1" level="project" />
+    <orderEntry type="library" name="1.6.2" level="project" />
     <orderEntry type="module" module-name="Forge" scope="PROVIDED" />
   </component>
 </module>

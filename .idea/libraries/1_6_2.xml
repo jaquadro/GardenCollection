@@ -1,10 +1,8 @@
 <component name="libraryTable">
-  <library name="1.6.1">
+  <library name="1.6.2">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/forge/mcp/jars/versions/1.6.1/1.6.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/scala-lang/scala-library/2.10.2/scala-library-2.10.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/scala-lang/scala-compiler/2.10.2/scala-compiler-2.10.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/ow2/asm/asm-all/4.1/asm-all-4.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/lwjgl/lwjgl/lwjgl_util/2.9.0/lwjgl_util-2.9.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/lwjgl/lwjgl/lwjgl/2.9.0/lwjgl-2.9.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/bouncycastle/bcprov-jdk15on/1.47/bcprov-jdk15on-1.47.jar!/" />
@@ -24,6 +22,8 @@
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/com/google/guava/guava/14.0/guava-14.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/com/google/code/gson/gson/2.2.2/gson-2.2.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/argo/argo/2.25_fixed/argo-2.25_fixed.jar!/" />
+      <root url="jar://$PROJECT_DIR$/forge/mcp/jars/libraries/org/ow2/asm/asm-debug-all/4.1/asm-debug-all-4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/forge/mcp/jars/versions/1.6.2/1.6.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

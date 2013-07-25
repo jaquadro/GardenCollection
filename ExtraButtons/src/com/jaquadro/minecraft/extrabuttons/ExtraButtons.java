@@ -22,7 +22,7 @@ public class ExtraButtons
 {
     public static final String MOD_ID = "ExtraButtons";
     static final String MOD_NAME = "ExtraButtons";
-    static final String MOD_VERSION = "1.6.1.0";
+    static final String MOD_VERSION = "1.6.2.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
 
     private static int capacitiveBlockId;
@@ -110,7 +110,7 @@ public class ExtraButtons
                 'x', goldStack, 'y', stickStack, 'z', redstoneStack, 'w', stonePlateStack);
 
         ItemStack stoneButtonStack = new ItemStack(Block.stoneButton);
-        ItemStack glowStoneStack = new ItemStack(Item.lightStoneDust);
+        ItemStack glowStoneStack = new ItemStack(Item.glowstone);
 
         for (int i = 0; i < 16; i++) {
             ItemStack dyeStack = new ItemStack(Item.dyePowder, 1, 15 - i);
