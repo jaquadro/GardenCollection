@@ -2,10 +2,7 @@
   <artifact name="ExtraButtons Release">
     <output-path>$PROJECT_DIR$/forge/mcp/bin/minecraft</output-path>
     <properties id="ant-postprocessing">
-      <options enabled="true">
-        <file>file://$PROJECT_DIR$/ExtraButtons/build.xml</file>
-        <target>package</target>
-      </options>
+      <options enabled="true" />
     </properties>
     <root id="root">
       <element id="module-output" name="ExtraButtons" />

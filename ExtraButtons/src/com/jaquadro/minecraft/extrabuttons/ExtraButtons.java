@@ -1,8 +1,10 @@
 package com.jaquadro.minecraft.extrabuttons;
 
 import com.jaquadro.minecraft.extrabuttons.block.*;
+import com.jaquadro.minecraft.extrabuttons.item.ItemDelayButton;
 import com.jaquadro.minecraft.extrabuttons.item.ItemToggleButton;
 import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityButton;
+import com.jaquadro.minecraft.extrabuttons.tileentity.TileEntityDelayButton;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -15,6 +17,10 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+
+// To-do?
+// Signal relay: take's input signal, re-emits in all directions.  Possibly directed versions.
+// Variable-length buttons: Versions of standard button with longer duration.  Possibly apply to panels/capt touch
 
 @Mod(modid = ExtraButtons.MOD_ID, name = ExtraButtons.MOD_NAME, version = ExtraButtons.MOD_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
@@ -31,6 +37,7 @@ public class ExtraButtons
     private static int stonePanelButtonId;
     private static int woodPanelButtonId;
     private static int illuminatedButtonId;
+    private static int delayButtonId;
 
     public static Block capacitiveTouchBlock;
     public static Block stonePanelButton;
@@ -38,6 +45,7 @@ public class ExtraButtons
     public static Block playerDetectorRail;
     public static Block playerPoweredRail;
     public static Block illuminatedButton;
+    public static Block delayButton;
 
     @Mod.Instance(MOD_ID)
     public static ExtraButtons instance;
@@ -60,6 +68,7 @@ public class ExtraButtons
         stonePanelButtonId = config.getBlock("StonePanelButton", 563).getInt();
         woodPanelButtonId = config.getBlock("WoodPanelButton", 564).getInt();
         illuminatedButtonId = config.getBlock("IlluminatedButton", 565).getInt();
+        delayButtonId = config.getBlock("DelayButton", 566).getInt();
 
         config.save();
 
@@ -80,6 +89,12 @@ public class ExtraButtons
         LanguageRegistry.addName(playerPoweredRail, "Player Powered Rail");
         GameRegistry.registerBlock(playerPoweredRail, "playerPoweredRail");
 
+        LanguageRegistry.addName(delayButton, "Delay Button");
+        GameRegistry.registerBlock(delayButton, ItemDelayButton.class, "delayButton");
+
+        ItemStack delayButtonStack = new ItemStack(delayButtonId, 1, 0);
+        LanguageRegistry.addName(delayButtonStack, "Delay Button");
+
         GameRegistry.registerBlock(illuminatedButton, ItemToggleButton.class, "illuminatedButton");
 
         for (int i = 0; i < 16; i++) {
@@ -89,6 +104,7 @@ public class ExtraButtons
         }
 
         GameRegistry.registerTileEntity(TileEntityButton.class, "toggleButton");
+        GameRegistry.registerTileEntity(TileEntityDelayButton.class, "delayButton");
 
         ItemStack ironStack = new ItemStack(Item.ingotIron);
         ItemStack torchStack = new ItemStack(Block.torchRedstoneActive);
@@ -123,6 +139,10 @@ public class ExtraButtons
 
         GameRegistry.addRecipe(new ItemStack(stonePanelButton), "xx", 'x', stoneButtonStack);
         GameRegistry.addRecipe(new ItemStack(woodPanelButton), "xx", 'x', woodButtonStack);
+
+        ItemStack repeaterStack = new ItemStack(Item.redstoneRepeater);
+
+        GameRegistry.addRecipe(new ItemStack(delayButton), "x", "y", 'x', stoneButtonStack, 'y', repeaterStack);
     }
 
     private static final String[] colors = {
@@ -134,7 +154,9 @@ public class ExtraButtons
 
     @Mod.EventHandler
     public void load (FMLInitializationEvent event)
-    { }
+    {
+        proxy.registerRenderers();
+    }
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event)
@@ -177,5 +199,11 @@ public class ExtraButtons
                     .setHardness(0.5f)
                     .setStepSound(Block.soundStoneFootstep)
                     .setUnlocalizedName("illuminatedButton");
+
+        if (delayButtonId > -1)
+            delayButton = new DelayButton(delayButtonId)
+                    .setHardness(0.7f)
+                    .setStepSound(Block.soundStoneFootstep)
+                    .setUnlocalizedName("delayButton");
     }
 }
