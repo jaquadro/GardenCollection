@@ -28,7 +28,7 @@ public class ExtraButtons
 {
     public static final String MOD_ID = "ExtraButtons";
     static final String MOD_NAME = "ExtraButtons";
-    static final String MOD_VERSION = "1.6.4.0";
+    static final String MOD_VERSION = "1.6.4.1";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
 
     private static int capacitiveBlockId;
