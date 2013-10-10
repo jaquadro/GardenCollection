@@ -11,6 +11,7 @@ public class TileEntityDelayButton extends TileEntity
     public byte metadata = 0;
     public byte delayLevel = 0;
     public byte stateLevel = 0;
+    public long chainUpdate = 0;
 
     @Override
     public void writeToNBT (NBTTagCompound tag)
@@ -20,6 +21,9 @@ public class TileEntityDelayButton extends TileEntity
         tag.setByte("meta", this.metadata);
         tag.setByte("delay", this.delayLevel);
         tag.setByte("state", this.stateLevel);
+
+        if (chainUpdate > 0)
+            tag.setLong("update", this.chainUpdate);
     }
 
     @Override
@@ -30,6 +34,9 @@ public class TileEntityDelayButton extends TileEntity
         this.metadata = tag.getByte("meta");
         this.delayLevel = tag.getByte("delay");
         this.stateLevel = tag.getByte("state");
+
+        if (tag.hasKey("update"))
+            this.chainUpdate = tag.getLong("update");
     }
 
     public int getDirection ()
@@ -62,6 +69,16 @@ public class TileEntityDelayButton extends TileEntity
         metadata = (byte) ((metadata & ~0x10) | (depressed ? 0x10 : 0));
     }
 
+    public boolean isShowingDelay ()
+    {
+        return (metadata & 0x20) != 0;
+    }
+
+    public void setShowingDelay (boolean showDelay)
+    {
+        metadata = (byte) ((metadata & ~0x20) | (showDelay ? 0x20 : 0));
+    }
+
     public int getDelay ()
     {
         return delayLevel;
@@ -80,6 +97,16 @@ public class TileEntityDelayButton extends TileEntity
     public void setState (int state)
     {
         stateLevel = (byte)state;
+    }
+
+    public long getUpdateTime ()
+    {
+        return chainUpdate;
+    }
+
+    public void setUpdateTime (long time)
+    {
+        chainUpdate = time;
     }
 
     @Override

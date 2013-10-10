@@ -187,18 +187,39 @@ public class DelayButton extends BlockContainer
         if (te.isDepressed())
             return true;
 
-        int dir = te.getDirection();
+        if (player.isSneaking())
+            cycleDelaySetting(te);
+        else {
+            activateButton(te);
 
-        te.setIsDepressed(true);
-        te.setState(te.getDelay());
-        te.setIsLatched(true);
+            world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
+            this.updateNeighbors(world, x, y, z, te.getDirection());
+        }
 
         world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
-        world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
-        this.updateNeighbors(world, x, y, z, dir);
         world.scheduleBlockUpdate(x, y, z, this.blockID, this.tickRate(world));
 
         return true;
+    }
+
+    private void cycleDelaySetting (TileEntityDelayButton te)
+    {
+        if (te.isShowingDelay())
+            te.setUpdateTime(te.getWorldObj().getTotalWorldTime() + tickRate(te.getWorldObj()));
+
+        int cycle = te.getDelay() + 1;
+        if (cycle > 3)
+            cycle = 0;
+
+        te.setDelay(cycle);
+        te.setShowingDelay(true);
+    }
+
+    private void activateButton (TileEntityDelayButton te)
+    {
+        te.setIsDepressed(true);
+        te.setState(te.getDelay());
+        te.setIsLatched(true);
     }
 
     @Override
@@ -240,9 +261,26 @@ public class DelayButton extends BlockContainer
     public void updateTick (World world, int x, int y, int z, Random rand)
     {
         TileEntityDelayButton te = (TileEntityDelayButton) world.getBlockTileEntity(x, y, z);
+        if (te == null)
+            return;
 
-        if (te != null && (te.isDepressed() || te.isLatched())) {
+        // If "update" is set, reschedule the tick
+        if (te.getUpdateTime() > 0) {
+            int tick = (int)(te.getUpdateTime() - world.getTotalWorldTime());
+            te.setUpdateTime(0);
+
+            if (tick > 0) {
+                world.scheduleBlockUpdate(x, y, z, this.blockID, tick);
+                world.markBlockForUpdate(x, y, z);
+                return;
+            }
+        }
+
+        if (te.isDepressed() || te.isLatched() || te.isShowingDelay()) {
             if (!world.isRemote) {
+                if (te.isShowingDelay())
+                    te.setShowingDelay(false);
+
                 if (te.isLatched()) {
                     if (te.getState() > 0) {
                         te.setState(te.getState() - 1);
@@ -360,8 +398,10 @@ public class DelayButton extends BlockContainer
 
             if (renderBack)
                 return iconPanelBack;
-            else
-                return iconPanelFront[Math.max(0, Math.min(3, te.getState()))];
+            else {
+                int level = te.isShowingDelay() ? te.getDelay() : te.getState();
+                return iconPanelFront[Math.max(0, Math.min(3, level))];
+            }
         }
         else
             return iconButton;
