@@ -22,7 +22,7 @@ public class ExtraButtons
 {
     static final String MOD_ID = "ExtraButtons";
     static final String MOD_NAME = "ExtraButtons";
-    static final String MOD_VERSION = "1.4.7.0";
+    static final String MOD_VERSION = "1.4.7.1";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.extrabuttons.";
     static final String RESOURCE_PATH = "/jaquadro/extrabuttons/";
 

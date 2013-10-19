@@ -263,21 +263,6 @@ public class ToggleButton extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int getMixedBrightnessForBlock(IBlockAccess blockAccess, int x, int y, int z)
-    {
-        int brightness = super.getMixedBrightnessForBlock(blockAccess, x, y, z);
-
-        TileEntityButton te = (TileEntityButton) blockAccess.getBlockTileEntity(x, y, z);
-        if (te != null && te.isLatched()) {
-            int blockLight = (brightness & 0xFF) >> 0xF;
-            brightness |= Math.max(10, blockLight) << 4;
-        }
-
-        return brightness;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
     public String getTextureFile ()
     {
         return CommonProxy.BLOCK_PNG;
@@ -288,12 +273,14 @@ public class ToggleButton extends BlockContainer
     public int getBlockTexture (IBlockAccess world, int x, int y, int z, int side)
     {
         int data = world.getBlockMetadata(x, y, z);
-        TileEntityButton te = (TileEntityButton) world.getBlockTileEntity(x, y, z);
+        TileEntity baseTE = world.getBlockTileEntity(x, y, z);
+        if (baseTE != null && baseTE.getClass().isAssignableFrom(TileEntityButton.class)) {
+            TileEntityButton te = (TileEntityButton) baseTE;
+            if (te.isLatched())
+                return this.blockIndexInTexture + data;
+        }
 
-        if (te != null && te.isLatched())
-            return this.blockIndexInTexture + data;
-        else
-            return this.blockIndexInTexture + 16 + data;
+        return this.blockIndexInTexture + 16 + data;
     }
 
     @Override

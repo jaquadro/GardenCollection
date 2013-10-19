@@ -12,6 +12,8 @@
     <option name="PASS_PARENT_ENVS" value="true" />
     <module name="Forge" />
     <envs />
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Run" />
     <method>
       <option name="BuildArtifacts" enabled="true">
         <artifact name="ExtraButtons Internal" />
