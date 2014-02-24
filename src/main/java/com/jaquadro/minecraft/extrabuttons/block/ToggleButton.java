@@ -27,17 +27,21 @@ import static net.minecraftforge.common.util.ForgeDirection.*;
 
 public class ToggleButton extends BlockContainer
 {
+    private boolean isLit;
+    private static boolean blockIsChanging;
+
     @SideOnly(Side.CLIENT)
     private IIcon[] iconArrayOn;
 
     @SideOnly(Side.CLIENT)
     private IIcon[] iconArrayOff;
 
-    public ToggleButton ()
+    public ToggleButton (boolean isLit)
     {
         super(Material.circuits);
         this.setTickRandomly(true);
         this.setCreativeTab(CreativeTabs.tabRedstone);
+        this.isLit = isLit;
     }
 
     @Override
@@ -157,6 +161,21 @@ public class ToggleButton extends BlockContainer
     }
 
     @Override
+    public void onBlockAdded (World world, int x, int y, int z)
+    {
+        super.onBlockAdded(world, x, y, z);
+
+        if (isLit) {
+            world.notifyBlockOfNeighborChange(x, y - 1, z, this);
+            world.notifyBlockOfNeighborChange(x, y + 1, z, this);
+            world.notifyBlockOfNeighborChange(x - 1, y, z, this);
+            world.notifyBlockOfNeighborChange(x + 1, y, z, this);
+            world.notifyBlockOfNeighborChange(x, y, z - 1, this);
+            world.notifyBlockOfNeighborChange(x, y, z + 1, this);
+        }
+    }
+
+    @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9)
     {
         TileEntityButton te = (TileEntityButton) world.getTileEntity(x, y, z);
@@ -171,6 +190,8 @@ public class ToggleButton extends BlockContainer
         te.setIsDepressed(true);
         te.setIsLatched(!te.isLatched());
 
+        updateBlockState(te.isLatched(), world, x, y, z);
+
         world.markBlockRangeForRenderUpdate(x, y, z, x, y, z);
         world.playSoundEffect((double) x + 0.5D, (double) y + 0.5D, (double) z + 0.5D, "random.click", 0.3F, 0.6F);
         this.updateNeighbors(world, x, y, z, dir);
@@ -182,11 +203,42 @@ public class ToggleButton extends BlockContainer
     @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data)
     {
-        TileEntityButton te = (TileEntityButton) world.getTileEntity(x, y, z);
-        if (te != null && te.isLatched())
-            this.updateNeighbors(world, x, y, z, te.getDirection());
+        if (!blockIsChanging) {
+            TileEntityButton te = (TileEntityButton) world.getTileEntity(x, y, z);
+            if (te != null && te.isLatched())
+                this.updateNeighbors(world, x, y, z, te.getDirection());
+
+            if (isLit) {
+                world.notifyBlockOfNeighborChange(x, y - 1, z, this);
+                world.notifyBlockOfNeighborChange(x, y + 1, z, this);
+                world.notifyBlockOfNeighborChange(x - 1, y, z, this);
+                world.notifyBlockOfNeighborChange(x + 1, y, z, this);
+                world.notifyBlockOfNeighborChange(x, y, z - 1, this);
+                world.notifyBlockOfNeighborChange(x, y, z + 1, this);
+            }
+        }
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    private static void updateBlockState (boolean isLit, World world, int x, int y, int z)
+    {
+        int data = world.getBlockMetadata(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
+        blockIsChanging = true;
+
+        if (isLit)
+            world.setBlock(x, y, z, ExtraButtons.illuminatedButtonOn);
+        else
+            world.setBlock(x, y, z, ExtraButtons.illuminatedButtonOff);
+
+        blockIsChanging = false;
+        world.setBlockMetadataWithNotify(x, y, z, data, 2);
+
+        if (te != null) {
+            te.validate();
+            world.setTileEntity(x, y, z, te);
+        }
     }
 
     @Override
@@ -265,6 +317,11 @@ public class ToggleButton extends BlockContainer
         return new TileEntityButton();
     }
 
+    @Override
+    public boolean isAssociatedBlock (Block block) {
+        return block == ExtraButtons.illuminatedButtonOn || block == ExtraButtons.illuminatedButtonOff;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side)
@@ -285,6 +342,12 @@ public class ToggleButton extends BlockContainer
     public IIcon getIcon (int side, int data)
     {
         return iconArrayOff[data];
+    }
+
+    @Override
+    public Item getItemDropped (int metadata, Random rand, int fortune)
+    {
+        return Item.getItemFromBlock(ExtraButtons.illuminatedButtonOff);
     }
 
     @Override
@@ -311,8 +374,10 @@ public class ToggleButton extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList)
     {
-        for (int i = 0; i < 16; ++i)
-            blockList.add(new ItemStack(item, 1, i));
+        if (!isLit) {
+            for (int i = 0; i < 16; ++i)
+                blockList.add(new ItemStack(item, 1, i));
+        }
     }
 
     public static int getBlockFromDye (int data)

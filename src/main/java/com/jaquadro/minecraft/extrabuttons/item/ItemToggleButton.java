@@ -22,14 +22,14 @@ public class ItemToggleButton extends ItemBlock
     {
         super(block);
         setHasSubtypes(true);
-        setUnlocalizedName("illuminatedButton");
+        setUnlocalizedName("illuminatedButtonOn");
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIconFromDamage (int data)
     {
-        ToggleButton block = (ToggleButton) ExtraButtons.illuminatedButton;
+        ToggleButton block = (ToggleButton) ExtraButtons.illuminatedButtonOn;
         return block.getIcon(0, ToggleButton.getBlockFromDye(data));
     }
 

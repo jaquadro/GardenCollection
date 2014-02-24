@@ -14,7 +14,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 // To-do?
@@ -42,7 +41,8 @@ public class ExtraButtons
     public static Block woodPanelButton;
     public static Block playerDetectorRail;
     public static Block playerPoweredRail;
-    public static Block illuminatedButton;
+    public static Block illuminatedButtonOn;
+    public static Block illuminatedButtonOff;
     public static Block delayButton;
 
     @Mod.Instance(MOD_ID)
@@ -78,7 +78,8 @@ public class ExtraButtons
         GameRegistry.registerBlock(playerDetectorRail, MOD_ID + "player_detector_rail");
         GameRegistry.registerBlock(playerPoweredRail, MOD_ID + "player_powered_rail");
         GameRegistry.registerBlock(delayButton, ItemDelayButton.class, MOD_ID + "delay_button");
-        GameRegistry.registerBlock(illuminatedButton, ItemToggleButton.class, MOD_ID + "illuminated_button");
+        GameRegistry.registerBlock(illuminatedButtonOn, ItemToggleButton.class, MOD_ID + "illuminated_button_on");
+        GameRegistry.registerBlock(illuminatedButtonOff, ItemToggleButton.class, MOD_ID + "illuminated_button");
 
         GameRegistry.registerTileEntity(TileEntityButton.class, MOD_ID + "toggle_button");
         GameRegistry.registerTileEntity(TileEntityDelayButton.class, MOD_ID + "delay_button");
@@ -103,13 +104,12 @@ public class ExtraButtons
                 'x', goldStack, 'y', stickStack, 'z', redstoneStack, 'w', stonePlateStack);
 
         ItemStack stoneButtonStack = new ItemStack(Blocks.stone_button);
-        ItemStack glowStoneStack = new ItemStack(Items.glowstone_dust);
 
         for (int i = 0; i < 16; i++) {
-            ItemStack dyeStack = new ItemStack(Items.dye, 1, 15 - i);
+            ItemStack stainedGlassStack = new ItemStack(Blocks.stained_glass_pane, 1, 15 - i);
 
-            GameRegistry.addRecipe(new ItemStack(illuminatedButton, 1, i), " x ", " y ", " z ",
-                    'x', dyeStack, 'y', glowStoneStack, 'z', stoneButtonStack);
+            GameRegistry.addRecipe(new ItemStack(illuminatedButtonOff, 1, i), " x ", " y ", " z ",
+                    'x', stainedGlassStack, 'y', redstoneStack, 'z', stoneButtonStack);
         }
 
         ItemStack woodButtonStack = new ItemStack(Blocks.wooden_button);
@@ -164,11 +164,17 @@ public class ExtraButtons
                     .setStepSound(Block.soundTypeMetal)
                     .setBlockName("playerPoweredRail");
 
-        if (illuminatedButtonId > -1)
-            illuminatedButton = new ToggleButton()
+        if (illuminatedButtonId > -1) {
+            illuminatedButtonOff = new ToggleButton(false)
                     .setHardness(0.5f)
                     .setStepSound(Block.soundTypeStone)
-                    .setBlockName("illuminatedButton");
+                    .setBlockName("illuminatedButtonOn");
+            illuminatedButtonOn = new ToggleButton(true)
+                    .setHardness(0.5f)
+                    .setLightLevel(0.4375f)
+                    .setStepSound(Block.soundTypeStone)
+                    .setBlockName("illuminatedButtonOn");
+        }
 
         if (delayButtonId > -1)
             delayButton = new DelayButton()
