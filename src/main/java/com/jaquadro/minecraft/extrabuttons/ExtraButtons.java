@@ -106,7 +106,7 @@ public class ExtraButtons
         ItemStack stoneButtonStack = new ItemStack(Blocks.stone_button);
 
         for (int i = 0; i < 16; i++) {
-            ItemStack stainedGlassStack = new ItemStack(Blocks.stained_glass_pane, 1, 15 - i);
+            ItemStack stainedGlassStack = new ItemStack(Blocks.stained_glass_pane, 1, i);
 
             GameRegistry.addRecipe(new ItemStack(illuminatedButtonOff, 1, i), " x ", " y ", " z ",
                     'x', stainedGlassStack, 'y', redstoneStack, 'z', stoneButtonStack);
@@ -168,7 +168,7 @@ public class ExtraButtons
             illuminatedButtonOff = new ToggleButton(false)
                     .setHardness(0.5f)
                     .setStepSound(Block.soundTypeStone)
-                    .setBlockName("illuminatedButtonOn");
+                    .setBlockName("illuminatedButton");
             illuminatedButtonOn = new ToggleButton(true)
                     .setHardness(0.5f)
                     .setLightLevel(0.4375f)
