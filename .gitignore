@@ -1,9 +1,4 @@
-forge/
-out/
-.idea/workspace.xml
-build/
-.gradle/
-eclipse/
-gradle/
-gradlew
-gradlew.bat
+*/build/**
+*/eclipse/**
+*/.gradle/**
+*/out/**

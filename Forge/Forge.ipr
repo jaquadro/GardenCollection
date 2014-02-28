@@ -25,6 +25,11 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="cpw.mods.fml.common.Mod.EventHandler" />
+      <item index="1" class="java.lang.String" itemvalue="cpw.mods.fml.common.Mod.Instance" />
+      <item index="2" class="java.lang.String" itemvalue="cpw.mods.fml.common.eventhandler.SubscribeEvent" />
+    </list>
   </component>
   <component name="GradleUISettings">
     <setting name="root" />
@@ -171,9 +176,16 @@
       </item>
     </group>
   </component>
+  <component name="ProjectCodeStyleSettingsManager">
+    <option name="PER_PROJECT_SETTINGS">
+      <value />
+    </option>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/1.7.x.iml" filepath="$PROJECT_DIR$/1.7.x.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ExtraButtons/ExtraButtons.iml" filepath="$PROJECT_DIR$/../ExtraButtons/ExtraButtons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Forge.iml" filepath="$PROJECT_DIR$/Forge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../HungerStrike/HungerStrike.iml" filepath="$PROJECT_DIR$/../HungerStrike/HungerStrike.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="JDK 1.7 32-bit" project-jdk-type="JavaSDK">
@@ -184,6 +196,47 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <UIState>
+          <splitter-proportions>
+            <SplitterProportionsDataImpl />
+          </splitter-proportions>
+          <settings />
+        </UIState>
+      </state>
+      <state key="Copyright.UI">
+        <UIState>
+          <splitter-proportions>
+            <SplitterProportionsDataImpl />
+          </splitter-proportions>
+        </UIState>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <UIState>
+          <splitter-proportions>
+            <SplitterProportionsDataImpl>
+              <option name="proportions">
+                <list>
+                  <option value="0.2" />
+                </list>
+              </option>
+            </SplitterProportionsDataImpl>
+          </splitter-proportions>
+          <last-edited>1.6</last-edited>
+        </UIState>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <UIState>
+          <splitter-proportions>
+            <SplitterProportionsDataImpl />
+          </splitter-proportions>
+          <settings />
+        </UIState>
+      </state>
+    </states>
   </component>
 </project>
 

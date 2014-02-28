@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" name="Default" comment="" />
-    <ignored path="1.7.x.iws" />
+    <list default="true" id="958780d6-f660-45e4-a911-15186daa5263" name="Default" comment="" />
+    <ignored path="Forge.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/ExtraButtons.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393138057539" ignored="false" />
-    <file path="/CapacitiveTouchBlock.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393129538593" ignored="false" />
-    <file path="/WoodPanelButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393138153667" ignored="false" />
-    <file path="/StonePanelButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393138178646" ignored="false" />
-    <file path="/PlayerPoweredRail.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393132139378" ignored="false" />
-    <file path="/PlayerDetectorRail.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393131943217" ignored="false" />
-    <file path="/ItemDelayButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393135118572" ignored="false" />
-    <file path="/ItemToggleButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393135380020" ignored="false" />
-    <file path="/ToggleButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393136991810" ignored="false" />
-    <file path="/DelayButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393137371180" ignored="false" />
-    <file path="/DelayButtonRenderer.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393137455131" ignored="false" />
-    <file path="/en_US.lang" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393139419677" ignored="false" />
-    <file path="/build.gradle" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393142269373" ignored="false" />
-    <file path="/mcmod.info" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393142456541" ignored="false" />
-    <file path="/TileEntityButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393144114240" ignored="false" />
-    <file path="/TileEntityDelayButton.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393144172817" ignored="false" />
-    <file path="/fragment.java" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393145827563" ignored="false" />
-    <file path="/pack.mcmeta" changelist="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" time="1393144970048" ignored="false" />
+    <file path="/HungerStrike.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393560690241" ignored="false" />
+    <file path="/CommandHungerStrike.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393562552178" ignored="false" />
+    <file path="/en_US.lang" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393562450134" ignored="false" />
+    <file path="/TickHandler.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393392515439" ignored="false" />
+    <file path="/fragment.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393553812438" ignored="false" />
+    <file path="/ClientProxy.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393393672586" ignored="false" />
+    <file path="$PROJECT_DIR$/eclipse/logs/fml-client-latest.log" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393394780023" ignored="false" />
+    <file path="$PROJECT_DIR$/eclipse/logs/latest.log" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393394780023" ignored="false" />
+    <file path="/PlayerHandler.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393550433446" ignored="false" />
+    <file path="/PlayerController.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393478523462" ignored="false" />
+    <file path="/CommonProxy.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393477757327" ignored="false" />
+    <file path="/PlayerEntension.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393483432703" ignored="false" />
+    <file path="/PlayerExtension.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393544017100" ignored="false" />
+    <file path="/ExtendedPlayer.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393560825404" ignored="false" />
+    <file path="/a.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393549601487" ignored="false" />
+    <file path="/sample.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393549689931" ignored="false" />
+    <file path="/ConfigManager.java" changelist="958780d6-f660-45e4-a911-15186daa5263" time="1393562102417" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,28 +72,45 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints>
+      <breakpoint url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/entity/player/EntityPlayerMP.java" line="379" class="net.minecraft.entity.player.EntityPlayerMP" package="net.minecraft.entity.player">
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="1.7.x" />
+    <favorites_list name="Forge" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
+      <file leaf-file-name="HungerStrike.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/HungerStrike.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="113" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+            <state line="13" column="48" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TileEntityButton.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityButton.java">
+      <file leaf-file-name="ConfigManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ConfigManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="35" selection-start="1736" selection-end="1749" vertical-scroll-proportion="0.0">
+            <state line="7" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -102,69 +118,84 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TileEntityDelayButton.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityDelayButton.java">
+      <file leaf-file-name="CommonProxy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/CommonProxy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="122" column="44" selection-start="2863" selection-end="2863" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mcmod.info" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mcmod.info">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="1" selection-start="247" selection-end="247" vertical-scroll-proportion="0.28549618">
+            <state line="2" column="13" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="ExtraButtons.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java">
+        <entry file="file://$PROJECT_DIR$/../ExtraButtons/src/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="43" selection-start="1903" selection-end="1903" vertical-scroll-proportion="0.0">
+            <state line="60" column="8" selection-start="2467" selection-end="2569" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CapacitiveTouchBlock.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/block/CapacitiveTouchBlock.java">
+      <file leaf-file-name="PlayerHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="80" selection-start="3785" selection-end="3785" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TileEntity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="17" selection-start="2195" selection-end="2195" vertical-scroll-proportion="167.24">
+            <state line="22" column="33" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#492#534#0" expanded="true" />
+                <element signature="e#867#881#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="World.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/World.java">
+      <file leaf-file-name="mcmod.info" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/resources/mcmod.info">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1131" column="29" selection-start="38942" selection-end="38955" vertical-scroll-proportion="-11.6">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IWorldAccess.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/IWorldAccess.java">
+      <file leaf-file-name="CommandHungerStrike.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/command/CommandHungerStrike.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="9" selection-start="547" selection-end="547" vertical-scroll-proportion="0.0">
+            <state line="104" column="99" selection-start="4214" selection-end="4214" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5092#5100#0" expanded="true" />
+                <element signature="e#5397#5405#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientProxy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/client/ClientProxy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="13" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="en_US.lang" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/resources/assets/hungerstrike/lang/en_US.lang">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="64" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtendedPlayer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ExtendedPlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="70" column="25" selection-start="2161" selection-end="2161" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -179,22 +210,20 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/item/ItemToggleButton.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/block/ToggleButton.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/block/DelayButton.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/client/renderer/DelayButtonRenderer.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/block/CapacitiveTouchBlock.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/block/WoodPanelButton.java" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/block/StonePanelButton.java" />
-        <option value="$PROJECT_DIR$/assets/extrabuttons/lang/en_US.lang" />
-        <option value="$PROJECT_DIR$/src/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/ExtraButtons/mcmod.info" />
-        <option value="$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityButton.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityDelayButton.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/pack.mcmeta" />
-        <option value="$PROJECT_DIR$/src/main/resources/mcmod.info" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/TickHandler.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/client/ClientProxy.java" />
+        <option value="$PROJECT_DIR$/../ExtraButtons/src/com/jaquadro/minecraft/extrabuttons/PlayerHandler.java" />
+        <option value="$PROJECT_DIR$/../ExtraButtons/src/PlayerController.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerController.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerEntension.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/CommonProxy.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerExtension.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerHandler.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ExtendedPlayer.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ConfigManager.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/command/CommandHungerStrike.java" />
+        <option value="$PROJECT_DIR$/../HungerStrike/resources/assets/hungerstrike/lang/en_US.lang" />
+        <option value="$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/HungerStrike.java" />
       </list>
     </option>
   </component>
@@ -239,35 +268,32 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="HungerStrike" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="HungerStrike" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -275,7 +301,61 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="hungerstrike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HungerStrike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hungerstrike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="command" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HungerStrike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hungerstrike" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="HungerStrike" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -285,19 +365,11 @@
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="HungerStrike" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -305,29 +377,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extrabuttons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="textures" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blocks" />
+              <option name="myItemId" value="lang" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="ExtraButtons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtraButtons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -335,7 +405,53 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
+              <option name="myItemId" value="extrabuttons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtraButtons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="extrabuttons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtraButtons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Forge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ExtraButtons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -343,59 +459,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="extrabuttons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="Forge" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
+              <option name="myItemId" value="ExtraButtons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extrabuttons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -403,62 +481,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tileentity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="1.7.x" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="extrabuttons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="block" />
+              <option name="myItemId" value="lang" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Java" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
   </component>
-  <component name="RunManager" selected="Application.Minecraft Client">
+  <component name="RunManager" selected="Application.Minecraft Server">
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -519,17 +567,23 @@
     <configuration default="false" name="Minecraft Client" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="net.minecraft.launchwrapper.Launch" />
-      <option name="VM_PARAMETERS" value="-Xincgc -Xmx1024M -Xms1024M -Djava.library.path=&quot;$PROJECT_DIR$/../1.7.x\build\natives&quot; -Dfml.ignoreInvalidMinecraftCertificates=true" />
-      <option name="PROGRAM_PARAMETERS" value="--version 1.7 --tweakClass cpw.mods.fml.common.launcher.FMLTweaker --username=jaquadro --accessToken FML --assetDir=eclipse/assets" />
+      <option name="VM_PARAMETERS" value="-Xincgc -Xmx1024M -Xms1024M -Djava.library.path=&quot;$PROJECT_DIR$/../Forge\build\natives&quot; -Dfml.ignoreInvalidMinecraftCertificates=true" />
+      <option name="PROGRAM_PARAMETERS" value="--version 1.7 --tweakClass cpw.mods.fml.common.launcher.FMLTweaker --username=jaquadro --accessToken FML" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/eclipse" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="1.7.x" />
+      <module name="HungerStrike" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -538,13 +592,13 @@
       <option name="MAIN_CLASS_NAME" value="cpw.mods.fml.relauncher.ServerLaunchWrapper" />
       <option name="VM_PARAMETERS" value="-Xincgc -Dfml.ignoreInvalidMinecraftCertificates=true" />
       <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/../1.7.x\eclipse" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/eclipse" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="1.7.x" />
+      <module name="HungerStrike" />
       <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -560,25 +614,28 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component maxAnnotateRevisions="500" name="SvnConfiguration">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
     <option name="LAST_MERGED_REVISION" />
-    <option name="UPDATE_RUN_STATUS" value="false" />
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
     <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
     <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d5c0a109-3b23-4e27-8bbb-ede23a3117eb" name="Default" comment="" />
-      <created>1393127544607</created>
-      <updated>1393127544607</updated>
+      <changelist id="958780d6-f660-45e4-a911-15186daa5263" name="Default" comment="" />
+      <created>1393388280712</created>
+      <updated>1393388280712</updated>
     </task>
     <servers />
   </component>
@@ -587,25 +644,25 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3996063" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297244" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2497332" sideWeight="0.67027557" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3297244" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13927428" sideWeight="0.67027557" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3297244" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -640,7 +697,7 @@
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
     <option name="LIMIT_HISTORY" value="true" />
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
@@ -673,194 +730,130 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/nbt/NBTTagCompound.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="113" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
+        <state line="107" column="43" selection-start="3088" selection-end="3088" vertical-scroll-proportion="0.3847328">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntityChest.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/entity/EntityLivingBase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="597" selection-end="597" vertical-scroll-proportion="-12.478193">
+        <state line="731" column="19" selection-start="24182" selection-end="24182" vertical-scroll-proportion="0.33333334">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntityComparator.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/cpw/mods/fml/common/event/FMLPreInitializationEvent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="90" selection-end="90" vertical-scroll-proportion="0.10381679">
+        <state line="74" column="16" selection-start="2005" selection-end="2005" vertical-scroll-proportion="0.33282444">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/network/play/server/S35PacketUpdateTileEntity.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/util/FoodStats.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="11" selection-start="710" selection-end="710" vertical-scroll-proportion="-0.045741323">
+        <state line="51" column="44" selection-start="1536" selection-end="1536" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntityCommandBlock.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/entity/player/EntityPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="44" selection-start="2511" selection-end="2536" vertical-scroll-proportion="0.6625954">
+        <state line="2176" column="16" selection-start="71863" selection-end="71863" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/IBlockAccess.java">
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraftforge/common/config/ConfigCategory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="17" selection-start="341" selection-end="341" vertical-scroll-proportion="0.10381679">
+        <state line="78" column="16" selection-start="2073" selection-end="2073" vertical-scroll-proportion="-0.5236641">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/tileentity/TileEntity.java">
+    <entry file="file://$PROJECT_DIR$/../ExtraButtons/src/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="17" selection-start="2195" selection-end="2195" vertical-scroll-proportion="167.24">
+        <state line="60" column="8" selection-start="2467" selection-end="2569" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/resources/assets/hungerstrike/lang/en_US.lang">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="64" selection-start="971" selection-end="971" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/HungerStrike.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="48" selection-start="612" selection-end="612" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ExtendedPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="25" selection-start="2161" selection-end="2161" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/IWorldAccess.java">
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/ConfigManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="9" selection-start="547" selection-end="547" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.2-10.12.0.1024/forgeSrc-1.7.2-10.12.0.1024-sources.jar!/net/minecraft/world/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1131" column="29" selection-start="38942" selection-end="38955" vertical-scroll-proportion="-11.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="35" selection-start="1736" selection-end="1749" vertical-scroll-proportion="0.0">
+        <state line="7" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/tileentity/TileEntityDelayButton.java">
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/CommonProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="122" column="44" selection-start="2863" selection-end="2863" vertical-scroll-proportion="0.0">
+        <state line="2" column="13" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/command/CommandHungerStrike.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="104" column="99" selection-start="4214" selection-end="4214" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#5092#5100#0" expanded="true" />
+            <element signature="e#5397#5405#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/pack.mcmeta">
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/client/ClientProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="5" selection-start="85" selection-end="85" vertical-scroll-proportion="0.10381679">
+        <state line="4" column="13" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/ExtraButtons.java">
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/src/com/jaquadro/minecraft/hungerstrike/PlayerHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="43" selection-start="1903" selection-end="1903" vertical-scroll-proportion="0.0">
+        <state line="22" column="33" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#492#534#0" expanded="true" />
+            <element signature="e#867#881#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../HungerStrike/resources/mcmod.info">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/jaquadro/minecraft/extrabuttons/block/CapacitiveTouchBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="80" selection-start="3785" selection-end="3785" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mcmod.info">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="1" selection-start="247" selection-end="247" vertical-scroll-proportion="0.28549618">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="Copyright.UI" />
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>JDK 1.7 32-bit</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>1.7.x</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI" />
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI" />
-    </states>
   </component>
 </project>
 
