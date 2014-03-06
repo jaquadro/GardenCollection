@@ -60,16 +60,18 @@ public class ModularPots
     private void initializeBlocks () {
         largePot = new LargePot(false)
             .setHardness(0.5f)
+            .setResistance(5f)
             .setStepSound(Block.soundTypeStone)
             .setBlockName("largePot");
 
         largePotColored = new LargePot(true)
             .setHardness(0.5f)
+            .setResistance(5f)
             .setStepSound(Block.soundTypeStone)
             .setBlockName("largePotColored");
 
         largePotPlantProxy = new LargePotPlantProxy()
-            .setHardness(0.5f)
+            .setHardness(0)
             .setLightOpacity(0)
             .setBlockName("largePotPlantProxy");
     }
