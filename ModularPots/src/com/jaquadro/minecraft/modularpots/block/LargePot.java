@@ -158,6 +158,11 @@ public class LargePot extends BlockContainer
     }
 
     @Override
+    public boolean isSideSolid (IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+        return side != ForgeDirection.UP;
+    }
+
+    @Override
     public boolean shouldSideBeRendered (IBlockAccess blockAccess, int x, int y, int z, int side) {
         switch (side) {
             case 0:
