@@ -14,6 +14,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDye;
@@ -90,7 +91,7 @@ public class LargePot extends BlockContainer
         float dim = .0625f;
 
         TileEntityLargePot te = getTileEntity(world, x, y, z);
-        if (te == null || te.getSubstrate() == null)
+        if (te == null || te.getSubstrate() == null || !isSubstrateSolid(te.getSubstrate()))
             setBlockBounds(0, 0, 0, 1, dim, 1);
         else
             setBlockBounds(0, 0, 0, 1, 1 - dim, 1);
@@ -367,7 +368,16 @@ public class LargePot extends BlockContainer
         }
 
         if (tileEntity.getSubstrate() == null && isValidSubstrate(item)) {
-            addSubstrate(tileEntity, itemStack.getItem(), itemStack.getItemDamage());
+            if (item == Items.water_bucket) {
+                addSubstrate(tileEntity, Item.getItemFromBlock(Blocks.water), 0);
+                if (!player.capabilities.isCreativeMode)
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.bucket));
+            }
+            else {
+                addSubstrate(tileEntity, itemStack.getItem(), itemStack.getItemDamage());
+                if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+            }
             world.markBlockForUpdate(x, y, z);
 
             calculateConnectedness(world, x, y, z);
@@ -385,14 +395,19 @@ public class LargePot extends BlockContainer
 
             tileEntity.setItem(itemStack.getItem(), itemStack.getItemDamage());
             tileEntity.markDirty();
+
+            if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
         }
         else
             return false;
 
-        if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
-            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-
         return true;
+    }
+
+    @Override
+    public int getRenderBlockPass () {
+        return 0;
     }
 
     private boolean enoughAirAbove (IBlockAccess world, int x, int y, int z, IPlantable plant) {
@@ -412,6 +427,9 @@ public class LargePot extends BlockContainer
     }
 
     private boolean isValidSubstrate (Item item) {
+        if (item == Items.water_bucket)
+            return true;
+
         Block block = Block.getBlockFromItem(item);
         if (block == null)
             return false;
@@ -420,7 +438,13 @@ public class LargePot extends BlockContainer
             || block == Blocks.sand
             || block == Blocks.gravel
             || block == Blocks.soul_sand
-            || block == Blocks.grass;
+            || block == Blocks.grass
+            || block == Blocks.water;
+    }
+
+    private boolean isSubstrateSolid (Item item) {
+        Block block = Block.getBlockFromItem(item);
+        return block != Blocks.water;
     }
 
     private boolean canSustainPlantActivated (IBlockAccess world, int x, int y, int z, IPlantable plantable) {
@@ -451,6 +475,8 @@ public class LargePot extends BlockContainer
                 return substrate == Blocks.grass || substrate == Blocks.dirt;
             case Beach:
                 return substrate == Blocks.grass || substrate == Blocks.dirt || substrate == Blocks.sand;
+            case Water:
+                return substrate == Blocks.water;
             default:
                 return false;
         }
