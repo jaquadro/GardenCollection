@@ -8,16 +8,19 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+
+import java.util.List;
 
 public class LargePotPlantProxy extends Block
 {
@@ -45,7 +48,38 @@ public class LargePotPlantProxy extends Block
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z) {
-        return null;
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            return null;
+
+        return block.getCollisionBoundingBoxFromPool(world, x, y, z);
+    }
+
+    @Override
+    public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+
+        return block.getSelectedBoundingBoxFromPool(world, x, y, z);
+    }
+
+    @Override
+    public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+        else
+            block.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+    }
+
+    @Override
+    public MovingObjectPosition collisionRayTrace (World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            return super.collisionRayTrace(world, x, y, z, startVec, endVec);
+
+        return block.collisionRayTrace(world, x, y, z, startVec, endVec);
     }
 
     @Override
@@ -68,6 +102,15 @@ public class LargePotPlantProxy extends Block
         world.notifyBlockOfNeighborChange(x, y - 1, z, block);
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            return super.getIcon(world, x, y, z, side);
+
+        return block.getIcon(world, x, y, z, side);
     }
 
     @Override
