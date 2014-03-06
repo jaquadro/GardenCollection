@@ -218,8 +218,7 @@ public class LargePot extends BlockContainer
         if (plant == Blocks.cactus)
             return substrate == Blocks.sand;
 
-        return plantType == EnumPlantType.Crop
-            && (substrate == Blocks.farmland || substrate == Blocks.dirt);
+        return plantType == EnumPlantType.Crop && substrate == Blocks.farmland;
     }
 
     @Override
@@ -330,8 +329,14 @@ public class LargePot extends BlockContainer
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
         TileEntityLargePot te = getTileEntity(world, x, y, z);
         if (te != null && te.getSubstrate() != null) {
-            ItemStack item = new ItemStack(te.getSubstrate(), 1, te.getSubstrateData());
-            dropBlockAsItem(world, x, y, z, item);
+            Block substrate = Block.getBlockFromItem(te.getSubstrate());
+            if (substrate != Blocks.water) {
+                if (substrate == Blocks.farmland)
+                    substrate = Blocks.dirt;
+
+                ItemStack item = new ItemStack(substrate, 1, te.getSubstrateOriginalData());
+                dropBlockAsItem(world, x, y, z, item);
+            }
         }
 
         if (te != null && te.getFlowerPotItem() != null) {
@@ -387,6 +392,17 @@ public class LargePot extends BlockContainer
 
             calculateConnectedness(world, x, y, z);
             notify8Neighbors(world, x, y, z);
+        }
+        else if (tileEntity.getSubstrate() != null && item == Items.water_bucket) {
+            if (Block.getBlockFromItem(tileEntity.getSubstrate()) == Blocks.dirt) {
+                tileEntity.setSubstrate(Item.getItemFromBlock(Blocks.farmland), 1, tileEntity.getSubstrateData());
+                tileEntity.markDirty();
+
+                world.markBlockForUpdate(x, y, z);
+
+                calculateConnectedness(world, x, y, z);
+                notify8Neighbors(world, x, y, z);
+            }
         }
         else if (plantable != null && canSustainPlantActivated(world, x, y, z, plantable)) {
             if (!enoughAirAbove(world, x, y, z, plantable))

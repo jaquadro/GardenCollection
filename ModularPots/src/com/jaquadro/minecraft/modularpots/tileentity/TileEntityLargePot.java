@@ -14,6 +14,7 @@ public class TileEntityLargePot extends TileEntity
     private int flowerPotData;
     private Item substrate;
     private int substrateData;
+    private int substrateOrigData;
     private int connectedNeighbors;
 
     public TileEntityLargePot () { }
@@ -39,6 +40,10 @@ public class TileEntityLargePot extends TileEntity
         return substrateData;
     }
 
+    public int getSubstrateOriginalData () {
+        return substrateOrigData;
+    }
+
     public int getConnectedFlags () {
         return connectedNeighbors;
     }
@@ -50,11 +55,13 @@ public class TileEntityLargePot extends TileEntity
         if (flowerPotItem != null)
             tag.setString("Item", Item.itemRegistry.getNameForObject(flowerPotItem));
         if (flowerPotData != 0)
-            tag.setInteger("ItemD", flowerPotData);
+            tag.setShort("ItemD", (short) flowerPotData);
         if (substrate != null)
             tag.setString("Subs", Item.itemRegistry.getNameForObject(substrate));
         if (substrateData != 0)
-            tag.setInteger("SubsD", substrateData);
+            tag.setShort("SubsD", (short) substrateData);
+        if (substrateOrigData != 0)
+            tag.setShort("SubsO", (short) substrateOrigData);
         if (connectedNeighbors != 0)
             tag.setShort("Conn", (short)connectedNeighbors);
     }
@@ -75,7 +82,7 @@ public class TileEntityLargePot extends TileEntity
             else
                 flowerPotItem = (Item)Item.itemRegistry.getObject(itemString);
 
-            flowerPotData = tag.hasKey("ItemD") ? tag.getInteger("ItemD") : 0;
+            flowerPotData = tag.hasKey("ItemD") ? tag.getShort("ItemD") : 0;
         }
 
         if (tag.hasKey("Subs")) {
@@ -85,7 +92,8 @@ public class TileEntityLargePot extends TileEntity
             else
                 substrate = (Item)Item.itemRegistry.getObject(substrateString);
 
-            substrateData = tag.hasKey("SubsD") ? tag.getInteger("SubsD") : 0;
+            substrateData = tag.hasKey("SubsD") ? tag.getShort("SubsD") : 0;
+            substrateOrigData = tag.hasKey("SubsO") ? tag.getShort("SubsO") : 0;
         }
 
         connectedNeighbors = tag.hasKey("Conn") ? tag.getShort("Conn") : 0;
@@ -117,6 +125,12 @@ public class TileEntityLargePot extends TileEntity
     public void setSubstrate (Item item, int itemData) {
         this.substrate = item;
         this.substrateData = itemData;
+    }
+      
+    public void setSubstrate (Item item, int itemData, int origData) {
+        this.substrate = item;
+        this.substrateData = itemData;
+        this.substrateOrigData = origData;
     }
 
     public void setConnectedFlags (int bitflags) {
