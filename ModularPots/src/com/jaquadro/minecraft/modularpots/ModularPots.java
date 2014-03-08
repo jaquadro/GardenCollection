@@ -1,17 +1,24 @@
 package com.jaquadro.minecraft.modularpots;
 
+import com.jaquadro.minecraft.modularpots.block.FlowerLeaves;
 import com.jaquadro.minecraft.modularpots.block.LargePot;
 import com.jaquadro.minecraft.modularpots.block.LargePotPlantProxy;
+import com.jaquadro.minecraft.modularpots.block.ThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 @Mod(modid = ModularPots.MOD_ID, name = ModularPots.MOD_NAME, version = ModularPots.MOD_VERSION)
 public class ModularPots
@@ -24,6 +31,8 @@ public class ModularPots
     public static Block largePot;
     public static Block largePotColored;
     public static Block largePotPlantProxy;
+    public static Block thinLog;
+    public static Block flowerLeaves;
 
     @Mod.Instance(MOD_ID)
     public static ModularPots instance;
@@ -38,6 +47,8 @@ public class ModularPots
         GameRegistry.registerBlock(largePot, MOD_ID + ":large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, MOD_ID + ":large_pot_colored");
         GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
+        GameRegistry.registerBlock(thinLog, MOD_ID + ":thin_log");
+        GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
 
@@ -50,11 +61,23 @@ public class ModularPots
             GameRegistry.addRecipe(new ItemStack(largePotColored, 3, 15 - i), "x x", "x x", "xxx",
                 'x', stainedClayStack);
         }
+
+        //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
+        //GameRegistry.addShapelessRecipe(new ItemStack(thinLog, 4, 0), axeStack, new ItemStack(Blocks.log, 1, 0));
     }
 
     @Mod.EventHandler
     public void load (FMLInitializationEvent event) {
         proxy.registerRenderers();
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @SubscribeEvent
+    public void applyBonemeal (BonemealEvent event) {
+        if (event.block == largePotPlantProxy) {
+            LargePotPlantProxy proxyBlock = (LargePotPlantProxy) largePotPlantProxy;
+            event.setCanceled(!proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z));
+        }
     }
 
     private void initializeBlocks () {
@@ -74,5 +97,16 @@ public class ModularPots
             .setHardness(0)
             .setLightOpacity(0)
             .setBlockName("largePotPlantProxy");
+
+        thinLog = new ThinLog()
+            .setHardness(1.5f)
+            .setResistance(5f)
+            .setLightOpacity(0)
+            .setStepSound(Block.soundTypeWood)
+            .setBlockName("thinLog");
+
+        flowerLeaves = new FlowerLeaves()
+            .setBlockName("flowerLeaves")
+            .setBlockTextureName("leaves");
     }
 }

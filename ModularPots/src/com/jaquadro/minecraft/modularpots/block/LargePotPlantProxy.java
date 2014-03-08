@@ -3,12 +3,17 @@ package com.jaquadro.minecraft.modularpots.block;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenOakOrnTree;
+import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenOrnamentalTree;
+import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenPineOrnTree;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -18,6 +23,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
@@ -43,7 +49,7 @@ public class LargePotPlantProxy extends Block
 
     @Override
     public int getRenderType () {
-        return ClientProxy.transformPlantRendererID;
+        return ClientProxy.transformPlantRenderID;
     }
 
     @Override
@@ -88,6 +94,45 @@ public class LargePotPlantProxy extends Block
             //dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
             world.setBlockToAir(x, y, z);
         }
+    }
+
+    /*@Override
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
+        ItemStack itemStack = player.inventory.getCurrentItem();
+        if (itemStack == null)
+            return false;
+
+        return false;
+    }*/
+
+    public boolean applyBonemeal (World world, int x, int y, int z) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block != Blocks.sapling)
+            return false;
+
+        TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
+        int blockMeta = te.getFlowerPotData();
+
+        world.setBlock(x, y, z, Blocks.air, 0, 4);
+
+        WorldGenerator generator = null;
+        switch (blockMeta) {
+            case 0:
+            case 2:
+                generator = new WorldGenOakOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                break;
+            case 1:
+                generator = new WorldGenPineOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                break;
+            case 6:
+                generator = new WorldGenOakOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                break;
+        }
+
+        if (generator == null || !generator.generate(world, world.rand, x, y, z))
+            world.setBlock(x, y, z, this, blockMeta, 4);
+
+        return true;
     }
 
     @Override

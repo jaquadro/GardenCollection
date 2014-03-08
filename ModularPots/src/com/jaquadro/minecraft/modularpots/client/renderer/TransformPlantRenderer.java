@@ -8,12 +8,9 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.IPlantable;
 
 public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
 {
@@ -69,7 +66,7 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public int getRenderId () {
-        return ClientProxy.transformPlantRendererID;
+        return ClientProxy.transformPlantRenderID;
     }
 
     private boolean renderCrossedSquares(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z)

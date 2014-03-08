@@ -408,7 +408,10 @@ public class LargePot extends BlockContainer
             if (!enoughAirAbove(world, x, y, z, plantable))
                 return false;
 
+            // TODO: Non-compliant IPlantable, use config
             Block itemBlock = plantable.getPlant(world, x, y, z);
+            if (itemBlock == null && plantable instanceof Block)
+                itemBlock = (Block) plantable;
 
             world.setBlock(x, y + 1, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage(), 3);
             if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
@@ -479,6 +482,10 @@ public class LargePot extends BlockContainer
 
         EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
         Block plant = plantable.getPlant(world, x, y + 1, z);
+
+        // TODO: Non-compliant IPlantable, use config
+        if (plantType == null)
+            plantType = EnumPlantType.Plains;
 
         if (plant == Blocks.cactus)
             return false;
