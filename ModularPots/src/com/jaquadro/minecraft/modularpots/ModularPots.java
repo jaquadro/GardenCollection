@@ -1,10 +1,10 @@
 package com.jaquadro.minecraft.modularpots;
 
-import com.jaquadro.minecraft.modularpots.block.FlowerLeaves;
-import com.jaquadro.minecraft.modularpots.block.LargePot;
-import com.jaquadro.minecraft.modularpots.block.LargePotPlantProxy;
-import com.jaquadro.minecraft.modularpots.block.ThinLog;
+import com.jaquadro.minecraft.modularpots.block.*;
+import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
+import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
+import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -13,6 +13,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -28,10 +29,13 @@ public class ModularPots
     static final String MOD_VERSION = "1.7.2.1";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.modularpots.";
 
+    public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
+
     public static Block largePot;
     public static Block largePotColored;
     public static Block largePotPlantProxy;
     public static Block thinLog;
+    public static Block thinLogFence;
     public static Block flowerLeaves;
 
     @Mod.Instance(MOD_ID)
@@ -47,7 +51,8 @@ public class ModularPots
         GameRegistry.registerBlock(largePot, MOD_ID + ":large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, MOD_ID + ":large_pot_colored");
         GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
-        GameRegistry.registerBlock(thinLog, MOD_ID + ":thin_log");
+        GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
+        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
         GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
@@ -60,6 +65,18 @@ public class ModularPots
             ItemStack stainedClayStack = new ItemStack(Blocks.stained_hardened_clay, 1, i);
             GameRegistry.addRecipe(new ItemStack(largePotColored, 3, 15 - i), "x x", "x x", "xxx",
                 'x', stainedClayStack);
+        }
+
+        for (int i = 0; i < ThinLog.subNames.length; i++) {
+            GameRegistry.addRecipe(new ItemStack(thinLogFence, 2, i), "xyx", " y ",
+                'x', Items.string, 'y', new ItemStack(thinLog, 1, i));
+
+            if (i / 4 == 0)
+                GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
+                    'x', new ItemStack(thinLogFence, 1, i));
+            else if (i / 4 == 1)
+                GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
+                    'x', new ItemStack(thinLogFence, 1, i));
         }
 
         //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
@@ -104,6 +121,13 @@ public class ModularPots
             .setLightOpacity(0)
             .setStepSound(Block.soundTypeWood)
             .setBlockName("thinLog");
+
+        thinLogFence = new ThinLogFence()
+            .setHardness(1.5f)
+            .setResistance(5f)
+            .setLightOpacity(0)
+            .setStepSound(Block.soundTypeWood)
+            .setBlockName("thinLogFence");
 
         flowerLeaves = new FlowerLeaves()
             .setBlockName("flowerLeaves")

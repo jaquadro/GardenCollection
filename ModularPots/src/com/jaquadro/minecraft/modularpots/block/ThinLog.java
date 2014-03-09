@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.block;
 
+import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -7,17 +8,22 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Random;
 
 public class ThinLog extends Block
 {
+    public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
+
     public ThinLog () {
         super(Material.wood);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
+        this.setCreativeTab(ModularPots.tabModularPots);
 
         setBlockBoundsForItemRender();
     }
@@ -48,6 +54,11 @@ public class ThinLog extends Block
     }
 
     @Override
+    public boolean canPlaceTorchOnTop (World world, int x, int y, int z) {
+        return true;
+    }
+
+    @Override
     public int getRenderType () {
         return ClientProxy.thinLogRenderID;
     }
@@ -68,6 +79,12 @@ public class ThinLog extends Block
                 }
             }
         }
+    }
+
+    @Override
+    public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
+        for (int i = 0; i < 6; i++)
+            blockList.add(new ItemStack(item, 1, i));
     }
 
     @SideOnly(Side.CLIENT)

@@ -3,9 +3,7 @@ package com.jaquadro.minecraft.modularpots.block;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
-import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenOakOrnTree;
-import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenOrnamentalTree;
-import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenPineOrnTree;
+import com.jaquadro.minecraft.modularpots.world.gen.feature.*;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -124,7 +122,13 @@ public class LargePotPlantProxy extends Block
             case 1:
                 generator = new WorldGenPineOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
                 break;
-            case 6:
+            case 3:
+                generator = new WorldGenJungleOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                break;
+            case 4:
+                generator = new WorldGenAcaciaOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                break;
+            case 5:
                 generator = new WorldGenOakOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
                 break;
         }

@@ -83,7 +83,7 @@ public class LargePot extends BlockContainer
         super(Material.clay);
 
         this.colored = colored;
-        this.setCreativeTab(CreativeTabs.tabDecorations);
+        this.setCreativeTab(ModularPots.tabModularPots);
     }
 
     @Override

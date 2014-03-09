@@ -21,6 +21,10 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
     protected final static String PATTERN_5X5PLUS = "  X  " + " XXX " + "XXXXX" + " XXX " + "  X  ";
     protected final static String PATTERN_5X5PLUSW = " XXX " + "XXXXX" + "XXXXX" + "XXXXX" + " XXX ";
     protected final static String PATTERN_5X5 = "XXXXX" + "XXXXX" + "XXXXX" + "XXXXX" + "XXXXX";
+    protected final static String PATTERN_5X5UNBAL1 = " XX  " + "XXXX " + "XXXX " + " XXX " + "     ";
+    protected final static String PATTERN_5X5UNBAL2 = "  XX " + " XXXX" + " XXXX" + " XXX " + "     ";
+    protected final static String PATTERN_5X5UNBAL3 = "     " + " XXX " + " XXXX" + " XXXX" + "  XX ";
+    protected final static String PATTERN_5X5UNBAL4 = "     " + " XXX " + "XXXX " + "XXXX " + " XX  ";
 
     public WorldGenOrnamentalTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
         super(blockNotify);
@@ -35,6 +39,8 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
         boolean potted = world.getBlock(x, y - 1, z) instanceof LargePot;
         int height = potted ? 5 : 6;
         int trunkHeight = height - 4;
+
+        prepare(world, rand, x, y, z, trunkHeight);
 
         if (!canGenerate(world, x, y, z, height))
             return false;
@@ -54,6 +60,8 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
         return canGenerateTrunk(world, x, y, z, trunkHeight)
             && canGenerateCanopy(world, x, y, z, trunkHeight);
     }
+
+    protected void prepare (World world, Random rand, int x, int y, int z, int trunkHeight) { }
 
     protected boolean canGenerateTrunk (World world, int x, int y, int z, int trunkHeight) {
         for (int iy = y; iy < y + trunkHeight; iy++) {
