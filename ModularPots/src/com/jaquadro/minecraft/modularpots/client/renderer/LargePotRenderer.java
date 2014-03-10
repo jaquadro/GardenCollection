@@ -69,18 +69,23 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         // Top Lip
         tessellator.startDrawingQuads();
         tessellator.setNormal(0, 1, 0);
-        for (int i = 1; i <= 4; i++) {
-            block.setRenderStep(i);
-            renderer.setRenderBoundsFromBlock(block);
-            renderer.renderFaceYPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
-        }
+
+        float dim = .0625f;
+        renderer.setRenderBounds(0, 0, 0, 1, 1, dim);
+        renderer.renderFaceYPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+        renderer.setRenderBounds(0, 0, 1 - dim, 1, 1, 1);
+        renderer.renderFaceYPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+        renderer.setRenderBounds(0, 0, 0, dim, 1, 1);
+        renderer.renderFaceYPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+        renderer.setRenderBounds(1 - dim, 0, 0, 1, 1, 1);
+        renderer.renderFaceYPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+
         tessellator.draw();
 
         block.setBlockBoundsForItemRender();
         renderer.setRenderBoundsFromBlock(block);
 
         // Interior Sides
-        float dim = .0625f;
         tessellator.startDrawingQuads();
         tessellator.setNormal(0, 0, -1);
         renderer.renderFaceZNeg(block, 0, 0, 1 - dim, renderer.getBlockIconFromSideAndMetadata(block, 2, metadata));
@@ -101,7 +106,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         // Interior Bottom
         tessellator.startDrawingQuads();
         tessellator.setNormal(0, 1, 0);
-        renderer.renderFaceYPos(block, 0, dim - 1, 0 - dim, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
+        renderer.renderFaceYPos(block, 0, dim - 1, 0, renderer.getBlockIconFromSideAndMetadata(block, 1, metadata));
         tessellator.draw();
 
         GL11.glTranslatef(.5f, .5f, .5f);

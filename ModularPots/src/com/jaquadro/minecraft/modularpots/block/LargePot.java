@@ -117,25 +117,6 @@ public class LargePot extends BlockContainer
         setBlockBoundsForItemRender();
     }
 
-    public void setRenderStep (int step) {
-        float dim = .0625f;
-
-        switch (step) {
-            case 1:
-                setBlockBounds(0, 0, 0, dim, 1, 1);
-                break;
-            case 2:
-                setBlockBounds(1 - dim, 0, 0, 1, 1, 1);
-                break;
-            case 3:
-                setBlockBounds(0, 0, 0, 1, 1, dim);
-                break;
-            case 4:
-                setBlockBounds(0, 0, 1 - dim, 1, 1, 1);
-                break;
-        }
-    }
-
     @Override
     public void setBlockBoundsForItemRender () {
         setBlockBounds(0, 0, 0, 1, 1, 1);
