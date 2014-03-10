@@ -15,7 +15,6 @@ public class TileEntityLargePot extends TileEntity
     private Item substrate;
     private int substrateData;
     private int substrateOrigData;
-    private int connectedNeighbors;
 
     public TileEntityLargePot () { }
 
@@ -44,10 +43,6 @@ public class TileEntityLargePot extends TileEntity
         return substrateOrigData;
     }
 
-    public int getConnectedFlags () {
-        return connectedNeighbors;
-    }
-
     @Override
     public void writeToNBT (NBTTagCompound tag) {
         super.writeToNBT(tag);
@@ -62,8 +57,6 @@ public class TileEntityLargePot extends TileEntity
             tag.setShort("SubsD", (short) substrateData);
         if (substrateOrigData != 0)
             tag.setShort("SubsO", (short) substrateOrigData);
-        if (connectedNeighbors != 0)
-            tag.setShort("Conn", (short)connectedNeighbors);
     }
 
     @Override
@@ -95,8 +88,6 @@ public class TileEntityLargePot extends TileEntity
             substrateData = tag.hasKey("SubsD") ? tag.getShort("SubsD") : 0;
             substrateOrigData = tag.hasKey("SubsO") ? tag.getShort("SubsO") : 0;
         }
-
-        connectedNeighbors = tag.hasKey("Conn") ? tag.getShort("Conn") : 0;
     }
 
     @Override
@@ -131,9 +122,5 @@ public class TileEntityLargePot extends TileEntity
         this.substrate = item;
         this.substrateData = itemData;
         this.substrateOrigData = origData;
-    }
-
-    public void setConnectedFlags (int bitflags) {
-        connectedNeighbors = bitflags;
     }
 }

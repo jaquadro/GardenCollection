@@ -124,9 +124,6 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, data);
 
-        TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
-        int connected = (tileEntity != null) ? tileEntity.getConnectedFlags() : 0;
-
         calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
         scaleColor(activeRimColor, baseColor, .8f);
         scaleColor(activeInWallColor, baseColor, .7f);
@@ -135,35 +132,40 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         setTessellatorColor(tessellator, activeRimColor);
 
         float unit = 0.0625f;
-        if (!Direction.isSet(connected, Direction.North)) {
-            block.setRenderStep(3);
-            renderer.setRenderBoundsFromBlock(block);
+        boolean connectZNeg = block.isCompatibleNeighbor(world, x, y, z, 0, -1);
+        boolean connectZPos = block.isCompatibleNeighbor(world, x, y, z, 0, 1);
+        boolean connectXNeg = block.isCompatibleNeighbor(world, x, y, z, -1, 0);
+        boolean connectXPos = block.isCompatibleNeighbor(world, x, y, z, 1, 0);
+        boolean connectZNegXNeg = block.isCompatibleNeighbor(world, x, y, z, -1, -1);
+        boolean connectZNegXPos = block.isCompatibleNeighbor(world, x, y, z, 1, -1);
+        boolean connectZPosXNeg = block.isCompatibleNeighbor(world, x, y, z, -1, 1);
+        boolean connectZPosXPos = block.isCompatibleNeighbor(world, x, y, z, 1, 1);
+
+        if (!connectZNeg) {
+            renderer.setRenderBounds(0, 0, 0, 1, 1, unit);
             renderer.renderFaceYPos(block, x, y, z, icon);
         }
-        if (!Direction.isSet(connected, Direction.South)) {
-            block.setRenderStep(4);
-            renderer.setRenderBoundsFromBlock(block);
+        if (!connectZPos) {
+            renderer.setRenderBounds(0, 0, 1 - unit, 1, 1, 1);
             renderer.renderFaceYPos(block, x, y, z, icon);
         }
-        if (!Direction.isSet(connected, Direction.West)) {
-            block.setRenderStep(1);
-            renderer.setRenderBoundsFromBlock(block);
+        if (!connectXNeg) {
+            renderer.setRenderBounds(0, 0, 0, unit, 1, 1);
             renderer.renderFaceYPos(block, x, y, z, icon);
         }
-        if (!Direction.isSet(connected, Direction.East)) {
-            block.setRenderStep(2);
-            renderer.setRenderBoundsFromBlock(block);
+        if (!connectXPos) {
+            renderer.setRenderBounds(1 - unit, 0, 0, 1, 1, 1);
             renderer.renderFaceYPos(block, x, y, z, icon);
         }
 
         // Render interior corners
-        if (Direction.isSet(connected, North) && Direction.isSet(connected, East) && !Direction.isSet(connected, NorthEast))
+        if (connectZNeg && connectXPos && !connectZNegXPos)
             renderCorner(block, renderer, NorthEast, x, y, z, icon);
-        if (Direction.isSet(connected, North) && Direction.isSet(connected, West) && !Direction.isSet(connected, NorthWest))
+        if (connectZNeg && connectXNeg && !connectZNegXNeg)
             renderCorner(block, renderer, NorthWest, x, y, z, icon);
-        if (Direction.isSet(connected, South) && Direction.isSet(connected, East) && !Direction.isSet(connected, SouthEast))
+        if (connectZPos && connectXPos && !connectZPosXPos)
             renderCorner(block, renderer, SouthEast, x, y, z, icon);
-        if (Direction.isSet(connected, South) && Direction.isSet(connected, West) && !Direction.isSet(connected, SouthWest))
+        if (connectZPos && connectXNeg && !connectZPosXNeg)
             renderCorner(block, renderer, SouthWest, x, y, z, icon);
 
         block.setBlockBoundsForItemRender();
@@ -171,14 +173,16 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
 
         setTessellatorColor(tessellator, activeInWallColor);
 
-        if (!Direction.isSet(connected, Direction.West))
+        if (!connectXNeg)
             renderer.renderFaceXPos(block, x - 1 + unit, y, z, icon);
-        if (!Direction.isSet(connected, Direction.East))
+        if (!connectXPos)
             renderer.renderFaceXNeg(block, x + 1 - unit, y, z, icon);
-        if (!Direction.isSet(connected, Direction.North))
+        if (!connectZNeg)
             renderer.renderFaceZPos(block, x, y, z - 1 + unit, icon);
-        if (!Direction.isSet(connected, Direction.South))
+        if (!connectZPos)
             renderer.renderFaceZNeg(block, x, y, z + 1 - unit, icon);
+
+        TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
 
         if (tileEntity != null && tileEntity.getSubstrate() instanceof ItemBlock) {
             Block substrate = Block.getBlockFromItem(tileEntity.getSubstrate());

@@ -97,20 +97,19 @@ public class LargePot extends BlockContainer
             setBlockBounds(0, 0, 0, 1, 1 - dim, 1);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
 
-        int connected = (te != null) ? te.getConnectedFlags() : 0;
-        if (!Direction.isSet(connected, West)) {
+        if (!isCompatibleNeighbor(world, x, y, z, -1, 0)) {
             setBlockBounds(0, 0, 0, dim, 1, 1);
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
         }
-        if (!Direction.isSet(connected, North)) {
+        if (!isCompatibleNeighbor(world, x, y, z, 0, -1)) {
             setBlockBounds(0, 0, 0, 1, 1, dim);
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
         }
-        if (!Direction.isSet(connected, East)) {
+        if (!isCompatibleNeighbor(world, x, y, z, 1, 0)) {
             setBlockBounds(1 - dim, 0, 0, 1, 1, 1);
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
         }
-        if (!Direction.isSet(connected, South)) {
+        if (!isCompatibleNeighbor(world, x, y, z, 0, 1)) {
             setBlockBounds(0, 0, 1 - dim, 1, 1, 1);
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
         }
@@ -164,6 +163,9 @@ public class LargePot extends BlockContainer
 
     @Override
     public boolean shouldSideBeRendered (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        int nx = x;
+        int nz = z;
+
         switch (side) {
             case 0:
                 y++;
@@ -185,23 +187,9 @@ public class LargePot extends BlockContainer
                 break;
         }
 
-        if (side >= 2 && side < 6) {
-            TileEntityLargePot te = getTileEntity(blockAccess, x, y, z);
-            if (te != null) {
-                int flags = te.getConnectedFlags();
-                switch (side) {
-                    case 2:
-                        return !Direction.isSet(flags, North);
-                    case 3:
-                        return !Direction.isSet(flags, Direction.South);
-                    case 4:
-                        return !Direction.isSet(flags, Direction.West);
-                    case 5:
-                        return !Direction.isSet(flags, Direction.East);
-                }
-            }
-            return true;
-        }
+        if (side >= 2 && side < 6)
+            return !isCompatibleNeighbor(blockAccess, x, y, z, nx - x, nz - z);
+
         return side != 1;
     }
 
@@ -227,18 +215,9 @@ public class LargePot extends BlockContainer
     }
 
     @Override
-    public void onPostBlockPlaced (World world, int x, int y, int z, int meta) {
-        calculateConnectedness(world, x, y, z);
-        notify8Neighbors(world, x, y, z);
-    }
-
-    @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, Block block) {
         if (world.isRemote)
             return;
-
-        //if (block == this)
-        //    calculateConnectedness(world, x, y, z);
 
         if (y >= world.getHeight() - 1)
             return;
@@ -253,38 +232,7 @@ public class LargePot extends BlockContainer
         }
     }
 
-    private void calculateConnectedness (World world, int x, int y, int z) {
-        calculateConnectedness(world, x, y, z, getTileEntity(world, x, y, z), 0);
-    }
-
-    private void calculateConnectedness (World world, int x, int y, int z, int invalid) {
-        calculateConnectedness(world, x, y, z, getTileEntity(world, x, y, z), invalid);
-    }
-
-    private void calculateConnectedness (World world, int x, int y, int z, TileEntityLargePot te, int invalid) {
-        if (te == null)
-            return;
-
-        int flags = te.getConnectedFlags();
-        flags = Direction.setOrClear(flags, North, isCompatibleNeighbor(world, x, y, z, 0, -1));
-        flags = Direction.setOrClear(flags, Direction.East, isCompatibleNeighbor(world, x, y, z, 1, 0));
-        flags = Direction.setOrClear(flags, Direction.South, isCompatibleNeighbor(world, x, y, z, 0, 1));
-        flags = Direction.setOrClear(flags, Direction.West, isCompatibleNeighbor(world, x, y, z, -1, 0));
-        flags = Direction.setOrClear(flags, Direction.NorthWest, isCompatibleNeighbor(world, x, y, z, -1, -1));
-        flags = Direction.setOrClear(flags, Direction.NorthEast, isCompatibleNeighbor(world, x, y, z, 1, -1));
-        flags = Direction.setOrClear(flags, Direction.SouthEast, isCompatibleNeighbor(world, x, y, z, 1, 1));
-        flags = Direction.setOrClear(flags, Direction.SouthWest, isCompatibleNeighbor(world, x, y, z, -1, 1));
-
-        flags &= ~invalid;
-
-        if (flags != te.getConnectedFlags()) {
-            te.setConnectedFlags(flags);
-            te.markDirty();
-            world.markBlockForUpdate(x, y, z);
-        }
-    }
-
-    private boolean isCompatibleNeighbor (World world, int x, int y, int z, int dx, int dz) {
+    public boolean isCompatibleNeighbor (IBlockAccess world, int x, int y, int z, int dx, int dz) {
         Block block = world.getBlock(x + dx, y, z + dz);
         if (block != this)
             return false;
@@ -301,28 +249,6 @@ public class LargePot extends BlockContainer
             return false;
 
         return true;
-    }
-
-    private void notify8Neighbors (World world, int x, int y, int z) {
-        calculateConnectedness(world, x - 1, y, z);
-        calculateConnectedness(world, x + 1, y, z);
-        calculateConnectedness(world, x, y, z - 1);
-        calculateConnectedness(world, x, y, z + 1);
-        calculateConnectedness(world, x - 1, y, z - 1);
-        calculateConnectedness(world, x - 1, y, z + 1);
-        calculateConnectedness(world, x + 1, y, z - 1);
-        calculateConnectedness(world, x + 1, y, z + 1);
-    }
-
-    private void notify8NeighborsRemoval (World world, int x, int y, int z) {
-        calculateConnectedness(world, x - 1, y, z, East.getFlag());
-        calculateConnectedness(world, x + 1, y, z, West.getFlag());
-        calculateConnectedness(world, x, y, z - 1, South.getFlag());
-        calculateConnectedness(world, x, y, z + 1, North.getFlag());
-        calculateConnectedness(world, x - 1, y, z - 1, SouthEast.getFlag());
-        calculateConnectedness(world, x - 1, y, z + 1, NorthEast.getFlag());
-        calculateConnectedness(world, x + 1, y, z - 1, SouthWest.getFlag());
-        calculateConnectedness(world, x + 1, y, z + 1, NorthWest.getFlag());
     }
 
     @Override
@@ -345,11 +271,6 @@ public class LargePot extends BlockContainer
         }
 
         super.breakBlock(world, x, y, z, block, data);
-    }
-
-    @Override
-    public void onBlockPreDestroy (World world, int x, int y, int z, int data) {
-        notify8NeighborsRemoval(world, x, y, z);
     }
 
     @Override
@@ -389,9 +310,6 @@ public class LargePot extends BlockContainer
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
             }
             world.markBlockForUpdate(x, y, z);
-
-            calculateConnectedness(world, x, y, z);
-            notify8Neighbors(world, x, y, z);
         }
         else if (tileEntity.getSubstrate() != null && item == Items.water_bucket) {
             if (Block.getBlockFromItem(tileEntity.getSubstrate()) == Blocks.dirt) {
@@ -399,9 +317,6 @@ public class LargePot extends BlockContainer
                 tileEntity.markDirty();
 
                 world.markBlockForUpdate(x, y, z);
-
-                calculateConnectedness(world, x, y, z);
-                notify8Neighbors(world, x, y, z);
             }
         }
         else if (plantable != null && canSustainPlantActivated(world, x, y, z, plantable)) {
