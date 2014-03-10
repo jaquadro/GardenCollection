@@ -147,11 +147,11 @@ public class ThinLog extends Block
         boolean hardXNeg = isNeighborHardConnection(blockXNeg) || blockXNeg instanceof BlockTorch;
         boolean hardXPos = isNeighborHardConnection(blockXPos) || blockXPos instanceof BlockTorch;
 
-        boolean hardConnection = (flagsY & 12) != 0;
-        boolean hardConnectionZNeg = hardConnection && (flagsZNeg & 12) != 0;
-        boolean hardConnectionZPos = hardConnection && (flagsZPos & 12) != 0;
-        boolean hardConnectionXNeg = hardConnection && (flagsXNeg & 12) != 0;
-        boolean hardConnectionXPos = hardConnection && (flagsXPos & 12) != 0;
+        boolean hardConnection = (flagsY & 4) != 0;
+        boolean hardConnectionZNeg = hardConnection && (flagsZNeg & 4) != 0;
+        boolean hardConnectionZPos = hardConnection && (flagsZPos & 4) != 0;
+        boolean hardConnectionXNeg = hardConnection && (flagsXNeg & 4) != 0;
+        boolean hardConnectionXPos = hardConnection && (flagsXPos & 4) != 0;
 
         boolean connectZNeg = (connectFlagsY == 0 && hardZNeg)
             || (blockZNeg == this && !hardConnectionZNeg && (connectFlagsY != 3 || connectFlagsZNeg != 3));
