@@ -67,35 +67,58 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler
         boolean connectXNeg = (connectFlags & 16) != 0;
         boolean connectXPos = (connectFlags & 32) != 0;
 
-        if (connectYNeg || connectYPos) {
+        boolean connectY = connectYNeg | connectYPos;
+        boolean connectZ = connectZNeg | connectZPos;
+        boolean connectX = connectXNeg | connectXPos;
+
+        if (!(connectYNeg && connectYPos) && !(connectZNeg && connectZPos) && !(connectXNeg && connectXPos)) {
+            if (connectY && !connectX && !connectZ)
+                block.setOrientation(0);
+            else if (connectZ && !connectY && !connectX)
+                block.setOrientation(1);
+            else if (connectX && !connectY && !connectZ)
+                block.setOrientation(2);
+            else
+                block.setOrientation(3);
+
+            renderer.setRenderBounds(margin, margin, margin, 1 - margin, 1 - margin, 1 - margin);
+            renderer.renderStandardBlock(block, x, y, z);
+        }
+
+        if (connectY) {
+            block.setOrientation(0);
             if (connectYNeg && connectYPos)
                 renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1, 1 - margin);
             else if (connectYNeg)
-                renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1 - margin, 1 - margin);
+                renderer.setRenderBounds(margin, 0, margin, 1 - margin, margin, 1 - margin);
             else if (connectYPos)
-                renderer.setRenderBounds(margin, margin, margin, 1 - margin, 1, 1 - margin);
+                renderer.setRenderBounds(margin, 1 - margin, margin, 1 - margin, 1, 1 - margin);
             renderer.renderStandardBlock(block, x, y, z);
         }
 
-        if (connectZNeg || connectZPos) {
+        if (connectZ) {
+            block.setOrientation(1);
             if (connectZNeg && connectZPos)
                 renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 1);
             else if (connectZNeg)
-                renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, 1 - margin);
+                renderer.setRenderBounds(margin, margin, 0, 1 - margin, 1 - margin, margin);
             else if (connectZPos)
-                renderer.setRenderBounds(margin, margin, margin, 1 - margin, 1 - margin, 1);
+                renderer.setRenderBounds(margin, margin, 1 - margin, 1 - margin, 1 - margin, 1);
             renderer.renderStandardBlock(block, x, y, z);
         }
 
-        if (connectXNeg || connectXPos) {
+        if (connectX) {
+            block.setOrientation(2);
             if (connectXNeg && connectXPos)
                 renderer.setRenderBounds(0, margin, margin, 1, 1 - margin, 1 - margin);
             else if (connectXNeg)
-                renderer.setRenderBounds(0, margin, margin, 1 - margin, 1 - margin, 1 - margin);
+                renderer.setRenderBounds(0, margin, margin, margin, 1 - margin, 1 - margin);
             else if (connectXPos)
-                renderer.setRenderBounds(margin, margin, margin, 1, 1 - margin, 1 - margin);
+                renderer.setRenderBounds(1 - margin, margin, margin, 1, 1 - margin, 1 - margin);
             renderer.renderStandardBlock(block, x, y, z);
         }
+
+        block.setOrientation(0);
 
         //renderer.renderStandardBlock(block, x, y, z);
 

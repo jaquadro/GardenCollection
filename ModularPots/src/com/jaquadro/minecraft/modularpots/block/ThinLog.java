@@ -25,6 +25,10 @@ public class ThinLog extends Block
 {
     public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
+    // Scratch state variable for rendering purposes
+    // 0 = Y, 1 = Z, 2 = X, 3 = BARK
+    private int orientation;
+
     public ThinLog () {
         super(Material.wood);
         this.setCreativeTab(ModularPots.tabModularPots);
@@ -34,6 +38,10 @@ public class ThinLog extends Block
 
     public float getMargin () {
         return 0.25f;
+    }
+
+    public void setOrientation (int orientation) {
+        this.orientation = orientation;
     }
 
     @Override
@@ -202,7 +210,15 @@ public class ThinLog extends Block
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (int side, int meta) {
-        return getIconSource(meta).getIcon(side, meta % 4);
+        int superMeta = meta % 4;
+        if (orientation == 1)
+            superMeta |= 8;
+        else if (orientation == 2)
+            superMeta |= 4;
+        else if (orientation == 3)
+            superMeta |= 12;
+
+        return getIconSource(meta).getIcon(side, superMeta);
     }
 
     private Block getIconSource (int meta) {
