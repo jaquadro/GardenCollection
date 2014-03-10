@@ -73,10 +73,10 @@ public class ModularPots
 
             if (i / 4 == 0)
                 GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
-                    'x', new ItemStack(thinLogFence, 1, i));
+                    'x', new ItemStack(thinLog, 1, i));
             else if (i / 4 == 1)
                 GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
-                    'x', new ItemStack(thinLogFence, 1, i));
+                    'x', new ItemStack(thinLog, 1, i));
         }
 
         //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
