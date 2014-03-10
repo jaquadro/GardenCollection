@@ -53,7 +53,7 @@ public class ModularPots
         GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
-        GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
+        //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
 
