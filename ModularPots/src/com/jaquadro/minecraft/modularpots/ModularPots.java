@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
+import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -16,6 +17,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -38,6 +40,8 @@ public class ModularPots
     public static Block thinLogFence;
     public static Block flowerLeaves;
 
+    public static Item soilTestKitUsed;
+
     @Mod.Instance(MOD_ID)
     public static ModularPots instance;
 
@@ -54,6 +58,8 @@ public class ModularPots
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
+
+        GameRegistry.registerItem(soilTestKitUsed, MOD_ID + ":soil_test_kit_used");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
 
@@ -132,5 +138,9 @@ public class ModularPots
         flowerLeaves = new FlowerLeaves()
             .setBlockName("flowerLeaves")
             .setBlockTextureName("leaves");
+
+        soilTestKitUsed = new ItemUsedSoilKit()
+            .setTextureName("soil_test_kit")
+            .setUnlocalizedName("soilTestKitUsed");
     }
 }

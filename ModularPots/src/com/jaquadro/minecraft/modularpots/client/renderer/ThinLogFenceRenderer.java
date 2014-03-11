@@ -10,9 +10,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
-/**
- * Created by Justin on 3/8/14.
- */
 public class ThinLogFenceRenderer implements ISimpleBlockRenderingHandler
 {
     @Override
