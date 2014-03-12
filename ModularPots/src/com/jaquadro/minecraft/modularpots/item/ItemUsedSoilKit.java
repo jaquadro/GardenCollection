@@ -10,10 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ItemUsedSoilKit extends Item
@@ -75,9 +78,34 @@ public class ItemUsedSoilKit extends Item
         return true;
     }
 
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
+        float temperature = (itemStack.getItemDamage() & 255) / 255f;
+        float humidity = ((itemStack.getItemDamage() >> 8) & 255) / 255f;
+
+        EnumChatFormatting tempColor = EnumChatFormatting.BLUE;
+        if (temperature >= .3)
+            tempColor = EnumChatFormatting.DARK_GREEN;
+        if (temperature >= 1)
+            tempColor = EnumChatFormatting.DARK_RED;
+
+        EnumChatFormatting humidColor = EnumChatFormatting.DARK_RED;
+        if (humidity >= .3)
+            humidColor = EnumChatFormatting.GOLD;
+        if (humidity >= .6)
+            humidColor = EnumChatFormatting.DARK_GREEN;
+
+        String temperatureStr = StatCollector.translateToLocal("soilkit.temperature") + ": " + tempColor + String.format("%.2f", temperature) ;
+        String humidityStr = StatCollector.translateToLocal("soilkit.humidity") + ": " + humidColor + String.format("%.2f", humidity);
+
+        list.add(temperatureStr);
+        list.add(humidityStr);
+    }
+
     @Override
     public void getSubItems (Item item, CreativeTabs creativeTabs, List list) {
-        super.getSubItems(item, creativeTabs, list);
+        //super.getSubItems(item, creativeTabs, list);
 
         list.add(new ItemStack(item, 1, PackTempHumidity(0, 0)));
         list.add(new ItemStack(item, 1, PackTempHumidity(.5f, 0)));

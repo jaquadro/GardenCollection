@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -300,6 +301,9 @@ public class LargePot extends BlockContainer
                 world.markBlockForUpdate(x, y, z);
             }
         }
+        else if (tileEntity.getSubstrate() != null && item == ModularPots.soilTestKitUsed) {
+            applyTestKit(world, x, y, z, itemStack);
+        }
         else if (plantable != null && canSustainPlantActivated(world, x, y, z, plantable)) {
             if (!enoughAirAbove(world, x, y, z, plantable))
                 return false;
@@ -321,6 +325,31 @@ public class LargePot extends BlockContainer
         }
         else
             return false;
+
+        return true;
+    }
+
+    public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
+        if (testKit.getItem() != ModularPots.soilTestKitUsed)
+            return false;
+
+        TileEntityLargePot tileEntity = getTileEntity(world, x, y, z);
+        if (tileEntity == null)
+            return false;
+
+        Block substrate = Block.getBlockFromItem(tileEntity.getSubstrate());
+        if (substrate != Blocks.dirt && substrate != Blocks.grass && substrate != Blocks.farmland)
+            return false;
+
+        tileEntity.setBiomeData(testKit.getItemDamage());
+        world.markBlockForUpdate(x, y, z);
+
+        for (int i = 0; i < 5; i++) {
+            double d0 = world.rand.nextGaussian() * 0.02D;
+            double d1 = world.rand.nextGaussian() * 0.02D;
+            double d2 = world.rand.nextGaussian() * 0.02D;
+            world.spawnParticle("happyVillager", x + world.rand.nextFloat(), y + .5f + world.rand.nextFloat(), z + world.rand.nextFloat(), d0, d1, d2);
+        }
 
         return true;
     }

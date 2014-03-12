@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.*;
 import cpw.mods.fml.relauncher.Side;
@@ -94,14 +95,27 @@ public class LargePotPlantProxy extends Block
         }
     }
 
-    /*@Override
+    @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
         ItemStack itemStack = player.inventory.getCurrentItem();
         if (itemStack == null)
             return false;
 
+        if (itemStack.getItem() == ModularPots.soilTestKitUsed)
+            return applyTestKit(world, x, y, z, itemStack);
+
         return false;
-    }*/
+    }
+
+    public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
+        LargePot block = getAttachedPot(world, x, y, z);
+        if (block == null)
+            return false;
+
+        y = getAttachedPotYIndex(world, x, y, z);
+
+        return block.applyTestKit(world, x, y, z, testKit);
+    }
 
     public boolean applyBonemeal (World world, int x, int y, int z) {
         Block block = getItemBlock(world, x, y, z);
@@ -183,6 +197,17 @@ public class LargePotPlantProxy extends Block
         return underBlock instanceof LargePot;
     }
 
+    private int getAttachedPotYIndex (IBlockAccess world, int x, int y, int z) {
+        if (y == 0)
+            return 0;
+
+        Block underBlock = world.getBlock(x, --y, z);
+        while (y > 0 && underBlock instanceof LargePotPlantProxy)
+            underBlock = world.getBlock(x, --y, z);
+
+        return y;
+    }
+
     private LargePot getAttachedPot (IBlockAccess world, int x, int y, int z) {
         if (y == 0)
             return null;
@@ -197,7 +222,7 @@ public class LargePotPlantProxy extends Block
         return (LargePot) underBlock;
     }
 
-    private TileEntityLargePot getAttachedPotEntity (IBlockAccess world, int x, int y, int z) {
+    public TileEntityLargePot getAttachedPotEntity (IBlockAccess world, int x, int y, int z) {
         if (y == 0)
             return null;
 

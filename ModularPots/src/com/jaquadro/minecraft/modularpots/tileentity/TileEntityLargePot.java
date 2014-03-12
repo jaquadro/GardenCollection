@@ -10,11 +10,16 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityLargePot extends TileEntity
 {
+    private static final int DEFAULT_BIOME_DATA = 65407;
+
     private Item flowerPotItem;
     private int flowerPotData;
     private Item substrate;
     private int substrateData;
     private int substrateOrigData;
+
+    private boolean hasBiomeOverride;
+    private int biomeData = DEFAULT_BIOME_DATA;
 
     public TileEntityLargePot () { }
 
@@ -43,6 +48,22 @@ public class TileEntityLargePot extends TileEntity
         return substrateOrigData;
     }
 
+    public boolean hasBiomeDataOverride () {
+        return hasBiomeOverride;
+    }
+
+    public int getBiomeData () {
+        return biomeData;
+    }
+
+    public float getBiomeTemperature () {
+        return (biomeData & 255) / 255f;
+    }
+
+    public float getBiomeHumidity () {
+        return ((biomeData >> 8) & 255) / 255f;
+    }
+
     @Override
     public void writeToNBT (NBTTagCompound tag) {
         super.writeToNBT(tag);
@@ -57,6 +78,8 @@ public class TileEntityLargePot extends TileEntity
             tag.setShort("SubsD", (short) substrateData);
         if (substrateOrigData != 0)
             tag.setShort("SubsO", (short) substrateOrigData);
+        if (hasBiomeOverride || biomeData != DEFAULT_BIOME_DATA)
+            tag.setInteger("Biom", biomeData);
     }
 
     @Override
@@ -88,6 +111,9 @@ public class TileEntityLargePot extends TileEntity
             substrateData = tag.hasKey("SubsD") ? tag.getShort("SubsD") : 0;
             substrateOrigData = tag.hasKey("SubsO") ? tag.getShort("SubsO") : 0;
         }
+
+        hasBiomeOverride = tag.hasKey("Biom");
+        biomeData = tag.hasKey("Biom") ? tag.getInteger("Biom") : DEFAULT_BIOME_DATA;
     }
 
     @Override
@@ -122,5 +148,10 @@ public class TileEntityLargePot extends TileEntity
         this.substrate = item;
         this.substrateData = itemData;
         this.substrateOrigData = origData;
+    }
+
+    public void setBiomeData (int data) {
+        this.biomeData = data;
+        this.hasBiomeOverride = true;
     }
 }

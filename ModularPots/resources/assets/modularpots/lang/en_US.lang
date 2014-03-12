@@ -1,4 +1,9 @@
+item.soilTestKitUsed.name=Used Soil Test Kit
+
 itemGroup.modularPots=Modular Flower Pots
+
+soilkit.humidity=Humidity
+soilkit.temperature=Temperature
 
 tile.largePot.name=Large Flower Pot
 tile.largePotColored.black.name=Black Large Flower Pot

@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.client.renderer;
 
 import com.jaquadro.minecraft.modularpots.block.LargePotPlantProxy;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -47,10 +48,14 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
             tessellator.setColorOpaque_F(r, g, b);
         }
 
+        TileEntityLargePot potData = block.getAttachedPotEntity(world, x, y, z);
+        if (potData == null)
+            potData = new TileEntityLargePot();
+
         if (itemRenderType == 1)
-            renderCrossedSquares(world, renderer, itemBlock, x, y, z);
+            renderCrossedSquares(world, renderer, itemBlock, x, y, z, potData);
         else if (itemRenderType == 40 && itemBlock instanceof BlockDoublePlant)
-            renderBlockDoublePlant(world, renderer, (BlockDoublePlant) itemBlock, x, y, z);
+            renderBlockDoublePlant(world, renderer, (BlockDoublePlant) itemBlock, x, y, z, potData);
         else
             renderer.renderBlockByRenderType(itemBlock, x, y, z);
 
@@ -69,13 +74,13 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
         return ClientProxy.transformPlantRenderID;
     }
 
-    private boolean renderCrossedSquares(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z)
+    private boolean renderCrossedSquares(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, TileEntityLargePot potData)
     {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
         int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         if (l == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))
-            l = ColorizerGrass.getGrassColor(0.5, 1);
+            l = ColorizerGrass.getGrassColor(potData.getBiomeTemperature(), potData.getBiomeHumidity());
 
         float f = (float)(l >> 16 & 255) / 255.0F;
         float f1 = (float)(l >> 8 & 255) / 255.0F;
@@ -102,13 +107,13 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 
-    private boolean renderBlockDoublePlant(IBlockAccess world, RenderBlocks renderer, BlockDoublePlant block, int x, int y, int z)
+    private boolean renderBlockDoublePlant(IBlockAccess world, RenderBlocks renderer, BlockDoublePlant block, int x, int y, int z, TileEntityLargePot potData)
     {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
         int l = block.colorMultiplier(renderer.blockAccess, x, y, z);
         if (l == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))
-            l = ColorizerGrass.getGrassColor(0.5, 1);
+            l = ColorizerGrass.getGrassColor(potData.getBiomeTemperature(), potData.getBiomeHumidity());
 
         float f = (float)(l >> 16 & 255) / 255.0F;
         float f1 = (float)(l >> 8 & 255) / 255.0F;
