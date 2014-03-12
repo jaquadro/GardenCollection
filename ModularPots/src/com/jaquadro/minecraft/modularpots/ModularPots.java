@@ -2,10 +2,7 @@ package com.jaquadro.minecraft.modularpots;
 
 import com.jaquadro.minecraft.modularpots.block.*;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
-import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
-import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
-import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
-import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
+import com.jaquadro.minecraft.modularpots.item.*;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -22,13 +19,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import org.omg.DynamicAny.DynEnum;
 
 @Mod(modid = ModularPots.MOD_ID, name = ModularPots.MOD_NAME, version = ModularPots.MOD_VERSION)
 public class ModularPots
 {
     public static final String MOD_ID = "modularpots";
     static final String MOD_NAME = "Modular Flower Pots";
-    static final String MOD_VERSION = "1.7.2.2";
+    static final String MOD_VERSION = "1.7.2.3";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.modularpots.";
 
     public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
@@ -40,6 +38,7 @@ public class ModularPots
     public static Block thinLogFence;
     public static Block flowerLeaves;
 
+    public static Item soilTestKit;
     public static Item soilTestKitUsed;
 
     @Mod.Instance(MOD_ID)
@@ -59,6 +58,7 @@ public class ModularPots
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
 
+        GameRegistry.registerItem(soilTestKit, MOD_ID + ":soil_test_kit");
         GameRegistry.registerItem(soilTestKitUsed, MOD_ID + ":soil_test_kit_used");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
@@ -84,6 +84,14 @@ public class ModularPots
                 GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
                     'x', new ItemStack(thinLog, 1, i));
         }
+
+        ItemStack itemDyeRed = new ItemStack(Items.dye, 1, 1);
+        ItemStack itemDyeGreen = new ItemStack(Items.dye, 1, 2);
+
+        GameRegistry.addRecipe(new ItemStack(soilTestKit), "xy", "zz",
+            'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
+        GameRegistry.addRecipe(new ItemStack(soilTestKit), "yx", "zz",
+            'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
 
         //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
         //GameRegistry.addShapelessRecipe(new ItemStack(thinLog, 4, 0), axeStack, new ItemStack(Blocks.log, 1, 0));
@@ -138,6 +146,10 @@ public class ModularPots
         flowerLeaves = new FlowerLeaves()
             .setBlockName("flowerLeaves")
             .setBlockTextureName("leaves");
+
+        soilTestKit = new ItemSoilKit()
+            .setTextureName("soil_test_kit")
+            .setUnlocalizedName("soilTestKit");
 
         soilTestKitUsed = new ItemUsedSoilKit()
             .setTextureName("soil_test_kit")

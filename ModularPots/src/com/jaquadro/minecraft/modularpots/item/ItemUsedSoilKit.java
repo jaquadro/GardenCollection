@@ -33,16 +33,6 @@ public class ItemUsedSoilKit extends Item
         setCreativeTab(ModularPots.tabModularPots);
     }
 
-    @Override
-    public ItemStack onItemRightClick (ItemStack itemStack, World world, EntityPlayer player) {
-        return super.onItemRightClick(itemStack, world, player);
-    }
-
-    @Override
-    public boolean onItemUse (ItemStack itemStack, EntityPlayer player, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
-        return super.onItemUse(itemStack, player, world, par4, par5, par6, par7, par8, par9, par10);
-    }
-
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIconFromDamage (int damage) {
@@ -85,7 +75,7 @@ public class ItemUsedSoilKit extends Item
         float humidity = ((itemStack.getItemDamage() >> 8) & 255) / 255f;
 
         EnumChatFormatting tempColor = EnumChatFormatting.BLUE;
-        if (temperature >= .3)
+        if (temperature >= .2)
             tempColor = EnumChatFormatting.DARK_GREEN;
         if (temperature >= 1)
             tempColor = EnumChatFormatting.DARK_RED;
@@ -97,7 +87,7 @@ public class ItemUsedSoilKit extends Item
             humidColor = EnumChatFormatting.DARK_GREEN;
 
         String temperatureStr = StatCollector.translateToLocal("soilkit.temperature") + ": " + tempColor + String.format("%.2f", temperature) ;
-        String humidityStr = StatCollector.translateToLocal("soilkit.humidity") + ": " + humidColor + String.format("%.2f", humidity);
+        String humidityStr = StatCollector.translateToLocal("soilkit.rainfall") + ": " + humidColor + String.format("%.2f", humidity);
 
         list.add(temperatureStr);
         list.add(humidityStr);
