@@ -22,7 +22,7 @@ public class ItemSoilKit extends Item
     }
 
     @Override
-    public boolean onItemUseFirst (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
         if (player.inventory.getFirstEmptyStack() == -1 && player.inventory.getCurrentItem().stackSize > 1)
             return false;
 
@@ -31,6 +31,8 @@ public class ItemSoilKit extends Item
         int rainfall = (int)(Math.min(1, Math.max(0, biome.rainfall)) * 255) & 255;
 
         ItemStack usedKit = new ItemStack(ModularPots.soilTestKitUsed, 1, rainfall << 8 | temperature);
+
+        world.playSoundAtEntity(player, "step.grass", 1.0f, 1.0f);
 
         if (player.inventory.getCurrentItem().stackSize == 1)
             player.inventory.setInventorySlotContents(player.inventory.currentItem, usedKit);
