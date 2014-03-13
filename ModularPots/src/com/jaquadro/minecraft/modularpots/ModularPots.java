@@ -81,7 +81,7 @@ public class ModularPots
                 GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
                     'x', new ItemStack(thinLog, 1, i));
             else if (i / 4 == 1)
-                GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
+                GameRegistry.addRecipe(new ItemStack(Blocks.log2, 1, i % 4), "xx", "xx",
                     'x', new ItemStack(thinLog, 1, i));
         }
 
