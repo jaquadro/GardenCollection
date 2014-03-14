@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ExtraButtons/ExtraButtons.iml" filepath="$PROJECT_DIR$/ExtraButtons/ExtraButtons.iml" />
       <module fileurl="file://$PROJECT_DIR$/forge/Forge.iml" filepath="$PROJECT_DIR$/forge/Forge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModularPots/ModularPots.iml" filepath="$PROJECT_DIR$/ModularPots/ModularPots.iml" />
     </modules>
   </component>
 </project>

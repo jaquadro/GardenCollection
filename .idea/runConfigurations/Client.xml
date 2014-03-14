@@ -24,7 +24,7 @@
     <ConfigurationWrapper RunnerId="Run" />
     <method>
       <option name="BuildArtifacts" enabled="true">
-        <artifact name="ExtraButtons Internal" />
+        <artifact name="ModularPots Internal" />
       </option>
     </method>
   </configuration>

@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact name="ModularPots Release">
+    <output-path>$PROJECT_DIR$/forge/mcp/bin/minecraft</output-path>
+    <properties id="ant-postprocessing">
+      <options enabled="true">
+        <file>file://$PROJECT_DIR$/ModularPots/build-modularpots.xml</file>
+        <target>package</target>
+      </options>
+    </properties>
+    <properties id="ant-preprocessing">
+      <options enabled="true">
+        <file>file://$PROJECT_DIR$/ModularPots/build-modularpots.xml</file>
+        <target>clean</target>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="module-output" name="ModularPots" />
+      <element id="directory" name="assets">
+        <element id="dir-copy" path="$PROJECT_DIR$/ModularPots/assets" />
+      </element>
+      <element id="module-output" name="Forge" />
+      <element id="file-copy" path="$PROJECT_DIR$/ModularPots/mcmod.info" />
+      <element id="file-copy" path="$PROJECT_DIR$/ModularPots/pack.mcmeta" />
+    </root>
+  </artifact>
+</component>

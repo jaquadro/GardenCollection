@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ModularPots Internal">
+    <output-path>$PROJECT_DIR$/forge/mcp/jars/mods</output-path>
+    <root id="archive" name="ModularPots.jar">
+      <element id="directory" name="assets">
+        <element id="dir-copy" path="$PROJECT_DIR$/ModularPots/assets" />
+      </element>
+      <element id="module-output" name="ModularPots" />
+      <element id="file-copy" path="$PROJECT_DIR$/ModularPots/mcmod.info" />
+    </root>
+  </artifact>
+</component>
