@@ -32,6 +32,12 @@ public class LargePotPlantProxy extends Block
     @SideOnly(Side.CLIENT)
     private IIcon transpIcon;
 
+    // Scratch State
+    private int scratchX;
+    private int scratchY;
+    private int scratchZ;
+    private boolean applyingBonemeal;
+
     public LargePotPlantProxy () {
         super(Material.plants);
     }
@@ -125,6 +131,11 @@ public class LargePotPlantProxy extends Block
         TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
         int blockMeta = te.getFlowerPotData();
 
+        applyingBonemeal = true;
+        scratchX = x;
+        scratchY = y;
+        scratchZ = z;
+
         world.setBlock(x, y, z, Blocks.air, 0, 4);
 
         WorldGenerator generator = null;
@@ -150,12 +161,14 @@ public class LargePotPlantProxy extends Block
         if (generator == null || !generator.generate(world, world.rand, x, y, z))
             world.setBlock(x, y, z, this, blockMeta, 4);
 
+        applyingBonemeal = false;
+
         return true;
     }
 
     @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
-        if (isUnderBlockPot(world, x, y, z)) {
+        if (isUnderBlockPot(world, x, y, z) && !isApplyingBonemealTo(x, y, z)) {
             TileEntityLargePot tileEntity = getAttachedPotEntity(world, x, y, z);
             ItemStack item = new ItemStack(tileEntity.getFlowerPotItem(), 1, tileEntity.getFlowerPotData());
             dropBlockAsItem(world, x, y, z, item);
@@ -165,6 +178,13 @@ public class LargePotPlantProxy extends Block
         world.notifyBlockOfNeighborChange(x, y - 1, z, block);
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    private boolean isApplyingBonemealTo (int x, int y, int z) {
+        return applyingBonemeal
+            && scratchX == x
+            && scratchY == y
+            && scratchZ == z;
     }
 
     @Override
