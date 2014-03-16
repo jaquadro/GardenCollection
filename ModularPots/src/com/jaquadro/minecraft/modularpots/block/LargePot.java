@@ -29,12 +29,16 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.jaquadro.minecraft.modularpots.block.LargePot.Direction.*;
 
 public class LargePot extends BlockContainer
 {
+    public static final String[] subTypes = new String[] { "default", "raw" };
+
     public enum Direction {
         North (1 << 0),
         East (1 << 1),
@@ -79,6 +83,12 @@ public class LargePot extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     private IIcon[] iconArray;
+
+    @SideOnly(Side.CLIENT)
+    private IIcon[] iconOverlayArray;
+
+    // Scratch
+    private int scratchDropMetadata;
 
     public LargePot (boolean colored) {
         super(Material.clay);
@@ -136,6 +146,17 @@ public class LargePot extends BlockContainer
     @Override
     public int getRenderType () {
         return ClientProxy.largePotRenderID;
+    }
+
+    @Override
+    public boolean canRenderInPass (int pass) {
+        ClientProxy.renderPass = pass;
+        return true;
+    }
+
+    @Override
+    public int getRenderBlockPass () {
+        return 1;
     }
 
     @Override
@@ -218,7 +239,13 @@ public class LargePot extends BlockContainer
         Block block = world.getBlock(x + dx, y, z + dz);
         if (block != this)
             return false;
-        if (world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x + dx, y, z + dz))
+
+        int meta = world.getBlockMetadata(x, y, z);
+        int metaComp = world.getBlockMetadata(x + dx, y, z + dz);
+        if (meta != metaComp)
+            return false;
+
+        if (!colored && meta == 1)
             return false;
 
         LargePot pot = (LargePot) block;
@@ -252,7 +279,24 @@ public class LargePot extends BlockContainer
             dropBlockAsItem(world, x, y, z, item);
         }
 
+        if (te != null)
+            scratchDropMetadata = te.getCarving() << 8;
+
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
+        int count = quantityDropped(metadata, fortune, world.rand);
+        for (int i = 0; i < count; i++) {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null)
+                items.add(new ItemStack(item, 1, metadata | scratchDropMetadata));
+        }
+
+        return items;
     }
 
     @Override
@@ -280,53 +324,66 @@ public class LargePot extends BlockContainer
                 plantable = (IPlantable) itemBlock;
         }
 
-        if (tileEntity.getSubstrate() == null && isValidSubstrate(item)) {
-            if (item == Items.water_bucket) {
-                addSubstrate(tileEntity, Item.getItemFromBlock(Blocks.water), 0);
-                if (!player.capabilities.isCreativeMode)
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.bucket));
-            }
-            else {
-                addSubstrate(tileEntity, itemStack.getItem(), itemStack.getItemDamage());
-                if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
-                    player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-            }
-            world.markBlockForUpdate(x, y, z);
-        }
-        else if (tileEntity.getSubstrate() != null && item == Items.water_bucket) {
-            if (Block.getBlockFromItem(tileEntity.getSubstrate()) == Blocks.dirt) {
-                tileEntity.setSubstrate(Item.getItemFromBlock(Blocks.farmland), 1, tileEntity.getSubstrateData());
-                tileEntity.markDirty();
-
-                world.markBlockForUpdate(x, y, z);
-            }
-        }
-        else if (tileEntity.getSubstrate() != null && item == ModularPots.soilTestKitUsed) {
-            applyTestKit(world, x, y, z, itemStack);
-        }
+        if (tileEntity.getSubstrate() == null && isValidSubstrate(item))
+            applySubstrate(world, x, y, z, tileEntity, player);
+        else if (tileEntity.getSubstrate() != null && canApplyItemToSubstrate(tileEntity, itemStack))
+            applyItemToSubstrate(world, x, y, z, tileEntity, player);
         else if (plantable != null && canSustainPlantActivated(world, x, y, z, plantable)) {
             if (!enoughAirAbove(world, x, y, z, plantable))
                 return false;
-
-            // TODO: Non-compliant IPlantable, use config
-            Block itemBlock = plantable.getPlant(world, x, y, z);
-            if (itemBlock == null && plantable instanceof Block)
-                itemBlock = (Block) plantable;
-
-            world.setBlock(x, y + 1, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage(), 3);
-            if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
-                world.setBlock(x, y + 2, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage() | 8, 3);
-
-            tileEntity.setItem(itemStack.getItem(), itemStack.getItemDamage());
-            tileEntity.markDirty();
-
-            if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
-                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+            applyPlantable(world, x, y, z, tileEntity, player, plantable);
         }
         else
             return false;
 
         return true;
+    }
+
+    protected void applySubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
+        ItemStack substrate = player.inventory.getCurrentItem();
+
+        if (!colored && world.getBlockMetadata(x, y, z) == 1) {
+            world.setBlockToAir(x, y, z);
+            world.playSoundAtEntity(player, "dig.sand", 1.0f, 1.0f);
+            for (int i = 0; i < 4; i++)
+                dropBlockAsItem(world, x, y, z, new ItemStack(Items.clay_ball));
+            return;
+        }
+
+        if (substrate.getItem() == Items.water_bucket) {
+            tile.setSubstrate(Item.getItemFromBlock(Blocks.water), 0);
+            tile.markDirty();
+            if (!player.capabilities.isCreativeMode)
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.bucket));
+        }
+        else {
+            tile.setSubstrate(substrate.getItem(), substrate.getItemDamage());
+            tile.markDirty();
+            if (!player.capabilities.isCreativeMode && --substrate.stackSize <= 0)
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+        }
+        world.markBlockForUpdate(x, y, z);
+    }
+
+    protected boolean canApplyItemToSubstrate (TileEntityLargePot tile, ItemStack itemStack) {
+        return itemStack.getItem() == Items.water_bucket || itemStack.getItem() == ModularPots.soilTestKitUsed;
+    }
+
+    protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
+        ItemStack item = player.inventory.getCurrentItem();
+        if (item.getItem() == Items.water_bucket)
+            applyWaterToSubstrate(world, x, y, z, tile, player);
+        else if (item.getItem() == ModularPots.soilTestKitUsed)
+            applyTestKit(world, x, y, z, item);
+    }
+
+    protected void applyWaterToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
+        if (Block.getBlockFromItem(tile.getSubstrate()) == Blocks.dirt) {
+            tile.setSubstrate(Item.getItemFromBlock(Blocks.farmland), 1, tile.getSubstrateData());
+            tile.markDirty();
+
+            world.markBlockForUpdate(x, y, z);
+        }
     }
 
     public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
@@ -354,9 +411,23 @@ public class LargePot extends BlockContainer
         return true;
     }
 
-    @Override
-    public int getRenderBlockPass () {
-        return 0;
+    protected void applyPlantable (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player, IPlantable plantable) {
+        ItemStack itemStack = player.inventory.getCurrentItem();
+
+        // TODO: Non-compliant IPlantable, use config
+        Block itemBlock = plantable.getPlant(world, x, y, z);
+        if (itemBlock == null && plantable instanceof Block)
+            itemBlock = (Block) plantable;
+
+        world.setBlock(x, y + 1, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage(), 3);
+        if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
+            world.setBlock(x, y + 2, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage() | 8, 3);
+
+        tile.setItem(itemStack.getItem(), itemStack.getItemDamage());
+        tile.markDirty();
+
+        if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
     }
 
     private boolean enoughAirAbove (IBlockAccess world, int x, int y, int z, IPlantable plant) {
@@ -370,12 +441,7 @@ public class LargePot extends BlockContainer
         return enough;
     }
 
-    private void addSubstrate (TileEntityLargePot tileEntity, Item item, int data) {
-        tileEntity.setSubstrate(item, data);
-        tileEntity.markDirty();
-    }
-
-    private boolean isValidSubstrate (Item item) {
+    protected boolean isValidSubstrate (Item item) {
         if (item == Items.water_bucket)
             return true;
 
@@ -396,7 +462,7 @@ public class LargePot extends BlockContainer
         return block != Blocks.water;
     }
 
-    private boolean canSustainPlantActivated (IBlockAccess world, int x, int y, int z, IPlantable plantable) {
+    protected boolean canSustainPlantActivated (IBlockAccess world, int x, int y, int z, IPlantable plantable) {
         TileEntityLargePot te = getTileEntity(world, x, y, z);
         if (te == null || te.getSubstrate() == null)
             return false;
@@ -449,9 +515,30 @@ public class LargePot extends BlockContainer
     @Override
     public IIcon getIcon (int side, int data) {
         if (colored)
-            return iconArray[data % 16];
+            return iconArray[data & 15];
 
-        return iconSide;
+        switch (data) {
+            case 1:
+                return Blocks.clay.getIcon(side, 0);
+            default:
+                return iconSide;
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getBottomIcon (int data) {
+        if (!colored && data == 1)
+            return Blocks.clay.getIcon(0, 0);
+        else
+            return iconSide;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getOverlayIcon (int data) {
+        if (data > 0 && data <= iconOverlayArray.length)
+            return iconOverlayArray[data - 1];
+
+        return null;
     }
 
     @Override
@@ -460,8 +547,10 @@ public class LargePot extends BlockContainer
             for (int i = 0; i < 16; i++)
                 blockList.add(new ItemStack(item, 1, i));
         }
-        else
+        else {
             blockList.add(new ItemStack(item, 1, 0));
+            blockList.add(new ItemStack(item, 1, 1));
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -476,6 +565,10 @@ public class LargePot extends BlockContainer
                 iconArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":large_pot_" + colorName);
             }
         }
+
+        iconOverlayArray = new IIcon[5];
+        for (int i = 0; i < iconOverlayArray.length; i++)
+            iconOverlayArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":large_pot_" + (i + 1));
     }
 
     public static int getBlockFromDye (int index) {

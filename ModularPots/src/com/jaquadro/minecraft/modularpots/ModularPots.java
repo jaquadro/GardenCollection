@@ -4,11 +4,13 @@ import com.jaquadro.minecraft.modularpots.block.*;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.*;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -37,9 +39,13 @@ public class ModularPots
     public static Block thinLog;
     public static Block thinLogFence;
     public static Block flowerLeaves;
+    public static Block potteryTable;
 
     public static Item soilTestKit;
     public static Item soilTestKitUsed;
+    public static Item potteryPattern;
+
+    public static int potteryTableGuiID = 0;
 
     @Mod.Instance(MOD_ID)
     public static ModularPots instance;
@@ -51,17 +57,20 @@ public class ModularPots
     public void preInit (FMLPreInitializationEvent event) {
         initializeBlocks();
 
-        GameRegistry.registerBlock(largePot, MOD_ID + ":large_pot");
+        GameRegistry.registerBlock(largePot, ItemLargePot.class, MOD_ID + ":large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, MOD_ID + ":large_pot_colored");
         GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
+        GameRegistry.registerBlock(potteryTable, MOD_ID + ":pottery_table");
 
         GameRegistry.registerItem(soilTestKit, MOD_ID + ":soil_test_kit");
         GameRegistry.registerItem(soilTestKitUsed, MOD_ID + ":soil_test_kit_used");
+        GameRegistry.registerItem(potteryPattern, MOD_ID + ":pottery_pattern");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
+        GameRegistry.registerTileEntity(TileEntityPotteryTable.class, MOD_ID + ":pottery_table");
 
         ItemStack hardenedClayStack = new ItemStack(Blocks.hardened_clay);
         GameRegistry.addRecipe(new ItemStack(largePot, 3), "x x", "x x", "xxx",
@@ -85,6 +94,9 @@ public class ModularPots
                     'x', new ItemStack(thinLog, 1, i));
         }
 
+        GameRegistry.addRecipe(new ItemStack(potteryTable), "x", "y",
+            'x', Items.clay_ball, 'y', Blocks.crafting_table);
+
         ItemStack itemDyeRed = new ItemStack(Items.dye, 1, 1);
         ItemStack itemDyeGreen = new ItemStack(Items.dye, 1, 2);
 
@@ -92,6 +104,10 @@ public class ModularPots
             'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
         GameRegistry.addRecipe(new ItemStack(soilTestKit), "yx", "zz",
             'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
+
+        GameRegistry.addSmelting(new ItemStack(largePot, 1, 1), new ItemStack(largePot, 1, 0), 0);
+        for (int i = 1; i <= 5; i++)
+            GameRegistry.addSmelting(new ItemStack(largePot, 1, 1 | (i << 8)), new ItemStack(largePot, 1, (i << 8)), 0);
 
         //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
         //GameRegistry.addShapelessRecipe(new ItemStack(thinLog, 4, 0), axeStack, new ItemStack(Blocks.log, 1, 0));
@@ -101,6 +117,7 @@ public class ModularPots
     public void load (FMLInitializationEvent event) {
         proxy.registerRenderers();
         MinecraftForge.EVENT_BUS.register(this);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
     }
 
     @SubscribeEvent
@@ -147,6 +164,10 @@ public class ModularPots
             .setBlockName("flowerLeaves")
             .setBlockTextureName("leaves");
 
+        potteryTable = new PotteryTable()
+            .setStepSound(Block.soundTypeWood)
+            .setBlockName("potteryTable");
+
         soilTestKit = new ItemSoilKit()
             .setTextureName("soil_test_kit")
             .setUnlocalizedName("soilTestKit");
@@ -154,5 +175,8 @@ public class ModularPots
         soilTestKitUsed = new ItemUsedSoilKit()
             .setTextureName("soil_test_kit")
             .setUnlocalizedName("soilTestKitUsed");
+
+        potteryPattern = new ItemPotteryPattern()
+            .setUnlocalizedName("potteryPattern");
     }
 }

@@ -36,6 +36,9 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
     private void renderInventoryBlock (LargePot block, int metadata, int modelId, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
 
+        int damage = metadata;
+        metadata &= 15;
+
         block.setBlockBoundsForItemRender();
         renderer.setRenderBoundsFromBlock(block);
 
@@ -65,6 +68,27 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         tessellator.setNormal(1, 0, 0);
         renderer.renderFaceXPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
         tessellator.draw();
+
+        // Overlay
+        if ((damage & 0xFF00) != 0) {
+            IIcon icon = block.getOverlayIcon((damage >> 8) & 255);
+            tessellator.startDrawingQuads();
+            tessellator.setNormal(0, 0, -1);
+            renderer.renderFaceZNeg(block, 0, 0, 0, icon);
+            tessellator.draw();
+            tessellator.startDrawingQuads();
+            tessellator.setNormal(0, 0, 1);
+            renderer.renderFaceZPos(block, 0, 0, 0, icon);
+            tessellator.draw();
+            tessellator.startDrawingQuads();
+            tessellator.setNormal(-1, 0, 0);
+            renderer.renderFaceXNeg(block, 0, 0, 0, icon);
+            tessellator.draw();
+            tessellator.startDrawingQuads();
+            tessellator.setNormal(1, 0, 0);
+            renderer.renderFaceXPos(block, 0, 0, 0, icon);
+            tessellator.draw();
+        }
 
         // Top Lip
         tessellator.startDrawingQuads();
@@ -117,10 +141,76 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         if (!(block instanceof LargePot))
             return false;
 
-        return renderWorldBlock(world, x, y, z, (LargePot) block, modelId, renderer);
+        if (ClientProxy.renderPass == 0)
+            return renderWorldBlockPass0(world, x, y, z, (LargePot) block, modelId, renderer);
+        else if (ClientProxy.renderPass == 1)
+            return renderWorldBlockPass1(world, x, y, z, (LargePot) block, modelId, renderer);
+
+        return false;
     }
 
-    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, LargePot block, int modelId, RenderBlocks renderer) {
+    private void renderEmptyPlane (Block block, int x, int y, int z, RenderBlocks renderer) {
+        renderer.setRenderBounds(0, 0, 0, 0, 0, 0);
+        renderer.renderFaceYNeg(block, x, y, z, Blocks.hardened_clay.getIcon(0, 0));
+    }
+
+    private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, LargePot block, int modelId, RenderBlocks renderer) {
+        TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
+        if (tileEntity == null) {
+            renderEmptyPlane(block, x, y, z, renderer);
+            return true;
+        }
+
+        Tessellator tessellator = Tessellator.instance;
+        IIcon icon = block.getOverlayIcon(tileEntity.getCarving());
+        boolean didRender = false;
+
+        renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+
+        if (icon != null) {
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
+            tessellator.setColorOpaque_F(1f, 1f, 1f);
+
+            boolean connectZNeg = block.isCompatibleNeighbor(world, x, y, z, 0, -1);
+            boolean connectZPos = block.isCompatibleNeighbor(world, x, y, z, 0, 1);
+            boolean connectXNeg = block.isCompatibleNeighbor(world, x, y, z, -1, 0);
+            boolean connectXPos = block.isCompatibleNeighbor(world, x, y, z, 1, 0);
+
+            if (!connectXNeg)
+                renderer.renderFaceXNeg(block, x, y, z, icon);
+            if (!connectXPos)
+                renderer.renderFaceXPos(block, x, y, z, icon);
+            if (!connectZNeg)
+                renderer.renderFaceZNeg(block, x, y, z, icon);
+            if (!connectZPos)
+                renderer.renderFaceZPos(block, x, y, z, icon);
+
+            didRender = !(connectXNeg && connectXPos && connectZNeg && connectZPos);
+        }
+
+        if (tileEntity.getSubstrate() instanceof ItemBlock) {
+            Block substrate = Block.getBlockFromItem(tileEntity.getSubstrate());
+            int substrateData = tileEntity.getSubstrateData();
+
+            if (substrate == Blocks.water) {
+                calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
+                scaleColor(activeSubstrateColor, activeSubstrateColor, .9f);
+                setTessellatorColor(tessellator, activeSubstrateColor);
+
+                IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
+                renderer.renderFaceYPos(block, x, y - .0625f, z, substrateIcon);
+
+                didRender = true;
+            }
+        }
+
+        if (!didRender)
+            renderEmptyPlane(block, x, y, z, renderer);
+
+        return true;
+    }
+
+    private boolean renderWorldBlockPass0 (IBlockAccess world, int x, int y, int z, LargePot block, int modelId, RenderBlocks renderer) {
         renderer.renderStandardBlock(block, x, y, z);
 
         int data = world.getBlockMetadata(x, y, z);
@@ -193,16 +283,22 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
             Block substrate = Block.getBlockFromItem(tileEntity.getSubstrate());
             int substrateData = tileEntity.getSubstrateData();
 
-            calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
-            scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
-            setTessellatorColor(tessellator, activeSubstrateColor);
+            if (substrate != Blocks.water) {
+                calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
+                scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
+                setTessellatorColor(tessellator, activeSubstrateColor);
 
-            IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
-            renderer.renderFaceYPos(block, x, y - unit, z, substrateIcon);
+                IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
+                renderer.renderFaceYPos(block, x, y - unit, z, substrateIcon);
+            }
+            else {
+                setTessellatorColor(tessellator, activeBottomColor);
+                renderer.renderFaceYPos(block, x, y - 1 + unit, z, block.getBottomIcon(data));
+            }
         }
         else {
             setTessellatorColor(tessellator, activeBottomColor);
-            renderer.renderFaceYPos(block, x, y - 1 + unit, z, renderer.getBlockIcon(Blocks.hardened_clay));
+            renderer.renderFaceYPos(block, x, y - 1 + unit, z, block.getBottomIcon(data));
         }
 
         return true;

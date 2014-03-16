@@ -17,6 +17,7 @@ public class TileEntityLargePot extends TileEntity
     private Item substrate;
     private int substrateData;
     private int substrateOrigData;
+    private int carving;
 
     private boolean hasBiomeOverride;
     private int biomeData = DEFAULT_BIOME_DATA;
@@ -46,6 +47,10 @@ public class TileEntityLargePot extends TileEntity
 
     public int getSubstrateOriginalData () {
         return substrateOrigData;
+    }
+
+    public int getCarving () {
+        return carving;
     }
 
     public boolean hasBiomeDataOverride () {
@@ -80,6 +85,8 @@ public class TileEntityLargePot extends TileEntity
             tag.setShort("SubsO", (short) substrateOrigData);
         if (hasBiomeOverride || biomeData != DEFAULT_BIOME_DATA)
             tag.setInteger("Biom", biomeData);
+        if (carving != 0)
+            tag.setShort("Carv", (short) carving);
     }
 
     @Override
@@ -114,6 +121,8 @@ public class TileEntityLargePot extends TileEntity
 
         hasBiomeOverride = tag.hasKey("Biom");
         biomeData = tag.hasKey("Biom") ? tag.getInteger("Biom") : DEFAULT_BIOME_DATA;
+
+        carving = tag.hasKey("Carv") ? tag.getShort("Carv") : 0;
     }
 
     @Override
@@ -153,5 +162,9 @@ public class TileEntityLargePot extends TileEntity
     public void setBiomeData (int data) {
         this.biomeData = data;
         this.hasBiomeOverride = true;
+    }
+
+    public void setCarving (int id) {
+        carving = id;
     }
 }
