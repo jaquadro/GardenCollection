@@ -36,23 +36,36 @@ public class GuiPotteryTable extends GuiContainer
         fontRendererObj.drawString(name, 8, 6, 4210752);
         fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, ySize - 96 + 2, 4210752);
 
-        for (int i = 0; i < 6; i++) {
+        DrawPatternColumn(0, 6, -18, 0);
+        DrawPatternColumn(6, 12, 18, 0);
+    }
+
+    private void DrawPatternColumn (int start, int end, int offsetX, int offsetY) {
+        zLevel = 100.0F;
+        itemRender.zLevel = 100.0F;
+
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_BLEND);
+        this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+
+        for (int i = start; i < end; i++) {
             Slot slot = inventorySlots.getSlot(3 + i);
             if (slot != null && slot.getStack() != null) {
                 ItemStack item = slot.getStack();
                 if (item.getItem() == ModularPots.potteryPattern) {
                     LargePot largePot = (LargePot) ModularPots.largePot;
-                    IIcon pattern = largePot.getOverlayIcon(item.getItemDamage());
 
-                    if (pattern != null) {
-                        GL11.glDisable(GL11.GL_LIGHTING);
-                        this.mc.getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-                        drawTexturedModelRectFromIcon(slot.xDisplayPosition - 18, slot.yDisplayPosition, pattern, 16, 16);
-                        GL11.glEnable(GL11.GL_LIGHTING);
-                    }
+                    IIcon pattern = largePot.getOverlayIcon(item.getItemDamage());
+                    if (pattern != null)
+                        drawTexturedModelRectFromIcon(slot.xDisplayPosition + offsetX, slot.yDisplayPosition + offsetY, pattern, 16, 16);
                 }
             }
         }
+
+        GL11.glEnable(GL11.GL_LIGHTING);
+
+        itemRender.zLevel = 0.0F;
+        zLevel = 0.0F;
     }
 
     @Override

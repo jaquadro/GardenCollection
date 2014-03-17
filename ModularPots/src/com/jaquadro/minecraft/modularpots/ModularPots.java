@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots;
 
 import com.jaquadro.minecraft.modularpots.block.*;
+import com.jaquadro.minecraft.modularpots.config.ConfigManager;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.*;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
@@ -22,6 +23,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import org.omg.DynamicAny.DynEnum;
+
+import javax.security.auth.login.Configuration;
 
 @Mod(modid = ModularPots.MOD_ID, name = ModularPots.MOD_NAME, version = ModularPots.MOD_VERSION)
 public class ModularPots
@@ -47,6 +50,8 @@ public class ModularPots
 
     public static int potteryTableGuiID = 0;
 
+    public static ConfigManager config;
+
     @Mod.Instance(MOD_ID)
     public static ModularPots instance;
 
@@ -55,6 +60,8 @@ public class ModularPots
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) {
+        config = new ConfigManager(event.getSuggestedConfigurationFile());
+
         initializeBlocks();
 
         GameRegistry.registerBlock(largePot, ItemLargePot.class, MOD_ID + ":large_pot");

@@ -20,8 +20,10 @@ public class PotteryManager
     }
 
     private PotteryManager () {
-        for (int i = 1; i <= 5; i++)
-            registerPattern(new ItemStack(ModularPots.potteryPattern, 1, i));
+        for (int i = 1; i < 256; i++) {
+            if (ModularPots.config.getOverlayImage(i) != null)
+                registerPattern(new ItemStack(ModularPots.potteryPattern, 1, i));
+        }
 
         registerTarget(new ItemStack(ModularPots.largePot, 1, 1));
         registerTarget(new ItemStack(ModularPots.largePot));

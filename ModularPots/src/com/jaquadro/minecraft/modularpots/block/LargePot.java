@@ -535,8 +535,8 @@ public class LargePot extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     public IIcon getOverlayIcon (int data) {
-        if (data > 0 && data <= iconOverlayArray.length)
-            return iconOverlayArray[data - 1];
+        if (iconOverlayArray[data] != null)
+            return iconOverlayArray[data];
 
         return null;
     }
@@ -566,9 +566,12 @@ public class LargePot extends BlockContainer
             }
         }
 
-        iconOverlayArray = new IIcon[5];
-        for (int i = 0; i < iconOverlayArray.length; i++)
-            iconOverlayArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":large_pot_" + (i + 1));
+        iconOverlayArray = new IIcon[256];
+        for (int i = 1; i < iconOverlayArray.length; i++) {
+            String overlayImage = ModularPots.config.getOverlayImage(i);
+            if (overlayImage != null)
+                iconOverlayArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":" + overlayImage);
+        }
     }
 
     public static int getBlockFromDye (int index) {

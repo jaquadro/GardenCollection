@@ -32,9 +32,10 @@ public class InventoryPottery implements IInventory
             return null;
 
         int stackCount = stack.stackSize;
-
         ItemStack result = parent.decrStackSize(slot, count);
-        if (stack != result || stackCount != result.stackSize)
+
+        ItemStack stackAfter = parent.getStackInSlot(slot);
+        if (stack != stackAfter || stackCount != stackAfter.stackSize)
             container.onCraftMatrixChanged(this);
 
         return result;

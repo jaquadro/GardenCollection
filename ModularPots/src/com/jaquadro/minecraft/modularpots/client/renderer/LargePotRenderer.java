@@ -69,6 +69,10 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         renderer.renderFaceXPos(block, 0, 0, 0, renderer.getBlockIconFromSideAndMetadata(block, 5, metadata));
         tessellator.draw();
 
+        boolean blendEnabled = GL11.glIsEnabled(GL11.GL_BLEND);
+        if (!blendEnabled)
+            GL11.glEnable(GL11.GL_BLEND);
+
         // Overlay
         if ((damage & 0xFF00) != 0) {
             IIcon icon = block.getOverlayIcon((damage >> 8) & 255);
@@ -89,6 +93,9 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
             renderer.renderFaceXPos(block, 0, 0, 0, icon);
             tessellator.draw();
         }
+
+        if (!blendEnabled)
+            GL11.glDisable(GL11.GL_BLEND);
 
         // Top Lip
         tessellator.startDrawingQuads();
