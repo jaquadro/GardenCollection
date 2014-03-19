@@ -8,14 +8,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 public class PotteryTable extends BlockContainer
 {
+    private final Random rand = new Random();
+
     @SideOnly(Side.CLIENT)
     private IIcon iconSide;
 
@@ -63,6 +70,43 @@ public class PotteryTable extends BlockContainer
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
         player.openGui(ModularPots.instance, ModularPots.potteryTableGuiID, world, x, y, z);
         return true;
+    }
+
+    @Override
+    public void breakBlock (World world, int x, int y, int z, Block block, int metadata) {
+        TileEntityPotteryTable te = (TileEntityPotteryTable) world.getTileEntity(x, y, z);
+        if (te != null) {
+            for (int i = 0; i < te.getSizeInventory(); i++) {
+                ItemStack stack = te.getStackInSlot(i);
+                if (stack != null) {
+                    float ex = rand.nextFloat() * .8f + .1f;
+                    float ey = rand.nextFloat() * .8f + .1f;
+                    float ez = rand.nextFloat() * .8f + .1f;
+
+                    EntityItem entity;
+                    for (; stack.stackSize > 0; world.spawnEntityInWorld(entity)) {
+                        int stackPartSize = rand.nextInt(21) + 10;
+                        if (stackPartSize > stack.stackSize)
+                            stackPartSize = stack.stackSize;
+
+                        stack.stackSize -= stackPartSize;
+                        entity = new EntityItem(world, x + ex, y + ey, z + ez, new ItemStack(stack.getItem(), stackPartSize, stack.getItemDamage()));
+
+                        float motionUnit = .05f;
+                        entity.motionX = rand.nextGaussian() * motionUnit;
+                        entity.motionY = rand.nextGaussian() * motionUnit + .2f;
+                        entity.motionZ = rand.nextGaussian() * motionUnit;
+
+                        if (stack.hasTagCompound())
+                            entity.getEntityItem().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
+                    }
+                }
+            }
+
+            world.func_147453_f(x, y, z, block);
+        }
+
+        super.breakBlock(world, x, y, z, block, metadata);
     }
 
     @SideOnly(Side.CLIENT)

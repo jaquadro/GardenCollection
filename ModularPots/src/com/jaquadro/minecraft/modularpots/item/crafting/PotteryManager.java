@@ -79,6 +79,7 @@ public class PotteryManager
                 continue;
 
             ItemStack result = target.copy();
+            result.stackSize = 1;
             result.setItemDamage(target.getItemDamage() | (pattern.getItemDamage() << entry.getValue()));
 
             return result;

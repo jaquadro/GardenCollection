@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.inventory;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -69,6 +70,11 @@ public class SlotPottery extends Slot
                         this.player.dropPlayerItemWithRandomChoice(itemContainer, false);
                 }
             }
+        }
+
+        ItemStack itemPattern = inputInventory.getStackInSlot(0);
+        if (itemPattern != null && itemPattern.getItem() == Items.dye) {
+            inputInventory.decrStackSize(0, 1);
         }
     }
 }

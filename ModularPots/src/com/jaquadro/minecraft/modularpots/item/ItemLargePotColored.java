@@ -3,6 +3,8 @@ package com.jaquadro.minecraft.modularpots.item;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.LargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -10,6 +12,8 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemLargePotColored extends ItemBlock
 {
@@ -38,6 +42,14 @@ public class ItemLargePotColored extends ItemBlock
     @Override
     public String getUnlocalizedName (ItemStack itemStack) {
         return super.getUnlocalizedName() + "." + ItemDye.field_150923_a[itemStack.getItemDamage() & 15];
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
+        String name = ModularPots.config.getOverlayName((itemStack.getItemDamage() >> 8) & 255);
+        if (name != null)
+            list.add(name);
     }
 
     @Override

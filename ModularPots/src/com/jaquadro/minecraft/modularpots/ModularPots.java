@@ -19,6 +19,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -113,8 +116,10 @@ public class ModularPots
             'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
 
         GameRegistry.addSmelting(new ItemStack(largePot, 1, 1), new ItemStack(largePot, 1, 0), 0);
-        for (int i = 1; i <= 5; i++)
-            GameRegistry.addSmelting(new ItemStack(largePot, 1, 1 | (i << 8)), new ItemStack(largePot, 1, (i << 8)), 0);
+        for (int i = 1; i < 256; i++) {
+            if (ModularPots.config.getOverlayImage(i) != null)
+                GameRegistry.addSmelting(new ItemStack(largePot, 1, 1 | (i << 8)), new ItemStack(largePot, 1, (i << 8)), 0);
+        }
 
         //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
         //GameRegistry.addShapelessRecipe(new ItemStack(thinLog, 4, 0), axeStack, new ItemStack(Blocks.log, 1, 0));
@@ -172,6 +177,7 @@ public class ModularPots
             .setBlockTextureName("leaves");
 
         potteryTable = new PotteryTable()
+            .setHardness(2.5f)
             .setStepSound(Block.soundTypeWood)
             .setBlockName("potteryTable");
 
