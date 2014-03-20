@@ -262,8 +262,23 @@ public class LargePot extends BlockContainer
     }
 
     @Override
+    public void onBlockHarvested (World world, int x, int y, int z, int p_149681_5_, EntityPlayer player) {
+        super.onBlockHarvested(world, x, y, z, p_149681_5_, player);
+
+        if (player.capabilities.isCreativeMode) {
+            TileEntityLargePot te = getTileEntity(world, x, y, z);
+            if (te != null) {
+                te.setSubstrate(null, 0);
+                te.setItem(null, 0);
+                te.markDirty();
+            }
+        }
+    }
+
+    @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
         TileEntityLargePot te = getTileEntity(world, x, y, z);
+
         if (te != null && te.getSubstrate() != null) {
             Block substrate = Block.getBlockFromItem(te.getSubstrate());
             if (substrate != Blocks.water) {

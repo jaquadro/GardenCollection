@@ -167,11 +167,28 @@ public class LargePotPlantProxy extends Block
     }
 
     @Override
+    public void onBlockHarvested (World world, int x, int y, int z, int p_149681_5_, EntityPlayer player) {
+        super.onBlockHarvested(world, x, y, z, p_149681_5_, player);
+
+        if (player.capabilities.isCreativeMode) {
+            if (isUnderBlockPot(world, x, y, z)) {
+                TileEntityLargePot tileEntity = getAttachedPotEntity(world, x, y, z);
+                if (tileEntity != null) {
+                    tileEntity.setItem(null, 0);
+                    tileEntity.markDirty();
+                }
+            }
+        }
+    }
+
+    @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
         if (isUnderBlockPot(world, x, y, z) && !isApplyingBonemealTo(x, y, z)) {
             TileEntityLargePot tileEntity = getAttachedPotEntity(world, x, y, z);
-            ItemStack item = new ItemStack(tileEntity.getFlowerPotItem(), 1, tileEntity.getFlowerPotData());
-            dropBlockAsItem(world, x, y, z, item);
+            if (tileEntity != null && tileEntity.getFlowerPotItem() != null) {
+                ItemStack item = new ItemStack(tileEntity.getFlowerPotItem(), 1, tileEntity.getFlowerPotData());
+                dropBlockAsItem(world, x, y, z, item);
+            }
         }
 
         world.notifyBlockOfNeighborChange(x, y + 1, z, block);
