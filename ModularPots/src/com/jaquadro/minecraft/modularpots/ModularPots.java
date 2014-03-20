@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots;
 
 import com.jaquadro.minecraft.modularpots.block.*;
 import com.jaquadro.minecraft.modularpots.config.ConfigManager;
+import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.*;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
@@ -28,13 +29,14 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.omg.DynamicAny.DynEnum;
 
 import javax.security.auth.login.Configuration;
+import java.io.File;
 
 @Mod(modid = ModularPots.MOD_ID, name = ModularPots.MOD_NAME, version = ModularPots.MOD_VERSION)
 public class ModularPots
 {
     public static final String MOD_ID = "modularpots";
     static final String MOD_NAME = "Modular Flower Pots";
-    static final String MOD_VERSION = "1.7.2.3";
+    static final String MOD_VERSION = "1.7.2.4";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.modularpots.";
 
     public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
@@ -63,7 +65,7 @@ public class ModularPots
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) {
-        config = new ConfigManager(event.getSuggestedConfigurationFile());
+        config = new ConfigManager(new File(event.getModConfigurationDirectory(), MOD_ID + ".patterns.cfg"));
 
         initializeBlocks();
 
@@ -117,7 +119,7 @@ public class ModularPots
 
         GameRegistry.addSmelting(new ItemStack(largePot, 1, 1), new ItemStack(largePot, 1, 0), 0);
         for (int i = 1; i < 256; i++) {
-            if (ModularPots.config.getOverlayImage(i) != null)
+            if (ModularPots.config.hasPattern(i))
                 GameRegistry.addSmelting(new ItemStack(largePot, 1, 1 | (i << 8)), new ItemStack(largePot, 1, (i << 8)), 0);
         }
 
@@ -130,6 +132,15 @@ public class ModularPots
         proxy.registerRenderers();
         MinecraftForge.EVENT_BUS.register(this);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
+        for (int i = 1; i < 256; i++) {
+            if (!config.hasPattern(i))
+                continue;
+
+            PatternConfig pattern = config.getPattern(i);
+            for (int j = 0; j < pattern.getLocationCount(); j++)
+                ChestGenHooks.addItem(pattern.getGenLocation(j), new WeightedRandomChestContent(potteryPattern, i, 1, 1, pattern.getGenRarity(j)));
+        }
     }
 
     @SubscribeEvent

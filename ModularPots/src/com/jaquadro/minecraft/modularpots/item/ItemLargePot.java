@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.item;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.LargePot;
+import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -34,9 +35,9 @@ public class ItemLargePot extends ItemMultiTexture
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
-        String name = ModularPots.config.getOverlayName((itemStack.getItemDamage() >> 8) & 255);
-        if (name != null)
-            list.add(name);
+        PatternConfig pattern = ModularPots.config.getPattern((itemStack.getItemDamage() >> 8) & 255);
+        if (pattern != null && pattern.getName() != null)
+            list.add(pattern.getName());
     }
 
     @Override

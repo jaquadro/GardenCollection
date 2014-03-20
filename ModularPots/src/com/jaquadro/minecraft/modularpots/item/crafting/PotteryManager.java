@@ -21,14 +21,14 @@ public class PotteryManager
 
     private PotteryManager () {
         for (int i = 1; i < 256; i++) {
-            if (ModularPots.config.getOverlayImage(i) != null)
+            if (ModularPots.config.hasPattern(i))
                 registerPattern(new ItemStack(ModularPots.potteryPattern, 1, i));
         }
 
         registerTarget(new ItemStack(ModularPots.largePot, 1, 1));
-        registerTarget(new ItemStack(ModularPots.largePot));
-        for (int i = 0; i < 16; i++)
-            registerTarget(new ItemStack(ModularPots.largePotColored, 1, i));
+        //registerTarget(new ItemStack(ModularPots.largePot));
+        //for (int i = 0; i < 16; i++)
+        //    registerTarget(new ItemStack(ModularPots.largePotColored, 1, i));
     }
 
     public void registerPattern (ItemStack itemStack) {

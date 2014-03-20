@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots.item;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,7 +34,7 @@ public class ItemPotteryPattern extends Item
     @Override
     public void getSubItems (Item item, CreativeTabs creativeTab, List list) {
         for (int i = 1; i < 256; i++) {
-            if (ModularPots.config.getOverlayImage(i) != null)
+            if (ModularPots.config.hasPattern(i))
                 list.add(new ItemStack(item, 1, i));
         }
     }
@@ -41,9 +42,9 @@ public class ItemPotteryPattern extends Item
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
-        String name = ModularPots.config.getOverlayName(itemStack.getItemDamage());
-        if (name != null)
-            list.add(name);
+        PatternConfig pattern = ModularPots.config.getPattern(itemStack.getItemDamage());
+        if (pattern != null && pattern.getName() != null)
+            list.add(pattern.getName());
     }
 
     @SideOnly(Side.CLIENT)

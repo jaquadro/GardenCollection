@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
@@ -568,9 +569,9 @@ public class LargePot extends BlockContainer
 
         iconOverlayArray = new IIcon[256];
         for (int i = 1; i < iconOverlayArray.length; i++) {
-            String overlayImage = ModularPots.config.getOverlayImage(i);
-            if (overlayImage != null)
-                iconOverlayArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":" + overlayImage);
+            PatternConfig pattern = ModularPots.config.getPattern(i);
+            if (pattern != null && pattern.getOverlay() != null)
+                iconOverlayArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":" + pattern.getOverlay());
         }
     }
 
