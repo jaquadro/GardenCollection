@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -141,6 +142,8 @@ public class ModularPots
             for (int j = 0; j < pattern.getLocationCount(); j++)
                 ChestGenHooks.addItem(pattern.getGenLocation(j), new WeightedRandomChestContent(potteryPattern, i, 1, 1, pattern.getGenRarity(j)));
         }
+
+        VillagerTradeHandler.instance().load();
     }
 
     @SubscribeEvent

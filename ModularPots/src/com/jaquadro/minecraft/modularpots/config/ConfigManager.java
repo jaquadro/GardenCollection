@@ -20,6 +20,7 @@ public class ConfigManager
 
     private PatternConfig defaultPattern;
     private PatternConfig[] patterns = new PatternConfig[256];
+    private int patternCount;
 
     public ConfigManager (File file) {
         config = new Configuration(file);
@@ -93,6 +94,8 @@ public class ConfigManager
                     for (int j = 0; j < defaultPattern.getLocationCount(); j++)
                         patterns[i].addGenLocation(defaultPattern.getGenLocation(j), defaultPattern.getGenRarity(j));
                 }
+
+                patternCount++;
             }
         }
     }
@@ -169,6 +172,10 @@ public class ConfigManager
 
     public PatternConfig getPattern (int index) {
         return patterns[index];
+    }
+
+    public int getPatternCount () {
+        return patternCount;
     }
 
     /*public String getOverlayImage (int index) {
