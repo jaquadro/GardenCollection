@@ -1,13 +1,12 @@
 package com.jaquadro.minecraft.modularpots.client.renderer;
 
-import com.jaquadro.minecraft.modularpots.block.LargePot;
-import com.jaquadro.minecraft.modularpots.block.ThinLog;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
+import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
@@ -50,13 +49,13 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof ThinLog))
+        if (!(block instanceof BlockThinLog))
             return false;
 
-        return renderWorldBlock(world, x, y, z, (ThinLog) block, modelId, renderer);
+        return renderWorldBlock(world, x, y, z, (BlockThinLog) block, modelId, renderer);
     }
 
-    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, ThinLog block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockThinLog block, int modelId, RenderBlocks renderer) {
         float margin = block.getMargin();
         int connectFlags = block.calcConnectionFlags(world, x, y, z);
 
@@ -123,7 +122,7 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler
         //renderer.renderStandardBlock(block, x, y, z);
 
         Block blockUnder = world.getBlock(x, y - 1, z);
-        if (blockUnder instanceof LargePot) {
+        if (blockUnder instanceof BlockLargePot) {
             //Tessellator tessellator = Tessellator.instance;
             //tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
             //tessellator.setColorOpaque_F(1f, 1f, 1f);

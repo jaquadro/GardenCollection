@@ -12,14 +12,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-/**
- * Created by Justin on 3/8/14.
- */
-public class FlowerLeaves extends BlockOldLeaf
+public class BlockFlowerLeaves extends BlockOldLeaf
 {
     private IIcon[] flowersTop;
     private IIcon[] flowersTopSide;
     private IIcon[] flowersSide;
+
+    public  BlockFlowerLeaves (String blockName) {
+        setBlockName(blockName);
+        setBlockTextureName("leaves");
+    }
 
     /*@Override
     public IIcon getIcon (int var1, int var2) {

@@ -1,7 +1,8 @@
 package com.jaquadro.minecraft.modularpots.item;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
-import com.jaquadro.minecraft.modularpots.block.LargePot;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
@@ -26,13 +27,13 @@ public class ItemLargePotColored extends ItemBlock
 
     @Override
     public int getColorFromItemStack (ItemStack itemStack, int data) {
-        return ModularPots.largePotColored.getRenderColor(itemStack.getItemDamage() & 15);
+        return ModBlocks.largePotColored.getRenderColor(itemStack.getItemDamage() & 15);
     }
 
     @Override
     public IIcon getIconFromDamage (int data) {
-        LargePot block = (LargePot) ModularPots.largePotColored;
-        return block.getIcon(0, LargePot.getBlockFromDye(data & 15));
+        BlockLargePot block = (BlockLargePot) ModBlocks.largePotColored;
+        return block.getIcon(0, BlockLargePot.getBlockFromDye(data & 15));
     }
 
     @Override

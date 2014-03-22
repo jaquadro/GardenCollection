@@ -21,16 +21,22 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ThinLogFence extends Block
+public class BlockThinLogFence extends Block
 {
     public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
     @SideOnly(Side.CLIENT)
     IIcon sideIcon;
 
-    public ThinLogFence () {
+    public BlockThinLogFence (String blockName) {
         super(Material.wood);
+
         setCreativeTab(ModularPots.tabModularPots);
+        setHardness(1.5f);
+        setResistance(5f);
+        setLightOpacity(0);
+        setStepSound(Block.soundTypeWood);
+        setBlockName(blockName);
 
         setBlockBoundsForItemRender();
     }

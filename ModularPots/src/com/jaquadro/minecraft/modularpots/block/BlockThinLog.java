@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.block;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-public class ThinLog extends Block
+public class BlockThinLog extends Block
 {
     public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
@@ -29,9 +30,15 @@ public class ThinLog extends Block
     // 0 = Y, 1 = Z, 2 = X, 3 = BARK
     private int orientation;
 
-    public ThinLog () {
+    public BlockThinLog (String blockName) {
         super(Material.wood);
-        this.setCreativeTab(ModularPots.tabModularPots);
+
+        setCreativeTab(ModularPots.tabModularPots);
+        setHardness(1.5f);
+        setResistance(5f);
+        setLightOpacity(0);
+        setStepSound(Block.soundTypeWood);
+        setBlockName(blockName);
 
         setBlockBoundsForItemRender();
     }
@@ -188,7 +195,7 @@ public class ThinLog extends Block
     private boolean isNeighborHardConnection (Block block) {
         if (block.getMaterial().isOpaque() && block.renderAsNormalBlock())
             return true;
-        if (block == ModularPots.largePot)
+        if (block == ModBlocks.largePot)
             return true;
         return false;
     }
@@ -198,7 +205,7 @@ public class ThinLog extends Block
             return true;
 
         return block instanceof BlockLeavesBase
-            || block == ModularPots.thinLogFence;
+            || block == ModBlocks.thinLogFence;
     }
 
     @Override

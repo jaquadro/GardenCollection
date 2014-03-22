@@ -1,7 +1,8 @@
 package com.jaquadro.minecraft.modularpots.item;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
-import com.jaquadro.minecraft.modularpots.block.LargePot;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
@@ -21,15 +22,15 @@ public class ItemLargePot extends ItemMultiTexture
     }
 
     private static String[] getSubTypes (Block block) {
-        if (block == ModularPots.largePot)
-            return LargePot.subTypes;
+        if (block == ModBlocks.largePot)
+            return BlockLargePot.subTypes;
 
         return new String[0];
     }
 
     @Override
     public String getUnlocalizedName (ItemStack itemStack) {
-        return super.getUnlocalizedName() + "." + LargePot.subTypes[itemStack.getItemDamage() % 2];
+        return super.getUnlocalizedName() + "." + BlockLargePot.subTypes[itemStack.getItemDamage() % 2];
     }
 
     @SideOnly(Side.CLIENT)

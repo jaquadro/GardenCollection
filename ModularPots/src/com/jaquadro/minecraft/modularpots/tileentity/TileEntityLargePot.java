@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.tileentity;
 
-import com.jaquadro.minecraft.modularpots.block.LargePotPlantProxy;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePotPlantProxy;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -139,7 +139,7 @@ public class TileEntityLargePot extends TileEntity
         getWorldObj().func_147479_m(xCoord, yCoord, zCoord); // markBlockForRenderUpdate
 
         int y = yCoord;
-        while (getWorldObj().getBlock(xCoord, ++y, zCoord) instanceof LargePotPlantProxy)
+        while (getWorldObj().getBlock(xCoord, ++y, zCoord) instanceof BlockLargePotPlantProxy)
             getWorldObj().func_147479_m(xCoord, y, zCoord);
     }
 

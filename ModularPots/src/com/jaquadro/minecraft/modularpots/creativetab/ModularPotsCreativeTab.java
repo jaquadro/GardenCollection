@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.creativetab;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,6 +16,6 @@ public class ModularPotsCreativeTab extends CreativeTabs
     @SideOnly(Side.CLIENT)
     @Override
     public Item getTabIconItem () {
-        return Item.getItemFromBlock(ModularPots.largePot);
+        return Item.getItemFromBlock(ModBlocks.largePot);
     }
 }

@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.inventory;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.item.crafting.PotteryManager;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
@@ -62,16 +63,16 @@ public class ContainerPotteryTable extends Container
 
         if (target != null && target.getItem() == Item.getItemFromBlock(Blocks.clay)) {
             if (pattern == null) {
-                craftResult.setInventorySlotContents(0, new ItemStack(ModularPots.largePot, 1, 1));
+                craftResult.setInventorySlotContents(0, new ItemStack(ModBlocks.largePot, 1, 1));
                 return;
             }
             else if (PotteryManager.instance().isRegisteredPattern(pattern))
-                target = new ItemStack(ModularPots.largePot, target.stackSize, 1);
+                target = new ItemStack(ModBlocks.largePot, target.stackSize, 1);
         }
 
         if (pattern != null && pattern.getItem() == Items.dye) {
-            if (target != null && target.getItem() == Item.getItemFromBlock(ModularPots.largePot) && (target.getItemDamage() & 15) == 0) {
-                craftResult.setInventorySlotContents(0, new ItemStack(ModularPots.largePotColored, 1, target.getItemDamage() | pattern.getItemDamage()));
+            if (target != null && target.getItem() == Item.getItemFromBlock(ModBlocks.largePot) && (target.getItemDamage() & 15) == 0) {
+                craftResult.setInventorySlotContents(0, new ItemStack(ModBlocks.largePotColored, 1, target.getItemDamage() | pattern.getItemDamage()));
                 return;
             }
         }

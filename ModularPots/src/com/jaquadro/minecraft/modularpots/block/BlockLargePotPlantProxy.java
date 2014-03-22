@@ -1,8 +1,9 @@
 package com.jaquadro.minecraft.modularpots.block;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
-import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.*;
 import cpw.mods.fml.relauncher.Side;
@@ -25,9 +26,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
-public class LargePotPlantProxy extends Block
+public class BlockLargePotPlantProxy extends Block
 {
     @SideOnly(Side.CLIENT)
     private IIcon transpIcon;
@@ -38,8 +40,12 @@ public class LargePotPlantProxy extends Block
     private int scratchZ;
     private boolean applyingBonemeal;
 
-    public LargePotPlantProxy () {
+    public BlockLargePotPlantProxy (String blockName) {
         super(Material.plants);
+
+        setHardness(0);
+        setLightOpacity(0);
+        setBlockName(blockName);
     }
 
     @Override
@@ -96,7 +102,6 @@ public class LargePotPlantProxy extends Block
     @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, Block block) {
         if (!hasValidUnderBlock(world, x, y, z)) {
-            //dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
             world.setBlockToAir(x, y, z);
         }
     }
@@ -114,7 +119,7 @@ public class LargePotPlantProxy extends Block
     }
 
     public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
-        LargePot block = getAttachedPot(world, x, y, z);
+        BlockLargePot block = getAttachedPot(world, x, y, z);
         if (block == null)
             return false;
 
@@ -124,14 +129,22 @@ public class LargePotPlantProxy extends Block
     }
 
     public boolean applyBonemeal (World world, int x, int y, int z) {
+        applyingBonemeal = true;
+
+        if (PlantHandlerRegistry.applyBonemeal(world, x, y, z)) {
+            applyingBonemeal = false;
+            return true;
+        }
+
         Block block = getItemBlock(world, x, y, z);
-        if (block != Blocks.sapling)
+        if (block != Blocks.sapling) {
+            applyingBonemeal = false;
             return false;
+        }
 
         TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
         int blockMeta = te.getFlowerPotData();
 
-        applyingBonemeal = true;
         scratchX = x;
         scratchY = y;
         scratchZ = z;
@@ -142,19 +155,19 @@ public class LargePotPlantProxy extends Block
         switch (blockMeta) {
             case 0:
             case 2:
-                generator = new WorldGenOakOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
                 break;
             case 1:
-                generator = new WorldGenPineOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                generator = new WorldGenPineOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
                 break;
             case 3:
-                generator = new WorldGenJungleOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                generator = new WorldGenJungleOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
                 break;
             case 4:
-                generator = new WorldGenAcaciaOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                generator = new WorldGenAcaciaOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
                 break;
             case 5:
-                generator = new WorldGenOakOrnTree(false, ModularPots.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
                 break;
         }
 
@@ -198,10 +211,7 @@ public class LargePotPlantProxy extends Block
     }
 
     private boolean isApplyingBonemealTo (int x, int y, int z) {
-        return applyingBonemeal
-            && scratchX == x
-            && scratchY == y
-            && scratchZ == z;
+        return applyingBonemeal;
     }
 
     @Override
@@ -223,7 +233,7 @@ public class LargePotPlantProxy extends Block
             return false;
 
         Block underBlock = world.getBlock(x, y - 1, z);
-        return (underBlock instanceof LargePotPlantProxy || underBlock instanceof LargePot);
+        return (underBlock instanceof BlockLargePotPlantProxy || underBlock instanceof BlockLargePot);
     }
 
     private boolean isUnderBlockPot (IBlockAccess world, int x, int y, int z) {
@@ -231,7 +241,7 @@ public class LargePotPlantProxy extends Block
             return false;
 
         Block underBlock = world.getBlock(x, y - 1, z);
-        return underBlock instanceof LargePot;
+        return underBlock instanceof BlockLargePot;
     }
 
     private int getAttachedPotYIndex (IBlockAccess world, int x, int y, int z) {
@@ -239,24 +249,24 @@ public class LargePotPlantProxy extends Block
             return 0;
 
         Block underBlock = world.getBlock(x, --y, z);
-        while (y > 0 && underBlock instanceof LargePotPlantProxy)
+        while (y > 0 && underBlock instanceof BlockLargePotPlantProxy)
             underBlock = world.getBlock(x, --y, z);
 
         return y;
     }
 
-    private LargePot getAttachedPot (IBlockAccess world, int x, int y, int z) {
+    private BlockLargePot getAttachedPot (IBlockAccess world, int x, int y, int z) {
         if (y == 0)
             return null;
 
         Block underBlock = world.getBlock(x, --y, z);
-        while (y > 0 && underBlock instanceof LargePotPlantProxy)
+        while (y > 0 && underBlock instanceof BlockLargePotPlantProxy)
             underBlock = world.getBlock(x, --y, z);
 
-        if (!(underBlock instanceof LargePot))
+        if (!(underBlock instanceof BlockLargePot))
             return null;
 
-        return (LargePot) underBlock;
+        return (BlockLargePot) underBlock;
     }
 
     public TileEntityLargePot getAttachedPotEntity (IBlockAccess world, int x, int y, int z) {
@@ -264,13 +274,13 @@ public class LargePotPlantProxy extends Block
             return null;
 
         Block underBlock = world.getBlock(x, --y, z);
-        while (y > 0 && underBlock instanceof LargePotPlantProxy)
+        while (y > 0 && underBlock instanceof BlockLargePotPlantProxy)
             underBlock = world.getBlock(x, --y, z);
 
-        if (!(underBlock instanceof LargePot))
+        if (!(underBlock instanceof BlockLargePot))
             return null;
 
-        LargePot largePot = (LargePot) underBlock;
+        BlockLargePot largePot = (BlockLargePot) underBlock;
         return largePot.getTileEntity(world, x, y, z);
     }
 

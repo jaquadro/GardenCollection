@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class PotteryTable extends BlockContainer
+public class BlockPotteryTable extends BlockContainer
 {
     private final Random rand = new Random();
 
@@ -29,9 +29,13 @@ public class PotteryTable extends BlockContainer
     @SideOnly(Side.CLIENT)
     private IIcon iconTop;
 
-    public PotteryTable () {
+    public BlockPotteryTable (String blockName) {
         super(Material.wood);
+
         setCreativeTab(ModularPots.tabModularPots);
+        setHardness(2.5f);
+        setStepSound(Block.soundTypeWood);
+        setBlockName(blockName);
     }
 
     @Override

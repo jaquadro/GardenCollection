@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.client.renderer;
 
-import com.jaquadro.minecraft.modularpots.block.LargePotPlantProxy;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePotPlantProxy;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -22,13 +22,13 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof LargePotPlantProxy))
+        if (!(block instanceof BlockLargePotPlantProxy))
             return false;
 
-        return renderWorldBlock(world, x, y, z, (LargePotPlantProxy) block, modelId, renderer);
+        return renderWorldBlock(world, x, y, z, (BlockLargePotPlantProxy) block, modelId, renderer);
     }
 
-    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, LargePotPlantProxy block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockLargePotPlantProxy block, int modelId, RenderBlocks renderer) {
         //Item item = block.getItemBlock(world, x, y, z);
         //Block itemBlock = (item instanceof IPlantable) ? ((IPlantable)item).getPlant(world, x, y, z) : Block.getBlockFromItem(item);
         Block itemBlock = block.getItemBlock(world, x, y, z);

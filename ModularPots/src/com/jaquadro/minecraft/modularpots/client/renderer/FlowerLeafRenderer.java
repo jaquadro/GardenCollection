@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.client.renderer;
 
-import com.jaquadro.minecraft.modularpots.block.FlowerLeaves;
+import com.jaquadro.minecraft.modularpots.block.BlockFlowerLeaves;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -18,13 +18,13 @@ public class FlowerLeafRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof FlowerLeaves))
+        if (!(block instanceof BlockFlowerLeaves))
             return false;
 
-        return renderWorldBlock(world, x, y, z, (FlowerLeaves) block, modelId, renderer);
+        return renderWorldBlock(world, x, y, z, (BlockFlowerLeaves) block, modelId, renderer);
     }
 
-    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, FlowerLeaves block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockFlowerLeaves block, int modelId, RenderBlocks renderer) {
         renderer.renderStandardBlock(block, x, y, z);
 
         Tessellator tessellator = Tessellator.instance;

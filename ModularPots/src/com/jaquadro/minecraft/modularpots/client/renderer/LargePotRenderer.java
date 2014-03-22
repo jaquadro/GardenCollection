@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.client.renderer;
 
-import com.jaquadro.minecraft.modularpots.block.LargePot;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -14,8 +14,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
-import static com.jaquadro.minecraft.modularpots.block.LargePot.Direction;
-import static com.jaquadro.minecraft.modularpots.block.LargePot.Direction.*;
+import static com.jaquadro.minecraft.modularpots.block.BlockLargePot.Direction;
+import static com.jaquadro.minecraft.modularpots.block.BlockLargePot.Direction.*;
 
 public class LargePotRenderer implements ISimpleBlockRenderingHandler
 {
@@ -27,13 +27,13 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof LargePot))
+        if (!(block instanceof BlockLargePot))
             return;
 
-        renderInventoryBlock((LargePot) block, metadata, modelId, renderer);
+        renderInventoryBlock((BlockLargePot) block, metadata, modelId, renderer);
     }
 
-    private void renderInventoryBlock (LargePot block, int metadata, int modelId, RenderBlocks renderer) {
+    private void renderInventoryBlock (BlockLargePot block, int metadata, int modelId, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
 
         int damage = metadata;
@@ -145,13 +145,13 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof LargePot))
+        if (!(block instanceof BlockLargePot))
             return false;
 
         if (ClientProxy.renderPass == 0)
-            return renderWorldBlockPass0(world, x, y, z, (LargePot) block, modelId, renderer);
+            return renderWorldBlockPass0(world, x, y, z, (BlockLargePot) block, modelId, renderer);
         else if (ClientProxy.renderPass == 1)
-            return renderWorldBlockPass1(world, x, y, z, (LargePot) block, modelId, renderer);
+            return renderWorldBlockPass1(world, x, y, z, (BlockLargePot) block, modelId, renderer);
 
         return false;
     }
@@ -161,7 +161,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         renderer.renderFaceYNeg(block, x, y, z, Blocks.hardened_clay.getIcon(0, 0));
     }
 
-    private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, LargePot block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, BlockLargePot block, int modelId, RenderBlocks renderer) {
         TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
         if (tileEntity == null) {
             renderEmptyPlane(block, x, y, z, renderer);
@@ -217,7 +217,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 
-    private boolean renderWorldBlockPass0 (IBlockAccess world, int x, int y, int z, LargePot block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlockPass0 (IBlockAccess world, int x, int y, int z, BlockLargePot block, int modelId, RenderBlocks renderer) {
         renderer.renderStandardBlock(block, x, y, z);
 
         int data = world.getBlockMetadata(x, y, z);
@@ -311,7 +311,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 
-    private void renderCorner (LargePot block, RenderBlocks renderer, Direction direction, int x, int y, int z, IIcon icon) {
+    private void renderCorner (BlockLargePot block, RenderBlocks renderer, Direction direction, int x, int y, int z, IIcon icon) {
         Tessellator tessellator = Tessellator.instance;
         float dim = .0625f;
 

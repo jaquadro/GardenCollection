@@ -1,7 +1,8 @@
 package com.jaquadro.minecraft.modularpots.item;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
-import com.jaquadro.minecraft.modularpots.block.ThinLogFence;
+import com.jaquadro.minecraft.modularpots.block.BlockThinLogFence;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -23,19 +24,19 @@ public class ItemThinLogFence extends ItemBlock
     @Override
     public String getUnlocalizedName (ItemStack itemStack) {
         int meta = itemStack.getItemDamage();
-        if (meta < 0 || meta >= ThinLogFence.subNames.length)
+        if (meta < 0 || meta >= BlockThinLogFence.subNames.length)
             meta = 0;
 
-        return super.getUnlocalizedName() + "." + ThinLogFence.subNames[meta];
+        return super.getUnlocalizedName() + "." + BlockThinLogFence.subNames[meta];
     }
 
     @Override
     public IIcon getIconFromDamage (int meta) {
-        return ModularPots.thinLogFence.getIcon(0, meta);
+        return ModBlocks.thinLogFence.getIcon(0, meta);
     }
 
     @Override
     public int getColorFromItemStack (ItemStack itemStack, int meta) {
-        return ModularPots.thinLogFence.getRenderColor(itemStack.getItemDamage());
+        return ModBlocks.thinLogFence.getRenderColor(itemStack.getItemDamage());
     }
 }

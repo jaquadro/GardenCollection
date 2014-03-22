@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.client.renderer;
 
-import com.jaquadro.minecraft.modularpots.block.ThinLogFence;
+import com.jaquadro.minecraft.modularpots.block.BlockThinLogFence;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -14,13 +14,13 @@ public class ThinLogFenceRenderer implements ISimpleBlockRenderingHandler
 {
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof ThinLogFence))
+        if (!(block instanceof BlockThinLogFence))
             return;
 
-        renderInventoryBlock((ThinLogFence) block, metadata, modelId, renderer);
+        renderInventoryBlock((BlockThinLogFence) block, metadata, modelId, renderer);
     }
 
-    public void renderInventoryBlock (ThinLogFence block, int metadata, int modelId, RenderBlocks renderer) {
+    public void renderInventoryBlock (BlockThinLogFence block, int metadata, int modelId, RenderBlocks renderer) {
         block.setBlockBoundsForItemRender();
         GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -40,7 +40,7 @@ public class ThinLogFenceRenderer implements ISimpleBlockRenderingHandler
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    private void renderSideAtOrigin (ThinLogFence block, int metadata, RenderBlocks renderer, Tessellator tessellator, float xs, float xe) {
+    private void renderSideAtOrigin (BlockThinLogFence block, int metadata, RenderBlocks renderer, Tessellator tessellator, float xs, float xe) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, 0.0F, -1.0F);
         renderer.setRenderBounds(xs, 0, 0, xe, 1, 1);
@@ -54,7 +54,7 @@ public class ThinLogFenceRenderer implements ISimpleBlockRenderingHandler
         tessellator.draw();
     }
 
-    private void renderPostAtOrigin (ThinLogFence block, int metadata, RenderBlocks renderer, Tessellator tessellator) {
+    private void renderPostAtOrigin (BlockThinLogFence block, int metadata, RenderBlocks renderer, Tessellator tessellator) {
         tessellator.startDrawingQuads();
         tessellator.setNormal(0.0F, -1.0F, 0.0F);
         renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, renderer.getBlockIconFromSideAndMetadata(block, 0, metadata));
@@ -87,13 +87,13 @@ public class ThinLogFenceRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        if (!(block instanceof ThinLogFence))
+        if (!(block instanceof BlockThinLogFence))
             return false;
 
-        return renderWorldBlock(world, x, y, z, (ThinLogFence) block, modelId, renderer);
+        return renderWorldBlock(world, x, y, z, (BlockThinLogFence) block, modelId, renderer);
     }
 
-    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, ThinLogFence block, int modelId, RenderBlocks renderer) {
+    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockThinLogFence block, int modelId, RenderBlocks renderer) {
         float margin = block.getMargin();
 
         renderer.setRenderBounds(margin, 0, margin, 1 - margin, 1, 1 - margin);

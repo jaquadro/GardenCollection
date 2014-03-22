@@ -1,10 +1,11 @@
 package com.jaquadro.minecraft.modularpots.block;
 
+import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
-import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -32,11 +33,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static com.jaquadro.minecraft.modularpots.block.LargePot.Direction.*;
-
-public class LargePot extends BlockContainer
+public class BlockLargePot extends BlockContainer
 {
     public static final String[] subTypes = new String[] { "default", "raw" };
 
@@ -91,11 +89,16 @@ public class LargePot extends BlockContainer
     // Scratch
     private int scratchDropMetadata;
 
-    public LargePot (boolean colored) {
+    public BlockLargePot (String blockName, boolean colored) {
         super(Material.clay);
 
         this.colored = colored;
-        this.setCreativeTab(ModularPots.tabModularPots);
+
+        setCreativeTab(ModularPots.tabModularPots);
+        setHardness(.5f);
+        setResistance(5f);
+        setStepSound(Block.soundTypeStone);
+        setBlockName(blockName);
     }
 
     @Override
@@ -249,7 +252,7 @@ public class LargePot extends BlockContainer
         if (!colored && meta == 1)
             return false;
 
-        LargePot pot = (LargePot) block;
+        BlockLargePot pot = (BlockLargePot) block;
         TileEntityLargePot teThis = getTileEntity(world, x, y, z);
         TileEntityLargePot teThat = getTileEntity(world, x + dx, y, z + dz);
         if (teThis == null || teThat == null)
@@ -435,9 +438,9 @@ public class LargePot extends BlockContainer
         if (itemBlock == null && plantable instanceof Block)
             itemBlock = (Block) plantable;
 
-        world.setBlock(x, y + 1, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage(), 3);
+        world.setBlock(x, y + 1, z, ModBlocks.largePotPlantProxy, itemStack.getItemDamage(), 3);
         if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
-            world.setBlock(x, y + 2, z, ModularPots.largePotPlantProxy, itemStack.getItemDamage() | 8, 3);
+            world.setBlock(x, y + 2, z, ModBlocks.largePotPlantProxy, itemStack.getItemDamage() | 8, 3);
 
         tile.setItem(itemStack.getItem(), itemStack.getItemDamage());
         tile.markDirty();

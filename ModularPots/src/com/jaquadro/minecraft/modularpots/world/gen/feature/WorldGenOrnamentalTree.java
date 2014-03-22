@@ -1,8 +1,7 @@
 package com.jaquadro.minecraft.modularpots.world.gen.feature;
 
-import com.jaquadro.minecraft.modularpots.block.LargePot;
+import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
@@ -36,7 +35,7 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
 
     @Override
     public boolean generate (World world, Random rand, int x, int y, int z) {
-        boolean potted = world.getBlock(x, y - 1, z) instanceof LargePot;
+        boolean potted = world.getBlock(x, y - 1, z) instanceof BlockLargePot;
         int height = potted ? 5 : 6;
         int trunkHeight = height - 4;
 
