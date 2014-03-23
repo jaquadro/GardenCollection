@@ -32,11 +32,11 @@ public class VillagerTradeHandler implements VillagerRegistry.IVillageTradeHandl
             if (ModularPots.config.hasPattern(i)) {
                 if (random.nextFloat() < buyProb) {
                     int emeralds = 1 + random.nextInt(4);
-                    recipeList.add(new MerchantRecipe(new ItemStack(ModularPots.potteryPattern, 1, i), new ItemStack(Items.emerald, emeralds)));
+                    recipeList.add(new MerchantRecipe(new ItemStack(ModItems.potteryPattern, 1, i), new ItemStack(Items.emerald, emeralds)));
                 }
                 else if (random.nextFloat() < sellProb) {
                     int emeralds = 8 + random.nextInt(16);
-                    recipeList.add(new MerchantRecipe(new ItemStack(Items.emerald, emeralds), new ItemStack(ModularPots.potteryPattern, 1, i)));
+                    recipeList.add(new MerchantRecipe(new ItemStack(Items.emerald, emeralds), new ItemStack(ModItems.potteryPattern, 1, i)));
                 }
             }
         }

@@ -40,18 +40,8 @@ public class ModularPots
     public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
 
     public static final ModBlocks blocks = new ModBlocks();
-
-    //public static Block largePot;
-    //public static Block largePotColored;
-    //public static Block largePotPlantProxy;
-    //public static Block thinLog;
-    //public static Block thinLogFence;
-    //public static Block flowerLeaves;
-    //public static Block potteryTable;
-
-    public static Item soilTestKit;
-    public static Item soilTestKitUsed;
-    public static Item potteryPattern;
+    public static final ModItems items = new ModItems();
+    public static final ModRecipes recipes = new ModRecipes();
 
     public static int potteryTableGuiID = 0;
 
@@ -68,65 +58,8 @@ public class ModularPots
         config = new ConfigManager(new File(event.getModConfigurationDirectory(), MOD_ID + ".patterns.cfg"));
 
         blocks.init();
-
-        initializeBlocks();
-
-        /*GameRegistry.registerBlock(largePot, ItemLargePot.class, MOD_ID + ":large_pot");
-        GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, MOD_ID + ":large_pot_colored");
-        GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
-        GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
-        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
-        //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
-        GameRegistry.registerBlock(potteryTable, MOD_ID + ":pottery_table");*/
-
-        GameRegistry.registerItem(soilTestKit, MOD_ID + ":soil_test_kit");
-        GameRegistry.registerItem(soilTestKitUsed, MOD_ID + ":soil_test_kit_used");
-        GameRegistry.registerItem(potteryPattern, MOD_ID + ":pottery_pattern");
-
-        GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
-        GameRegistry.registerTileEntity(TileEntityPotteryTable.class, MOD_ID + ":pottery_table");
-
-        ItemStack hardenedClayStack = new ItemStack(Blocks.hardened_clay);
-        GameRegistry.addRecipe(new ItemStack(blocks.largePot, 3), "x x", "x x", "xxx",
-            'x', hardenedClayStack);
-
-        for (int i = 0; i < 16; i++) {
-            ItemStack stainedClayStack = new ItemStack(Blocks.stained_hardened_clay, 1, i);
-            GameRegistry.addRecipe(new ItemStack(blocks.largePotColored, 3, 15 - i), "x x", "x x", "xxx",
-                'x', stainedClayStack);
-        }
-
-        for (int i = 0; i < BlockThinLog.subNames.length; i++) {
-            GameRegistry.addRecipe(new ItemStack(blocks.thinLogFence, 2, i), "xyx", " y ",
-                'x', Items.string, 'y', new ItemStack(blocks.thinLog, 1, i));
-
-            if (i / 4 == 0)
-                GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
-                    'x', new ItemStack(blocks.thinLog, 1, i));
-            else if (i / 4 == 1)
-                GameRegistry.addRecipe(new ItemStack(Blocks.log2, 1, i % 4), "xx", "xx",
-                    'x', new ItemStack(blocks.thinLog, 1, i));
-        }
-
-        GameRegistry.addRecipe(new ItemStack(blocks.potteryTable), "x", "y",
-            'x', Items.clay_ball, 'y', Blocks.crafting_table);
-
-        ItemStack itemDyeRed = new ItemStack(Items.dye, 1, 1);
-        ItemStack itemDyeGreen = new ItemStack(Items.dye, 1, 2);
-
-        GameRegistry.addRecipe(new ItemStack(soilTestKit), "xy", "zz",
-            'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
-        GameRegistry.addRecipe(new ItemStack(soilTestKit), "yx", "zz",
-            'x', itemDyeRed, 'y', itemDyeGreen, 'z', Items.glass_bottle);
-
-        GameRegistry.addSmelting(new ItemStack(blocks.largePot, 1, 1), new ItemStack(blocks.largePot, 1, 0), 0);
-        for (int i = 1; i < 256; i++) {
-            if (ModularPots.config.hasPattern(i))
-                GameRegistry.addSmelting(new ItemStack(blocks.largePot, 1, 1 | (i << 8)), new ItemStack(blocks.largePot, 1, (i << 8)), 0);
-        }
-
-        //ItemStack axeStack = new ItemStack(Items.stone_axe, 1, OreDictionary.WILDCARD_VALUE);
-        //GameRegistry.addShapelessRecipe(new ItemStack(thinLog, 4, 0), axeStack, new ItemStack(Blocks.log, 1, 0));
+        items.init();
+        recipes.init();
     }
 
     @Mod.EventHandler
@@ -141,7 +74,7 @@ public class ModularPots
 
             PatternConfig pattern = config.getPattern(i);
             for (int j = 0; j < pattern.getLocationCount(); j++)
-                ChestGenHooks.addItem(pattern.getGenLocation(j), new WeightedRandomChestContent(potteryPattern, i, 1, 1, pattern.getGenRarity(j)));
+                ChestGenHooks.addItem(pattern.getGenLocation(j), new WeightedRandomChestContent(items.potteryPattern, i, 1, 1, pattern.getGenRarity(j)));
         }
 
         VillagerTradeHandler.instance().load();
@@ -155,61 +88,8 @@ public class ModularPots
     @SubscribeEvent
     public void applyBonemeal (BonemealEvent event) {
         if (event.block == blocks.largePotPlantProxy) {
-            BlockLargePotPlantProxy proxyBlock = (BlockLargePotPlantProxy) blocks.largePotPlantProxy;
+            BlockLargePotPlantProxy proxyBlock = blocks.largePotPlantProxy;
             event.setCanceled(!proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z));
         }
-    }
-
-    private void initializeBlocks () {
-        /*largePot = new BlockLargePot(false)
-            .setHardness(0.5f)
-            .setResistance(5f)
-            .setStepSound(Block.soundTypeStone)
-            .setBlockName("largePot");
-
-        largePotColored = new BlockLargePot(true)
-            .setHardness(0.5f)
-            .setResistance(5f)
-            .setStepSound(Block.soundTypeStone)
-            .setBlockName("largePotColored");
-
-        largePotPlantProxy = new BlockLargePotPlantProxy()
-            .setHardness(0)
-            .setLightOpacity(0)
-            .setBlockName("largePotPlantProxy");
-
-        thinLog = new BlockThinLog()
-            .setHardness(1.5f)
-            .setResistance(5f)
-            .setLightOpacity(0)
-            .setStepSound(Block.soundTypeWood)
-            .setBlockName("thinLog");
-
-        thinLogFence = new BlockThinLogFence()
-            .setHardness(1.5f)
-            .setResistance(5f)
-            .setLightOpacity(0)
-            .setStepSound(Block.soundTypeWood)
-            .setBlockName("thinLogFence");
-
-        flowerLeaves = new BlockFlowerLeaves()
-            .setBlockName("flowerLeaves")
-            .setBlockTextureName("leaves");
-
-        potteryTable = new BlockPotteryTable()
-            .setHardness(2.5f)
-            .setStepSound(Block.soundTypeWood)
-            .setBlockName("potteryTable");*/
-
-        soilTestKit = new ItemSoilKit()
-            .setTextureName("soil_test_kit")
-            .setUnlocalizedName("soilTestKit");
-
-        soilTestKitUsed = new ItemUsedSoilKit()
-            .setTextureName("soil_test_kit")
-            .setUnlocalizedName("soilTestKitUsed");
-
-        potteryPattern = new ItemPotteryPattern()
-            .setUnlocalizedName("potteryPattern");
     }
 }

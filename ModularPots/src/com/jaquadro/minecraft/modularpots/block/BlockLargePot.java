@@ -1,10 +1,12 @@
 package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -385,14 +387,14 @@ public class BlockLargePot extends BlockContainer
     }
 
     protected boolean canApplyItemToSubstrate (TileEntityLargePot tile, ItemStack itemStack) {
-        return itemStack.getItem() == Items.water_bucket || itemStack.getItem() == ModularPots.soilTestKitUsed;
+        return itemStack.getItem() == Items.water_bucket || itemStack.getItem() == ModItems.usedSoilTestKit;
     }
 
     protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
         ItemStack item = player.inventory.getCurrentItem();
         if (item.getItem() == Items.water_bucket)
             applyWaterToSubstrate(world, x, y, z, tile, player);
-        else if (item.getItem() == ModularPots.soilTestKitUsed)
+        else if (item.getItem() == ModItems.usedSoilTestKit)
             applyTestKit(world, x, y, z, item);
     }
 
@@ -406,7 +408,7 @@ public class BlockLargePot extends BlockContainer
     }
 
     public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
-        if (testKit.getItem() != ModularPots.soilTestKitUsed)
+        if (testKit.getItem() != ModItems.usedSoilTestKit)
             return false;
 
         TileEntityLargePot tileEntity = getTileEntity(world, x, y, z);

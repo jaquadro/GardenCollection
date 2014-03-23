@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots.item.crafting;
 
 import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import net.minecraft.item.ItemStack;
 
@@ -23,7 +24,7 @@ public class PotteryManager
     private PotteryManager () {
         for (int i = 1; i < 256; i++) {
             if (ModularPots.config.hasPattern(i))
-                registerPattern(new ItemStack(ModularPots.potteryPattern, 1, i));
+                registerPattern(new ItemStack(ModItems.potteryPattern, 1, i));
         }
 
         registerTarget(new ItemStack(ModBlocks.largePot, 1, 1));

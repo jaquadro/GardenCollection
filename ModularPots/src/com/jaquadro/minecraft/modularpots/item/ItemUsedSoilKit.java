@@ -27,9 +27,11 @@ public class ItemUsedSoilKit extends Item
     @SideOnly(Side.CLIENT)
     private IIcon iconOverlay;
 
-    public ItemUsedSoilKit () {
+    public ItemUsedSoilKit (String unlocalizedName) {
+        setUnlocalizedName(unlocalizedName);
         setMaxStackSize(1);
         setHasSubtypes(true);
+        setTextureName("soil_test_kit");
         setCreativeTab(ModularPots.tabModularPots);
     }
 

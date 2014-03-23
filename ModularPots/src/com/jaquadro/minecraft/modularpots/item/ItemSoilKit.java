@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.item;
 
+import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,8 +17,10 @@ public class ItemSoilKit extends Item
     @SideOnly(Side.CLIENT)
     private IIcon icon;
 
-    public ItemSoilKit () {
+    public ItemSoilKit (String unlocalizedName) {
+        setUnlocalizedName(unlocalizedName);
         setMaxStackSize(64);
+        setTextureName("soil_test_kit");
         setCreativeTab(ModularPots.tabModularPots);
     }
 
@@ -30,7 +33,7 @@ public class ItemSoilKit extends Item
         int temperature = (int)(Math.min(1, Math.max(0, biome.temperature)) * 255) & 255;
         int rainfall = (int)(Math.min(1, Math.max(0, biome.rainfall)) * 255) & 255;
 
-        ItemStack usedKit = new ItemStack(ModularPots.soilTestKitUsed, 1, rainfall << 8 | temperature);
+        ItemStack usedKit = new ItemStack(ModItems.usedSoilTestKit, 1, rainfall << 8 | temperature);
 
         world.playSoundAtEntity(player, "step.grass", 1.0f, 1.0f);
 

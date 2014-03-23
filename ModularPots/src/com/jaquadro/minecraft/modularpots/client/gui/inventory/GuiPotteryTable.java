@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots.client.gui.inventory;
 
 import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.inventory.ContainerPotteryTable;
@@ -53,7 +54,7 @@ public class GuiPotteryTable extends GuiContainer
             Slot slot = inventorySlots.getSlot(3 + i);
             if (slot != null && slot.getStack() != null) {
                 ItemStack item = slot.getStack();
-                if (item.getItem() == ModularPots.potteryPattern) {
+                if (item.getItem() == ModItems.potteryPattern) {
                     BlockLargePot largePot = ModBlocks.largePot;
 
                     IIcon pattern = largePot.getOverlayIcon(item.getItemDamage());

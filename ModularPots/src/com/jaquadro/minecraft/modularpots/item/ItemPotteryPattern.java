@@ -19,7 +19,8 @@ public class ItemPotteryPattern extends Item
     @SideOnly(Side.CLIENT)
     private IIcon[] iconArray = new IIcon[16];
 
-    public ItemPotteryPattern () {
+    public ItemPotteryPattern (String unlocalizedName) {
+        setUnlocalizedName(unlocalizedName);
         setMaxStackSize(1);
         setHasSubtypes(true);
         setCreativeTab(ModularPots.tabModularPots);

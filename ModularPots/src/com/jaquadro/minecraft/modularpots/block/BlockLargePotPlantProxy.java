@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
@@ -26,7 +27,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 public class BlockLargePotPlantProxy extends Block
@@ -112,7 +112,7 @@ public class BlockLargePotPlantProxy extends Block
         if (itemStack == null)
             return false;
 
-        if (itemStack.getItem() == ModularPots.soilTestKitUsed)
+        if (itemStack.getItem() == ModItems.usedSoilTestKit)
             return applyTestKit(world, x, y, z, itemStack);
 
         return false;

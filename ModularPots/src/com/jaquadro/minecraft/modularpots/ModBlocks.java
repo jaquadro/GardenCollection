@@ -5,6 +5,8 @@ import com.jaquadro.minecraft.modularpots.item.ItemLargePot;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModBlocks
@@ -35,5 +37,8 @@ public class ModBlocks
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
         GameRegistry.registerBlock(potteryTable, MOD_ID + ":pottery_table");
         //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
+
+        GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
+        GameRegistry.registerTileEntity(TileEntityPotteryTable.class, MOD_ID + ":pottery_table");
     }
 }
