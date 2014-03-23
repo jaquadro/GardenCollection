@@ -20,10 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDye;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -379,6 +376,9 @@ public class BlockLargePot extends BlockContainer
         }
         else {
             tile.setSubstrate(substrate.getItem(), substrate.getItemDamage());
+            if (Block.getBlockFromItem(substrate.getItem()) == Blocks.farmland)
+                tile.setSubstrate(substrate.getItem(), 1, substrate.getItemDamage());
+
             tile.markDirty();
             if (!player.capabilities.isCreativeMode && --substrate.stackSize <= 0)
                 player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
@@ -387,13 +387,17 @@ public class BlockLargePot extends BlockContainer
     }
 
     protected boolean canApplyItemToSubstrate (TileEntityLargePot tile, ItemStack itemStack) {
-        return itemStack.getItem() == Items.water_bucket || itemStack.getItem() == ModItems.usedSoilTestKit;
+        return itemStack.getItem() == Items.water_bucket
+            || itemStack.getItem() == ModItems.usedSoilTestKit
+            || itemStack.getItem() instanceof ItemHoe;
     }
 
     protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
         ItemStack item = player.inventory.getCurrentItem();
         if (item.getItem() == Items.water_bucket)
             applyWaterToSubstrate(world, x, y, z, tile, player);
+        else if (item.getItem() instanceof ItemHoe)
+            applyHoeToSubstrate(world, x, y, z, tile, player);
         else if (item.getItem() == ModItems.usedSoilTestKit)
             applyTestKit(world, x, y, z, item);
     }
@@ -404,6 +408,18 @@ public class BlockLargePot extends BlockContainer
             tile.markDirty();
 
             world.markBlockForUpdate(x, y, z);
+        }
+    }
+
+    protected void applyHoeToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
+        Block substrate = Block.getBlockFromItem(tile.getSubstrate());
+        if (substrate == Blocks.dirt || substrate == Blocks.grass) {
+            tile.setSubstrate(Item.getItemFromBlock(Blocks.farmland), 1, tile.getSubstrateData());
+            tile.markDirty();
+
+            world.markBlockForUpdate(x, y, z);
+            world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.farmland.stepSound.getStepResourcePath(),
+                (Blocks.farmland.stepSound.getVolume() + 1) / 2f, Blocks.farmland.stepSound.getPitch() * .8f);
         }
     }
 
@@ -475,7 +491,8 @@ public class BlockLargePot extends BlockContainer
             || block == Blocks.gravel
             || block == Blocks.soul_sand
             || block == Blocks.grass
-            || block == Blocks.water;
+            || block == Blocks.water
+            || block == Blocks.farmland;
     }
 
     private boolean isSubstrateSolid (Item item) {
