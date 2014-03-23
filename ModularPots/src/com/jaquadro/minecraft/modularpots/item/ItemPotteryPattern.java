@@ -17,7 +17,7 @@ import java.util.List;
 public class ItemPotteryPattern extends Item
 {
     @SideOnly(Side.CLIENT)
-    private IIcon[] iconArray = new IIcon[16];
+    private IIcon[] iconArray;
 
     public ItemPotteryPattern (String unlocalizedName) {
         setUnlocalizedName(unlocalizedName);
@@ -51,6 +51,7 @@ public class ItemPotteryPattern extends Item
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons (IIconRegister iconRegister) {
+        iconArray = new IIcon[16];
         for (int i = 0; i < 16; i++)
             iconArray[i] = iconRegister.registerIcon(ModularPots.MOD_ID + ":pottery_pattern_" + i);
     }

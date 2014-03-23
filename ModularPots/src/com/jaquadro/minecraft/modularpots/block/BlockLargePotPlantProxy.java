@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BlockLargePotPlantProxy extends Block
@@ -208,6 +209,12 @@ public class BlockLargePotPlantProxy extends Block
         world.notifyBlockOfNeighborChange(x, y - 1, z, block);
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
+        return drops;
     }
 
     private boolean isApplyingBonemealTo (int x, int y, int z) {
