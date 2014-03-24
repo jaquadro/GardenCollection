@@ -7,7 +7,9 @@ import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 
 public class ModBlocks
 {
@@ -40,5 +42,13 @@ public class ModBlocks
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, MOD_ID + ":pottery_table");
+    }
+
+    public static Block get (String name) {
+        return GameRegistry.findBlock(ModularPots.MOD_ID, name);
+    }
+
+    public static String getQualifiedName (Block block) {
+        return GameData.blockRegistry.getNameForObject(block);
     }
 }

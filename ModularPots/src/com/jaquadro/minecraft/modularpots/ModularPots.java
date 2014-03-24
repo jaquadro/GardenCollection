@@ -42,6 +42,7 @@ public class ModularPots
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModItems items = new ModItems();
     public static final ModRecipes recipes = new ModRecipes();
+    public static final ModIntegration integration = new ModIntegration();
 
     public static int potteryTableGuiID = 0;
 
@@ -78,11 +79,13 @@ public class ModularPots
         }
 
         VillagerTradeHandler.instance().load();
+        integration.init();
     }
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         PlantHandlerRegistry.init();
+        integration.postInit();
     }
 
     @SubscribeEvent
