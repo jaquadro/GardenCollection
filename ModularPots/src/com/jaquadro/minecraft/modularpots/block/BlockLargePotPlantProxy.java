@@ -41,6 +41,9 @@ public class BlockLargePotPlantProxy extends Block
     private int scratchZ;
     private boolean applyingBonemeal;
 
+    // Reentrant Flags
+    private int reeLightValue;
+
     public BlockLargePotPlantProxy (String blockName) {
         super(Material.plants);
 
@@ -219,6 +222,29 @@ public class BlockLargePotPlantProxy extends Block
 
     private boolean isApplyingBonemealTo (int x, int y, int z) {
         return applyingBonemeal;
+    }
+
+    @Override
+    public int getLightValue (IBlockAccess world, int x, int y, int z) {
+        if (reeLightValue > 0)
+            return getLightValue();
+
+        reeLightValue++;
+
+        Block block = getItemBlock(world, x, y, z);
+        int value = (block == null) ? super.getLightValue(world, x, y, z) : block.getLightValue(world, x, y, z);
+
+        reeLightValue--;
+        return value;
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock (World world, int x, int y, int z, Entity entity) {
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
+            super.onEntityCollidedWithBlock(world, x, y, z, entity);
+
+        block.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 
     @Override
