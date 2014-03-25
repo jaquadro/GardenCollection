@@ -114,6 +114,11 @@ public class BlockThinLog extends Block
     }
 
     @Override
+    public boolean shouldSideBeRendered (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        return true;
+    }
+
+    @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int meta) {
         byte range = 4;
         int height = range + 1;
@@ -169,8 +174,29 @@ public class BlockThinLog extends Block
         boolean connectXPos = (connectFlagsY == 0 && hardXPos)
             || (blockXPos == this && !hardConnectionXPos && (connectFlagsY != 3 || connectFlagsXPos != 3));
 
+        boolean connectSide = connectZNeg | connectZPos | connectXNeg | connectXPos;
+        if (!connectSide && (connectFlagsY & 1) == 0) {
+            if (hardZNeg)
+                connectZNeg = true;
+            if (hardZPos)
+                connectZPos = true;
+            if (hardXNeg)
+                connectXNeg = true;
+            if (hardXPos)
+                connectXPos = true;
+        }
+
         if (!(connectZNeg | connectZPos | connectXNeg | connectXPos))
             connectFlagsY = 3;
+
+        if (connectFlagsY == 2 && hardZNeg)
+            connectZNeg = true;
+        if (connectFlagsY == 2 && hardZPos)
+            connectZPos = true;
+        if (connectFlagsY == 2 && hardXNeg)
+            connectXNeg = true;
+        if (connectFlagsY == 2 && hardXPos)
+            connectXPos = true;
 
         return connectFlagsY | (connectZNeg ? 4 : 0) | (connectZPos ? 8 : 0) |
             (connectXNeg ? 16 : 0) | (connectXPos ? 32 : 0);
