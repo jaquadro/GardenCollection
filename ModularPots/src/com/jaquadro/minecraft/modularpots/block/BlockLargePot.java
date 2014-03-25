@@ -389,11 +389,47 @@ public class BlockLargePot extends BlockContainer
     protected boolean canApplyItemToSubstrate (TileEntityLargePot tile, ItemStack itemStack) {
         return itemStack.getItem() == Items.water_bucket
             || itemStack.getItem() == ModItems.usedSoilTestKit
-            || itemStack.getItem() instanceof ItemHoe;
+            || itemStack.getItem() == Items.bucket
+            || itemStack.getItem() instanceof ItemHoe
+            || itemStack.getItem() instanceof ItemTool;
     }
 
     protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityLargePot tile, EntityPlayer player) {
         ItemStack item = player.inventory.getCurrentItem();
+        if (item.getItem() == Items.bucket) {
+            if (Block.getBlockFromItem(tile.getSubstrate()) == Blocks.water) {
+                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.water_bucket));
+                tile.setSubstrate(null, 0);
+                tile.markDirty();
+                world.markBlockForUpdate(x, y, z);
+            }
+            return;
+        }
+
+        if (item.getItem() instanceof ItemTool && item.getItem().getToolClasses(item).contains("shovel")) {
+            if (Block.getBlockFromItem(tile.getSubstrate()) != Blocks.water) {
+                ItemStack drop = new ItemStack(tile.getSubstrate(), 1, tile.getSubstrateOriginalData());
+                dropBlockAsItem(world, x, y, z, drop);
+
+                if (tile.getFlowerPotItem() != null) {
+                    drop = new ItemStack(tile.getFlowerPotItem(), 1, tile.getFlowerPotData());
+                    dropBlockAsItem(world, x, y, z, drop);
+                }
+
+                tile.setSubstrate(null, 0);
+                tile.setItem(null, 0);
+                tile.markDirty();
+                world.markBlockForUpdate(x, y, z);
+
+                world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.dirt.stepSound.getStepResourcePath(),
+                    (Blocks.dirt.stepSound.getVolume() + 1) / 2f, Blocks.dirt.stepSound.getPitch() * .8f);
+
+                if (world.getBlock(x, y + 1, z) == ModBlocks.largePotPlantProxy)
+                    world.setBlockToAir(x, y + 1, z);
+            }
+            return;
+        }
+
         if (item.getItem() == Items.water_bucket)
             applyWaterToSubstrate(world, x, y, z, tile, player);
         else if (item.getItem() instanceof ItemHoe)
