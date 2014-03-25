@@ -16,8 +16,8 @@ public class TreecapitatorIntegration
             return;
 
         String thinLogs1 = ModBlocks.getQualifiedName(ModBlocks.thinLog);
-        String mcLeaves1 = "18";
-        String mcLeaves2 = "161";
+        String mcLeaves1 = "minecraft:leaves";
+        String mcLeaves2 = "minecraft:leaves2";
 
         NBTTagCompound tpModCfg = new NBTTagCompound();
         tpModCfg.setString("modID", ModularPots.MOD_ID);
@@ -25,44 +25,44 @@ public class TreecapitatorIntegration
         NBTTagList treeList = new NBTTagList();
 
         NBTTagCompound tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_oak");
+        tree.setString("treeName", "small_oak");
         tree.setString("logs", String.format("%s,0", thinLogs1));
-        tree.setString("leaves", String.format("%s,0", mcLeaves1));
+        tree.setString("leaves", String.format("%s,0; %s,8", mcLeaves1, mcLeaves1));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 
         tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_spruce");
+        tree.setString("treeName", "small_spruce");
         tree.setString("logs", String.format("%s,1", thinLogs1));
-        tree.setString("leaves", String.format("%s,1", mcLeaves1));
+        tree.setString("leaves", String.format("%s,1; %s,9", mcLeaves1, mcLeaves1));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 
         tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_birch");
+        tree.setString("treeName", "small_birch");
         tree.setString("logs", String.format("%s,2", thinLogs1));
-        tree.setString("leaves", String.format("%s,2", mcLeaves1));
+        tree.setString("leaves", String.format("%s,2; %s,10", mcLeaves1, mcLeaves1));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 
         tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_jungle");
+        tree.setString("treeName", "small_jungle");
         tree.setString("logs", String.format("%s,3", thinLogs1));
-        tree.setString("leaves", String.format("%s,3", mcLeaves1));
+        tree.setString("leaves", String.format("%s,3; %s,11", mcLeaves1, mcLeaves1));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 
         tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_acacia");
+        tree.setString("treeName", "small_acacia");
         tree.setString("logs", String.format("%s,5", thinLogs1));
-        tree.setString("leaves", String.format("%s,0", mcLeaves2));
+        tree.setString("leaves", String.format("%s,0; %s,8", mcLeaves2, mcLeaves2));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 
         tree = new NBTTagCompound();
-        tree.setString("treeName", "modpots_small_darkoak");
+        tree.setString("treeName", "small_darkoak");
         tree.setString("logs", String.format("%s,6", thinLogs1));
-        tree.setString("leaves", String.format("%s,1", mcLeaves2));
+        tree.setString("leaves", String.format("%s,1; %s,9", mcLeaves2, mcLeaves2));
         tree.setBoolean("requireLeafDecayCheck", false);
         treeList.appendTag(tree);
 

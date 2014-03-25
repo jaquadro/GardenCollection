@@ -32,16 +32,16 @@ public class ModBlocks
 
         String MOD_ID = ModularPots.MOD_ID;
 
-        GameRegistry.registerBlock(largePot, ItemLargePot.class, MOD_ID + ":large_pot");
-        GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, MOD_ID + ":large_pot_colored");
-        GameRegistry.registerBlock(largePotPlantProxy, MOD_ID + ":large_pot_plant_proxy");
-        GameRegistry.registerBlock(thinLog, ItemThinLog.class, MOD_ID + ":thin_log");
-        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, MOD_ID + ":thin_log_fence");
-        GameRegistry.registerBlock(potteryTable, MOD_ID + ":pottery_table");
-        //GameRegistry.registerBlock(flowerLeaves, MOD_ID + ":flower_leaves");
+        GameRegistry.registerBlock(largePot, ItemLargePot.class, "large_pot");
+        GameRegistry.registerBlock(largePotColored, ItemLargePotColored.class, "large_pot_colored");
+        GameRegistry.registerBlock(largePotPlantProxy, "large_pot_plant_proxy");
+        GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
+        GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
+        GameRegistry.registerBlock(potteryTable, "pottery_table");
+        //GameRegistry.registerBlock(flowerLeaves, "flower_leaves");
 
-        GameRegistry.registerTileEntity(TileEntityLargePot.class, MOD_ID + ":large_pot");
-        GameRegistry.registerTileEntity(TileEntityPotteryTable.class, MOD_ID + ":pottery_table");
+        GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
+        GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));
     }
 
     public static Block get (String name) {

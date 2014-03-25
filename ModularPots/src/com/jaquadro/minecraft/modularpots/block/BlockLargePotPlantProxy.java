@@ -243,8 +243,8 @@ public class BlockLargePotPlantProxy extends Block
         Block block = getItemBlock(world, x, y, z);
         if (block == null)
             super.onEntityCollidedWithBlock(world, x, y, z, entity);
-
-        block.onEntityCollidedWithBlock(world, x, y, z, entity);
+        else
+            block.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 
     @Override

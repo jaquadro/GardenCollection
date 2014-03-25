@@ -18,8 +18,8 @@ public class ModItems
 
         String MOD_ID = ModularPots.MOD_ID;
 
-        GameRegistry.registerItem(soilTestKit, MOD_ID + ":soil_test_kit");
-        GameRegistry.registerItem(usedSoilTestKit, MOD_ID + ":soil_test_kit_used");
-        GameRegistry.registerItem(potteryPattern, MOD_ID + ":pottery_pattern");
+        GameRegistry.registerItem(soilTestKit, "soil_test_kit");
+        GameRegistry.registerItem(usedSoilTestKit, "soil_test_kit_used");
+        GameRegistry.registerItem(potteryPattern, "pottery_pattern");
     }
 }
