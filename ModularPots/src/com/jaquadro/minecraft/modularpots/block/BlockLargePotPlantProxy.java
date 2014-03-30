@@ -11,6 +11,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -247,6 +249,16 @@ public class BlockLargePotPlantProxy extends Block
             block.onEntityCollidedWithBlock(world, x, y, z, entity);
     }
 
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int colorMultiplier (IBlockAccess blockAccess, int x, int y, int z) {
+        Block block = getItemBlock(blockAccess, x, y, z);
+        if (block == null)
+            return super.colorMultiplier(blockAccess, x, y, z);
+        else
+            return block.colorMultiplier(blockAccess, x, y, z);
+    }
+
     @Override
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
         Block block = getItemBlock(world, x, y, z);
@@ -259,6 +271,39 @@ public class BlockLargePotPlantProxy extends Block
     @Override
     public IIcon getIcon (int side, int data) {
         return transpIcon;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+        TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
+        if (te == null || te.getFlowerPotItem() == null)
+            return true;
+
+        Block proxy = Block.getBlockFromItem(te.getFlowerPotItem());
+        if (proxy == null || proxy == Blocks.air)
+            return true;
+
+        byte count = 4;
+        for (int ix = 0; ix < count; ++ix)
+        {
+            for (int iy = 0; iy < count; ++iy)
+            {
+                for (int iz = 0; iz < count; ++iz)
+                {
+                    double xOff = (double)x + ((double)ix + 0.5D) / (double)count;
+                    double yOff = (double)y + ((double)iy + 0.5D) / (double)count;
+                    double zOff = (double)z + ((double)iz + 0.5D) / (double)count;
+
+                    EntityDiggingFX fx = new EntityDiggingFX(world, xOff, yOff, zOff, xOff - (double) x - 0.5D, yOff - (double) y - 0.5D, zOff - (double) z - 0.5D, this, meta);
+                    fx.setParticleIcon(proxy.getIcon(world.rand.nextInt(6), te.getFlowerPotData()));
+
+                    effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
+                }
+            }
+        }
+
+        return true;
     }
 
     private boolean hasValidUnderBlock (IBlockAccess world, int x, int y, int z) {
