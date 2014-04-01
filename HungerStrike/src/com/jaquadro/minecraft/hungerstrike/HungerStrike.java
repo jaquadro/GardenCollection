@@ -21,7 +21,7 @@ public class HungerStrike
 {
     public static final String MOD_ID = "hungerstrike";
     static final String MOD_NAME = "Hunger Strike";
-    static final String MOD_VERSION = "1.7.2.0";
+    static final String MOD_VERSION = "1.7.2.1";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.hungerstrike.";
 
     @Mod.Instance(MOD_ID)

@@ -86,7 +86,7 @@ public class ExtendedPlayer implements IExtendedEntityProperties
         if (FMLServerHandler.instance().getSide() == Side.SERVER) {
             int foodDiff = player.getFoodStats().getFoodLevel() - startHunger;
             if (foodDiff > 0)
-                player.heal(foodDiff / 2f);
+                player.heal(foodDiff * (float)HungerStrike.instance.config.getFoodHealFactor());
         }
 
         setFoodData(player.getFoodStats(), calcBaselineHunger(), 1);
