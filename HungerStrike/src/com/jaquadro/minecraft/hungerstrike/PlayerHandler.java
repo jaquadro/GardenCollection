@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.hungerstrike;
 
 import com.mojang.authlib.GameProfile;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -78,9 +79,9 @@ public class PlayerHandler
         return store.remove(name);
     }
 
-    public void tick (EntityPlayer player, TickEvent.Phase phase) {
+    public void tick (EntityPlayer player, TickEvent.Phase phase, Side side) {
         ExtendedPlayer playerExt = ExtendedPlayer.get(player);
         if (playerExt != null)
-            playerExt.tick(phase);
+            playerExt.tick(phase, side);
     }
 }

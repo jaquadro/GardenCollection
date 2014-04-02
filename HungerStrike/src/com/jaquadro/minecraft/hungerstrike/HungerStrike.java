@@ -21,7 +21,7 @@ public class HungerStrike
 {
     public static final String MOD_ID = "hungerstrike";
     static final String MOD_NAME = "Hunger Strike";
-    static final String MOD_VERSION = "1.7.2.1";
+    static final String MOD_VERSION = "1.7.2.2";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.hungerstrike.";
 
     @Mod.Instance(MOD_ID)
@@ -52,7 +52,7 @@ public class HungerStrike
 
     @SubscribeEvent
     public void tick (TickEvent.PlayerTickEvent event) {
-        proxy.playerHandler.tick(event.player, event.phase);
+        proxy.playerHandler.tick(event.player, event.phase, event.side);
     }
 
     @SubscribeEvent

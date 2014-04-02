@@ -67,14 +67,14 @@ public class ExtendedPlayer implements IExtendedEntityProperties
             return mode == ConfigManager.Mode.ALL;
     }
 
-    public void tick (TickEvent.Phase phase) {
+    public void tick (TickEvent.Phase phase, Side side) {
         if (!shouldTick())
             return;
 
         if (phase == TickEvent.Phase.START)
             tickStart();
         else if (phase == TickEvent.Phase.END)
-            tickEnd();;
+            tickEnd(side);
     }
 
     private void tickStart () {
@@ -82,8 +82,8 @@ public class ExtendedPlayer implements IExtendedEntityProperties
         startHunger = player.getFoodStats().getFoodLevel();
     }
 
-    private void tickEnd () {
-        if (FMLServerHandler.instance().getSide() == Side.SERVER) {
+    private void tickEnd (Side side) {
+        if (side == Side.SERVER) {
             int foodDiff = player.getFoodStats().getFoodLevel() - startHunger;
             if (foodDiff > 0)
                 player.heal(foodDiff * (float)HungerStrike.instance.config.getFoodHealFactor());
