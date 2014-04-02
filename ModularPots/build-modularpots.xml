@@ -18,7 +18,7 @@
         <delete dir="${dir.obf}" />
         <exec executable="cmd" dir="${dir.mcp}">
             <arg value="/c" />
-            <arg value="reobfuscate.bat" />
+            <arg value="reobfuscate_srg.bat" />
         </exec>
         <copy file="mcmod.info" todir="${dir.obf}" />
         <copy file="pack.mcmeta" todir="${dir.obf}" />
