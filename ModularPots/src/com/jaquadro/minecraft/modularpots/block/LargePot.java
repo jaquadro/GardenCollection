@@ -374,6 +374,9 @@ public class LargePot extends BlockContainer
         if (item == Item.bucketWater)
             return true;
 
+        if (item.itemID >= Block.blocksList.length)
+            return false;
+
         Block block = Block.blocksList[item.itemID];
         if (block == null)
             return false;

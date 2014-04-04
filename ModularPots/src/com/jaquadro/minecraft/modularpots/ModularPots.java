@@ -27,7 +27,7 @@ public class ModularPots
 {
     public static final String MOD_ID = "modularpots";
     static final String MOD_NAME = "Modular Flower Pots";
-    static final String MOD_VERSION = "1.6.4.0";
+    static final String MOD_VERSION = "1.6.4.2";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.modularpots.";
 
     public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
