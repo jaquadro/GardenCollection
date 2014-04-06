@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
+import com.jaquadro.minecraft.modularpots.block.support.SaplingRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.*;
@@ -143,39 +144,40 @@ public class BlockLargePotPlantProxy extends Block
         }
 
         Block block = getItemBlock(world, x, y, z);
-        if (block != Blocks.sapling) {
-            applyingBonemeal = false;
-            return false;
-        }
-
         TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
         int blockMeta = te.getFlowerPotData();
 
-        scratchX = x;
-        scratchY = y;
-        scratchZ = z;
+        WorldGenerator generator = SaplingRegistry.getGenerator(block, blockMeta);
+        if (generator == null) {
+            applyingBonemeal = false;
+            return false;
+
+            /*if (block != Blocks.sapling) {
+                applyingBonemeal = false;
+                return false;
+            }
+
+            switch (blockMeta) {
+                case 0:
+                case 2:
+                    generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                    break;
+                case 1:
+                    generator = new WorldGenPineOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                    break;
+                case 3:
+                    generator = new WorldGenJungleOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
+                    break;
+                case 4:
+                    generator = new WorldGenAcaciaOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                    break;
+                case 5:
+                    generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
+                    break;
+            }*/
+        }
 
         world.setBlock(x, y, z, Blocks.air, 0, 4);
-
-        WorldGenerator generator = null;
-        switch (blockMeta) {
-            case 0:
-            case 2:
-                generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                break;
-            case 1:
-                generator = new WorldGenPineOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                break;
-            case 3:
-                generator = new WorldGenJungleOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                break;
-            case 4:
-                generator = new WorldGenAcaciaOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
-                break;
-            case 5:
-                generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
-                break;
-        }
 
         if (generator == null || !generator.generate(world, world.rand, x, y, z))
             world.setBlock(x, y, z, this, blockMeta, 4);

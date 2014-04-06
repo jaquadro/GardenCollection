@@ -2,10 +2,14 @@ package com.jaquadro.minecraft.modularpots.block;
 
 import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
+import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
@@ -14,6 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -21,8 +26,9 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Map.Entry;
 
-public class BlockThinLog extends Block
+public class BlockThinLog extends BlockContainer
 {
     public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
@@ -238,20 +244,53 @@ public class BlockThinLog extends Block
     public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
         for (int i = 0; i < 6; i++)
             blockList.add(new ItemStack(item, 1, i));
+
+        for (Entry<UniqueMetaIdentifier, Block> entry : WoodRegistry.registeredTypes()) {
+            int id = TileEntityWoodProxy.composeMetadata(entry.getValue(), entry.getKey().meta);
+            blockList.add(new ItemStack(item, 1, id));
+        }
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (int side, int meta) {
-        int superMeta = meta % 4;
+        int ometa = 0;
         if (orientation == 1)
-            superMeta |= 8;
+            ometa |= 8;
         else if (orientation == 2)
-            superMeta |= 4;
+            ometa |= 4;
         else if (orientation == 3)
-            superMeta |= 12;
+            ometa |= 12;
 
-        return getIconSource(meta).getIcon(side, superMeta);
+        int protoMeta = TileEntityWoodProxy.getMetaFromComposedMetadata(meta);
+        Block protoBlock = TileEntityWoodProxy.getBlockFromComposedMetadata(meta);
+        if (protoBlock == null)
+            protoBlock = Blocks.log;
+
+        return protoBlock.getIcon(side, protoMeta | ometa);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        TileEntityWoodProxy te = getTileEntity(blockAccess, x, y, z);
+        if (te == null)
+            return super.getIcon(blockAccess, x, y, z, side);
+
+        int ometa = 0;
+        if (orientation == 1)
+            ometa |= 8;
+        else if (orientation == 2)
+            ometa |= 4;
+        else if (orientation == 3)
+            ometa |= 12;
+
+        int protoMeta = te.getProtoMeta();
+        Block protoBlock = te.getProtoBlock();
+        if (protoBlock == null)
+            protoBlock = Blocks.log;
+
+        return protoBlock.getIcon(side, protoMeta | ometa);
     }
 
     private Block getIconSource (int meta) {
@@ -265,8 +304,21 @@ public class BlockThinLog extends Block
         }
     }
 
+    private TileEntityWoodProxy getTileEntity (IBlockAccess blockAccess, int x, int y, int z) {
+        TileEntity te = blockAccess.getTileEntity(x, y, z);
+        if (te != null && te instanceof TileEntityWoodProxy)
+            return (TileEntityWoodProxy) te;
+
+        return null;
+    }
+
     @Override
     public boolean canSustainLeaves (IBlockAccess world, int x, int y, int z) {
         return true;
+    }
+
+    @Override
+    public TileEntity createNewTileEntity (World world, int meta) {
+        return null;
     }
 }

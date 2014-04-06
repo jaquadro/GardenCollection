@@ -1,12 +1,14 @@
 package com.jaquadro.minecraft.modularpots;
 
 import com.jaquadro.minecraft.modularpots.block.*;
+import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePot;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -42,6 +44,7 @@ public class ModBlocks
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));
+        GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
     }
 
     public static Block get (String name) {
@@ -50,5 +53,10 @@ public class ModBlocks
 
     public static String getQualifiedName (Block block) {
         return GameData.blockRegistry.getNameForObject(block);
+    }
+
+    public static UniqueMetaIdentifier getUniqueMetaID (Block block, int meta) {
+        String name = GameData.blockRegistry.getNameForObject(block);
+        return new UniqueMetaIdentifier(name, meta);
     }
 }

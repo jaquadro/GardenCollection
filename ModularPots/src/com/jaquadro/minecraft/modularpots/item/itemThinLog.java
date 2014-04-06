@@ -3,10 +3,16 @@ package com.jaquadro.minecraft.modularpots.item;
 import com.jaquadro.minecraft.modularpots.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
+import cpw.mods.fml.common.registry.GameData;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
 public class ItemThinLog extends ItemBlock
 {
@@ -38,5 +44,16 @@ public class ItemThinLog extends ItemBlock
     @Override
     public int getColorFromItemStack (ItemStack itemStack, int meta) {
         return ModBlocks.thinLog.getRenderColor(itemStack.getItemDamage());
+    }
+
+    @Override
+    public boolean placeBlockAt (ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
+    {
+        int blockMeta = (metadata < 16) ? metadata : 0;
+        if (!super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, blockMeta))
+            return false;
+
+        TileEntityWoodProxy.syncTileEntityWithData(world, x, y, z, metadata);
+        return true;
     }
 }
