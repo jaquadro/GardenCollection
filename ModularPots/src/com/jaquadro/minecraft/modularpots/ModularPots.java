@@ -57,7 +57,6 @@ public class ModularPots
 
         blocks.init();
         items.init();
-        recipes.init();
     }
 
     @Mod.EventHandler
@@ -83,6 +82,8 @@ public class ModularPots
     public void postInit (FMLPostInitializationEvent event) {
         PlantHandlerRegistry.init();
         integration.postInit();
+
+        recipes.init();
     }
 
     @SubscribeEvent

@@ -5,9 +5,11 @@ import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemThinLog extends ItemBlock
@@ -27,9 +29,25 @@ public class ItemThinLog extends ItemBlock
     public String getUnlocalizedName (ItemStack itemStack) {
         int meta = itemStack.getItemDamage();
         if (meta < 0 || meta >= BlockThinLog.subNames.length)
-            meta = 0;
+            return super.getUnlocalizedName();
 
         return super.getUnlocalizedName() + "." + BlockThinLog.subNames[meta];
+    }
+
+    @Override
+    public String getItemStackDisplayName (ItemStack itemStack) {
+        int meta = itemStack.getItemDamage();
+        if (meta < 16)
+            return super.getItemStackDisplayName(itemStack);
+
+        Block block = TileEntityWoodProxy.getBlockFromComposedMetadata(meta);
+        Item item = Item.getItemFromBlock(block);
+        if (item == null)
+            return super.getItemStackDisplayName(itemStack);
+
+        String unlocName = item.getUnlocalizedName(new ItemStack(item, 1, TileEntityWoodProxy.getMetaFromComposedMetadata(meta)));
+
+        return ("" + StatCollector.translateToLocal(unlocName + ".name") + " " + StatCollector.translateToLocal(getUnlocalizedName() + ".name")).trim();
     }
 
     @Override

@@ -2,10 +2,16 @@ package com.jaquadro.minecraft.modularpots.core;
 
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
+import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
+import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
+import java.util.Map;
 
 public class ModRecipes
 {
@@ -46,6 +52,8 @@ public class ModRecipes
             }
         }
 
+        addExtraWoodRecipes();
+
         GameRegistry.addRecipe(new ItemStack(ModItems.soilTestKit), "xy", "zz",
             'x', new ItemStack(Items.dye, 1, 1), 'y', new ItemStack(Items.dye, 1, 2), 'z', Items.glass_bottle);
         GameRegistry.addRecipe(new ItemStack(ModItems.soilTestKit), "yx", "zz",
@@ -58,6 +66,21 @@ public class ModRecipes
         for (int i = 1; i < 256; i++) {
             if (ModularPots.config.hasPattern(i))
                 GameRegistry.addSmelting(new ItemStack(ModBlocks.largePot, 1, 1 | (i << 8)), new ItemStack(ModBlocks.largePot, 1, (i << 8)), 0);
+        }
+    }
+
+    private void addExtraWoodRecipes () {
+        for (Map.Entry<UniqueMetaIdentifier, Block> entry : WoodRegistry.registeredTypes()) {
+            UniqueMetaIdentifier id = entry.getKey();
+            int meta = TileEntityWoodProxy.composeMetadata(id.getBlock(), id.meta);
+
+            GameRegistry.addRecipe(new ItemStack(id.getBlock(), 1, id.meta), "xx", "xx",
+                'x', new ItemStack(ModBlocks.thinLog, 1, meta));
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, meta), "x", "x",
+                'x', new ItemStack(id.getBlock(), 1, id.meta));
+
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLogFence, 2, meta), "xyx", " y ",
+                'x', Items.string, 'y', new ItemStack(ModBlocks.thinLog, 1, meta));
         }
     }
 }

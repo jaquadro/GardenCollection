@@ -265,7 +265,7 @@ public class BlockThinLog extends BlockContainer
         int protoMeta = TileEntityWoodProxy.getMetaFromComposedMetadata(meta);
         Block protoBlock = TileEntityWoodProxy.getBlockFromComposedMetadata(meta);
         if (protoBlock == null)
-            protoBlock = Blocks.log;
+            protoBlock = getIconSource(meta);
 
         return protoBlock.getIcon(side, protoMeta | ometa);
     }
@@ -274,7 +274,7 @@ public class BlockThinLog extends BlockContainer
     @Override
     public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side) {
         TileEntityWoodProxy te = getTileEntity(blockAccess, x, y, z);
-        if (te == null)
+        if (te == null || te.getProtoBlock() == null)
             return super.getIcon(blockAccess, x, y, z, side);
 
         int ometa = 0;
@@ -319,6 +319,6 @@ public class BlockThinLog extends BlockContainer
 
     @Override
     public TileEntity createNewTileEntity (World world, int meta) {
-        return null;
+        return new TileEntityWoodProxy();
     }
 }
