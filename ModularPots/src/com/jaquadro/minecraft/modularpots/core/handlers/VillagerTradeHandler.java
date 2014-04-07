@@ -1,5 +1,7 @@
-package com.jaquadro.minecraft.modularpots;
+package com.jaquadro.minecraft.modularpots.core.handlers;
 
+import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;

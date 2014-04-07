@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.block.support;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import net.minecraft.block.Block;
 
 import java.util.HashMap;

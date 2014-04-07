@@ -1,5 +1,6 @@
-package com.jaquadro.minecraft.modularpots;
+package com.jaquadro.minecraft.modularpots.core;
 
+import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.modularpots.item.ItemPotteryPattern;
 import com.jaquadro.minecraft.modularpots.item.ItemSoilKit;

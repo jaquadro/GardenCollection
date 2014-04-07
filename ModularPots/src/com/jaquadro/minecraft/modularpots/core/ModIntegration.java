@@ -1,4 +1,4 @@
-package com.jaquadro.minecraft.modularpots;
+package com.jaquadro.minecraft.modularpots.core;
 
 import com.jaquadro.minecraft.modularpots.integration.BiomesOPlentyIntegration;
 import com.jaquadro.minecraft.modularpots.integration.TreecapitatorIntegration;

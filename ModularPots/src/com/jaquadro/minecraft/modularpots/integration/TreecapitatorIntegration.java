@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.integration;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInterModComms;

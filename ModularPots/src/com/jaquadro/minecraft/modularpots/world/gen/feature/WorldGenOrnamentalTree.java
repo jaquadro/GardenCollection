@@ -1,12 +1,11 @@
 package com.jaquadro.minecraft.modularpots.world.gen.feature;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import scala.tools.nsc.Global;
 
 import java.util.Random;
 

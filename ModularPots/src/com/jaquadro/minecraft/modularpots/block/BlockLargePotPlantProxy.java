@@ -1,13 +1,11 @@
 package com.jaquadro.minecraft.modularpots.block;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModItems;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.block.support.SaplingRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
-import com.jaquadro.minecraft.modularpots.world.gen.feature.*;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;

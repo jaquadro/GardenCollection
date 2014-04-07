@@ -1,7 +1,6 @@
 package com.jaquadro.minecraft.modularpots.inventory;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.item.crafting.PotteryManager;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import net.minecraft.entity.player.EntityPlayer;

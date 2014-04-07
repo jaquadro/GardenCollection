@@ -1,4 +1,4 @@
-package com.jaquadro.minecraft.modularpots;
+package com.jaquadro.minecraft.modularpots.core.handlers;
 
 import com.jaquadro.minecraft.modularpots.client.gui.inventory.GuiPotteryTable;
 import com.jaquadro.minecraft.modularpots.inventory.ContainerPotteryTable;

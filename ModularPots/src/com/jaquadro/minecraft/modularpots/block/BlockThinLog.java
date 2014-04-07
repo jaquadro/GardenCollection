@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.block;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;

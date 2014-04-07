@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.addon;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePotPlantProxy;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;

@@ -1,7 +1,6 @@
 package com.jaquadro.minecraft.modularpots.creativetab;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;

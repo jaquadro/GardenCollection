@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.modularpots.client.gui.inventory;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModItems;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.inventory.ContainerPotteryTable;

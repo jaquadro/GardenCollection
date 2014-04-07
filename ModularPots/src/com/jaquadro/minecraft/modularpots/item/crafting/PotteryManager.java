@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.modularpots.item.crafting;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModItems;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import net.minecraft.item.ItemStack;
 

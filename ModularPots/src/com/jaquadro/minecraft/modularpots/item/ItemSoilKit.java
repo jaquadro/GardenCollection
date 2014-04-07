@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.modularpots.item;
 
-import com.jaquadro.minecraft.modularpots.ModItems;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

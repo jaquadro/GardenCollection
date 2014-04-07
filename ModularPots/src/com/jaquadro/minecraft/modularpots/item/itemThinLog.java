@@ -1,12 +1,8 @@
 package com.jaquadro.minecraft.modularpots.item;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModularPots;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
-import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
-import cpw.mods.fml.common.registry.GameData;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

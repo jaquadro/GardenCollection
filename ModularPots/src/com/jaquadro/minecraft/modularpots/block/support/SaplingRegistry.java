@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.modularpots.block.support;
 
-import com.jaquadro.minecraft.modularpots.ModBlocks;
-import com.jaquadro.minecraft.modularpots.ModItems;
+import com.jaquadro.minecraft.modularpots.core.ModBlocks;
+import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.OrnamentalTreeFactory;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.OrnamentalTreeRegistry;
 import com.jaquadro.minecraft.modularpots.world.gen.feature.WorldGenOrnamentalTree;
