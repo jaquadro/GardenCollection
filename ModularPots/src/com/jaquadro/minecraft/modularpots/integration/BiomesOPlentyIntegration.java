@@ -28,6 +28,8 @@ public class BiomesOPlentyIntegration
         Block leaf4 = GameRegistry.findBlock(MOD_ID, "leaves4");
         Block leafc1 = GameRegistry.findBlock(MOD_ID, "colorizedLeaves1");
         Block leafc2 = GameRegistry.findBlock(MOD_ID, "colorizedLeaves2");
+        Block leafApple = GameRegistry.findBlock(MOD_ID, "appleLeaves");
+        Block leafPersimmon = GameRegistry.findBlock(MOD_ID, "persimmonLeaves");
 
         Item sapling = GameRegistry.findItem(MOD_ID, "saplings");
         Item sapling2 = GameRegistry.findItem(MOD_ID, "colorizedSaplings");
@@ -56,7 +58,7 @@ public class BiomesOPlentyIntegration
 
         // Register Saplings
 
-        //SaplingRegistry.registerSapling(sapling, 0, ) // Apple Tree
+        SaplingRegistry.registerSapling(sapling, 0, Blocks.log, 0, leafApple, 0, "small_oak"); // Apple Tree
         SaplingRegistry.registerSapling(sapling, 1, Blocks.log, 2, leaf1, 0, "small_oak"); // Autumn Tree
         SaplingRegistry.registerSapling(sapling, 2, bamboo, 0, leaf1, 1, "small_pine"); // Bamboo
         SaplingRegistry.registerSapling(sapling, 3, log2, 1, leaf1, 2, "small_oak"); // Magic Tree
@@ -71,7 +73,7 @@ public class BiomesOPlentyIntegration
         SaplingRegistry.registerSapling(sapling, 12, log1, 1, leaf3, 3, "small_oak"); // White Cherry Tree
         //SaplingRegistry.registerSapling(sapling, 13, log4, 1, leaf4, 0, "small_oak"); // Hellbark
         SaplingRegistry.registerSapling(sapling, 14, log4, 2, leaf4, 1, "small_oak"); // Jacaranda
-        //SaplingRegistry.registerSapling(sapling, 15, Blocks.log, 0, leaf4 2, "small_oak"); // Persimmon Tree
+        SaplingRegistry.registerSapling(sapling, 15, Blocks.log, 0, leafPersimmon, 0, "small_oak"); // Persimmon Tree
 
         SaplingRegistry.registerSapling(sapling2, 0, log1, 0, leafc1, 0, "large_oak"); // Sacred Oak Tree
         SaplingRegistry.registerSapling(sapling2, 1, log2, 2, leafc1, 1, "small_oak"); // Mangrove Tree

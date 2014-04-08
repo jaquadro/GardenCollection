@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
@@ -197,7 +198,7 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
     private void generateBlock (World world, int x, int y, int z, Block block, int meta) {
         Block existingBlock = world.getBlock(x, y, z);
         if (existingBlock.isAir(world, x, y, z) || existingBlock.isLeaves(world, x, y, z)) {
-            if (block != ModBlocks.thinLog && WoodRegistry.contains(block, meta)) {
+            if (WoodRegistry.contains(block, meta)) {
                 setBlockAndNotifyAdequately(world, x, y, z, block, 0);
                 TileEntityWoodProxy te = new TileEntityWoodProxy();
                 te.setProtoBlock(block, meta);
@@ -205,6 +206,10 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
                 setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, 0);
                 world.setTileEntity(x, y, z, te);
             }
+            else if (block == Blocks.log)
+                setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, meta % 4);
+            else if (block == Blocks.log2)
+                setBlockAndNotifyAdequately(world, x, y, z, ModBlocks.thinLog, meta % 4 + 4);
             else
                 setBlockAndNotifyAdequately(world, x, y, z, block, meta);
         }
