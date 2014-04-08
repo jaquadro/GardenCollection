@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.modularpots.world.gen.feature;
 
+import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
 import com.jaquadro.minecraft.modularpots.core.ModBlocks;
 import com.jaquadro.minecraft.modularpots.block.BlockLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
@@ -196,7 +197,7 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
     private void generateBlock (World world, int x, int y, int z, Block block, int meta) {
         Block existingBlock = world.getBlock(x, y, z);
         if (existingBlock.isAir(world, x, y, z) || existingBlock.isLeaves(world, x, y, z)) {
-            if (block != ModBlocks.thinLog) {
+            if (block != ModBlocks.thinLog && WoodRegistry.contains(block, meta)) {
                 setBlockAndNotifyAdequately(world, x, y, z, block, 0);
                 TileEntityWoodProxy te = new TileEntityWoodProxy();
                 te.setProtoBlock(block, meta);

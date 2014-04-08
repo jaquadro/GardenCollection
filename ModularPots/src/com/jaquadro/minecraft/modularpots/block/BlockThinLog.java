@@ -36,6 +36,9 @@ public class BlockThinLog extends BlockContainer
     // 0 = Y, 1 = Z, 2 = X, 3 = BARK
     private int orientation;
 
+    // Scratch
+    private int scratchDropMetadata;
+
     public BlockThinLog (String blockName) {
         super(Material.wood);
 
@@ -140,6 +143,22 @@ public class BlockThinLog extends BlockContainer
                 }
             }
         }
+
+        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
+        if (te != null)
+            scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
+        else
+            scratchDropMetadata = 0;
+
+        super.breakBlock(world, x, y, z, block, meta);
+    }
+
+    @Override
+    public int damageDropped (int meta) {
+        int damage = scratchDropMetadata > 0 ? scratchDropMetadata : meta;
+        scratchDropMetadata = 0;
+
+        return damage;
     }
 
     public int calcConnectionFlags (IBlockAccess world, int x, int y, int z) {

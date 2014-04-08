@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.modularpots.block.support;
 
 import com.jaquadro.minecraft.modularpots.core.ModBlocks;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
 import net.minecraft.block.Block;
 
 import java.util.HashMap;
@@ -23,5 +24,10 @@ public class WoodRegistry
 
     public static Set<Entry<UniqueMetaIdentifier, Block>> registeredTypes () {
         return registry.entrySet();
+    }
+
+    public static boolean contains (Block block, int meta) {
+        UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
+        return registry.containsKey(id);
     }
 }

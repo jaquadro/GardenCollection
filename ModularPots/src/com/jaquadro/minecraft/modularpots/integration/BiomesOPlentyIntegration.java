@@ -58,12 +58,12 @@ public class BiomesOPlentyIntegration
 
         //SaplingRegistry.registerSapling(sapling, 0, ) // Apple Tree
         SaplingRegistry.registerSapling(sapling, 1, Blocks.log, 2, leaf1, 0, "small_oak"); // Autumn Tree
-        //SaplingRegistry.registerSapling(sapling, 2, bamboo, 0, leaf1, 1, "small_pine"); // Bamboo
+        SaplingRegistry.registerSapling(sapling, 2, bamboo, 0, leaf1, 1, "small_pine"); // Bamboo
         SaplingRegistry.registerSapling(sapling, 3, log2, 1, leaf1, 2, "small_oak"); // Magic Tree
         SaplingRegistry.registerSapling(sapling, 4, log1, 2, leaf1, 3, "small_spruce"); // Dark Tree
         SaplingRegistry.registerSapling(sapling, 5, log3, 2, leaf2, 0, "small_oak"); // Dead Tree
         SaplingRegistry.registerSapling(sapling, 6, log1, 3, leaf2, 1, "small_spruce"); // Fir Tree
-        //SaplingRegistry.registerSapling(sapling, 7, Blocks.log, 0, leaf2, 2, "small_oak"); // Holy Tree
+        SaplingRegistry.registerSapling(sapling, 7, log2, 0, leaf2, 2, "small_spruce"); // Loftwood Tree
         SaplingRegistry.registerSapling(sapling, 8, Blocks.log2, 1, leaf2, 3, "small_oak"); // Autumn Tree
         SaplingRegistry.registerSapling(sapling, 9, Blocks.log, 0, leaf3, 0, "small_oak"); // Origin Tree
         SaplingRegistry.registerSapling(sapling, 10, log1, 1, leaf3, 1, "small_oak"); // Pink Cherry Tree

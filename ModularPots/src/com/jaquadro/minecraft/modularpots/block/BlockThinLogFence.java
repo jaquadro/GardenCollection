@@ -34,6 +34,9 @@ public class BlockThinLogFence extends BlockContainer
     @SideOnly(Side.CLIENT)
     IIcon sideIcon;
 
+    // Scratch
+    private int scratchDropMetadata;
+
     public BlockThinLogFence (String blockName) {
         super(Material.wood);
 
@@ -160,6 +163,25 @@ public class BlockThinLogFence extends BlockContainer
     @Override
     public boolean shouldSideBeRendered (IBlockAccess world, int x, int y, int z, int side) {
         return true;
+    }
+
+    @Override
+    public void breakBlock (World world, int x, int y, int z, Block block, int meta) {
+        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
+        if (te != null)
+            scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
+        else
+            scratchDropMetadata = 0;
+
+        super.breakBlock(world, x, y, z, block, meta);
+    }
+
+    @Override
+    public int damageDropped (int meta) {
+        int damage = scratchDropMetadata > 0 ? scratchDropMetadata : meta;
+        scratchDropMetadata = 0;
+
+        return damage;
     }
 
     @Override
