@@ -143,11 +143,21 @@ public class BlockLargePotPlantProxy extends Block
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
         ItemStack itemStack = player.inventory.getCurrentItem();
-        if (itemStack == null)
+        if (itemStack != null) {
+            if (itemStack.getItem() == ModItems.usedSoilTestKit)
+                return applyTestKit(world, x, y, z, itemStack);
+        }
+
+        Block block = getItemBlock(world, x, y, z);
+        if (block == null)
             return false;
 
-        if (itemStack.getItem() == ModItems.usedSoilTestKit)
-            return applyTestKit(world, x, y, z, itemStack);
+        try {
+            return block.onBlockActivated(world, x, y, z, player, side, vx, vy, vz);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through onBlockActivated(): " + e.getMessage());
+        }
 
         return false;
     }
