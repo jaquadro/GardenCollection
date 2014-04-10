@@ -205,12 +205,10 @@ public class BlockLargePotPlantProxy extends Block
         super.onBlockHarvested(world, x, y, z, p_149681_5_, player);
 
         if (player.capabilities.isCreativeMode) {
-            if (isUnderBlockPot(world, x, y, z)) {
-                TileEntityLargePot tileEntity = getAttachedPotEntity(world, x, y, z);
-                if (tileEntity != null) {
-                    tileEntity.setItem(null, 0);
-                    tileEntity.markDirty();
-                }
+            TileEntityLargePot tileEntity = getAttachedPotEntity(world, x, y, z);
+            if (tileEntity != null) {
+                tileEntity.setItem(null, 0);
+                tileEntity.markDirty();
             }
         }
     }
@@ -227,6 +225,9 @@ public class BlockLargePotPlantProxy extends Block
 
         world.notifyBlockOfNeighborChange(x, y + 1, z, block);
         world.notifyBlockOfNeighborChange(x, y - 1, z, block);
+
+        if (world.getBlock(x, y - 1, z) == this)
+            world.setBlockToAir(x, y - 1, z);
 
         super.breakBlock(world, x, y, z, block, data);
     }
