@@ -6,6 +6,7 @@ import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.block.support.SaplingRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -30,6 +31,8 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.Level;
 
 public class BlockLargePotPlantProxy extends Block
 {
@@ -74,7 +77,13 @@ public class BlockLargePotPlantProxy extends Block
         if (block == null)
             return null;
 
-        return block.getCollisionBoundingBoxFromPool(world, x, y, z);
+        try {
+            return block.getCollisionBoundingBoxFromPool(world, x, y, z);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through getCollisionBoundingBoxFromPool(): " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -83,16 +92,30 @@ public class BlockLargePotPlantProxy extends Block
         if (block == null)
             return super.getSelectedBoundingBoxFromPool(world, x, y, z);
 
-        return block.getSelectedBoundingBoxFromPool(world, x, y, z);
+        try {
+            return block.getSelectedBoundingBoxFromPool(world, x, y, z);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through getSelectedBoundingBoxFromPool(): " + e.getMessage());
+            return super.getSelectedBoundingBoxFromPool(world, x, y, z);
+        }
     }
 
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         Block block = getItemBlock(world, x, y, z);
-        if (block == null)
+        if (block == null) {
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
-        else
+            return;
+        }
+
+        try {
             block.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through addCollisionBoxesToList(): " + e.getMessage());
+            super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+        }
     }
 
     @Override
@@ -101,7 +124,13 @@ public class BlockLargePotPlantProxy extends Block
         if (block == null)
             return super.collisionRayTrace(world, x, y, z, startVec, endVec);
 
-        return block.collisionRayTrace(world, x, y, z, startVec, endVec);
+        try {
+            return block.collisionRayTrace(world, x, y, z, startVec, endVec);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through collisionRayTrace(): " + e.getMessage());
+            return super.collisionRayTrace(world, x, y, z, startVec, endVec);
+        }
     }
 
     @Override
@@ -149,30 +178,6 @@ public class BlockLargePotPlantProxy extends Block
         if (generator == null) {
             applyingBonemeal = false;
             return false;
-
-            /*if (block != Blocks.sapling) {
-                applyingBonemeal = false;
-                return false;
-            }
-
-            switch (blockMeta) {
-                case 0:
-                case 2:
-                    generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                    break;
-                case 1:
-                    generator = new WorldGenPineOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                    break;
-                case 3:
-                    generator = new WorldGenJungleOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves, blockMeta);
-                    break;
-                case 4:
-                    generator = new WorldGenAcaciaOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
-                    break;
-                case 5:
-                    generator = new WorldGenOakOrnTree(false, ModBlocks.thinLog, blockMeta, Blocks.leaves2, blockMeta & 3);
-                    break;
-            }*/
         }
 
         world.setBlock(x, y, z, Blocks.air, 0, 4);
@@ -233,8 +238,20 @@ public class BlockLargePotPlantProxy extends Block
 
         reeLightValue++;
 
+        int value = 0;
         Block block = getItemBlock(world, x, y, z);
-        int value = (block == null) ? super.getLightValue(world, x, y, z) : block.getLightValue(world, x, y, z);
+
+        if (block == null)
+            value = super.getLightValue(world, x, y, z);
+        else {
+            try {
+                value = block.getLightValue(world, x, y, z);
+            }
+            catch (Exception e) {
+                FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through getLightValue(): " + e.getMessage());
+                value = block.getLightValue(world, x, y, z);
+            }
+        }
 
         reeLightValue--;
         return value;
@@ -243,10 +260,18 @@ public class BlockLargePotPlantProxy extends Block
     @Override
     public void onEntityCollidedWithBlock (World world, int x, int y, int z, Entity entity) {
         Block block = getItemBlock(world, x, y, z);
-        if (block == null)
+        if (block == null) {
             super.onEntityCollidedWithBlock(world, x, y, z, entity);
-        else
+            return;
+        }
+
+        try {
             block.onEntityCollidedWithBlock(world, x, y, z, entity);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through onEntityCollidedWithBlock(): " + e.getMessage());
+            super.onEntityCollidedWithBlock(world, x, y, z, entity);
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -255,8 +280,14 @@ public class BlockLargePotPlantProxy extends Block
         Block block = getItemBlock(blockAccess, x, y, z);
         if (block == null)
             return super.colorMultiplier(blockAccess, x, y, z);
-        else
+
+        try {
             return block.colorMultiplier(blockAccess, x, y, z);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through colorMultiplier(): " + e.getMessage());
+            return super.colorMultiplier(blockAccess, x, y, z);
+        }
     }
 
     @Override
@@ -265,7 +296,13 @@ public class BlockLargePotPlantProxy extends Block
         if (block == null)
             return super.getIcon(world, x, y, z, side);
 
-        return block.getIcon(world, x, y, z, side);
+        try {
+            return block.getIcon(world, x, y, z, side);
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through getIcon(): " + e.getMessage());
+            return super.getIcon(world, x, y, z, side);
+        }
     }
 
     @Override
@@ -284,23 +321,28 @@ public class BlockLargePotPlantProxy extends Block
         if (proxy == null || proxy == Blocks.air)
             return true;
 
-        byte count = 4;
-        for (int ix = 0; ix < count; ++ix)
-        {
-            for (int iy = 0; iy < count; ++iy)
+        try {
+            byte count = 4;
+            for (int ix = 0; ix < count; ++ix)
             {
-                for (int iz = 0; iz < count; ++iz)
+                for (int iy = 0; iy < count; ++iy)
                 {
-                    double xOff = (double)x + ((double)ix + 0.5D) / (double)count;
-                    double yOff = (double)y + ((double)iy + 0.5D) / (double)count;
-                    double zOff = (double)z + ((double)iz + 0.5D) / (double)count;
+                    for (int iz = 0; iz < count; ++iz)
+                    {
+                        double xOff = (double)x + ((double)ix + 0.5D) / (double)count;
+                        double yOff = (double)y + ((double)iy + 0.5D) / (double)count;
+                        double zOff = (double)z + ((double)iz + 0.5D) / (double)count;
 
-                    EntityDiggingFX fx = new EntityDiggingFX(world, xOff, yOff, zOff, xOff - (double) x - 0.5D, yOff - (double) y - 0.5D, zOff - (double) z - 0.5D, this, meta);
-                    fx.setParticleIcon(proxy.getIcon(world.rand.nextInt(6), te.getFlowerPotData()));
+                        EntityDiggingFX fx = new EntityDiggingFX(world, xOff, yOff, zOff, xOff - (double) x - 0.5D, yOff - (double) y - 0.5D, zOff - (double) z - 0.5D, this, meta);
+                        fx.setParticleIcon(proxy.getIcon(world.rand.nextInt(6), te.getFlowerPotData()));
 
-                    effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
+                        effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
+                    }
                 }
             }
+        }
+        catch (Exception e) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Exception passing through addDestroyEffects(): " + e.getMessage());
         }
 
         return true;
