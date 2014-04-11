@@ -10,9 +10,11 @@ import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import org.apache.logging.log4j.Level;
 
 public class ModBlocks
 {
@@ -58,6 +60,11 @@ public class ModBlocks
 
     public static UniqueMetaIdentifier getUniqueMetaID (Block block, int meta) {
         String name = GameData.blockRegistry.getNameForObject(block);
+        if (name == null) {
+            FMLLog.log(ModularPots.MOD_ID, Level.WARN, "Tried to make a UniqueMetaIdentifier from an invalid block");
+            return null;
+        }
+
         return new UniqueMetaIdentifier(name, meta);
     }
 }

@@ -226,8 +226,10 @@ public class BlockLargePotPlantProxy extends Block
         world.notifyBlockOfNeighborChange(x, y + 1, z, block);
         world.notifyBlockOfNeighborChange(x, y - 1, z, block);
 
-        if (world.getBlock(x, y - 1, z) == this)
-            world.setBlockToAir(x, y - 1, z);
+        if (!isApplyingBonemealTo(x, y, z)) {
+            if (world.getBlock(x, y - 1, z) == this)
+                world.setBlockToAir(x, y - 1, z);
+        }
 
         super.breakBlock(world, x, y, z, block, data);
     }
