@@ -4,10 +4,13 @@ import com.jaquadro.minecraft.hungerstrike.ConfigManager;
 import com.jaquadro.minecraft.hungerstrike.ExtendedPlayer;
 import com.jaquadro.minecraft.hungerstrike.HungerStrike;
 import com.jaquadro.minecraft.hungerstrike.PlayerHandler;
+import com.jaquadro.minecraft.hungerstrike.network.SyncConfigPacket;
+import com.jaquadro.minecraft.hungerstrike.network.SyncExtendedPlayerPacket;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
@@ -85,6 +88,9 @@ public class CommandHungerStrike extends CommandBase {
 
                 ConfigManager.Mode mode = ConfigManager.Mode.fromValueIgnoreCase(args[1]);
                 HungerStrike.instance.config.setMode(mode);
+
+                if (!sender.getEntityWorld().isRemote)
+                    HungerStrike.packetPipeline.sendToAll(new SyncConfigPacket());
 
                 if (mode == ConfigManager.Mode.NONE)
                     notifyAdmins(sender, "commands.hungerstrike.setmode.none");

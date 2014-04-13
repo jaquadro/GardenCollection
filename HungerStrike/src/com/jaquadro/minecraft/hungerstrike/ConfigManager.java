@@ -1,5 +1,8 @@
 package com.jaquadro.minecraft.hungerstrike;
 
+import com.jaquadro.minecraft.hungerstrike.network.SyncExtendedPlayerPacket;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
@@ -29,6 +32,8 @@ public class ConfigManager
 
     private Mode mode = Mode.LIST;
     private double foodHealFactor = .5;
+    private int foodStackSize = -1;
+    private boolean hideHungerBar = true;
 
     public void setup (File location) {
         config = new Configuration(location);
@@ -44,8 +49,21 @@ public class ConfigManager
         foodHealProperty.comment = "How to translate food points into heart points when consuming food.\n" +
             "At the default value of 0.5, food fills your heart bar at half the rate it would fill hunger.";
 
+        Property foodStackSizeProperty = config.get(Configuration.CATEGORY_GENERAL, "MaxFoodStackSize", -1);
+        foodStackSizeProperty.comment = "Globally overrides the maximum stack size of food items.\n" +
+            "This property affects all Vanilla and Mod food items that derive from ItemFood.\n" +
+            "Set to -1 to retain the default stack size of each food item.  Note: This will affect the\n" +
+            "entire server, not just players on hunger strike.";
+
+        Property hideHungerBarProperty = config.get(Configuration.CATEGORY_GENERAL, "HideHungerBar", true);
+        hideHungerBarProperty.comment = "Controls whether or not the hunger bar is hidden for players\n" +
+            "on hunger strike.  If the hunger bar is left visible, it will remain filled at half capacity,\n" +
+            "except when certain potion effects are active like hunger and regeneration.";
+
         mode = Mode.fromValueIgnoreCase(modeProperty.getString());
         foodHealFactor = foodHealProperty.getDouble(.5);
+        foodStackSize = foodStackSizeProperty.getInt(-1);
+        hideHungerBar = hideHungerBarProperty.getBoolean(true);
 
         config.save();
     }
@@ -54,14 +72,26 @@ public class ConfigManager
         return foodHealFactor;
     }
 
+    public int getFoodStackSize () {
+        return foodStackSize;
+    }
+
+    public boolean isHungerBarHidden () {
+        return hideHungerBar;
+    }
+
     public Mode getMode () {
         return mode;
     }
 
     public void setMode (Mode value) {
-        mode = value;
+        setModeSoft(value);
 
         modeProperty.set(mode.toString());
         config.save();
+    }
+
+    public void setModeSoft (Mode value) {
+        mode = value;
     }
 }

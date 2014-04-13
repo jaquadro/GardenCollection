@@ -1,10 +1,12 @@
 package com.jaquadro.minecraft.hungerstrike;
 
+import com.jaquadro.minecraft.hungerstrike.network.SyncExtendedPlayerPacket;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.server.FMLServerHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.FoodStats;
@@ -51,13 +53,39 @@ public class ExtendedPlayer implements IExtendedEntityProperties
         hungerStrikeEnabled = properties.getBoolean("Enabled");
     }
 
+    public void saveNBTDataSync (NBTTagCompound compound) {
+        NBTTagCompound properties = new NBTTagCompound();
+        properties.setBoolean("Enabled", hungerStrikeEnabled);
+
+        compound.setTag(TAG, properties);
+    }
+
     public void enableHungerStrike (boolean enable) {
-        hungerStrikeEnabled = enable;
+        if (hungerStrikeEnabled != enable) {
+            hungerStrikeEnabled = enable;
+            if (player instanceof EntityPlayerMP)
+                HungerStrike.packetPipeline.sendTo(new SyncExtendedPlayerPacket(player), (EntityPlayerMP)player);
+        }
     }
 
     public boolean isOnHungerStrike () {
         return hungerStrikeEnabled;
     }
+
+    /*public boolean getEffectiveHungerStrike () {
+        if (!player.worldObj.isRemote)
+            return hungerStrikeEnabled;
+
+        switch (HungerStrike.config.getMode()) {
+            case NONE:
+                return false;
+            case ALL:
+                return true;
+            case LIST:
+            default:
+                return hungerStrikeEnabled;
+        }
+    }*/
 
     private boolean shouldTick () {
         ConfigManager.Mode mode = HungerStrike.instance.config.getMode();

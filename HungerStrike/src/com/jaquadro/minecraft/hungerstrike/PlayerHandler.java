@@ -84,4 +84,12 @@ public class PlayerHandler
         if (playerExt != null)
             playerExt.tick(phase, side);
     }
+
+    public boolean isOnHungerStrike (EntityPlayer player) {
+        ExtendedPlayer playerExt = ExtendedPlayer.get(player);
+        if (playerExt != null)
+            return playerExt.isOnHungerStrike();
+
+        return false;
+    }
 }
