@@ -1,4 +1,4 @@
-version = "1.7.2.9"
+version = "1.7.2.10"
 
 sourceSets.main {
     java {

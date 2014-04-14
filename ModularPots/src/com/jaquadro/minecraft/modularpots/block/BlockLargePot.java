@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
+import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -206,6 +207,10 @@ public class BlockLargePot extends BlockContainer
         EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
         Block plant = plantable.getPlant(world, x, y + 1, z);
         Block substrate = Block.getBlockFromItem(te.getSubstrate());
+
+        ItemStack plantItem = new ItemStack(plant, 1, plantable.getPlantMetadata(world, x, y, z));
+        if (PlantRegistry.instance().isBlacklisted(plantItem))
+            return false;
 
         if (plant == Blocks.cactus)
             return substrate == Blocks.sand;
@@ -545,6 +550,15 @@ public class BlockLargePot extends BlockContainer
 
         EnumPlantType plantType = plantable.getPlantType(world, x, y + 1, z);
         Block plant = plantable.getPlant(world, x, y + 1, z);
+
+        if (plant == null && plantable instanceof Block)
+            plant = (Block) plantable;
+
+        if (plant != null) {
+            ItemStack plantItem = new ItemStack(plant, 1, plantable.getPlantMetadata(world, x, y, z));
+            if (PlantRegistry.instance().isBlacklisted(plantItem))
+                return false;
+        }
 
         // TODO: Non-compliant IPlantable, use config
         if (plantType == null)

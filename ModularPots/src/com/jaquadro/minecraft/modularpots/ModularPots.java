@@ -11,14 +11,18 @@ import com.jaquadro.minecraft.modularpots.core.ModRecipes;
 import com.jaquadro.minecraft.modularpots.core.handlers.GuiHandler;
 import com.jaquadro.minecraft.modularpots.core.handlers.VillagerTradeHandler;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
+import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,7 +35,7 @@ public class ModularPots
 {
     public static final String MOD_ID = "modularpots";
     static final String MOD_NAME = "Modular Flower Pots";
-    static final String MOD_VERSION = "1.7.2.9";
+    static final String MOD_VERSION = "1.7.2.10";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.modularpots.";
 
     public static CreativeTabs tabModularPots = new ModularPotsCreativeTab("modularPots");
@@ -84,6 +88,18 @@ public class ModularPots
         integration.postInit();
 
         recipes.init();
+    }
+
+    @Mod.EventHandler
+    public void interModComs (FMLInterModComms.IMCEvent event) {
+        for (FMLInterModComms.IMCMessage message : event.getMessages()) {
+            if (message.key.equals("plantBlacklist")) {
+                if (message.isItemStackMessage())
+                    PlantRegistry.instance().addToBlacklist(message.getItemStackValue());
+                else if (message.isNBTMessage())
+                    PlantRegistry.instance().addToBlacklist(message.getNBTValue());
+            }
+        }
     }
 
     @SubscribeEvent
