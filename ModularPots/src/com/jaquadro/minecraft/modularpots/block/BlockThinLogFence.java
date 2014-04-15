@@ -168,7 +168,7 @@ public class BlockThinLogFence extends BlockContainer
     @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int meta) {
         TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        if (te != null)
+        if (te != null && te.getProtoBlock() != null)
             scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
         else
             scratchDropMetadata = 0;

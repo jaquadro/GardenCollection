@@ -145,7 +145,7 @@ public class BlockThinLog extends BlockContainer
         }
 
         TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        if (te != null)
+        if (te != null && te.getProtoBlock() != null)
             scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
         else
             scratchDropMetadata = 0;
