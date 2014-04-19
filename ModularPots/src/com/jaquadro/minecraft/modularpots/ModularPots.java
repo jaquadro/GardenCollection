@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.modularpots;
 
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.block.*;
+import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
 import com.jaquadro.minecraft.modularpots.config.ConfigManager;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.core.ModBlocks;
@@ -11,7 +12,9 @@ import com.jaquadro.minecraft.modularpots.core.ModRecipes;
 import com.jaquadro.minecraft.modularpots.core.handlers.GuiHandler;
 import com.jaquadro.minecraft.modularpots.core.handlers.VillagerTradeHandler;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
+import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -19,9 +22,13 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
@@ -67,6 +74,7 @@ public class ModularPots
     public void load (FMLInitializationEvent event) {
         proxy.registerRenderers();
         MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
         for (int i = 1; i < 256; i++) {
@@ -108,5 +116,26 @@ public class ModularPots
             BlockLargePotPlantProxy proxyBlock = blocks.largePotPlantProxy;
             event.setCanceled(!proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z));
         }
+    }
+
+    @SubscribeEvent
+    public void handleCrafting (PlayerEvent.ItemCraftedEvent event) {
+        if (event.crafting.getItem() instanceof ItemThinLog) {
+            for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
+                ItemStack item = event.craftMatrix.getStackInSlot(i);
+                if (item != null && isValidAxe(item) && item.getItemDamage() < item.getMaxDamage()) {
+                    event.craftMatrix.setInventorySlotContents(i, new ItemStack(item.getItem(), item.stackSize + 1, item.getItemDamage() + 1));
+                }
+            }
+        }
+    }
+
+    private boolean isValidAxe (ItemStack itemStack) {
+        Item item = itemStack.getItem();
+        return item == Items.wooden_axe
+            || item == Items.stone_axe
+            || item == Items.iron_axe
+            || item == Items.golden_axe
+            || item == Items.diamond_axe;
     }
 }

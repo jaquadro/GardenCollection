@@ -5,16 +5,25 @@ import com.jaquadro.minecraft.modularpots.block.BlockThinLog;
 import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Map;
 
 public class ModRecipes
 {
+    private static final String TINKERS_ID = "TConstruct";
+
+    private static final Item[] axeList = new Item[] {
+        Items.wooden_axe, Items.stone_axe, Items.iron_axe, Items.golden_axe, Items.diamond_axe
+    };
+
     public void init () {
         // Crafting
 
@@ -41,14 +50,22 @@ public class ModRecipes
             if (i / 4 == 0) {
                 GameRegistry.addRecipe(new ItemStack(Blocks.log, 1, i % 4), "xx", "xx",
                     'x', new ItemStack(ModBlocks.thinLog, 1, i));
-                GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "x",
-                    'x', new ItemStack(Blocks.log, 1, i % 4));
+                if (!Loader.isModLoaded(TINKERS_ID))
+                    GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "x",
+                        'x', new ItemStack(Blocks.log, 1, i % 4));
+                for (int j = 0; j < axeList.length; j++)
+                    GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "y",
+                        'x', new ItemStack(axeList[j], 1, OreDictionary.WILDCARD_VALUE), 'y', new ItemStack(Blocks.log, 1, i % 4));
             }
             else if (i / 4 == 1) {
                 GameRegistry.addRecipe(new ItemStack(Blocks.log2, 1, i % 4), "xx", "xx",
                     'x', new ItemStack(ModBlocks.thinLog, 1, i));
-                GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "x",
-                    'x', new ItemStack(Blocks.log2, 1, i % 4));
+                if (!Loader.isModLoaded(TINKERS_ID))
+                    GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "x",
+                        'x', new ItemStack(Blocks.log2, 1, i % 4));
+                for (int j = 0; j < axeList.length; j++)
+                    GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, i), "x", "y",
+                        'x', new ItemStack(axeList[j], 1, OreDictionary.WILDCARD_VALUE), 'y', new ItemStack(Blocks.log2, 1, i % 4));
             }
         }
 
@@ -76,8 +93,12 @@ public class ModRecipes
 
             GameRegistry.addRecipe(new ItemStack(id.getBlock(), 1, id.meta), "xx", "xx",
                 'x', new ItemStack(ModBlocks.thinLog, 1, meta));
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, meta), "x", "x",
-                'x', new ItemStack(id.getBlock(), 1, id.meta));
+            if (!Loader.isModLoaded(TINKERS_ID))
+                GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, meta), "x", "x",
+                    'x', new ItemStack(id.getBlock(), 1, id.meta));
+            for (int j = 0; j < axeList.length; j++)
+                GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, meta), "x", "y",
+                    'x', new ItemStack(axeList[j], 1, OreDictionary.WILDCARD_VALUE), 'y', new ItemStack(id.getBlock(), 1, id.meta));
 
             GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLogFence, 2, meta), "xyx", " y ",
                 'x', Items.string, 'y', new ItemStack(ModBlocks.thinLog, 1, meta));
