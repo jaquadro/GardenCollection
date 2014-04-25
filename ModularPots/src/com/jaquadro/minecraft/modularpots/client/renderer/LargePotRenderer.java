@@ -148,10 +148,13 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         if (!(block instanceof BlockLargePot))
             return false;
 
-        if (ClientProxy.renderPass == 0)
-            return renderWorldBlockPass0(world, x, y, z, (BlockLargePot) block, modelId, renderer);
-        else if (ClientProxy.renderPass == 1)
-            return renderWorldBlockPass1(world, x, y, z, (BlockLargePot) block, modelId, renderer);
+        try {
+            if (ClientProxy.renderPass == 0)
+                return renderWorldBlockPass0(world, x, y, z, (BlockLargePot) block, modelId, renderer);
+            else if (ClientProxy.renderPass == 1)
+                return renderWorldBlockPass1(world, x, y, z, (BlockLargePot) block, modelId, renderer);
+            }
+        catch (Exception e) { }
 
         return false;
     }

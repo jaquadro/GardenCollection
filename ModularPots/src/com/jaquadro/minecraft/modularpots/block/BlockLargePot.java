@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.modularpots.client.ClientProxy;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -492,14 +493,21 @@ public class BlockLargePot extends BlockContainer
 
         // TODO: Non-compliant IPlantable, use config
         Block itemBlock = plantable.getPlant(world, x, y, z);
-        if (itemBlock == null && plantable instanceof Block)
+        int itemMeta = itemStack.getItemDamage();
+        if (itemBlock == null && plantable instanceof Block) {
             itemBlock = (Block) plantable;
+        }
+        else {
+            int plantMeta = plantable.getPlantMetadata(world, x, y, z);
+            if (plantMeta > 0)
+                itemMeta = plantMeta;
+        }
 
-        world.setBlock(x, y + 1, z, ModBlocks.largePotPlantProxy, itemStack.getItemDamage(), 3);
+        world.setBlock(x, y + 1, z, ModBlocks.largePotPlantProxy, itemMeta, 3);
         if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
-            world.setBlock(x, y + 2, z, ModBlocks.largePotPlantProxy, itemStack.getItemDamage() | 8, 3);
+            world.setBlock(x, y + 2, z, ModBlocks.largePotPlantProxy, itemMeta | 8, 3);
 
-        tile.setItem(itemStack.getItem(), itemStack.getItemDamage());
+        tile.setItem(itemStack.getItem(), itemMeta);
         tile.markDirty();
 
         if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)

@@ -52,12 +52,15 @@ public class TransformPlantRenderer implements ISimpleBlockRenderingHandler
         if (potData == null)
             potData = new TileEntityLargePot();
 
-        if (itemRenderType == 1)
-            renderCrossedSquares(world, renderer, itemBlock, x, y, z, potData);
-        else if (itemRenderType == 40 && itemBlock instanceof BlockDoublePlant)
-            renderBlockDoublePlant(world, renderer, (BlockDoublePlant) itemBlock, x, y, z, potData);
-        else
-            renderer.renderBlockByRenderType(itemBlock, x, y, z);
+        try {
+            if (itemRenderType == 1)
+                renderCrossedSquares(world, renderer, itemBlock, x, y, z, potData);
+            else if (itemRenderType == 40 && itemBlock instanceof BlockDoublePlant)
+                renderBlockDoublePlant(world, renderer, (BlockDoublePlant) itemBlock, x, y, z, potData);
+            else
+                renderer.renderBlockByRenderType(itemBlock, x, y, z);
+            }
+        catch (Exception e) { }
 
         tessellator.addTranslation(0, +.0625f, 0);
 
