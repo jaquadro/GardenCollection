@@ -14,6 +14,9 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContainerPotteryTable extends Container
 {
     private static final int InventoryX = 10;
@@ -28,26 +31,36 @@ public class ContainerPotteryTable extends Container
     private IInventory tableInventory;
     private IInventory craftResult = new InventoryCraftResult();
 
+    private Slot inputSlot1;
+    private Slot inputSlot2;
+    private Slot outputSlot;
+    private List<Slot> storageSlots;
+    private List<Slot> playerSlots;
+    private List<Slot> hotbarSlots;
+
     public ContainerPotteryTable (InventoryPlayer inventory, TileEntityPotteryTable tileEntity) {
         tableInventory = new InventoryPottery(tileEntity, this);
 
-        addSlotToContainer(new Slot(tableInventory, 0, 50, 44));
-        addSlotToContainer(new Slot(tableInventory, 1, 50, 80));
-        addSlotToContainer(new SlotPottery(inventory.player, tableInventory, craftResult, 2, 110, 62));
+        inputSlot1 = addSlotToContainer(new Slot(tableInventory, 0, 50, 44));
+        inputSlot2 = addSlotToContainer(new Slot(tableInventory, 1, 50, 80));
+        outputSlot = addSlotToContainer(new SlotPottery(inventory.player, tableInventory, craftResult, 2, 110, 62));
+
+        storageSlots = new ArrayList<Slot>();
+        for (int i = 0; i < 6; i++)
+            storageSlots.add(addSlotToContainer(new Slot(tableInventory, 3 + i, StorageX1, StorageY1 + i * 18)));
 
         for (int i = 0; i < 6; i++)
-            addSlotToContainer(new Slot(tableInventory, 3 + i, StorageX1, StorageY1 + i * 18));
+            storageSlots.add(addSlotToContainer(new Slot(tableInventory, 9 + i, StorageX2, StorageY2 + i * 18)));
 
-        for (int i = 0; i < 6; i++)
-            addSlotToContainer(new Slot(tableInventory, 9 + i, StorageX2, StorageY2 + i * 18));
-
+        playerSlots = new ArrayList<Slot>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++)
-                addSlotToContainer(new Slot(inventory, j + i * 9 + 9, InventoryX + j * 18, InventoryY + i * 18));
+                playerSlots.add(addSlotToContainer(new Slot(inventory, j + i * 9 + 9, InventoryX + j * 18, InventoryY + i * 18)));
         }
 
+        hotbarSlots = new ArrayList<Slot>();
         for (int i = 0; i < 9; i++)
-            addSlotToContainer(new Slot(inventory, i, InventoryX + i * 18, HotbarY));
+            hotbarSlots.add(addSlotToContainer(new Slot(inventory, i, InventoryX + i * 18, HotbarY)));
     }
 
     @Override
@@ -84,24 +97,32 @@ public class ContainerPotteryTable extends Container
         ItemStack itemStack = null;
         Slot slot = (Slot) inventorySlots.get(slotIndex);
 
+        // Assume inventory and hotbar slot IDs are contiguous
+        int inventoryStart = playerSlots.get(0).slotNumber;
+        int hotbarStart = hotbarSlots.get(0).slotNumber;
+        int hotbarEnd = hotbarSlots.get(hotbarSlots.size() - 1).slotNumber + 1;
+
         if (slot != null && slot.getHasStack()) {
             ItemStack slotStack = slot.getStack();
             itemStack = slotStack.copy();
 
-            if (slotIndex == 2) {
-                if (!mergeItemStack(slotStack, 3, 39, true))
+            // Try merge output into inventory and signal change
+            if (slotIndex == outputSlot.slotNumber) {
+                if (!mergeItemStack(slotStack, inventoryStart, hotbarEnd, true))
                     return null;
                 slot.onSlotChange(slotStack, itemStack);
             }
-            else if (slotIndex > 2) {
-                if (slotIndex >= 3 && slotIndex < 30) {
-                    if (!mergeItemStack(slotStack, 30, 39, false))
+            // Try merge stacks within inventory and hotbar spaces
+            else if (slotIndex >= inventoryStart && slotIndex < hotbarEnd) {
+                if (slotIndex >= inventoryStart && slotIndex < hotbarStart) {
+                    if (!mergeItemStack(slotStack, hotbarStart, hotbarEnd, false))
                         return null;
                 }
-                else if (slotIndex >= 30 && slotIndex < 39 && !this.mergeItemStack(slotStack, 3, 30, false))
+                else if (slotIndex >= hotbarStart && slotIndex < hotbarEnd && !this.mergeItemStack(slotStack, inventoryStart, hotbarStart, false))
                     return null;
             }
-            else if (!mergeItemStack(slotStack, 3, 39, false))
+            // Try merge stack into inventory
+            else if (!mergeItemStack(slotStack, inventoryStart, hotbarEnd, false))
                 return null;
 
             if (slotStack.stackSize == 0)
