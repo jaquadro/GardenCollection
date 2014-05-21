@@ -116,7 +116,7 @@ public class ModularPots
         if (event.block == blocks.largePotPlantProxy) {
             BlockLargePotPlantProxy proxyBlock = blocks.largePotPlantProxy;
             if (proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z))
-                event.setReult(Result.ALLOW); // Stop further processing and consume bonemeal
+                event.setResult(Result.ALLOW); // Stop further processing and consume bonemeal
         }
     }
 
