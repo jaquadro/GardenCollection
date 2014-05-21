@@ -21,6 +21,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -114,7 +115,8 @@ public class ModularPots
     public void applyBonemeal (BonemealEvent event) {
         if (event.block == blocks.largePotPlantProxy) {
             BlockLargePotPlantProxy proxyBlock = blocks.largePotPlantProxy;
-            event.setCanceled(!proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z));
+            if (proxyBlock.applyBonemeal(event.world, event.x, event.y, event.z))
+                event.setReult(Result.ALLOW); // Stop further processing and consume bonemeal
         }
     }
 
