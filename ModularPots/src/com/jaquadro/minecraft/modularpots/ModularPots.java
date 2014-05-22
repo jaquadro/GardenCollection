@@ -14,6 +14,7 @@ import com.jaquadro.minecraft.modularpots.core.handlers.VillagerTradeHandler;
 import com.jaquadro.minecraft.modularpots.creativetab.ModularPotsCreativeTab;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
+import com.jaquadro.minecraft.modularpots.registry.RegistryGroup;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -107,6 +108,12 @@ public class ModularPots
                     PlantRegistry.instance().addToBlacklist(message.getItemStackValue());
                 else if (message.isNBTMessage())
                     PlantRegistry.instance().addToBlacklist(message.getNBTValue());
+            }
+            else if (message.key.equals("bonemealBlacklist")) {
+                if (message.isItemStackMessage())
+                    PlantRegistry.instance().addToBlacklist(message.getItemStackValue(), RegistryGroup.Bonemeal);
+                else if (message.isNBTMessage())
+                    PlantRegistry.instance().addToBlacklist(message.getNBTValue(), RegistryGroup.Bonemeal);
             }
         }
     }

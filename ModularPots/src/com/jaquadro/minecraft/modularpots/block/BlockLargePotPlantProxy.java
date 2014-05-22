@@ -1,10 +1,13 @@
 package com.jaquadro.minecraft.modularpots.block;
 
+import com.jaquadro.minecraft.modularpots.block.support.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.modularpots.core.ModItems;
 import com.jaquadro.minecraft.modularpots.ModularPots;
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.block.support.SaplingRegistry;
 import com.jaquadro.minecraft.modularpots.client.ClientProxy;
+import com.jaquadro.minecraft.modularpots.registry.PlantRegistry;
+import com.jaquadro.minecraft.modularpots.registry.RegistryGroup;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
@@ -175,14 +178,20 @@ public class BlockLargePotPlantProxy extends Block
     public boolean applyBonemeal (World world, int x, int y, int z) {
         applyingBonemeal = true;
 
+        Block block = getItemBlock(world, x, y, z);
+        TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
+        int blockMeta = te.getFlowerPotData();
+
+        UniqueMetaIdentifier plantId = ModItems.getUniqueMetaID(Item.getItemFromBlock(block), blockMeta);
+        if (PlantRegistry.instance().isBlacklisted(plantId, RegistryGroup.Bonemeal)) {
+            applyingBonemeal = false;
+            return false;
+        }
+
         if (PlantHandlerRegistry.applyBonemeal(world, x, y, z)) {
             applyingBonemeal = false;
             return true;
         }
-
-        Block block = getItemBlock(world, x, y, z);
-        TileEntityLargePot te = getAttachedPotEntity(world, x, y, z);
-        int blockMeta = te.getFlowerPotData();
 
         WorldGenerator generator = SaplingRegistry.getGenerator(block, blockMeta);
         if (generator == null) {
