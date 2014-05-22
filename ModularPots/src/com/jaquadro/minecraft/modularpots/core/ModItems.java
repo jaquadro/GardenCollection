@@ -8,6 +8,7 @@ import com.jaquadro.minecraft.modularpots.item.ItemUsedSoilKit;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class ModItems
 {
@@ -30,5 +31,11 @@ public class ModItems
     public static UniqueMetaIdentifier getUniqueMetaID (Item item, int meta) {
         String name = GameData.itemRegistry.getNameForObject(item);
         return new UniqueMetaIdentifier(name, meta);
+    }
+
+    public static UniqueMetaIdentifier getUniqueMetaID (ItemStack itemStack) {
+        if (itemStack.getItem() == null)
+            return null;
+        return getUniqueMetaID(itemStack.getItem(), itemStack.getItemDamage());
     }
 }

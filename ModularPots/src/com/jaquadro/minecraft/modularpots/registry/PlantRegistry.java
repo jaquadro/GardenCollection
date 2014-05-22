@@ -37,11 +37,11 @@ public class PlantRegistry
     }
 
     public boolean isBlacklisted (ItemStack itemStack) {
-        return isBlacklisted(ModItems.getUniqueMetaID(itemStack.getItem(), itemStack.getItemDamage()));
+        return isBlacklisted(ModItems.getUniqueMetaID(itemStack));
     }
 
     public void addToBlacklist (ItemStack itemStack) {
-        UniqueMetaIdentifier id = ModItems.getUniqueMetaID(itemStack.getItem(), itemStack.getItemDamage());
+        UniqueMetaIdentifier id = ModItems.getUniqueMetaID(itemStack);
         if (!blacklist.contains(id)) {
             blacklist.add(id);
             FMLLog.log(ModularPots.MOD_ID, Level.INFO, "Blacklisting plant " + id.toString());
