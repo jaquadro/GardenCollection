@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.modularpots.item.ItemLargePot;
 import com.jaquadro.minecraft.modularpots.item.ItemLargePotColored;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLog;
 import com.jaquadro.minecraft.modularpots.item.ItemThinLogFence;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityGarden;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityLargePot;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityWoodProxy;
@@ -26,6 +27,9 @@ public class ModBlocks
     public static BlockThinLogFence thinLogFence;
     public static BlockFlowerLeaves flowerLeaves;
 
+    public static BlockGardenSoil gardenSoil;
+    public static BlockGardenProxy gardenProxy;
+
     public void init () {
         largePot = new BlockLargePot("largePot", false);
         largePotColored = new BlockLargePot("largePotColored", true);
@@ -34,6 +38,8 @@ public class ModBlocks
         thinLog = new BlockThinLog("thinLog");
         thinLogFence = new BlockThinLogFence("thinLogFence");
         flowerLeaves = new BlockFlowerLeaves("flowerLeaves");
+        gardenSoil = new BlockGardenSoil("gardenSoil");
+        gardenProxy = new BlockGardenProxy("gardenProxy");
 
         String MOD_ID = ModularPots.MOD_ID;
 
@@ -44,10 +50,13 @@ public class ModBlocks
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
         GameRegistry.registerBlock(potteryTable, "pottery_table");
         //GameRegistry.registerBlock(flowerLeaves, "flower_leaves");
+        GameRegistry.registerBlock(gardenSoil, "garden_soil");
+        GameRegistry.registerBlock(gardenProxy, "garden_proxy");
 
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));
         GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
+        GameRegistry.registerTileEntity(TileEntityGarden.class, ModBlocks.getQualifiedName(gardenSoil));
     }
 
     public static Block get (String name) {

@@ -2,3 +2,6 @@
 */eclipse/**
 */.gradle/**
 */out/**
+Tools/OverlayTransform/bin/
+Tools/OverlayTransform/obj/
+*.suo

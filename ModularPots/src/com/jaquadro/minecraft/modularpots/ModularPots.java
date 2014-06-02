@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.modularpots;
 import com.jaquadro.minecraft.modularpots.addon.PlantHandlerRegistry;
 import com.jaquadro.minecraft.modularpots.block.*;
 import com.jaquadro.minecraft.modularpots.block.support.WoodRegistry;
+import com.jaquadro.minecraft.modularpots.client.renderer.PlacementGrid;
 import com.jaquadro.minecraft.modularpots.config.ConfigManager;
 import com.jaquadro.minecraft.modularpots.config.PatternConfig;
 import com.jaquadro.minecraft.modularpots.core.ModBlocks;
@@ -27,14 +28,20 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import java.io.File;
@@ -55,6 +62,7 @@ public class ModularPots
     public static final ModIntegration integration = new ModIntegration();
 
     public static int potteryTableGuiID = 0;
+    public static int gardenGuiID = 1;
 
     public static ConfigManager config;
 
@@ -135,6 +143,19 @@ public class ModularPots
                 if (item != null && isValidAxe(item) && item.getItemDamage() < item.getMaxDamage()) {
                     event.craftMatrix.setInventorySlotContents(i, new ItemStack(item.getItem(), item.stackSize + 1, item.getItemDamage() + 1));
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void drawBlockHighlight (DrawBlockHighlightEvent event) {
+        if (event.target != null && event.target.sideHit == 1 && event.target.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
+            Block block = event.player.worldObj.getBlock(event.target.blockX, event.target.blockY, event.target.blockZ);
+            if (block instanceof BlockLargePot) {
+                PlacementGrid grid = new PlacementGrid();
+                grid.render(event.player, event.target, event.partialTicks);
+                event.setCanceled(true);
             }
         }
     }

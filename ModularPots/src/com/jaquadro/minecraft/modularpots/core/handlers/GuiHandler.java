@@ -1,7 +1,10 @@
 package com.jaquadro.minecraft.modularpots.core.handlers;
 
+import com.jaquadro.minecraft.modularpots.client.gui.inventory.GuiGardenLayout;
 import com.jaquadro.minecraft.modularpots.client.gui.inventory.GuiPotteryTable;
+import com.jaquadro.minecraft.modularpots.inventory.ContainerGarden;
 import com.jaquadro.minecraft.modularpots.inventory.ContainerPotteryTable;
+import com.jaquadro.minecraft.modularpots.tileentity.TileEntityGarden;
 import com.jaquadro.minecraft.modularpots.tileentity.TileEntityPotteryTable;
 import cpw.mods.fml.common.network.IGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +18,8 @@ public class GuiHandler implements IGuiHandler
         TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityPotteryTable)
             return new ContainerPotteryTable(player.inventory, (TileEntityPotteryTable) tileEntity);
+        if (tileEntity instanceof TileEntityGarden)
+            return new ContainerGarden(player.inventory, (TileEntityGarden) tileEntity);
 
         return null;
     }
@@ -24,6 +29,8 @@ public class GuiHandler implements IGuiHandler
         TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity instanceof TileEntityPotteryTable)
             return new GuiPotteryTable(player.inventory, (TileEntityPotteryTable) tileEntity);
+        if (tileEntity instanceof TileEntityGarden)
+            return new GuiGardenLayout(player.inventory, (TileEntityGarden) tileEntity);
 
         return null;
     }
