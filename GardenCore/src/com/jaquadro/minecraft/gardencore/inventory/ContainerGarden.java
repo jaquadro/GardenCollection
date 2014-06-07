@@ -67,6 +67,11 @@ public class ContainerGarden extends Container
         return gardenInventory.isUseableByPlayer(player);
     }
 
+    /*@Override
+    public boolean canDragIntoSlot (Slot slot) {
+        return super.canDragIntoSlot(slot);
+    }*/
+
     @Override
     public ItemStack transferStackInSlot (EntityPlayer player, int slotIndex) {
         ItemStack itemStack = null;

@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardencore.client.renderer;
 
+import com.jaquadro.minecraft.gardencore.api.IPlantRenderer;
+import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
@@ -66,12 +68,10 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
 
             tessellator.addTranslation(offsetX, offsetY, offsetZ);
 
-            int renderType = subBlock.getRenderType();
             try {
-                if (renderType == 1)
-                    renderCrossedSquares(world, renderer, subBlock, x, y, z, te);
-                else if (renderType == 40 && subBlock instanceof BlockDoublePlant)
-                    renderBlockDoublePlant(world, renderer, (BlockDoublePlant) subBlock, x, y, z, te);
+                IPlantRenderer plantRenderer = PlantRegistry.instance().getPlantRenderer(subBlock, subBlockData);
+                if (plantRenderer != null)
+                    plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, 1);
                 else
                     renderer.renderBlockByRenderType(subBlock, x, y, z);
             }

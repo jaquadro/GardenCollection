@@ -10,6 +10,8 @@ public final class UniqueMetaIdentifier
     public final String name;
     public final int meta;
 
+    private GameRegistry.UniqueIdentifier cachedUID;
+
     public UniqueMetaIdentifier (String modId, String name, int meta) {
         this.modId = modId;
         this.name = name;
@@ -40,7 +42,9 @@ public final class UniqueMetaIdentifier
     }
 
     public GameRegistry.UniqueIdentifier getUniqueIdentifier () {
-        return new GameRegistry.UniqueIdentifier(modId + ":" + name);
+        if (cachedUID == null)
+            cachedUID = new GameRegistry.UniqueIdentifier(modId + ":" + name);
+        return cachedUID;
     }
 
     public Block getBlock () {

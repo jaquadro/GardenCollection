@@ -420,6 +420,9 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     @Override
     public boolean isItemValidForSlot (int slot, ItemStack itemStack) {
+        if (!isSlotValid(slot))
+            return  false;
+
         if (itemStack != null && itemStack.getItem() instanceof IPlantable)
             return isSlotValid(slot);
         return false;
