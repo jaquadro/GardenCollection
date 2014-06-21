@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.client.renderer;
 
+import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.IPlantRenderer;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
@@ -44,6 +45,8 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
         if (te == null)
             return true;
 
+        int section = y - te.yCoord;
+
         Tessellator tessellator = Tessellator.instance;
         //tessellator.addTranslation(0, -.0625f, 0);
 
@@ -70,8 +73,11 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
 
             try {
                 IPlantRenderer plantRenderer = PlantRegistry.instance().getPlantRenderer(subBlock, subBlockData);
-                if (plantRenderer != null)
-                    plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, 1);
+                if (plantRenderer != null) {
+                    IPlantMetaResolver resolver = PlantRegistry.instance().getPlantMetaResolver(subBlock, subBlockData);
+                    if (resolver == null || section <= resolver.getPlantHeight(subBlock, subBlockData))
+                        plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, section);
+                }
                 else
                     renderer.renderBlockByRenderType(subBlock, x, y, z);
             }
