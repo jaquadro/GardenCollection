@@ -11,14 +11,14 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.3-SNAPSHOT'
     }
 }
 
 allprojects {
     apply plugin: 'forge'
     minecraft {
-        version = "1.7.2-10.12.0.1024"
+        version = "1.7.2-10.12.2.1121"
         assetDir = "eclipse/assets"
     }
     version = "1.7.2.0"
