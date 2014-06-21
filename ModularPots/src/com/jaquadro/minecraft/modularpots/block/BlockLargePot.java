@@ -499,7 +499,7 @@ public class BlockLargePot extends BlockContainer
         }
         else {
             int plantMeta = plantable.getPlantMetadata(world, x, y, z);
-            if (plantMeta > 0)
+            if (plantMeta != world.getBlockMetadata(x, y, z))
                 itemMeta = plantMeta;
         }
 
