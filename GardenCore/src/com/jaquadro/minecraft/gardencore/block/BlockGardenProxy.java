@@ -226,9 +226,12 @@ public class BlockGardenProxy extends Block
 
     @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, Block block) {
-        if (!hasValidUnderBlock(world, x, y, z)) {
+        TileEntityGarden te = getGardenEntity(world, x, y, z);
+        if (te != null)
+            BlockGarden.validateBlockState(te);
+        /*if (!hasValidUnderBlock(world, x, y, z)) {
             world.setBlockToAir(x, y, z);
-        }
+        }*/
     }
 
     @Override
@@ -275,6 +278,8 @@ public class BlockGardenProxy extends Block
                     if (item != null)
                         dropBlockAsItem(world, x, y, z, item);
                 }
+
+                te.clearPlantedContents();
             }
         }
 
@@ -440,7 +445,7 @@ public class BlockGardenProxy extends Block
             return false;
 
         Block underBlock = world.getBlock(x, y - 1, z);
-        return underBlock instanceof BlockGarden;
+        return underBlock instanceof BlockGarden || underBlock instanceof BlockGardenProxy;
     }
 
     private int getBaseBlockYCoord (IBlockAccess world, int x, int y, int z) {

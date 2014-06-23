@@ -102,9 +102,9 @@ public abstract class BlockGarden extends BlockContainer
                 itemMeta = plantMeta;
         }
 
-        world.setBlock(x, y + 1, z, ModBlocks.gardenProxy, itemMeta, 3);
+        /*world.setBlock(x, y + 1, z, ModBlocks.gardenProxy, itemMeta, 3);
         if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
-            world.setBlock(x, y + 2, z, ModBlocks.gardenProxy, itemMeta | 8, 3);
+            world.setBlock(x, y + 2, z, ModBlocks.gardenProxy, itemMeta | 8, 3);*/
 
         tileEntity.setCenterPlant(itemStack.getItem(), itemMeta);
 
@@ -179,12 +179,12 @@ public abstract class BlockGarden extends BlockContainer
         if (y >= world.getHeight() - 1)
             return;
 
-        Block overBlock = world.getBlock(x, y + 1, z);
+        /*Block overBlock = world.getBlock(x, y + 1, z);
         if (overBlock.isAir(world, x, y, z)) {
             TileEntityGarden tileEntity = getTileEntity(world, x, y, z);
             if (tileEntity != null)
                 tileEntity.clearPlantedContents();
-        }
+        }*/
     }
 
     @Override

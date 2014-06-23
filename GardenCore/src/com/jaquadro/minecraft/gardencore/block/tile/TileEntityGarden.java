@@ -123,7 +123,11 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     private void clearReachableContents (int start, int length) {
         for (int i = start; i < length; i++)
-            setInventorySlotContents(i, null);
+            setInventorySlotContents(i, null, false);
+
+        BlockGarden.validateBlockState(this);
+        if (!worldObj.isRemote)
+            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
     public List<ItemStack> getReachableContents () {
@@ -357,8 +361,12 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     @Override
     public void setInventorySlotContents (int slot, ItemStack itemStack) {
+        setInventorySlotContents(slot, itemStack, true);
+    }
+
+    public void setInventorySlotContents (int slot, ItemStack itemStack, boolean notify) {
         if (!isSharedSlot(slot)) {
-            setInventorySlotContentsIsolated(slot, itemStack);
+            setInventorySlotContentsIsolated(slot, itemStack, notify);
             return;
         }
 
@@ -371,13 +379,13 @@ public class TileEntityGarden extends TileEntity implements IInventory
                 continue;
 
             TileEntityGarden nGarden = (TileEntityGarden)te;
-            nGarden.setInventorySlotContentsIsolated(mapping.mappedSlot, null);
+            nGarden.setInventorySlotContentsIsolated(mapping.mappedSlot, null, notify);
         }
 
-        setInventorySlotContentsIsolated(slot, itemStack);
+        setInventorySlotContentsIsolated(slot, itemStack, notify);
     }
 
-    protected void setInventorySlotContentsIsolated (int slot, ItemStack itemStack) {
+    protected void setInventorySlotContentsIsolated (int slot, ItemStack itemStack, boolean notify) {
         containerStacks[slot] = itemStack;
 
         if (itemStack != null && itemStack.stackSize > getInventoryStackLimit())
@@ -385,7 +393,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
         markDirty();
 
-        //if (!worldObj.isRemote)
+        if (notify)
             BlockGarden.validateBlockState(this);
     }
 
