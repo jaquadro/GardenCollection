@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.client.renderer;
 
+import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -11,6 +12,11 @@ import net.minecraft.world.IBlockAccess;
 public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 {
     private float[] baseColor = new float[3];
+    private float[] activeRimColor = new float[3];
+    private float[] activeInWallColor = new float[3];
+    private float[] activeBottomColor = new float[3];
+
+    private ModularBoxRenderer boxRenderer = new ModularBoxRenderer();
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -26,13 +32,23 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, data);
 
         RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
-        RenderUtil.setTessellatorColor(tessellator, baseColor);
+        RenderUtil.scaleColor(activeRimColor, baseColor, .8f);
+        RenderUtil.scaleColor(activeInWallColor, baseColor, .7f);
+        RenderUtil.scaleColor(activeBottomColor, baseColor, .6f);
 
-        RenderUtil.renderOctantExterior(block, x, y, z, icon, renderer, .0625, RenderUtil.CONNECT_XPOS, RenderUtil.CUT_YPOS);
-        RenderUtil.renderOctantExterior(block, x + .5, y, z, icon, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.setIcon(icon);
+        boxRenderer.setExteriorColor(baseColor);
+        boxRenderer.setInteriorColor(activeInWallColor);
+        boxRenderer.setInteriorColor(activeBottomColor, ModularBoxRenderer.FACE_YNEG);
+        boxRenderer.setCutColor(activeRimColor);
 
-        RenderUtil.renderOctantInterior(block, x, y, z, icon, renderer, .0625, RenderUtil.CONNECT_XPOS, RenderUtil.CUT_YPOS);
-        RenderUtil.renderOctantInterior(block, x + .5, y, z, icon, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctantExterior(block, x, y, z, renderer, .0625, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctantExterior(block, x + .5, y, z, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctantExterior(block, x, y, z + .5, renderer, .0625, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
+
+        boxRenderer.renderOctantInterior(block, x, y, z, renderer, .0625, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctantInterior(block, x + .5, y, z, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctantInterior(block, x, y, z + .5, renderer, .0625, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
 
         return true;
     }
