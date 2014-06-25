@@ -42,13 +42,9 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setInteriorColor(activeBottomColor, ModularBoxRenderer.FACE_YNEG);
         boxRenderer.setCutColor(activeRimColor);
 
-        boxRenderer.renderOctantExterior(block, x, y, z, renderer, .0625, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctantExterior(block, x + .5, y, z, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctantExterior(block, x, y, z + .5, renderer, .0625, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
-
-        boxRenderer.renderOctantInterior(block, x, y, z, renderer, .0625, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctantInterior(block, x + .5, y, z, renderer, .0625, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctantInterior(block, x, y, z + .5, renderer, .0625, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctant(renderer, block, x, y, z, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctant(renderer, block, x + .5, y, z, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctant(renderer, block, x, y, z + .5, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
 
         return true;
     }

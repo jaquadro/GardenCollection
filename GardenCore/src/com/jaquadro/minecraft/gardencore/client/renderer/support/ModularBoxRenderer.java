@@ -65,6 +65,8 @@ public class ModularBoxRenderer
     private static final int PLANE_YNEG = CONNECT_YNEG | CONNECT_YNEG_ZNEG | CONNECT_YNEG_ZPOS | CONNECT_YNEG_XNEG | CONNECT_YNEG_XPOS;
     private static final int PLANE_YPOS = CONNECT_YPOS | CONNECT_YPOS_ZNEG | CONNECT_YPOS_ZPOS | CONNECT_YPOS_XNEG | CONNECT_YPOS_XPOS;
 
+    private double unit = 0.0625;
+
     private float[][] exteriorColor = new float[6][3];
     private float[][] interiorColor = new float[6][3];
     private float[][] cutColor = new float[6][3];
@@ -141,7 +143,7 @@ public class ModularBoxRenderer
         cutIcon[side] = icon;
     }
 
-    public void renderOctantExterior (Block block, double x, double y, double z, RenderBlocks renderer, double unit, int connectedFlags, int cutFlags) {
+    public void renderOctant (RenderBlocks renderer, Block block, double x, double y, double z, int connectedFlags, int cutFlags) {
         double xBase = Math.floor(x);
         double yBase = Math.floor(y);
         double zBase = Math.floor(z);
@@ -151,10 +153,12 @@ public class ModularBoxRenderer
         double xPos = xNeg + .5;
         double yPos = yNeg + .5;
         double zPos = zNeg + .5;
-        x = xBase;
-        y = yBase;
-        z = zBase;
 
+        renderExterior(renderer, block, xBase, yBase, zBase, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
+        renderInterior(renderer, block, xBase, yBase, zBase, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
+    }
+
+    public void renderExterior (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos, int connectedFlags, int cutFlags) {
         if ((cutFlags & CUT_YNEG) != 0)
             connectedFlags |= CONNECT_YNEG;
         if ((cutFlags & CUT_YPOS) != 0)
@@ -345,20 +349,7 @@ public class ModularBoxRenderer
         }
     }
 
-    public void renderOctantInterior (Block block, double x, double y, double z, RenderBlocks renderer, double unit, int connectedFlags, int cutFlags) {
-        double xBase = Math.floor(x);
-        double yBase = Math.floor(y);
-        double zBase = Math.floor(z);
-        double xNeg = x - xBase;
-        double yNeg = y - yBase;
-        double zNeg = z - zBase;
-        double xPos = xNeg + .5;
-        double yPos = yNeg + .5;
-        double zPos = zNeg + .5;
-        x = xBase;
-        y = yBase;
-        z = zBase;
-
+    public void renderInterior (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos, int connectedFlags, int cutFlags) {
         if ((cutFlags & CUT_YNEG) != 0)
             connectedFlags |= PLANE_YNEG;
         if ((cutFlags & CUT_YPOS) != 0)
