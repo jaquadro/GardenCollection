@@ -18,11 +18,13 @@ public class ItemWindowBox extends ItemBlock
         if (!super.placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata & 15))
             return false;
 
-        boolean isUpper = side != 0 && (side == 1 || hitY <= 0.5);
+        boolean isLower = side != 0 && (side == 1 || hitY <= 0.5);
 
         TileEntityWindowBox te = (TileEntityWindowBox) world.getTileEntity(x, y, z);
         if (te != null)
-            te.setUpper(isUpper);
+            te.setUpper(!isLower);
+
+
 
         return true;
     }

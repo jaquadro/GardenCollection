@@ -1,5 +1,8 @@
 package com.jaquadro.minecraft.gardencore.client.renderer;
 
+import com.jaquadro.minecraft.gardencore.block.BlockWindowBox;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -25,6 +28,13 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        if (!(block instanceof BlockWindowBox))
+            return false;
+
+        return renderWorldBlock(world, x, y, z, (BlockWindowBox) block, modelId, renderer);
+    }
+
+    public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockWindowBox block, int modelId, RenderBlocks renderer) {
         int data = world.getBlockMetadata(x, y, z);
 
         Tessellator tessellator = Tessellator.instance;
@@ -42,9 +52,34 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setInteriorColor(activeBottomColor, ModularBoxRenderer.FACE_YNEG);
         boxRenderer.setCutColor(activeRimColor);
 
-        boxRenderer.renderOctant(renderer, block, x, y, z, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
+
+
+        TileEntityWindowBox te = block.getTileEntity(world, x, y, z);
+        boolean validNE = te.isSlotValid(TileEntityGarden.SLOT_NE);
+        boolean validNW = te.isSlotValid(TileEntityGarden.SLOT_NW);
+        boolean validSE = te.isSlotValid(TileEntityGarden.SLOT_SE);
+        boolean validSW = te.isSlotValid(TileEntityGarden.SLOT_SW);
+
+        if (validNW) {
+            int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSE ? ModularBoxRenderer.CONNECT_ZPOS : 0);
+            boxRenderer.renderOctant(renderer, block, x, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
+        }
+        if (validNE) {
+            int connect = 0 | (validNW ? ModularBoxRenderer.CONNECT_XNEG : 0) | (validSE ? ModularBoxRenderer.CONNECT_ZPOS : 0);
+            boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
+        }
+        if (validSW) {
+            int connect = 0 | (validSE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validNW ? ModularBoxRenderer.CONNECT_ZNEG : 0);
+            boxRenderer.renderOctant(renderer, block, x, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
+        }
+        if (validSE) {
+            int connect = 0 | (validSW ? ModularBoxRenderer.CONNECT_XNEG : 0) | (validNE ? ModularBoxRenderer.CONNECT_ZNEG : 0);
+            boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
+        }
+
+        /*boxRenderer.renderOctant(renderer, block, x, y, z, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
         boxRenderer.renderOctant(renderer, block, x + .5, y, z, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctant(renderer, block, x, y, z + .5, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);
+        boxRenderer.renderOctant(renderer, block, x, y, z + .5, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);*/
 
         return true;
     }

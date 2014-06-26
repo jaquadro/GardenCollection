@@ -64,20 +64,23 @@ public class BlockWindowBox extends BlockGarden
         int quadrant = MathHelper.floor_double((entity.rotationYaw * 4f / 360f) + .5) & 3;
         switch (quadrant) {
             case 0:
-                te.setDirection(2);
-                break;
-            case 1:
-                te.setDirection(5);
-                break;
-            case 2:
                 te.setDirection(3);
                 break;
-            case 3:
+            case 1:
                 te.setDirection(4);
+                break;
+            case 2:
+                te.setDirection(2);
+                break;
+            case 3:
+                te.setDirection(5);
                 break;
         }
 
-        world.markBlockForUpdate(x, y, z);
+        if (world.isRemote) {
+            te.invalidate();
+            world.markBlockForUpdate(x, y, z);
+        }
     }
 
     /*@Override
@@ -93,5 +96,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
         return Blocks.planks.getIcon(world, x, y, z, side);
+    }
+
+    public TileEntityWindowBox getTileEntity (IBlockAccess world, int x, int y, int z) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        return (te != null && te instanceof TileEntityWindowBox) ? (TileEntityWindowBox) te : null;
     }
 }
