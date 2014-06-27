@@ -61,7 +61,7 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boolean validSW = te.isSlotValid(TileEntityGarden.SLOT_SW);
 
         if (validNW) {
-            int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSE ? ModularBoxRenderer.CONNECT_ZPOS : 0);
+            int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSW ? ModularBoxRenderer.CONNECT_ZPOS : 0);
             boxRenderer.renderOctant(renderer, block, x, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
         }
         if (validNE) {

@@ -54,6 +54,8 @@ public class TileEntityWindowBox extends TileEntityGarden
     @Override
     public boolean isSlotValid (int slot) {
         int dir = getDirection();
+
+        // Outer corner check
         if (isAttachedNeighbor(dir)) {
             int facingDir = getNeighborDirection(dir);
             switch (slot) {
@@ -84,21 +86,58 @@ public class TileEntityWindowBox extends TileEntityGarden
             }
         }
 
+        int rdir = (dir % 2 == 0) ? dir + 1 : dir - 1;
+
+        // Inner corner check
+        if (isAttachedNeighbor(rdir)) {
+            int facingDir = getNeighborDirection(rdir);
+            switch (slot) {
+                case 2: // Z- X-
+                    if (dir == 3 && facingDir == 4)
+                        return true;
+                    if (dir == 5 && facingDir == 2)
+                        return true;
+                    break;
+                case 3: // Z- X+
+                    if (dir == 3 && facingDir == 5)
+                        return true;
+                    if (dir == 4 && facingDir == 2)
+                        return true;
+                    break;
+                case 4: // Z+ X-
+                    if (dir == 2 && facingDir == 4)
+                        return true;
+                    if (dir == 5 && facingDir == 3)
+                        return true;
+                    break;
+                case 5: // Z+ X+
+                    if (dir == 2 && facingDir == 5)
+                        return true;
+                    if (dir == 4 && facingDir == 3)
+                        return true;
+                    break;
+            }
+        }
+
         switch (slot) {
             case 1:
                 return true;
             case 2: // Z- X-
                 if (dir == 2 || dir == 4)
                     return true;
+                break;
             case 3: // Z- X+
                 if (dir == 2 || dir == 5)
                     return true;
+                break;
             case 4: // Z+ X-
                 if (dir == 3 || dir == 4)
                     return true;
+                break;
             case 5: // Z+ X+
                 if (dir == 3 || dir == 5)
                     return  true;
+                break;
         }
 
         return false;
@@ -166,7 +205,10 @@ public class TileEntityWindowBox extends TileEntityGarden
         int dir = getDirection();
         int ndir = nte.getDirection();
 
-        if (dir == neighborToDirection(x, z)) {
+        int rdir = (dir % 2 == 0) ? dir + 1 : dir - 1;
+        int xzDir = neighborToDirection(x, z);
+
+        if (dir == xzDir || rdir == xzDir) {
             switch (dir) {
                 case 2:
                 case 3:
