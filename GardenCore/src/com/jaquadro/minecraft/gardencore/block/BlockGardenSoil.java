@@ -25,7 +25,7 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
-    protected ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
+    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
         return substrate;
     }
 

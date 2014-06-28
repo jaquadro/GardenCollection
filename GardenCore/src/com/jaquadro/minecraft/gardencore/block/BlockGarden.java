@@ -33,7 +33,7 @@ public abstract class BlockGarden extends BlockContainer
         return 0;
     }
 
-    protected abstract ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z);
+    public abstract ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z);
 
     protected boolean canApplyItemToSubstrate (TileEntityGarden tileEntity, ItemStack itemStack) {
         return false;

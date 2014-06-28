@@ -4,11 +4,14 @@ import com.jaquadro.minecraft.gardencore.block.BlockWindowBox;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
+import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
@@ -18,6 +21,7 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
     private float[] activeRimColor = new float[3];
     private float[] activeInWallColor = new float[3];
     private float[] activeBottomColor = new float[3];
+    private float[] activeSubstrateColor = new float[3];
 
     private ModularBoxRenderer boxRenderer = new ModularBoxRenderer();
 
@@ -52,8 +56,6 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setInteriorColor(activeBottomColor, ModularBoxRenderer.FACE_YNEG);
         boxRenderer.setCutColor(activeRimColor);
 
-
-
         TileEntityWindowBox te = block.getTileEntity(world, x, y, z);
         boolean validNE = te.isSlotValid(TileEntityGarden.SLOT_NE);
         boolean validNW = te.isSlotValid(TileEntityGarden.SLOT_NW);
@@ -77,9 +79,33 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
         }
 
-        /*boxRenderer.renderOctant(renderer, block, x, y, z, RenderUtil.CONNECT_XPOS | RenderUtil.CONNECT_ZPOS, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctant(renderer, block, x + .5, y, z, RenderUtil.CONNECT_XNEG, RenderUtil.CUT_YPOS);
-        boxRenderer.renderOctant(renderer, block, x, y, z + .5, RenderUtil.CONNECT_ZNEG, RenderUtil.CUT_YPOS);*/
+        ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z);
+        if (substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
+            Block substrate = Block.getBlockFromItem(substrateItem.getItem());
+            IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateItem.getItemDamage());
+
+            RenderUtil.calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
+            RenderUtil.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
+            RenderUtil.setTessellatorColor(tessellator, activeSubstrateColor);
+
+            double ySubstrate = (te.isUpper() ? 1 : .5) - .0625;
+            if (validNW) {
+                renderer.setRenderBounds(0, 0, 0, .5, ySubstrate, .5);
+                renderer.renderFaceYPos(block, x, y, z, substrateIcon);
+            }
+            if (validNE) {
+                renderer.setRenderBounds(.5, 0, 0, 1, ySubstrate, .5);
+                renderer.renderFaceYPos(block, x, y, z, substrateIcon);
+            }
+            if (validSW) {
+                renderer.setRenderBounds(0, 0, .5, .5, ySubstrate, 1);
+                renderer.renderFaceYPos(block, x, y, z, substrateIcon);
+            }
+            if (validSE) {
+                renderer.setRenderBounds(.5, 0, .5, 1, ySubstrate, 1);
+                renderer.renderFaceYPos(block, x, y, z, substrateIcon);
+            }
+        }
 
         return true;
     }
@@ -91,7 +117,7 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public int getRenderId () {
-        return 0;
+        return ClientProxy.windowBoxRenderID;
     }
 
     /*private void renderOctZNeg (Block block, double x, double y, double z, IIcon icon, RenderBlocks renderer, int connect) {
