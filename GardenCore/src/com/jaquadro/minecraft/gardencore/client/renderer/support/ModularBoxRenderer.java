@@ -1,9 +1,12 @@
 package com.jaquadro.minecraft.gardencore.client.renderer.support;
 
+import com.jaquadro.minecraft.gardencore.util.RenderUtil;
+import com.sun.prism.util.tess.Tess;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
 public class ModularBoxRenderer
 {
@@ -156,6 +159,11 @@ public class ModularBoxRenderer
 
         renderExterior(renderer, block, xBase, yBase, zBase, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
         renderInterior(renderer, block, xBase, yBase, zBase, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
+    }
+
+    public void renderBox (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos, int connectedFlags, int cutFlags) {
+        renderExterior(renderer, block, x, y, z, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
+        renderInterior(renderer, block, x, y, z, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
     }
 
     public void renderExterior (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos, int connectedFlags, int cutFlags) {
@@ -558,22 +566,28 @@ public class ModularBoxRenderer
 
         switch (face) {
             case FACE_YNEG:
-                renderer.renderFaceYNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceYNegAOPartial(renderer, block, (int)x, (int)y, (int)z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceYNeg(block, x, y, z, exteriorIcon[face]);
                 break;
             case FACE_YPOS:
-                renderer.renderFaceYPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceYPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceYPos(block, x, y, z, exteriorIcon[face]);
                 break;
             case FACE_ZNEG:
-                renderer.renderFaceZNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceZNegAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceZNeg(block, x, y, z, exteriorIcon[face]);
                 break;
             case FACE_ZPOS:
-                renderer.renderFaceZPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceZPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceZPos(block, x, y, z, exteriorIcon[face]);
                 break;
             case FACE_XNEG:
-                renderer.renderFaceXNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceXNegAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceXNeg(block, x, y, z, exteriorIcon[face]);
                 break;
             case FACE_XPOS:
-                renderer.renderFaceXPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceXPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
+                //renderer.renderFaceXPos(block, x, y, z, exteriorIcon[face]);
                 break;
         }
     }
@@ -605,6 +619,7 @@ public class ModularBoxRenderer
 
     private void renderCutFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
         Tessellator.instance.setColorOpaque_F(cutColor[face][0], cutColor[face][1], cutColor[face][2]);
+        Tessellator.instance.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (int)x, (int)y, (int)z));
 
         switch (face) {
             case FACE_YNEG:

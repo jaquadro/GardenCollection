@@ -110,10 +110,6 @@ public class TileEntityGarden extends TileEntity implements IInventory
         return getStackInSlot(slot);
     }
 
-    public void setCenterPlant (Item item, int data) {
-        setInventorySlotContents(0, new ItemStack(item, 1, data));
-    }
-
     public void clearPlantedContents () {
         clearReachableContents(0, containerSlotCount());
     }

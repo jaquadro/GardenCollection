@@ -59,7 +59,7 @@ public class BlockWindowBox extends BlockGarden
         if (te == null)
             return 0;
 
-        return te.isUpper() ? 0f - 0.0625f : -.5f - 0.0625f;
+        return te.isUpper() ? -.0625f : -.5f - .0625f;
     }
 
     @Override
