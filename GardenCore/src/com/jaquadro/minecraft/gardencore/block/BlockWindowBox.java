@@ -1,10 +1,8 @@
 package com.jaquadro.minecraft.gardencore.block;
 
-import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
-import com.jaquadro.minecraft.gardencore.core.CommonProxy;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -19,7 +17,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
@@ -54,6 +51,35 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
         return substrate;
+    }
+
+    @Override
+    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
+        TileEntityWindowBox te = getTileEntity(world, x, y, z);
+        if (te == null)
+            return 0;
+
+        return te.isUpper() ? 0f - 0.0625f : -.5f - 0.0625f;
+    }
+
+    @Override
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
+        TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
+
+        if (hitX <= .5) {
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NW))
+                return TileEntityGarden.SLOT_NW;
+            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SW))
+                return TileEntityGarden.SLOT_SW;
+        }
+        else {
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NE))
+                return TileEntityGarden.SLOT_NE;
+            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SE))
+                return TileEntityGarden.SLOT_SE;
+        }
+
+        return TileEntityGarden.SLOT_INVALID;
     }
 
     @Override
@@ -119,7 +145,7 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void onBlockPlacedBy (World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
         TileEntityWindowBox te = (TileEntityWindowBox) world.getTileEntity(x, y, z);
-        if (te == null)
+        if (te == null || te.getDirection() != 0)
             return;
 
         int quadrant = MathHelper.floor_double((entity.rotationYaw * 4f / 360f) + .5) & 3;
@@ -143,45 +169,6 @@ public class BlockWindowBox extends BlockGarden
             world.markBlockForUpdate(x, y, z);
         }
     }
-
-    @Override
-    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable, float hitX, float hitY, float hitZ) {
-        ItemStack itemStack = player.inventory.getCurrentItem();
-
-        Block itemBlock = plantable.getPlant(world, x, y, z);
-        int itemMeta = itemStack.getItemDamage();
-        if (itemBlock == null && plantable instanceof Block) {
-            itemBlock = (Block) plantable;
-        }
-        else {
-            int plantMeta = plantable.getPlantMetadata(world, x, y, z);
-            if (plantMeta > 0)
-                itemMeta = plantMeta;
-        }
-
-        ItemStack slotItem = new ItemStack(itemBlock, 1, itemMeta);
-
-        if (hitX <= .5) {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NW))
-                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_NW, slotItem);
-            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SW))
-                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_SW, slotItem);
-        }
-        else {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NE))
-                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_NE, slotItem);
-            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SE))
-                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_SE, slotItem);
-        }
-
-        if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
-            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-    }
-
-    /*@Override
-    public int onBlockPlaced (World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
-        return side != 0 && (side == 1 || hitY <= 0.5) ? meta : meta
-    }*/
 
     @Override
     public IIcon getIcon (int side, int meta) {

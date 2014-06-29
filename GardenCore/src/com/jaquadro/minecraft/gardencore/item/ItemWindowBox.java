@@ -21,9 +21,12 @@ public class ItemWindowBox extends ItemBlock
         boolean isLower = side != 0 && (side == 1 || hitY <= 0.5);
 
         TileEntityWindowBox te = (TileEntityWindowBox) world.getTileEntity(x, y, z);
-        if (te != null)
+        if (te != null) {
             te.setUpper(!isLower);
 
+            if (side != 0 && side != 1)
+                te.setDirection((side % 2 == 0) ? side + 1 : side - 1);
+        }
 
 
         return true;

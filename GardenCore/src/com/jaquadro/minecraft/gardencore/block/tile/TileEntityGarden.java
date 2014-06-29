@@ -36,6 +36,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
         }
     }
 
+    public static final int SLOT_INVALID = -1;
     public static final int SLOT_CENTER = 0;
     public static final int SLOT_COVER = 1;
     public static final int SLOT_NW = 2;

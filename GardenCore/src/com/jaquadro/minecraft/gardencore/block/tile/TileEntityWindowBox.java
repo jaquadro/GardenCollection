@@ -25,7 +25,7 @@ public class TileEntityWindowBox extends TileEntityGarden
     }
 
     public void setDirection (int direction) {
-        this.direction |= direction & 7;
+        this.direction = (this.direction & 8) | (direction & 7);
         //invalidate();
     }
 

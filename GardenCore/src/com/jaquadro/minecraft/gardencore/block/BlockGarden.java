@@ -29,7 +29,7 @@ public abstract class BlockGarden extends BlockContainer
         setBlockName(blockName);
     }
 
-    public float getPlantOffsetY () {
+    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
         return 0;
     }
 
@@ -40,6 +40,10 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) { }
+
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
+        return TileEntityGarden.SLOT_CENTER;
+    }
 
     protected boolean canSustainPlantable (IBlockAccess world, int x, int y, int z, IPlantable plantable) {
         ItemStack substrateStack = getGardenSubstrate(world, x, y, z);
@@ -88,7 +92,7 @@ public abstract class BlockGarden extends BlockContainer
         }
     }
 
-    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable, float hitX, float hitY, float hitZ) {
+    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable, int slot) {
         ItemStack itemStack = player.inventory.getCurrentItem();
 
         Block itemBlock = plantable.getPlant(world, x, y, z);
@@ -102,11 +106,7 @@ public abstract class BlockGarden extends BlockContainer
                 itemMeta = plantMeta;
         }
 
-        /*world.setBlock(x, y + 1, z, ModBlocks.gardenProxy, itemMeta, 3);
-        if (itemBlock instanceof BlockDoublePlant || itemBlock.getRenderType() == 40)
-            world.setBlock(x, y + 2, z, ModBlocks.gardenProxy, itemMeta | 8, 3);*/
-
-        tileEntity.setCenterPlant(itemStack.getItem(), itemMeta);
+        tileEntity.setInventorySlotContents(slot, new ItemStack(itemBlock, 1, itemMeta));
 
         if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
             player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
@@ -239,10 +239,16 @@ public abstract class BlockGarden extends BlockContainer
             return true;
         }
         else if (plantable != null && canSustainPlantable(world, x, y, z, plantable)) {
+            int slot = getSlot(world, x, y, z, side, player, hitX, hitY, hitZ);
+            if (slot == TileEntityGarden.SLOT_INVALID)
+                return false;
+            if (tileEntity.getStackInSlot(slot) != null)
+                return false;
+
             if (!enoughAirAbove(world, x, y, z, plantable))
                 return false;
 
-            applyPlantable(world, x, y, z, tileEntity, player, plantable, hitX, hitY, hitZ);
+            applyPlantable(world, x, y, z, tileEntity, player, plantable, slot);
             return true;
         }
 

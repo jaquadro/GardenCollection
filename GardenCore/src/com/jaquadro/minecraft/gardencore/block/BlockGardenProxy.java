@@ -63,7 +63,7 @@ public class BlockGardenProxy extends Block
         if (gardenBlock == null)
             return 0;
 
-        return gardenBlock.getPlantOffsetY();
+        return gardenBlock.getPlantOffsetY(blockAccess, x, getBaseBlockYCoord(blockAccess, x, y, z), z, slot);
     }
 
     public float getPlantOffsetZ (int slot) {
