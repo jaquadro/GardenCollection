@@ -53,7 +53,7 @@ public class PlayerPoweredRail extends PlayerDetectorRail
         boolean isPowerBitSet = (data & 8) != 0;
         boolean isValidTarget = false;
         float boundAdjust = 0.125F;
-        List entities = world.getEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getAABBPool().getAABB((double) ((float) x + boundAdjust), (double) y, (double) ((float) z + boundAdjust), (double) ((float) (x + 1) - boundAdjust), (double) ((float) (y + 1) - boundAdjust), (double) ((float) (z + 1) - boundAdjust)));
+        List entities = world.getEntitiesWithinAABB(EntityMinecart.class, AxisAlignedBB.getBoundingBox((double) ((float) x + boundAdjust), (double) y, (double) ((float) z + boundAdjust), (double) ((float) (x + 1) - boundAdjust), (double) ((float) (y + 1) - boundAdjust), (double) ((float) (z + 1) - boundAdjust)));
 
         if (!entities.isEmpty()) {
             for (Object item : entities) {
