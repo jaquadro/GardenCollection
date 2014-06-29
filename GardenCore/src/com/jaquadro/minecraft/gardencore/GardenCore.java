@@ -4,12 +4,21 @@ import com.jaquadro.minecraft.gardencore.core.CommonProxy;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.regex.Pattern;
 
 @Mod(modid = GardenCore.MOD_ID, name = GardenCore.MOD_NAME, version = GardenCore.MOD_VERSION)
 public class GardenCore
@@ -42,6 +51,74 @@ public class GardenCore
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
+        try {
+            List<ModContainer> loadedMods = Loader.instance().getActiveModList();
+            for (ModContainer mod : loadedMods) {
+                String baseAssetPath = "assets/" + mod.getModId() + "/textures/blocks/";
+                Pattern assetPattern = Pattern.compile("assets/.+/textures/blocks/.+\\.png");
+                JarFile modJar;
 
+                try {
+                    modJar = new JarFile(mod.getSource());
+                }
+                catch (IOException e) {
+                     continue;
+                }
+
+                Enumeration<JarEntry> modJarEntries = modJar.entries();
+                while (modJarEntries.hasMoreElements()) {
+                    JarEntry element = modJarEntries.nextElement();
+                    if (element.isDirectory() || !assetPattern.matcher(element.getName()).matches())
+                        continue;
+
+                    BufferedImage image = ImageIO.read(modJar.getInputStream(element));
+                    if (image.getWidth() != image.getHeight())
+                        continue;
+
+                    int xStart = 0;
+                    int xStop = image.getWidth();
+                    int yStart = 0;
+                    int yStop = image.getHeight();
+
+                    SearchYStart:
+                    for (; yStart < yStop; yStart++, yStart++) {
+                        for (int x = xStart; x < xStop; x++) {
+                            if (((image.getRGB(x, yStart) >> 24) & 0xFF) != 0)
+                                break SearchYStart;
+                        }
+                    }
+
+                    SearchYStop:
+                    for (; yStop > yStart; yStop--) {
+                        for (int x = xStart; x < xStop; x++) {
+                            if (((image.getRGB(x, yStop - 1) >> 24) & 0xFF) != 0)
+                                break SearchYStop;
+                        }
+                    }
+
+                    SearchXStart:
+                    for (; xStart < xStop; xStart++) {
+                        for (int y = yStart; y < yStop; y++) {
+                            if (((image.getRGB(xStart, y) >> 24) & 0xFF) != 0)
+                                break SearchXStart;
+                        }
+                    }
+
+                    SearchXStop:
+                    for (; xStop > xStart; xStop--) {
+                        for (int y = yStart; y < yStop; y++) {
+                            if (((image.getRGB(xStop - 1, y) >> 24) & 0xFF) != 0)
+                                break SearchXStop;
+                        }
+                    }
+
+                    FMLLog.info("%s area: %d,%d; %dx%d", element.getName(), xStart, yStart, xStop - xStart, yStop - yStart);
+                }
+
+            }
+        }
+        catch (IOException e) {
+            FMLLog.severe("Error processing jars: %s", e.getMessage());
+        }
     }
 }

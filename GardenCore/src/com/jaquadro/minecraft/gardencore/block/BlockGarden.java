@@ -88,7 +88,7 @@ public abstract class BlockGarden extends BlockContainer
         }
     }
 
-    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable) {
+    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.inventory.getCurrentItem();
 
         Block itemBlock = plantable.getPlant(world, x, y, z);
@@ -118,7 +118,7 @@ public abstract class BlockGarden extends BlockContainer
 
         boolean enough = true;
         for (int i = 0; i < height; i++)
-            enough &= world.isAirBlock(x, y + 1 + i, z);
+            enough &= world.isAirBlock(x, y + 1 + i, z) || world.getBlock(x, y + 1 + i, z) instanceof BlockGardenProxy;
 
         return enough;
     }
@@ -212,7 +212,7 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     @Override
-    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         if (side != ForgeDirection.UP.ordinal())
             return false;
 
@@ -242,7 +242,7 @@ public abstract class BlockGarden extends BlockContainer
             if (!enoughAirAbove(world, x, y, z, plantable))
                 return false;
 
-            applyPlantable(world, x, y, z, tileEntity, player, plantable);
+            applyPlantable(world, x, y, z, tileEntity, player, plantable, hitX, hitY, hitZ);
             return true;
         }
 

@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -18,6 +19,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
@@ -140,6 +142,40 @@ public class BlockWindowBox extends BlockGarden
             te.invalidate();
             world.markBlockForUpdate(x, y, z);
         }
+    }
+
+    @Override
+    protected void applyPlantable (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player, IPlantable plantable, float hitX, float hitY, float hitZ) {
+        ItemStack itemStack = player.inventory.getCurrentItem();
+
+        Block itemBlock = plantable.getPlant(world, x, y, z);
+        int itemMeta = itemStack.getItemDamage();
+        if (itemBlock == null && plantable instanceof Block) {
+            itemBlock = (Block) plantable;
+        }
+        else {
+            int plantMeta = plantable.getPlantMetadata(world, x, y, z);
+            if (plantMeta > 0)
+                itemMeta = plantMeta;
+        }
+
+        ItemStack slotItem = new ItemStack(itemBlock, 1, itemMeta);
+
+        if (hitX <= .5) {
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NW))
+                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_NW, slotItem);
+            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SW))
+                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_SW, slotItem);
+        }
+        else {
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NE))
+                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_NE, slotItem);
+            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SE))
+                tileEntity.setInventorySlotContents(TileEntityGarden.SLOT_SE, slotItem);
+        }
+
+        if (!player.capabilities.isCreativeMode && --itemStack.stackSize <= 0)
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
     }
 
     /*@Override
