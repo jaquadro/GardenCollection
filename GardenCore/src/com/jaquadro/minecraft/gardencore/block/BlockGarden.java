@@ -82,7 +82,7 @@ public abstract class BlockGarden extends BlockContainer
             case Cave:
                 return true;
             case Plains:
-                return substrate == Blocks.grass || substrate == Blocks.dirt;
+                return substrate == Blocks.grass || substrate == Blocks.dirt || substrate == Blocks.farmland;
             case Beach:
                 return substrate == Blocks.grass || substrate == Blocks.dirt || substrate == Blocks.sand;
             case Water:

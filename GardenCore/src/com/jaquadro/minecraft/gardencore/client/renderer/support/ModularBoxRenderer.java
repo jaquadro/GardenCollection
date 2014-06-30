@@ -1,12 +1,9 @@
 package com.jaquadro.minecraft.gardencore.client.renderer.support;
 
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
-import com.sun.prism.util.tess.Tess;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
 
 public class ModularBoxRenderer
 {

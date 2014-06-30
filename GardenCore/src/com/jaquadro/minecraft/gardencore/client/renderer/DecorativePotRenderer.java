@@ -58,13 +58,14 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
 
         float unit = .0625f;
 
-        boxRenderer.renderBox(renderer, block, x, y, z, 0, 1f - .125f, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(renderer, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(renderer, block, x, y, z, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
         //renderer.setRenderBounds(0, 1f - .125f, 0, 1, 1, 1);
         //renderer.renderStandardBlock(block, x, y, z);
 
-        renderer.setRenderBounds(.0625f, .5f, .0625f, 1f - .0625f, 1f - .125f, 1f - .0625f);
-        renderer.renderStandardBlock(block, x, y, z);
+        //renderer.setRenderBounds(.0625f, .5f, .0625f, 1f - .0625f, 1f - .125f, 1f - .0625f);
+        //renderer.renderStandardBlock(block, x, y, z);
 
         renderer.setRenderBounds(.1875f, .375f, .1875f, 1f - .1875f, .5f, 1f - .1875f);
         renderer.renderStandardBlock(block, x, y, z);
