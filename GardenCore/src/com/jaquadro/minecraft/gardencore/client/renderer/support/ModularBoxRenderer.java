@@ -561,85 +561,62 @@ public class ModularBoxRenderer
         }
     }
 
-    private void renderExteriorFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
-        Tessellator.instance.setColorOpaque_F(exteriorColor[face][0], exteriorColor[face][1], exteriorColor[face][2]);
-
+    private void renderFace (int face, RenderBlocks renderer, Block block, double x, double y, double z, IIcon icon, float r, float g, float b) {
         switch (face) {
             case FACE_YNEG:
-                RenderUtil.renderFaceYNegAOPartial(renderer, block, (int)x, (int)y, (int)z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceYNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceYNeg(renderer, block, (int)x, (int)y, (int)z, icon, r, g, b);
                 break;
             case FACE_YPOS:
-                RenderUtil.renderFaceYPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceYPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceYPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZNEG:
-                RenderUtil.renderFaceZNegAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceZNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceZNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZPOS:
-                RenderUtil.renderFaceZPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceZPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceZPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_XNEG:
-                RenderUtil.renderFaceXNegAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceXNeg(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceXNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_XPOS:
-                RenderUtil.renderFaceXPosAOPartial(renderer, block, (int) x, (int) y, (int) z, exteriorIcon[face], 1, 1, 1);
-                //renderer.renderFaceXPos(block, x, y, z, exteriorIcon[face]);
+                RenderUtil.renderFaceXPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
         }
     }
 
+    private void renderExteriorFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
+        renderFace(face, renderer, block, x, y, z, exteriorIcon[face], exteriorColor[face][0], exteriorColor[face][1], exteriorColor[face][2]);
+    }
+
     private void renderInteriorFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
-        Tessellator.instance.setColorOpaque_F(interiorColor[face][0], interiorColor[face][1], interiorColor[face][2]);
+        IIcon icon = interiorIcon[face];
+        float r = interiorColor[face][0];
+        float g = interiorColor[face][1];
+        float b = interiorColor[face][2];
 
         switch (face) {
             case FACE_YNEG:
-                renderer.renderFaceYNeg(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceYNegColorMult(renderer, block, (int)x, (int)y, (int)z, icon, r, g, b);
                 break;
             case FACE_YPOS:
-                renderer.renderFaceYPos(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceYPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZNEG:
-                renderer.renderFaceZNeg(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceZNegColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZPOS:
-                renderer.renderFaceZPos(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceZPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_XNEG:
-                renderer.renderFaceXNeg(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceXNegColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_XPOS:
-                renderer.renderFaceXPos(block, x, y, z, interiorIcon[face]);
+                RenderUtil.renderFaceXPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
         }
     }
 
     private void renderCutFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
-        Tessellator.instance.setColorOpaque_F(cutColor[face][0], cutColor[face][1], cutColor[face][2]);
-        Tessellator.instance.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (int)x, (int)y, (int)z));
-
-        switch (face) {
-            case FACE_YNEG:
-                renderer.renderFaceYNeg(block, x, y, z, cutIcon[face]);
-                break;
-            case FACE_YPOS:
-                renderer.renderFaceYPos(block, x, y, z, cutIcon[face]);
-                break;
-            case FACE_ZNEG:
-                renderer.renderFaceZNeg(block, x, y, z, cutIcon[face]);
-                break;
-            case FACE_ZPOS:
-                renderer.renderFaceZPos(block, x, y, z, cutIcon[face]);
-                break;
-            case FACE_XNEG:
-                renderer.renderFaceXNeg(block, x, y, z, cutIcon[face]);
-                break;
-            case FACE_XPOS:
-                renderer.renderFaceXPos(block, x, y, z, cutIcon[face]);
-                break;
-        }
+        renderFace(face, renderer, block, x, y, z, cutIcon[face], cutColor[face][0], cutColor[face][1], cutColor[face][2]);
     }
 }
