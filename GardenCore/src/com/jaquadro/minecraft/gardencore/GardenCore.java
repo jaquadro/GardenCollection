@@ -8,7 +8,11 @@ import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -47,6 +51,9 @@ public class GardenCore
     public void init (FMLInitializationEvent event) {
         proxy.registerRenderers();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
+        //MinecraftForge.EVENT_BUS.register(this);
+        //FMLCommonHandler.instance().bus().register(this);
     }
 
     @Mod.EventHandler

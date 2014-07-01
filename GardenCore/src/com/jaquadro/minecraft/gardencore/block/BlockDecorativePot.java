@@ -2,22 +2,27 @@ package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.List;
 
 public class BlockDecorativePot extends BlockGarden
 {
-    private static ItemStack substrate = new ItemStack(Blocks.dirt, 1);
+    private static ItemStack substrate = new ItemStack(Blocks.netherrack, 1, 1);
 
     public BlockDecorativePot (String blockName) {
         super(blockName, Material.rock);
@@ -71,6 +76,59 @@ public class BlockDecorativePot extends BlockGarden
         super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
 
         setBlockBounds(0, 0, 0, 1, 1, 1);
+    }
+
+    @Override
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        ItemStack itemStack = player.inventory.getCurrentItem();
+        if (side == 1 && itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
+            if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack)) {
+                if (world.isAirBlock(x, y + 1, z)) {
+                    world.playSoundEffect(x + .5, y + .5, z + .5, "fire.ignite", 1, world.rand.nextFloat() * .4f + .8f);
+                    world.setBlock(x, y + 1, z, ModBlocks.smallFire);
+
+                    world.notifyBlocksOfNeighborChange(x, y, z, this);
+                    world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+                }
+
+                itemStack.damageItem(1, player);
+                return true;
+            }
+        }
+
+        return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+    }
+
+    @Override
+    public void breakBlock (World world, int x, int y, int z, Block block, int data) {
+        if (isSconceLit(world, x, y, z)) {
+            world.notifyBlocksOfNeighborChange(x, y, z, this);
+            world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+        }
+
+        super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public int isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side) {
+        return (side == 1 && isSconceLit(world, x, y, z)) ? 15 : 0;
+    }
+
+    @Override
+    public int isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side) {
+        return isSconceLit(world, x, y, z) ? 15 : 0;
+    }
+
+    @Override
+    public boolean canProvidePower () {
+        return true;
+    }
+
+    private boolean isSconceLit (IBlockAccess world, int x, int y, int z) {
+        if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack))
+            return world.getBlock(x, y + 1, z) == ModBlocks.smallFire;
+
+        return false;
     }
 
     @Override

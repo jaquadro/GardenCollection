@@ -1,10 +1,7 @@
 package com.jaquadro.minecraft.gardencore.core;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
-import com.jaquadro.minecraft.gardencore.block.BlockDecorativePot;
-import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
-import com.jaquadro.minecraft.gardencore.block.BlockGardenSoil;
-import com.jaquadro.minecraft.gardencore.block.BlockWindowBox;
+import com.jaquadro.minecraft.gardencore.block.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityWindowBox;
@@ -22,17 +19,20 @@ public class ModBlocks
     public static BlockGardenProxy gardenProxy;
     public static BlockWindowBox windowBox;
     public static BlockDecorativePot decorativePot;
+    public static BlockSmallFire smallFire;
 
     public void init () {
         gardenSoil = new BlockGardenSoil("gardenSoil");
         gardenProxy = new BlockGardenProxy("gardenProxy");
         windowBox = new BlockWindowBox("windowBox");
         decorativePot = new BlockDecorativePot("decorativePot");
+        smallFire = new BlockSmallFire();
 
         GameRegistry.registerBlock(gardenSoil, "garden_soil");
         GameRegistry.registerBlock(gardenProxy, "garden_proxy");
         GameRegistry.registerBlock(windowBox, ItemWindowBox.class, "window_box");
         GameRegistry.registerBlock(decorativePot, "decorative_pot");
+        GameRegistry.registerBlock(smallFire, "small_fire");
 
         GameRegistry.registerTileEntity(TileEntityGarden.class, ModBlocks.getQualifiedName(gardenSoil));
         GameRegistry.registerTileEntity(TileEntityWindowBox.class, ModBlocks.getQualifiedName(windowBox));
