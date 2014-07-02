@@ -65,6 +65,8 @@ public class ModularBoxRenderer
     private static final int PLANE_YNEG = CONNECT_YNEG | CONNECT_YNEG_ZNEG | CONNECT_YNEG_ZPOS | CONNECT_YNEG_XNEG | CONNECT_YNEG_XPOS;
     private static final int PLANE_YPOS = CONNECT_YPOS | CONNECT_YPOS_ZNEG | CONNECT_YPOS_ZPOS | CONNECT_YPOS_XNEG | CONNECT_YPOS_XPOS;
 
+    public static final float[] COLOR_WHITE = new float[] { 1, 1, 1 };
+
     private double unit = 0.0625;
 
     private float[][] exteriorColor = new float[6][3];
@@ -163,6 +165,10 @@ public class ModularBoxRenderer
         renderInterior(renderer, block, x, y, z, xNeg, yNeg, zNeg, xPos, yPos, zPos, connectedFlags, cutFlags);
     }
 
+    public void renderSolidBox (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos) {
+        renderExterior(renderer, block, x, y, z, xNeg, yNeg, zNeg, xPos, yPos, zPos, 0, 0);
+    }
+
     public void renderExterior (RenderBlocks renderer, Block block, double x, double y, double z, double xNeg, double yNeg, double zNeg, double xPos, double yPos, double zPos, int connectedFlags, int cutFlags) {
         if ((cutFlags & CUT_YNEG) != 0)
             connectedFlags |= CONNECT_YNEG;
@@ -192,6 +198,9 @@ public class ModularBoxRenderer
             renderExteriorFace(FACE_XNEG, renderer, block, x, y, z);
         if ((connectedFlags & CONNECT_XPOS) == 0)
             renderExteriorFace(FACE_XPOS, renderer, block, x, y, z);
+
+        if (unit == 0)
+            return;
 
         // Render edge faces
         if ((cutFlags & TEST_YNEG_ZNEG) != 0) {
@@ -395,6 +404,9 @@ public class ModularBoxRenderer
             renderer.setRenderBounds(xPos - unit, yNeg + unit, zNeg + unit, xPos, yPos - unit, zPos - unit);
             renderInteriorFace(FACE_XNEG, renderer, block, x, y, z);
         }
+
+        if (unit == 0)
+            return;
 
         // Render edge faces
         if ((connectedFlags & TEST_YNEG_ZNEG) != 0 && (connectedFlags | CONNECT_YNEG | CONNECT_ZNEG | CONNECT_YNEG_ZNEG) != connectedFlags) {

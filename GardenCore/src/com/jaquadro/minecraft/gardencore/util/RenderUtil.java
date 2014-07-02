@@ -80,42 +80,42 @@ public final class RenderUtil
     }
 
     public static void renderFaceYNeg (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceYNegAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceYNegColorMult(renderer, block, x, y, z, icon, r, g, b);
     }
 
     public static void renderFaceYPos (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceYPosAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceYPosColorMult(renderer, block, x, y, z, icon, r, g, b);
     }
 
     public static void renderFaceZNeg (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceZNegAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceZNegColorMult(renderer, block, x, y, z, icon, r, g, b);
     }
 
     public static void renderFaceZPos (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceZPosAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceZPosColorMult(renderer, block, x, y, z, icon, r, g, b);
     }
 
     public static void renderFaceXNeg (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceXNegAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceXNegColorMult(renderer, block, x, y, z, icon, r, g, b);
     }
 
     public static void renderFaceXPos (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
+        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
             renderFaceXPosAOPartial(renderer, block, x, y, z, icon, r, g, b);
         else
             renderFaceXPosColorMult(renderer, block, x, y, z, icon, r, g, b);
@@ -123,8 +123,11 @@ public final class RenderUtil
 
     public static void renderFaceYNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMinY > 0) ? y : y - 1, z));
         tessellator.setColorOpaque_F(.5f * r, .5f * g, .5f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(0, -1, 0);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMinY > 0) ? y : y - 1, z));
 
         renderer.enableAO = false;
         renderer.renderFaceYNeg(block, (double) x, (double) y, (double) z, icon);
@@ -132,8 +135,11 @@ public final class RenderUtil
 
     public static void renderFaceYPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMaxY < 1) ? y : y + 1, z));
         tessellator.setColorOpaque_F(1f * r, 1f * g, 1f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(0, 1, 0);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMaxY < 1) ? y : y + 1, z));
 
         renderer.enableAO = false;
         renderer.renderFaceYPos(block, (double) x, (double) y, (double) z, icon);
@@ -141,8 +147,11 @@ public final class RenderUtil
 
     public static void renderFaceZNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMinZ > 0) ? z : z - 1));
         tessellator.setColorOpaque_F(.8f * r, .8f * g, .8f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(0, 0, -1);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMinZ > 0) ? z : z - 1));
 
         renderer.enableAO = false;
         renderer.renderFaceZNeg(block, (double) x, (double) y, (double) z, icon);
@@ -150,8 +159,11 @@ public final class RenderUtil
 
     public static void renderFaceZPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMaxZ < 1) ? z : z + 1));
         tessellator.setColorOpaque_F(.8f * r, .8f * g, .8f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(0, 0, 1);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMaxZ < 1) ? z : z + 1));
 
         renderer.enableAO = false;
         renderer.renderFaceZPos(block, (double) x, (double) y, (double) z, icon);
@@ -159,8 +171,11 @@ public final class RenderUtil
 
     public static void renderFaceXNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMinX > 0) ? x : x - 1, y, z));
         tessellator.setColorOpaque_F(.6f * r, .6f * g, .6f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(-1, 0, 0);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMinX > 0) ? x : x - 1, y, z));
 
         renderer.enableAO = false;
         renderer.renderFaceXNeg(block, (double) x, (double) y, (double) z, icon);
@@ -168,8 +183,11 @@ public final class RenderUtil
 
     public static void renderFaceXPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMaxX < 1) ? x : x + 1, y, z));
         tessellator.setColorOpaque_F(.6f * r, .6f * g, .6f * b);
+        if (renderer.blockAccess == null)
+            tessellator.setNormal(1, 0, 0);
+        else
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMaxX < 1) ? x : x + 1, y, z));
 
         renderer.enableAO = false;
         renderer.renderFaceXPos(block, (double) x, (double) y, (double) z, icon);

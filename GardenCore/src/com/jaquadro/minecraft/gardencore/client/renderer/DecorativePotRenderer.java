@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencore.client.renderer;
 
 import com.jaquadro.minecraft.gardencore.block.BlockDecorativePot;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
+import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import org.lwjgl.opengl.GL11;
 
 public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
 {
@@ -24,7 +26,35 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
+        if (!(block instanceof BlockDecorativePot))
+            return;
 
+        renderInventoryBlock((BlockDecorativePot) block, metadata, modelId, renderer);
+    }
+
+    private void renderInventoryBlock (BlockDecorativePot block, int metadata, int modelId, RenderBlocks renderer) {
+        Tessellator tessellator = Tessellator.instance;
+        IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, metadata);
+
+        float unit = .0625f;
+        boxRenderer.setIcon(icon);
+        boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
+
+        GL11.glRotatef(90, 0, 1, 0);
+        GL11.glTranslatef(-.5f, -.5f, -.5f);
+
+        tessellator.startDrawingQuads();
+
+        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(renderer, block, 0, 0, 0, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
+
+        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
+        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
+        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
+
+        tessellator.draw();
+
+        GL11.glTranslatef(.5f, .5f, .5f);
     }
 
     @Override
@@ -61,20 +91,9 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.renderBox(renderer, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
         boxRenderer.renderBox(renderer, block, x, y, z, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
-        //renderer.setRenderBounds(0, 1f - .125f, 0, 1, 1, 1);
-        //renderer.renderStandardBlock(block, x, y, z);
-
-        //renderer.setRenderBounds(.0625f, .5f, .0625f, 1f - .0625f, 1f - .125f, 1f - .0625f);
-        //renderer.renderStandardBlock(block, x, y, z);
-
-        renderer.setRenderBounds(.1875f, .375f, .1875f, 1f - .1875f, .5f, 1f - .1875f);
-        renderer.renderStandardBlock(block, x, y, z);
-
-        renderer.setRenderBounds(.3125f, .1875f, .3125f, 1f - .3125f, .375f, 1f - .3125f);
-        renderer.renderStandardBlock(block, x, y, z);
-
-        renderer.setRenderBounds(.125f, 0, .125f, 1f - .125f, .1875f, 1f - .125f);
-        renderer.renderStandardBlock(block, x, y, z);
+        boxRenderer.renderSolidBox(renderer, block, x, y, z, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
+        boxRenderer.renderSolidBox(renderer, block, x, y, z, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
+        boxRenderer.renderSolidBox(renderer, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
         ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z);
         if (substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
@@ -92,29 +111,13 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 
-    private void renderRim (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float unit, float startX, float stopX, float startZ, float stopZ, float yLevel) {
-        RenderUtil.setTessellatorColor(Tessellator.instance, activeRimColor);
-
-        renderer.setRenderBounds(startX, 0, startZ, startX + unit, yLevel, stopZ);
-        renderer.renderFaceYPos(block, x, y, z, icon);
-
-        renderer.setRenderBounds(stopX - unit, 0, startZ, stopX, yLevel, stopZ);
-        renderer.renderFaceYPos(block, x, y, z, icon);
-
-        renderer.setRenderBounds(startX, 0, startZ, stopX, yLevel, startZ + unit);
-        renderer.renderFaceYPos(block, x, y, z, icon);
-
-        renderer.setRenderBounds(startX, 0, stopZ - unit, stopX, yLevel, stopZ);
-        renderer.renderFaceYPos(block, x, y, z, icon);
-    }
-
     @Override
     public boolean shouldRender3DInInventory (int modelId) {
-        return false;
+        return true;
     }
 
     @Override
     public int getRenderId () {
-        return 0;
+        return ClientProxy.decorativePotRenderID;
     }
 }
