@@ -35,6 +35,20 @@ public abstract class BlockGarden extends BlockContainer
 
     public abstract ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z);
 
+    protected void applySubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) {
+        ItemStack substrate = player.inventory.getCurrentItem();
+
+        tileEntity.setSubstrate(substrate);
+        if (Block.getBlockFromItem(substrate.getItem()) == Blocks.farmland)
+            tileEntity.setSubstrate(substrate, new ItemStack(Blocks.farmland, 1, 1));
+
+        tileEntity.markDirty();
+        if (!player.capabilities.isCreativeMode && --substrate.stackSize <= 0)
+            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+
+        world.markBlockForUpdate(x, y, z);
+    }
+
     protected boolean canApplyItemToSubstrate (TileEntityGarden tileEntity, ItemStack itemStack) {
         return false;
     }
@@ -43,6 +57,23 @@ public abstract class BlockGarden extends BlockContainer
 
     protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return TileEntityGarden.SLOT_CENTER;
+    }
+
+    protected boolean isValidSubstrate (ItemStack itemStack) {
+        if (itemStack == null || itemStack.getItem() == null)
+            return false;
+
+        Block block = Block.getBlockFromItem(itemStack.getItem());
+        if (block == null)
+            return false;
+
+        return block == Blocks.dirt
+            || block == Blocks.sand
+            || block == Blocks.gravel
+            || block == Blocks.soul_sand
+            || block == Blocks.grass
+            || block == Blocks.water
+            || block == Blocks.farmland;
     }
 
     protected boolean canSustainPlantable (IBlockAccess world, int x, int y, int z, IPlantable plantable) {
@@ -234,6 +265,10 @@ public abstract class BlockGarden extends BlockContainer
                 plantable = (IPlantable) itemBlock;
         }
 
+        if (getGardenSubstrate(world, x, y, z) == null && isValidSubstrate(itemStack)) {
+            applySubstrate(world, x, y, z, tileEntity, player);
+            return true;
+        }
         if (canApplyItemToSubstrate(tileEntity, itemStack)) {
             applyItemToSubstrate(world, x, y, z, tileEntity, player);
             return true;

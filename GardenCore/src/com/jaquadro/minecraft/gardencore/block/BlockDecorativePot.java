@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.block;
 
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
@@ -21,8 +22,6 @@ import java.util.List;
 
 public class BlockDecorativePot extends BlockGarden
 {
-    private static ItemStack substrate = new ItemStack(Blocks.netherrack, 1, 1);
-
     public BlockDecorativePot (String blockName) {
         super(blockName, Material.rock);
 
@@ -33,7 +32,16 @@ public class BlockDecorativePot extends BlockGarden
 
     @Override
     public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
-        return substrate;
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        return (te != null) ? te.getSubstrate() : null;
+    }
+
+    @Override
+    protected boolean isValidSubstrate (ItemStack itemStack) {
+        if (Block.getBlockFromItem(itemStack.getItem()) == Blocks.netherrack)
+            return true;
+
+        return super.isValidSubstrate(itemStack);
     }
 
     @Override
@@ -81,6 +89,7 @@ public class BlockDecorativePot extends BlockGarden
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         ItemStack itemStack = player.inventory.getCurrentItem();
         if (side == 1 && itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
+            ItemStack substrate = getGardenSubstrate(world, x, y, z);
             if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack)) {
                 if (world.isAirBlock(x, y + 1, z)) {
                     world.playSoundEffect(x + .5, y + .5, z + .5, "fire.ignite", 1, world.rand.nextFloat() * .4f + .8f);
@@ -124,6 +133,7 @@ public class BlockDecorativePot extends BlockGarden
     }
 
     private boolean isSconceLit (IBlockAccess world, int x, int y, int z) {
+        ItemStack substrate = getGardenSubstrate(world, x, y, z);
         if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack))
             return world.getBlock(x, y + 1, z) == ModBlocks.smallFire;
 

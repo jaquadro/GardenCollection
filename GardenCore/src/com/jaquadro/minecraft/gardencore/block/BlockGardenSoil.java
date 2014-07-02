@@ -30,6 +30,11 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
+    protected boolean isValidSubstrate (ItemStack itemStack) {
+        return false;
+    }
+
+    @Override
     public IIcon getIcon (int side, int meta) {
         return blockIcon;
     }

@@ -87,6 +87,9 @@ public class TileEntityGarden extends TileEntity implements IInventory
     private ItemStack[] containerStacks;
     private String customName;
 
+    private ItemStack substrate;
+    private ItemStack substrateSource;
+
     public TileEntityGarden () {
         containerStacks = new ItemStack[containerSlotCount()];
     }
@@ -216,6 +219,24 @@ public class TileEntityGarden extends TileEntity implements IInventory
         return true;
     }
 
+    public ItemStack getSubstrate () {
+        return substrate;
+    }
+
+    public ItemStack getSubstrateSource () {
+        return (substrateSource != null) ? substrateSource : substrate;
+    }
+
+    public void setSubstrate (ItemStack substrate) {
+        this.substrate = substrate.copy();
+        this.substrateSource = null;
+    }
+
+    public void setSubstrate (ItemStack substrate, ItemStack substrateSource) {
+        this.substrate = substrate.copy();
+        this.substrateSource = substrateSource.copy();
+    }
+
     @Override
     public void readFromNBT (NBTTagCompound tag) {
         super.readFromNBT(tag);
@@ -245,6 +266,20 @@ public class TileEntityGarden extends TileEntity implements IInventory
         customName = null;
         if (tag.hasKey("CustomName"))
             customName = tag.getString("CustomName");
+
+        if (tag.hasKey("SubId")) {
+            substrate = new ItemStack(Item.getItemById(tag.getShort("SubId")));
+            if (tag.hasKey("SubDa"))
+                substrate.setItemDamage(tag.getShort("SubDa"));
+
+            if (tag.hasKey("SubSrcId")) {
+                substrateSource = new ItemStack(Item.getItemById(tag.getShort("SubSrcId")));
+                if (tag.hasKey("SubSrcDa"))
+                    substrateSource.setItemDamage(tag.getShort("SubSrcDa"));
+                if (tag.hasKey("SubSrcTag", 10))
+                    substrateSource.stackTagCompound = tag.getCompoundTag("SubSrcTag");
+            }
+        }
     }
 
     @Override
@@ -268,6 +303,20 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
         if (hasCustomInventoryName())
             tag.setString("CustomName", customName);
+
+        if (substrate != null) {
+            tag.setShort("SubId", (short)Item.getIdFromItem(substrate.getItem()));
+            if (substrate.getItemDamage() != 0)
+                tag.setShort("SubDa", (short)substrate.getItemDamage());
+
+            if (substrateSource != null) {
+                tag.setShort("SubSrcId", (short)Item.getIdFromItem(substrateSource.getItem()));
+                if (substrateSource.getItemDamage() != 0)
+                    tag.setShort("SubSrcDa", (short)substrateSource.getItemDamage());
+                if (substrateSource.stackTagCompound != null)
+                    tag.setTag("SubSrcTag", substrateSource.stackTagCompound);
+            }
+        }
     }
 
     @Override
