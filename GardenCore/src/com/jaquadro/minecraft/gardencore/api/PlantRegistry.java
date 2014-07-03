@@ -1,19 +1,14 @@
 package com.jaquadro.minecraft.gardencore.api;
 
-import com.jaquadro.minecraft.gardencore.client.renderer.CrossedSquaresPlantRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.DoublePlantRenderer;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.DoublePlantRenderer;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.integration.VanillaMetaResolver;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;

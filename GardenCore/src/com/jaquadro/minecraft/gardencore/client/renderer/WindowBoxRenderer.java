@@ -14,6 +14,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import org.lwjgl.opengl.GL11;
 
 public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 {
@@ -27,7 +28,28 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
+        if (!(block instanceof BlockWindowBox))
+            return;
 
+        renderInventoryBlock((BlockWindowBox) block, metadata, modelId, renderer);
+    }
+
+    private void renderInventoryBlock (BlockWindowBox block, int metadata, int modelId, RenderBlocks renderer) {
+        Tessellator tessellator = Tessellator.instance;
+        IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, metadata);
+
+        float unit = .0625f;
+        boxRenderer.setIcon(icon);
+        boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
+
+        GL11.glRotatef(90, 0, 1, 0);
+        GL11.glTranslatef(-.5f, -.5f, -.5f);
+
+        tessellator.startDrawingQuads();
+        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0 * unit, 4 * unit, 4 * unit, 16 * unit, 12 * unit, 12 * unit, 0, ModularBoxRenderer.CUT_YPOS);
+        tessellator.draw();
+
+        GL11.glTranslatef(.5f, .5f, .5f);
     }
 
     @Override
@@ -112,53 +134,11 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean shouldRender3DInInventory (int modelId) {
-        return false;
+        return true;
     }
 
     @Override
     public int getRenderId () {
         return ClientProxy.windowBoxRenderID;
     }
-
-    /*private void renderOctZNeg (Block block, double x, double y, double z, IIcon icon, RenderBlocks renderer, int connect) {
-        if ((connect & CONNECT_ZNEG) != 0)
-            return;
-
-        double xNeg = x - (int)x;
-        double yNeg = y - (int)y;
-        double zNeg = z - (int)z;
-        double xPos = xNeg + .5;
-        double yPos = yNeg + .5;
-        double zPos = zNeg + UNIT;
-
-        renderer.setRenderBounds(xNeg, yNeg, zNeg, xPos, yPos, zPos);
-        renderer.renderFaceZNeg(block, x, y, z, icon);
-
-        if ((connect & CONNECT_XNEG) != 0)
-            xNeg += UNIT;
-        if ((connect & CONNECT_XPOS) != 0)
-            xPos -= UNIT;
-
-        renderer.setRenderBounds(xNeg, yNeg, zNeg, xPos, yPos, zPos);
-        renderer.renderFaceZPos(block, x, y, z, icon);
-    }
-
-    private void renderZNeg (Block block, int x, int y, int z, IIcon icon, RenderBlocks renderer, int xNegEdge, int xPosEdge, int yLevel) {
-        float unit = 0.0625f;
-
-        double yNeg = (yLevel == Y_LOWER) ? 0 : .5;
-        double yPos = (yLevel == Y_LOWER) ? .5 : 1;
-
-        switch (xNegEdge) {
-            case EDGE_FLUSH:
-                renderer.setRenderBounds(0, yNeg, 0, .5, yPos, unit);
-                renderer.renderFaceXNeg(block, x, y, z, icon);
-        }
-
-        if (xNegEdge != EDGE_NONE) {
-            double xNeg = 0;
-            double xPos = .5;
-            renderer.setRenderBounds();
-        }
-    }*/
 }

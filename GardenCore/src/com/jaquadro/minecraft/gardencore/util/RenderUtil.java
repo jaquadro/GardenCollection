@@ -49,6 +49,20 @@ public final class RenderUtil
         renderer.renderFaceYNeg(block, x, y, z, Blocks.dirt.getIcon(0, 0));
     }
 
+    public static void renderBlock (RenderBlocks renderer, Block block, int x, int y, int z) {
+        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
+        float r = colorScratch[0];
+        float g = colorScratch[1];
+        float b = colorScratch[2];
+
+        renderFaceYNeg(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 0), r, g, b);
+        renderFaceYPos(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 1), r, g, b);
+        renderFaceZNeg(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 2), r, g, b);
+        renderFaceZPos(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 3), r, g, b);
+        renderFaceXNeg(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 4), r, g, b);
+        renderFaceXPos(renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 5), r, g, b);
+    }
+
     public static void renderFaceYNeg (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon) {
         calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
         renderFaceYNeg(renderer, block, x, y, z, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
