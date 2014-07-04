@@ -55,7 +55,7 @@ public class CommandHungerStrike extends CommandBase {
                 ExtendedPlayer player = ExtendedPlayer.get(getPlayer(sender, args[1]));
                 player.enableHungerStrike(true);
 
-                notifyAdmins(sender, "commands.hungerstrike.add.success", args[1]);
+                func_152373_a(sender, this, "commands.hungerstrike.add.success", args[1]); // notifyAdmins
                 return;
             }
 
@@ -66,7 +66,7 @@ public class CommandHungerStrike extends CommandBase {
                 ExtendedPlayer player = ExtendedPlayer.get(getPlayer(sender, args[1]));
                 player.enableHungerStrike(false);
 
-                notifyAdmins(sender, "commands.hungerstrike.remove.success", args[1]);
+                func_152373_a(sender, this, "commands.hungerstrike.remove.success", args[1]); // notifyAdmins
                 return;
             }
 
@@ -74,11 +74,11 @@ public class CommandHungerStrike extends CommandBase {
                 ConfigManager.Mode mode = HungerStrike.instance.config.getMode();
 
                 if (mode == ConfigManager.Mode.NONE)
-                    notifyAdmins(sender, "commands.hungerstrike.mode.none");
+                    func_152373_a(sender, this, "commands.hungerstrike.mode.none"); // notifyAdmins
                 else if (mode == ConfigManager.Mode.LIST)
-                    notifyAdmins(sender, "commands.hungerstrike.mode.list");
+                    func_152373_a(sender, this, "commands.hungerstrike.mode.list"); // notifyAdmins
                 else if (mode == ConfigManager.Mode.ALL)
-                    notifyAdmins(sender, "commands.hungerstrike.mode.all");
+                    func_152373_a(sender, this, "commands.hungerstrike.mode.all"); // notifyAdmins
                 return;
             }
 
@@ -93,11 +93,11 @@ public class CommandHungerStrike extends CommandBase {
                     HungerStrike.packetPipeline.sendToAll(new SyncConfigPacket());
 
                 if (mode == ConfigManager.Mode.NONE)
-                    notifyAdmins(sender, "commands.hungerstrike.setmode.none");
+                    func_152373_a(sender, this, "commands.hungerstrike.setmode.none"); // notifyAdmins
                 else if (mode == ConfigManager.Mode.LIST)
-                    notifyAdmins(sender, "commands.hungerstrike.setmode.list");
+                    func_152373_a(sender, this, "commands.hungerstrike.setmode.list"); // notifyAdmins
                 else if (mode == ConfigManager.Mode.ALL)
-                    notifyAdmins(sender, "commands.hungerstrike.setmode.all");
+                    func_152373_a(sender, this, "commands.hungerstrike.setmode.all"); // notifyAdmins
                 return;
             }
         }
