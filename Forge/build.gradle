@@ -18,7 +18,7 @@ buildscript {
 allprojects {
     apply plugin: 'forge'
     minecraft {
-        version = "1.7.10-10.13.0.1152"
+        version = "1.7.10-10.13.0.1160"
         assetDir = "eclipse/assets"
     }
     version = "1.7.10.0"
