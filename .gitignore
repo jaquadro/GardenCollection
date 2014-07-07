@@ -18,3 +18,4 @@ Runtime/crash-reports/
 Runtime/config/forgeChunkLoading.cfg
 Runtime/config/
 Runtime/options.txt
+*.iws

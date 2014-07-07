@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencore;
 
 import com.jaquadro.minecraft.gardencore.core.CommonProxy;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
+import com.jaquadro.minecraft.gardencore.core.ModIntegration;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
 import com.jaquadro.minecraft.gardencore.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
@@ -31,6 +32,7 @@ public class GardenCore
 
     private static ForgeEventHandler forgeEventHandler = new ForgeEventHandler();
 
+    private static final ModIntegration integration = new ModIntegration();
     private static final ModBlocks blocks = new ModBlocks();
     private static final ModItems items = new ModItems();
 
@@ -53,12 +55,13 @@ public class GardenCore
 
         MinecraftForge.EVENT_BUS.register(forgeEventHandler);
 
-        //MinecraftForge.EVENT_BUS.register(this);
-        //FMLCommonHandler.instance().bus().register(this);
+        integration.init();
     }
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
+        integration.postInit();
+
         try {
             List<ModContainer> loadedMods = Loader.instance().getActiveModList();
             for (ModContainer mod : loadedMods) {
