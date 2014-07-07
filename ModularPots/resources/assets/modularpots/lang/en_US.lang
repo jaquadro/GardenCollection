@@ -1,0 +1,45 @@
+container.potteryTable=Pottery
+
+item.soilTestKit.name=Soil Test Kit
+item.soilTestKitUsed.name=Used Soil Test Kit
+item.potteryPattern.name=Clay Pattern Stamp
+
+itemGroup.modularPots=Modular Flower Pots
+
+soilkit.rainfall=Rainfall
+soilkit.temperature=Temperature
+
+tile.largePot.default.name=Large Flower Pot
+tile.largePot.raw.name=Raw Large Flower Pot
+tile.largePotColored.black.name=Black Large Flower Pot
+tile.largePotColored.red.name=Red Large Flower Pot
+tile.largePotColored.green.name=Green Large Flower Pot
+tile.largePotColored.brown.name=Brown Large Flower Pot
+tile.largePotColored.blue.name=Blue Large Flower Pot
+tile.largePotColored.purple.name=Purple Large Flower Pot
+tile.largePotColored.cyan.name=Cyan Large Flower Pot
+tile.largePotColored.silver.name=Light Gray Large Flower Pot
+tile.largePotColored.gray.name=Gray Large Flower Pot
+tile.largePotColored.pink.name=Pink Large Flower Pot
+tile.largePotColored.lime.name=Lime Large Flower Pot
+tile.largePotColored.yellow.name=Yellow Large Flower Pot
+tile.largePotColored.lightBlue.name=Light Blue Large Flower Pot
+tile.largePotColored.magenta.name=Magenta Large Flower Pot
+tile.largePotColored.orange.name=Orange Large Flower Pot
+tile.largePotColored.white.name=White Large Flower Pot
+tile.largePotPlantProxy.name=Large Flower Pot Proxy
+tile.thinLog.name=Post
+tile.thinLog.oak.name=Oak Wood Post
+tile.thinLog.spruce.name=Spruce Wood Post
+tile.thinLog.birch.name=Birch Wood Post
+tile.thinLog.jungle.name=Jungle Wood Post
+tile.thinLog.acacia.name=Acacia Wood Post
+tile.thinLog.big_oak.name=Dark Oak Wood Post
+tile.thinLogFence.name=Post Fence
+tile.thinLogFence.oak.name=Oak Wood Post Fence
+tile.thinLogFence.spruce.name=Spruce Wood Post Fence
+tile.thinLogFence.birch.name=Birch Wood Post Fence
+tile.thinLogFence.jungle.name=Jungle Wood Post Fence
+tile.thinLogFence.acacia.name=Acacia Wood Post Fence
+tile.thinLogFence.big_oak.name=Dark Oak Wood Post Fence
+tile.potteryTable.name=Pottery Table
