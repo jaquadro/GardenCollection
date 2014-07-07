@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
+import com.jaquadro.minecraft.gardencore.api.IBonemealHandler;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
@@ -272,6 +274,28 @@ public class BlockGardenProxy extends Block
         y = getBaseBlockYCoord(world, x, y, z);
 
         return block.applyTestKit(world, x, y, z, testKit);
+    }
+
+    public boolean applyBonemeal (World world, int x, int y, int z) {
+        BlockGarden block = getGardenBlock(world, x, y, z);
+        if (block == null)
+            return false;
+
+        y = getBaseBlockYCoord(world, x, y, z);
+
+        TileEntityGarden te = block.getTileEntity(world, x, y, z);
+
+        boolean handled = false;
+        for (int slot : te.getPlantSlots()) {
+            for (IBonemealHandler handler : GardenCoreAPI.instance().getBonemealHandlers()) {
+                if (handler.applyBonemeal(world, x, y, z, block, slot)) {
+                    handled = true;
+                    break;
+                }
+            }
+        }
+
+        return handled;
     }
 
     @Override

@@ -54,8 +54,8 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
-    <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
+    <ui_properties converted="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -63,11 +63,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BlockThinLogFence.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/BlockThinLogFence.java">
+      <file leaf-file-name="GardenTrees.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/GardenTrees.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9150943" vertical-offset="3294" max-vertical-offset="4301">
-              <caret line="244" column="0" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.74725276" vertical-offset="0" max-vertical-offset="637">
+              <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+              <folding>
+                <element signature="e#1498#1499#0" expanded="true" />
+                <element signature="e#1542#1543#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockGardenProxy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenProxy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4043" max-vertical-offset="9027">
+              <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
+              <folding>
+                <element signature="e#13891#13892#0" expanded="true" />
+                <element signature="e#13924#13925#0" expanded="true" />
+                <element signature="e#18199#18200#0" expanded="true" />
+                <element signature="e#18238#18239#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ForgeEventHandler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/handlers/ForgeEventHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,71 +103,72 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RenderUtil.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/util/RenderUtil.java">
+      <file leaf-file-name="GardenCoreIntegration.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/integration/GardenCoreIntegration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2947" max-vertical-offset="14977">
-              <caret line="227" column="43" selection-start-line="227" selection-start-column="43" selection-end-line="227" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="604" max-vertical-offset="1241">
+              <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DecorativePotRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/renderer/DecorativePotRenderer.java">
+      <file leaf-file-name="BlockGarden.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGarden.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="1853">
-              <caret line="50" column="123" selection-start-line="50" selection-start-column="123" selection-end-line="50" selection-end-column="123" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5212" max-vertical-offset="6171">
+              <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LargePotRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/renderer/LargePotRenderer.java">
+      <file leaf-file-name="GardenCoreAPI.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/GardenCoreAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="2822">
-              <caret line="54" column="96" selection-start-line="54" selection-start-column="96" selection-end-line="54" selection-end-column="96" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="816">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding>
+                <element signature="e#596#597#0" expanded="true" />
+                <element signature="e#627#628#0" expanded="true" />
+                <element signature="e#871#872#0" expanded="true" />
+                <element signature="e#916#917#0" expanded="true" />
+                <element signature="e#1015#1016#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlantRegistry.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/PlantRegistry.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1547">
+              <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WindowBoxRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/renderer/WindowBoxRenderer.java">
+      <file leaf-file-name="SaplingRegistry.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/SaplingRegistry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="2210">
-              <caret line="47" column="151" selection-start-line="47" selection-start-column="151" selection-end-line="47" selection-end-column="151" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1421" max-vertical-offset="2244">
+              <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#757#773#0" expanded="true" />
+                <element signature="e#1006#1007#0" expanded="true" />
+                <element signature="e#1037#1038#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompostBinRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/CompostBinRenderer.java">
+      <file leaf-file-name="ModItems.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/ModItems.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="884">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GardenProxyRenderer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/GardenProxyRenderer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="756" max-vertical-offset="3638">
-              <caret line="64" column="32" selection-start-line="64" selection-start-column="32" selection-end-line="64" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RenderBlocks.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1160/forgeSrc-1.7.10-10.13.0.1160-sources.jar!/net/minecraft/client/renderer/RenderBlocks.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="131696" max-vertical-offset="143854">
-              <caret line="7483" column="28" selection-start-line="7483" selection-start-column="28" selection-end-line="7483" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -162,16 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/item/ItemPotteryPattern.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/block/tile/TileEntityPotteryTable.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/inventory/SlotPottery.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/inventory/InventoryPottery.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/item/crafting/PotteryManager.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/core/ModItems.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/inventory/ContainerPotteryTable.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/core/handlers/GuiHandler.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/block/BlockPotteryTable.java" />
-        <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/core/handlers/VillagerTradeHandler.java" />
         <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/GardenContainers.java" />
         <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/gui/GuiPotteryTable.java" />
         <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/support/ModularBoxRenderer.java" />
@@ -191,8 +210,6 @@
         <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/GardenProxyRenderer.java" />
         <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/plant/CrossedSquaresPlantRenderer.java" />
         <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/plant/DoublePlantRenderer.java" />
-        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGarden.java" />
-        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenProxy.java" />
         <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/block/BlockLargePot.java" />
         <option value="$PROJECT_DIR$/GardenTrees/resources/assets/gardentrees/lang/en_US.lang" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/tile/TileEntityWoodProxy.java" />
@@ -200,11 +217,9 @@
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/item/ItemThinLogFence.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/BlockFlowerLeaves.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/core/ModBlocks.java" />
-        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/GardenTrees.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/client/renderer/ThinLogRenderer.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/core/ClientProxy.java" />
         <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/util/UniqueMetaRegistry.java" />
-        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/WoodRegistry.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/BlockThinLog.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/BlockThinLogFence.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/client/renderer/FlowerLeafRenderer.java" />
@@ -213,6 +228,20 @@
         <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/renderer/LargePotRenderer.java" />
         <option value="$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/client/renderer/WindowBoxRenderer.java" />
         <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/client/renderer/ThinLogFenceRenderer.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/SaplingRegistry.java" />
+        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/OrnamentalTreeFactory.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/WoodRegistry.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/IBonemealHandler.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGarden.java" />
+        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/integration/GardenBonemealHandler.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/GardenCoreAPI.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenProxy.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/GardenCore.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/handlers/EventHandler.java" />
+        <option value="$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/handlers/ForgeEventHandler.java" />
+        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/GardenTrees.java" />
+        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/integration/GardenCoreIntegration.java" />
+        <option value="$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/WorldGenOrnamentalTree.java" />
       </list>
     </option>
   </component>
@@ -233,7 +262,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -249,6 +278,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -303,7 +333,51 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="gen" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GardenCollection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GardenTrees" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gardentrees" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="item" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GardenCollection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GardenTrees" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gardentrees" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="integration" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -787,6 +861,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="GardenCore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gardencore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GardenCollection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="GardenContainers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1025,7 +1125,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1054,11 +1153,11 @@
       <recent name="com.jaquadro.minecraft.gardentrees.block.tile" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenTrees\src\com\jaquadro\minecraft\gardentrees\world\gen" />
       <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenTrees\src\com\jaquadro\minecraft\gardentrees\client\renderer" />
       <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenTrees\src\com\jaquadro\minecraft\gardentrees\core" />
       <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenTrees\resources\assets\gardentrees\lang" />
       <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenTrees\resources\assets\gardentrees\textures\blocks" />
-      <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenCore\src\com\jaquadro\minecraft\gardencore\item" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Workspace\Managed\Forge\GardenCollection\GardenCore\resources\assets\gardencore\textures\items" />
@@ -1075,6 +1174,19 @@
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -1103,19 +1215,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1189,9 +1288,6 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="StructureViewFactory">
-    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR" />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0af456d2-29b6-42d6-9b6d-9a778c111a0c" name="Default" comment="" />
@@ -1199,11 +1295,12 @@
       <updated>1404446829889</updated>
       <workItem from="1404446835588" duration="40828000" />
       <workItem from="1404686123000" duration="5815000" />
+      <workItem from="1404696555652" duration="10610000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46643000" />
+    <option name="totallyTimeSpent" value="57253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -1212,7 +1309,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907662" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27996072" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1226,9 +1322,10 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1656017" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32907662" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3280943" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907662" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1260,7 +1357,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="11" />
+      <option name="time" value="16" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -1268,126 +1365,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1160/forgeSrc-1.7.10-10.13.0.1160-sources.jar!/net/minecraftforge/fluids/BlockFluidBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.7091195" vertical-offset="5840" max-vertical-offset="7973">
-          <caret line="361" column="15" selection-start-line="361" selection-start-column="15" selection-end-line="361" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/core/ClientProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="24" column="99" selection-start-line="24" selection-start-column="99" selection-end-line="24" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/ClientProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/ModBlocks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
-          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockCompostBin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="1241">
-          <caret line="70" column="60" selection-start-line="70" selection-start-column="60" selection-end-line="70" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1042#1043#0" expanded="false" />
-            <element signature="e#1095#1096#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/item/ItemUsedSoilKit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1938">
-          <caret line="96" column="0" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/item/ItemSoilKit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1122">
-          <caret line="59" column="51" selection-start-line="59" selection-start-column="51" selection-end-line="59" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/ModItems.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
-          <caret line="24" column="73" selection-start-line="24" selection-start-column="73" selection-end-line="24" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenContainers/resources/assets/gardencontainers/lang/en_US.lang">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/resources/assets/gardencore/lang/en_US.lang">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="340">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/item/ItemLargePot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/core/ModBlocks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="77" max-vertical-offset="1105">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/IPlantRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
-          <caret line="9" column="110" selection-start-line="9" selection-start-column="110" selection-end-line="9" selection-end-column="110" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/plant/CrossedSquaresPlantRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/client/renderer/plant/DoublePlantRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenSoil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10691824" vertical-offset="0" max-vertical-offset="680">
@@ -1403,27 +1380,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGarden.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="281" max-vertical-offset="5338">
-          <caret line="82" column="37" selection-start-line="82" selection-start-column="37" selection-end-line="82" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3355" max-vertical-offset="8585">
-          <caret line="271" column="47" selection-start-line="271" selection-start-column="47" selection-end-line="271" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GardenContainers/src/com/jaquadro/minecraft/gardencontainers/block/BlockDecorativePot.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="2108">
           <caret line="47" column="4" selection-start-line="47" selection-start-column="4" selection-end-line="50" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1446,7 +1406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1454,7 +1413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1122" max-vertical-offset="1836">
           <caret line="79" column="43" selection-start-line="79" selection-start-column="43" selection-end-line="79" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1498,22 +1456,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/GardenCore.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.21383648" vertical-offset="714" max-vertical-offset="1955">
-          <caret line="56" column="5" selection-start-line="49" selection-start-column="4" selection-end-line="56" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/GardenTrees.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="697">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/core/ClientProxy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
@@ -1534,22 +1476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
           <caret line="33" column="64" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/PlantRegistry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6147798" vertical-offset="95" max-vertical-offset="1547">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/WoodRegistry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="935">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1594,7 +1520,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="709" max-vertical-offset="12444">
           <caret line="97" column="47" selection-start-line="97" selection-start-column="47" selection-end-line="97" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1610,7 +1535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10691824" vertical-offset="0" max-vertical-offset="2074">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1672,21 +1596,222 @@
         <state vertical-scroll-proportion="3.04717" vertical-offset="0" max-vertical-offset="2652">
           <caret line="114" column="60" selection-start-line="114" selection-start-column="60" selection-end-line="114" selection-end-column="60" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6475#6476#0" expanded="true" />
-            <element signature="e#6502#6503#0" expanded="true" />
-            <element signature="e#6549#6550#0" expanded="true" />
-            <element signature="e#6604#6605#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#6475#6476#0" expanded="false" />
+            <element signature="e#6502#6503#0" expanded="false" />
+            <element signature="e#6549#6550#0" expanded="false" />
+            <element signature="e#6604#6605#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/event/UseTrowelEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16012558" vertical-offset="0" max-vertical-offset="637">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/IPlantRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
+          <caret line="9" column="110" selection-start-line="9" selection-start-column="110" selection-end-line="9" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/IPlantMetaResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10675039" vertical-offset="0" max-vertical-offset="637">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/block/BlockThinLogFence.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9150943" vertical-offset="3294" max-vertical-offset="4301">
-          <caret line="244" column="0" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3031" max-vertical-offset="4301">
+          <caret line="246" column="54" selection-start-line="246" selection-start-column="54" selection-end-line="246" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/OrnamentalTreeRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/WoodRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="383" max-vertical-offset="1037">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1341#1342#0" expanded="true" />
+            <element signature="e#1415#1416#0" expanded="true" />
+            <element signature="e#1474#1475#0" expanded="true" />
+            <element signature="e#1528#1529#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/WorldGenStandardOrnTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="876" max-vertical-offset="2992">
+          <caret line="76" column="23" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/OrnamentalTreeFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10675039" vertical-offset="0" max-vertical-offset="637">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1160/forgeSrc-1.7.10-10.13.0.1160-sources.jar!/net/minecraft/world/gen/feature/WorldGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45368916" vertical-offset="0" max-vertical-offset="782">
+          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.0.1160/forgeSrc-1.7.10-10.13.0.1160-sources.jar!/net/minecraft/world/gen/feature/WorldGenAbstractTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10897436" vertical-offset="0" max-vertical-offset="624">
+          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/IBonemealHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18681319" vertical-offset="0" max-vertical-offset="637">
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/GardenCore.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="2023">
+          <caret line="53" column="61" selection-start-line="53" selection-start-column="61" selection-end-line="53" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/PlantRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="910" max-vertical-offset="1547">
+          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/handlers/ForgeEventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/GardenCoreAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="130" max-vertical-offset="816">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding>
+            <element signature="e#596#597#0" expanded="true" />
+            <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#871#872#0" expanded="true" />
+            <element signature="e#916#917#0" expanded="true" />
+            <element signature="e#1015#1016#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/core/ModItems.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="629">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/api/SaplingRegistry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1421" max-vertical-offset="2244">
+          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#757#773#0" expanded="true" />
+            <element signature="e#1006#1007#0" expanded="true" />
+            <element signature="e#1037#1038#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGardenProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4043" max-vertical-offset="9027">
+          <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
+          <folding>
+            <element signature="e#13891#13892#0" expanded="true" />
+            <element signature="e#13924#13925#0" expanded="true" />
+            <element signature="e#18199#18200#0" expanded="true" />
+            <element signature="e#18238#18239#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenCore/src/com/jaquadro/minecraft/gardencore/block/BlockGarden.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5212" max-vertical-offset="6171">
+          <caret line="345" column="0" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/integration/GardenCoreIntegration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="604" max-vertical-offset="1241">
+          <caret line="5" column="59" selection-start-line="5" selection-start-column="59" selection-end-line="5" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/world/gen/WorldGenOrnamentalTree.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.389325" vertical-offset="0" max-vertical-offset="4012">
+          <caret line="129" column="58" selection-start-line="129" selection-start-column="58" selection-end-line="129" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GardenTrees/src/com/jaquadro/minecraft/gardentrees/GardenTrees.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74725276" vertical-offset="0" max-vertical-offset="637">
+          <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+          <folding>
+            <element signature="e#1498#1499#0" expanded="true" />
+            <element signature="e#1542#1543#0" expanded="true" />
           </folding>
         </state>
       </provider>

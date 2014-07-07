@@ -11,7 +11,7 @@ import java.util.Set;
 
 public final class WoodRegistry
 {
-    private UniqueMetaRegistry<Block> registry;
+    private final UniqueMetaRegistry<Block> registry;
 
     private static WoodRegistry instance;
     static {
@@ -42,6 +42,14 @@ public final class WoodRegistry
 
     public Set<Entry<UniqueMetaIdentifier, Block>> registeredTypes () {
         return registry.entrySet();
+    }
+
+    public boolean contains (Block wood, int woodMeta) {
+        return contains(ModBlocks.getUniqueMetaID(wood, woodMeta));
+    }
+
+    public boolean contains (UniqueMetaIdentifier wood) {
+        return registry.getEntry(wood) != null;
     }
 
     //public static boolean contains (Block block, int meta) {

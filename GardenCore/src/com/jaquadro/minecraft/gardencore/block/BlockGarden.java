@@ -15,6 +15,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -325,8 +326,57 @@ public abstract class BlockGarden extends BlockContainer
         return false;
     }
 
+    public void clearPlantedContents (IBlockAccess world, int x, int y, int z) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        if (te != null)
+            te.clearReachableContents();
+
+        validateBlockState(te);
+    }
+
+    public NBTTagCompound saveAndClearPlantedContents (IBlockAccess world, int x, int y, int z) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        if (te == null)
+            return null;
+
+        NBTTagCompound tag = new NBTTagCompound();
+        te.writeToNBT(tag);
+
+        clearPlantedContents(world, x, y, z);
+        return tag;
+    }
+
+    public void restorePlantedContents (IBlockAccess world, int x, int y, int z, NBTTagCompound tag) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        if (te == null)
+            return;
+
+        te.readFromNBT(tag);
+        validateBlockState(te);
+    }
+
     public TileEntityGarden getTileEntity (IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         return (te != null && te instanceof TileEntityGarden) ? (TileEntityGarden) te : null;
+    }
+
+    public Block getPlantBlockFromSlot (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        TileEntityGarden te = getTileEntity(blockAccess, x, y, z);
+
+        ItemStack stack = te.getPlantInSlot(slot);
+        if (stack == null || stack.getItem() == null)
+            return null;
+
+        return Block.getBlockFromItem(stack.getItem());
+    }
+
+    public int getPlantMetaFromSlot (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        TileEntityGarden te = getTileEntity(blockAccess, x, y, z);
+
+        ItemStack stack = te.getPlantInSlot(slot);
+        if (stack == null || stack.getItem() == null)
+            return 0;
+
+        return stack.getItemDamage();
     }
 }

@@ -5,11 +5,12 @@ import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaSet;
 import net.minecraft.block.Block;
 
-import java.util.HashSet;
+import java.util.*;
 
 public final class GardenCoreAPI
 {
     private UniqueMetaSet<UniqueMetaIdentifier> smallFlameHostBlocks;
+    private List<IBonemealHandler> bonemealHandlers;
 
     private static GardenCoreAPI instance;
     static {
@@ -22,6 +23,15 @@ public final class GardenCoreAPI
 
     private GardenCoreAPI () {
         smallFlameHostBlocks = new UniqueMetaSet<UniqueMetaIdentifier>();
+        bonemealHandlers = new ArrayList<IBonemealHandler>();
+    }
+
+    public void registerBonemealHandler (IBonemealHandler handler) {
+        bonemealHandlers.add(handler);
+    }
+
+    public List<IBonemealHandler> getBonemealHandlers () {
+        return bonemealHandlers;
     }
 
     public void registerSmallFlameHostBlock (Block block, int meta) {

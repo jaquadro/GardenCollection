@@ -3,20 +3,17 @@ package com.jaquadro.minecraft.gardencore;
 import com.jaquadro.minecraft.gardencore.core.CommonProxy;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
+import com.jaquadro.minecraft.gardencore.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
@@ -31,6 +28,8 @@ public class GardenCore
     public static final String MOD_NAME = "Garden Core";
     public static final String MOD_VERSION = "1.0.0-1.7.2";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencore.";
+
+    private static ForgeEventHandler forgeEventHandler = new ForgeEventHandler();
 
     private static final ModBlocks blocks = new ModBlocks();
     private static final ModItems items = new ModItems();
@@ -51,6 +50,8 @@ public class GardenCore
     public void init (FMLInitializationEvent event) {
         proxy.registerRenderers();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
+        MinecraftForge.EVENT_BUS.register(forgeEventHandler);
 
         //MinecraftForge.EVENT_BUS.register(this);
         //FMLCommonHandler.instance().bus().register(this);
