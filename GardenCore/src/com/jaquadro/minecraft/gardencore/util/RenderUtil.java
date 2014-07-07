@@ -138,73 +138,103 @@ public final class RenderUtil
     public static void renderFaceYNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(.5f * r, .5f * g, .5f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(0, -1, 0);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMinY > 0) ? y : y - 1, z));
 
         renderer.enableAO = false;
         renderer.renderFaceYNeg(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     public static void renderFaceYPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(1f * r, 1f * g, 1f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(0, 1, 0);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, (renderer.renderMaxY < 1) ? y : y + 1, z));
 
         renderer.enableAO = false;
         renderer.renderFaceYPos(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     public static void renderFaceZNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(.8f * r, .8f * g, .8f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(0, 0, -1);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMinZ > 0) ? z : z - 1));
 
         renderer.enableAO = false;
         renderer.renderFaceZNeg(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     public static void renderFaceZPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(.8f * r, .8f * g, .8f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(0, 0, 1);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, (renderer.renderMaxZ < 1) ? z : z + 1));
 
         renderer.enableAO = false;
         renderer.renderFaceZPos(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     public static void renderFaceXNegColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(.6f * r, .6f * g, .6f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(-1, 0, 0);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMinX > 0) ? x : x - 1, y, z));
 
         renderer.enableAO = false;
         renderer.renderFaceXNeg(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     public static void renderFaceXPosColorMult (RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setColorOpaque_F(.6f * r, .6f * g, .6f * b);
-        if (renderer.blockAccess == null)
+        if (renderer.blockAccess == null) {
+            tessellator.startDrawingQuads();
             tessellator.setNormal(1, 0, 0);
+        }
         else
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, (renderer.renderMaxX < 1) ? x : x + 1, y, z));
 
         renderer.enableAO = false;
         renderer.renderFaceXPos(block, (double) x, (double) y, (double) z, icon);
+
+        if (renderer.blockAccess == null)
+            tessellator.draw();
     }
 
     private static int aoBrightnessXYNN;

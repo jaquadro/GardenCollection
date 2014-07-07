@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
+import com.jaquadro.minecraft.gardencore.core.ModItems;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -50,10 +51,44 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     protected boolean canApplyItemToSubstrate (TileEntityGarden tileEntity, ItemStack itemStack) {
-        return false;
+        return itemStack.getItem() == ModItems.usedSoilTestKit;
     }
 
-    protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) { }
+    protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) {
+        ItemStack item = player.inventory.getCurrentItem();
+
+        if (item.getItem() == ModItems.usedSoilTestKit)
+            applyTestKit(world, x, y, z, item);
+    }
+
+    public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
+        if (testKit.getItem() != ModItems.usedSoilTestKit)
+            return false;
+
+        ItemStack substrateStack = getGardenSubstrate(world, x, y, z);
+        if (substrateStack == null || substrateStack.getItem() == null)
+            return false;
+
+        Block substrate = Block.getBlockFromItem(substrateStack.getItem());
+        if (substrate != Blocks.dirt && substrate != Blocks.grass && substrate != Blocks.farmland)
+            return false;
+
+        TileEntityGarden tileEntity = getTileEntity(world, x, y, z);
+        if (tileEntity == null)
+            return false;
+
+        tileEntity.setBiomeData(testKit.getItemDamage());
+        world.markBlockForUpdate(x, y, z);
+
+        for (int i = 0; i < 5; i++) {
+            double d0 = world.rand.nextGaussian() * 0.02D;
+            double d1 = world.rand.nextGaussian() * 0.02D;
+            double d2 = world.rand.nextGaussian() * 0.02D;
+            world.spawnParticle("happyVillager", x + world.rand.nextFloat(), y + .5f + world.rand.nextFloat(), z + world.rand.nextFloat(), d0, d1, d2);
+        }
+
+        return true;
+    }
 
     protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return TileEntityGarden.SLOT_CENTER;

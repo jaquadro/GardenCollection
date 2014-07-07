@@ -36,6 +36,8 @@ public class TileEntityGarden extends TileEntity implements IInventory
         }
     }
 
+    private static final int DEFAULT_BIOME_DATA = 65407;
+
     public static final int SLOT_INVALID = -1;
     public static final int SLOT_CENTER = 0;
     public static final int SLOT_COVER = 1;
@@ -89,6 +91,9 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     private ItemStack substrate;
     private ItemStack substrateSource;
+
+    private boolean hasBiomeOverride;
+    private int biomeData = DEFAULT_BIOME_DATA;
 
     public TileEntityGarden () {
         containerStacks = new ItemStack[containerSlotCount()];
@@ -216,6 +221,19 @@ public class TileEntityGarden extends TileEntity implements IInventory
         if (sData != nData)
             return false;
 
+        TileEntity nEntity = worldObj.getTileEntity(x, y, z);
+        if (nEntity == null || getClass() != nEntity.getClass())
+            return false;
+
+        TileEntityGarden nGarden = (TileEntityGarden) nEntity;
+        if ((substrate == null || nGarden.substrate == null) && substrate != nGarden.substrate)
+            return false;
+
+        if (substrate != null) {
+            if (substrate.getItem() != nGarden.substrate.getItem() || substrate.getItemDamage() != nGarden.substrate.getItemDamage())
+                return false;
+        }
+
         return true;
     }
 
@@ -228,13 +246,34 @@ public class TileEntityGarden extends TileEntity implements IInventory
     }
 
     public void setSubstrate (ItemStack substrate) {
-        this.substrate = substrate.copy();
+        this.substrate = (substrate != null) ? substrate.copy() : null;
         this.substrateSource = null;
     }
 
     public void setSubstrate (ItemStack substrate, ItemStack substrateSource) {
-        this.substrate = substrate.copy();
-        this.substrateSource = substrateSource.copy();
+        this.substrate = (substrate != null) ? substrate.copy() : null;
+        this.substrateSource = (getSubstrateSource() != null) ? substrateSource.copy() : null;
+    }
+
+    public boolean hasBiomeDataOverride () {
+        return hasBiomeOverride;
+    }
+
+    public int getBiomeData () {
+        return biomeData;
+    }
+
+    public float getBiomeTemperature () {
+        return (biomeData & 255) / 255f;
+    }
+
+    public float getBiomeHumidity () {
+        return ((biomeData >> 8) & 255) / 255f;
+    }
+
+    public void setBiomeData (int data) {
+        this.biomeData = data;
+        this.hasBiomeOverride = true;
     }
 
     @Override
@@ -267,6 +306,8 @@ public class TileEntityGarden extends TileEntity implements IInventory
         if (tag.hasKey("CustomName"))
             customName = tag.getString("CustomName");
 
+        substrate = null;
+        substrateSource = null;
         if (tag.hasKey("SubId")) {
             substrate = new ItemStack(Item.getItemById(tag.getShort("SubId")));
             if (tag.hasKey("SubDa"))
@@ -280,6 +321,9 @@ public class TileEntityGarden extends TileEntity implements IInventory
                     substrateSource.stackTagCompound = tag.getCompoundTag("SubSrcTag");
             }
         }
+
+        hasBiomeOverride = tag.hasKey("Biom");
+        biomeData = tag.hasKey("Biom") ? tag.getInteger("Biom") : DEFAULT_BIOME_DATA;
     }
 
     @Override
@@ -317,6 +361,9 @@ public class TileEntityGarden extends TileEntity implements IInventory
                     tag.setTag("SubSrcTag", substrateSource.stackTagCompound);
             }
         }
+
+        if (hasBiomeOverride || biomeData != DEFAULT_BIOME_DATA)
+            tag.setInteger("Biom", biomeData);
     }
 
     @Override

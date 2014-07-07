@@ -1,5 +1,8 @@
 container.gardenLayout=Arrange Plants
 
+item.soilTestKit.name=Soil Test Kit
+item.soilTestKitUsed.name=Used Soil Test Kit
+
 itemGroup.gardenCore=Garden Core
 
 soilkit.rainfall=Rainfall
@@ -8,3 +11,5 @@ soilkit.temperature=Temperature
 item.gardenTrowel.name=Garden Trowel
 
 tile.gardenSoil.name=Garden Soil
+tile.potteryTable.name=Pottery Table
+tile.compostBin.name=Compost Bin

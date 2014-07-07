@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -72,20 +73,26 @@ public class BlockSmallFire extends Block
         return false;
     }
 
+    private static boolean blockCanHostSmallFlame (World world, int x, int y, int z) {
+        Block block = world.getBlock(x, y, z);
+        int metadata = world.getBlockMetadata(x, y, z);
+        return GardenCoreAPI.instance().blockCanHostSmallFlame(block, metadata);
+    }
+
     @Override
     public boolean canPlaceBlockAt (World world, int x, int y, int z) {
-        return world.getBlock(x, y - 1, z) instanceof BlockDecorativePot;
+        return blockCanHostSmallFlame(world, x, y - 1, z);
     }
 
     @Override
     public void onNeighborBlockChange (World world, int x, int y, int z, Block block) {
-        if (!(world.getBlock(x, y - 1, z) instanceof BlockDecorativePot))
+        if (!blockCanHostSmallFlame(world, x, y - 1, z))
             world.setBlockToAir(x, y, z);
     }
 
     @Override
     public void onBlockAdded (World world, int x, int y, int z) {
-        if (!(world.getBlock(x, y - 1, z) instanceof BlockDecorativePot))
+        if (!blockCanHostSmallFlame(world, x, y - 1, z))
             world.setBlockToAir(x, y, z);
         else
             world.scheduleBlockUpdate(x, y, z, this, tickRate(world) + world.rand.nextInt(10));

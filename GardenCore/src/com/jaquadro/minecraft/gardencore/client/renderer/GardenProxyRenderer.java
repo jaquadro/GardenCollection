@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 
 public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
@@ -61,13 +62,25 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
             float offsetY = block.getPlantOffsetY(world, x, y, z, slot);
             float offsetZ = block.getPlantOffsetZ(slot);
 
-            int color = block.colorMultiplier(world, x, y, z);
-            if (color != 16777215) {
-                float r = (color >> 16 & 255) / 255f;
-                float g = (color >> 8 & 255) / 255f;
-                float b = (color & 255) / 255f;
-                tessellator.setColorOpaque_F(r, g, b);
+            int color = subBlock.colorMultiplier(world, x, y, z);
+            if (color == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))
+                color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
+
+            float r = (color >> 16 & 255) / 255f;
+            float g = (color >> 8 & 255) / 255f;
+            float b = (color & 255) / 255f;
+
+            if (EntityRenderer.anaglyphEnable) {
+                float gray = (r * 30.0F + g * 59.0F + b * 11.0F) / 100.0F;
+                float ra = (r * 30.0F + g * 70.0F) / 100.0F;
+                float ba = (r * 30.0F + b * 70.0F) / 100.0F;
+                r = gray;
+                g = ra;
+                b = ba;
             }
+
+            tessellator.setColorOpaque_F(r, g, b);
+            tessellator.setBrightness(subBlock.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
 
             tessellator.addTranslation(offsetX, offsetY, offsetZ);
 

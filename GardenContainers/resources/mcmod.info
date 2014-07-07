@@ -1,0 +1,12 @@
+[
+{
+	"modid": "gardencontainers",
+	"name": "Garden Containers",
+	"description": "A variety of containers for planting vegetation.",
+	"version": "1.0.0",
+	"credits": "By jaquadro",
+	"logoFile": "",
+	"url": "http://www.jaquadro.com/",
+	"authors": [ "jaquadro" ]
+}
+]

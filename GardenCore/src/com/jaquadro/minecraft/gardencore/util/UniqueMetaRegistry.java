@@ -4,6 +4,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class UniqueMetaRegistry<E>
 {
@@ -28,5 +29,9 @@ public class UniqueMetaRegistry<E>
         }
 
         return null;
+    }
+
+    public Set<Map.Entry<UniqueMetaIdentifier, E>> entrySet () {
+        return registry.entrySet();
     }
 }

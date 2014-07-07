@@ -2,7 +2,6 @@ package com.jaquadro.minecraft.gardencore.client.renderer;
 
 import com.jaquadro.minecraft.gardencore.block.BlockCompostBin;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;

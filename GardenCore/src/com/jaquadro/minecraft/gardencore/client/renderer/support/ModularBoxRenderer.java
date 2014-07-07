@@ -117,6 +117,12 @@ public class ModularBoxRenderer
         setCutIcon(icon);
     }
 
+    public void setIcon (IIcon icon, int side) {
+        setExteriorIcon(icon, side);
+        setInteriorIcon(icon, side);
+        setCutIcon(icon, side);
+    }
+
     public void setExteriorIcon (IIcon icon) {
         for (int i = 0; i < 6; i++)
             exteriorIcon[i] = icon;
@@ -143,6 +149,10 @@ public class ModularBoxRenderer
 
     public void setCutIcon (IIcon icon, int side) {
         cutIcon[side] = icon;
+    }
+
+    public void setUnit (double unit) {
+        this.unit = unit;
     }
 
     public void renderOctant (RenderBlocks renderer, Block block, double x, double y, double z, int connectedFlags, int cutFlags) {
