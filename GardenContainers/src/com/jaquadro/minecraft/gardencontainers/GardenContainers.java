@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.gardencontainers.config.PatternConfig;
 import com.jaquadro.minecraft.gardencontainers.core.CommonProxy;
 import com.jaquadro.minecraft.gardencontainers.core.ModBlocks;
 import com.jaquadro.minecraft.gardencontainers.core.ModItems;
+import com.jaquadro.minecraft.gardencontainers.core.ModRecipes;
 import com.jaquadro.minecraft.gardencontainers.core.handlers.GuiHandler;
 import com.jaquadro.minecraft.gardencontainers.core.handlers.VillagerTradeHandler;
 import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
@@ -28,6 +29,7 @@ public class GardenContainers
 
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModItems items = new ModItems();
+    public static final ModRecipes recipes = new ModRecipes();
 
     public static ConfigManager config;
 
@@ -65,5 +67,6 @@ public class GardenContainers
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         GardenCoreAPI.instance().registerSmallFlameHostBlock(ModBlocks.decorativePot, 0);
+        recipes.init();
     }
 }
