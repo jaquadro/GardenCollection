@@ -26,8 +26,8 @@ public class GardenContainers
     public static final String MOD_VERSION = "1.0.0-1.7.2";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencontainers.";
 
-    private static final ModBlocks blocks = new ModBlocks();
-    private static final ModItems items = new ModItems();
+    public static final ModBlocks blocks = new ModBlocks();
+    public static final ModItems items = new ModItems();
 
     public static ConfigManager config;
 

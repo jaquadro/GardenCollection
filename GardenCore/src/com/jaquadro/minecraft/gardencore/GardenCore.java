@@ -30,11 +30,9 @@ public class GardenCore
     public static final String MOD_VERSION = "1.0.0-1.7.2";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencore.";
 
-    private static ForgeEventHandler forgeEventHandler = new ForgeEventHandler();
-
-    private static final ModIntegration integration = new ModIntegration();
-    private static final ModBlocks blocks = new ModBlocks();
-    private static final ModItems items = new ModItems();
+    public static final ModIntegration integration = new ModIntegration();
+    public static final ModBlocks blocks = new ModBlocks();
+    public static final ModItems items = new ModItems();
 
     @Mod.Instance(MOD_ID)
     public static GardenCore instance;
@@ -53,7 +51,7 @@ public class GardenCore
         proxy.registerRenderers();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        MinecraftForge.EVENT_BUS.register(forgeEventHandler);
+        MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
 
         integration.init();
     }
