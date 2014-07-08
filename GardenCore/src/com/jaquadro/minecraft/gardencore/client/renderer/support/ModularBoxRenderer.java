@@ -4,6 +4,9 @@ import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.lang.reflect.Array;
 
 public class ModularBoxRenderer
 {
@@ -77,38 +80,75 @@ public class ModularBoxRenderer
     private IIcon[] interiorIcon = new IIcon[6];
     private IIcon[] cutIcon = new IIcon[6];
 
+    private void copyFrom (float[] target, float[] source) {
+        target[0] = source[0];
+        target[1] = source[1];
+        target[2] = source[2];
+    }
+
+    private void copyFrom (float[] target, float r, float g, float b) {
+        target[0] = r;
+        target[1] = g;
+        target[2] = b;
+    }
+
     public void setColor (float[] color) {
         setExteriorColor(color);
         setInteriorColor(color);
         setCutColor(color);
     }
 
+    public void setScaledColor (float[] color, float scale) {
+        setScaledExteriorColor(color, scale);
+        setScaledInteriorColor(color, scale);
+        setScaledCutColor(color, scale);
+    }
+
     public void setExteriorColor (float[] color) {
         for (int i = 0; i < 6; i++)
-            exteriorColor[i] = color;
+            copyFrom(exteriorColor[i], color);
     }
 
     public void setExteriorColor (float[] color, int side) {
-        exteriorColor[side] = color;
+        copyFrom(exteriorColor[side], color);
+    }
+
+    public void setScaledExteriorColor (float[] color, float scale) {
+        for (int i = 0; i < 6; i++)
+            copyFrom(exteriorColor[i], color[0] * scale, color[1] * scale, color[2] * scale);
+    }
+
+    public void setScaledExteriorColor (float[] color, float scale, int side) {
+        copyFrom(exteriorColor[side], color[0] * scale, color[1] * scale, color[2] * scale);
     }
 
     public void setInteriorColor (float[] color) {
         for (int i = 0; i < 6; i++)
-            interiorColor[i] = color;
+            copyFrom(interiorColor[i], color);
     }
 
     public void setInteriorColor (float[] color, int side) {
         side = (side % 2 == 0) ? side + 1 : side - 1;
-        interiorColor[side] = color;
+        copyFrom(interiorColor[side], color);
+    }
+
+    public void setScaledInteriorColor (float[] color, float scale) {
+        for (int i = 0; i < 6; i++)
+            copyFrom(interiorColor[i], color[0] * scale, color[1] * scale, color[2] * scale);
     }
 
     public void setCutColor (float[] color) {
         for (int i = 0; i < 6; i++)
-            cutColor[i] = color;
+            copyFrom(cutColor[i], color);
     }
 
     public void setCutColor (float[] color, int side) {
-        cutColor[side] = color;
+        copyFrom(cutColor[side], color);
+    }
+
+    public void setScaledCutColor (float[] color, float scale) {
+        for (int i = 0; i < 6; i++)
+            copyFrom(cutColor[i], color[0] * scale, color[1] * scale, color[2] * scale);
     }
 
     public void setIcon (IIcon icon) {

@@ -69,26 +69,21 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, data);
 
         RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
-        RenderUtil.scaleColor(activeRimColor, baseColor, .8f);
-        RenderUtil.scaleColor(activeInWallColor, baseColor, .7f);
-        RenderUtil.scaleColor(activeBottomColor, baseColor, .6f);
-
-        boxRenderer.setIcon(icon);
-        boxRenderer.setExteriorColor(baseColor);
-        boxRenderer.setInteriorColor(activeInWallColor);
-        boxRenderer.setInteriorColor(activeBottomColor, ModularBoxRenderer.FACE_YNEG);
-        boxRenderer.setCutColor(activeRimColor);
-
-        RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
-        RenderUtil.scaleColor(activeRimColor, baseColor, .8f);
 
         float unit = .0625f;
 
+        boxRenderer.setIcon(icon);
+        boxRenderer.setColor(baseColor);
         boxRenderer.renderBox(renderer, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.setScaledColor(baseColor, .9375f);
         boxRenderer.renderBox(renderer, block, x, y, z, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
+        boxRenderer.setScaledExteriorColor(baseColor, .875f);
         boxRenderer.renderSolidBox(renderer, block, x, y, z, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
+        boxRenderer.setScaledExteriorColor(baseColor, .8125f);
         boxRenderer.renderSolidBox(renderer, block, x, y, z, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
+        boxRenderer.setScaledExteriorColor(baseColor, .9375f);
+        boxRenderer.setScaledExteriorColor(baseColor, .75f, 1);
         boxRenderer.renderSolidBox(renderer, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
         ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z);

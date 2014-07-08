@@ -143,7 +143,7 @@ public class BlockDecorativePot extends BlockGarden
 
     @Override
     public IIcon getIcon (int side, int meta) {
-        return Blocks.quartz_block.getIcon(side, 0);
+        return Blocks.quartz_block.getIcon(side, 2);
     }
 
     @Override
