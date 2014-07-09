@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
+import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
+import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import net.minecraft.block.Block;
@@ -164,6 +166,12 @@ public class TileEntityGarden extends TileEntity implements IInventory
                 continue;
 
             Block plantBlock = plant.getPlant(worldObj, xCoord, yCoord + 1, zCoord);
+            int plantMeta = getPlantInSlot(slot).getItemDamage();
+
+            IPlantMetaResolver resolver = PlantRegistry.instance().getPlantMetaResolver(plantBlock, plantMeta);
+            if (resolver != null)
+                return resolver.getPlantHeight(plantBlock, plantMeta);
+
             if (plantBlock instanceof BlockDoublePlant)
                 height = Math.max(height, 2);
             else

@@ -8,7 +8,10 @@ import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.HashMap;
@@ -71,6 +74,16 @@ public final class PlantRegistry
             renderRegistry.register(id, renderer);
     }
 
+    public void registerPlantRenderer (String modId, String block, IPlantRenderer renderer) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, OreDictionary.WILDCARD_VALUE);
+        renderRegistry.register(id, renderer);
+    }
+
+    public void registerPlantRenderer (String modId, String block, int meta, IPlantRenderer renderer) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, meta);
+        renderRegistry.register(id, renderer);
+    }
+
     public IPlantRenderer getPlantRenderer (Block block, int meta) {
         UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
         if (id == null)
@@ -93,6 +106,11 @@ public final class PlantRegistry
             metaResolverRegistry.register(id, resolver);
     }
 
+    public void registerPlantMetaResolver (String modId, String block, IPlantMetaResolver resolver) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, OreDictionary.WILDCARD_VALUE);
+        metaResolverRegistry.register(id, resolver);
+    }
+
     public IPlantMetaResolver getPlantMetaResolver (Block block, int meta) {
         UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
         if (id == null)
@@ -100,4 +118,29 @@ public final class PlantRegistry
 
         return metaResolverRegistry.getEntry(id);
     }
+
+
+
+    // API Stuff
+
+
+
+    public static IPlantable getPlantable (ItemStack plantItemStack) {
+        if (plantItemStack == null || plantItemStack.getItem() == null)
+            return null;
+
+        IPlantable plantable = null;
+        Item item = plantItemStack.getItem();
+        if (item instanceof IPlantable)
+            plantable = (IPlantable) item;
+        else if (item instanceof ItemBlock) {
+            Block itemBlock = Block.getBlockFromItem(item);
+            if (itemBlock instanceof IPlantable)
+                plantable = (IPlantable) itemBlock;
+        }
+
+        return plantable;
+    }
+
+
 }

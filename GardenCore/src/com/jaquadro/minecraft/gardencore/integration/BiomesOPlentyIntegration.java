@@ -1,21 +1,36 @@
 package com.jaquadro.minecraft.gardencore.integration;
 
-import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
-import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
+import com.jaquadro.minecraft.gardencore.api.*;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
 public class BiomesOPlentyIntegration
 {
     public static final String MOD_ID = "BiomesOPlenty";
 
+    private static BOPMetaResolver metaResolver = new BOPMetaResolver();
+
     public static void init () {
         if (!Loader.isModLoaded(MOD_ID))
             return;
 
+        initWood();
+
+        PlantRegistry plantReg = PlantRegistry.instance();
+        plantReg.registerPlantMetaResolver(MOD_ID, "foliage", metaResolver);
+
+        plantReg.registerPlantRenderer(MOD_ID, "foliage", new BOPShrubRenderer());
+    }
+
+    private static void initWood () {
         Block log1 = GameRegistry.findBlock(MOD_ID, "logs1");
         Block log2 = GameRegistry.findBlock(MOD_ID, "logs2");
         Block log3 = GameRegistry.findBlock(MOD_ID, "logs3");
@@ -82,5 +97,52 @@ public class BiomesOPlentyIntegration
         saplingReg.registerSapling(sapling2, 4, log3, 1, leafc2, 0); // Willow Tree
         saplingReg.registerSapling(sapling2, 5, log4, 0, leafc2, 1); // Pine Tree
         saplingReg.registerSapling(sapling2, 6, log4, 3, leafc2, 2); // Mahogany Tree
+    }
+
+    private static class BOPMetaResolver implements IPlantMetaResolver
+    {
+        @Override
+        public int getPlantHeight (Block block, int meta) {
+            GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(block);
+            if (uid.name.equals("foliage")) {
+                if (meta == 3)
+                    return 2;
+            }
+
+            return 1;
+        }
+
+        @Override
+        public int getPlantSectionMeta (Block block, int meta, int section) {
+            GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(block);
+            if (uid.name.equals("foliage")) {
+                if (meta == 3)
+                    return (section == 1) ? 3 : 6;
+            }
+
+            return meta;
+        }
+    }
+
+    private static class BOPShrubRenderer implements IPlantRenderer
+    {
+        private CrossedSquaresPlantRenderer crossRender = new CrossedSquaresPlantRenderer();
+
+        @Override
+        public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height) {
+            crossRender.render(world, x, y, z, renderer, block, meta, height);
+
+            if (meta != 3 || height > 1)
+                return;
+
+            IIcon hedgeTrunk = renderer.minecraftRB.getTextureMapBlocks().getTextureExtry("biomesoplenty:hedge_trunk");
+            if (hedgeTrunk == null)
+                return;
+
+            Tessellator tesselator = Tessellator.instance;
+            tesselator.setColorOpaque_F(1, 1, 1);
+
+            renderer.drawCrossedSquares(hedgeTrunk, x, y, z, 1.0F);
+        }
     }
 }

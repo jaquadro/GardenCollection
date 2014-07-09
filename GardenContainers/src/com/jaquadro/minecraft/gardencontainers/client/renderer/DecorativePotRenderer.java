@@ -17,9 +17,6 @@ import org.lwjgl.opengl.GL11;
 public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
 {
     private float[] baseColor = new float[3];
-    private float[] activeRimColor = new float[3];
-    private float[] activeInWallColor = new float[3];
-    private float[] activeBottomColor = new float[3];
     private float[] activeSubstrateColor = new float[3];
 
     private ModularBoxRenderer boxRenderer = new ModularBoxRenderer();
