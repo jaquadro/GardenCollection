@@ -447,15 +447,15 @@ public final class RenderUtil
         float aoBR = (float)((double)aoXYZPPP * renderer.renderMinX * (1.0D - renderer.renderMinZ) + (double)aoXYZNPP * renderer.renderMinX * renderer.renderMinZ + (double)aoXYZNPN * (1.0D - renderer.renderMinX) * renderer.renderMinZ + (double)aoXYZPPN * (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMinZ));
         float aoTR = (float)((double)aoXYZPPP * renderer.renderMinX * (1.0D - renderer.renderMaxZ) + (double)aoXYZNPP * renderer.renderMinX * renderer.renderMaxZ + (double)aoXYZNPN * (1.0D - renderer.renderMinX) * renderer.renderMaxZ + (double)aoXYZPPN * (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMaxZ));
 
-        int brXYZNPP = renderer.getAoBrightness(aoBrightnessXYNP, aoBrightnessXYZNPP, aoBrightnessYZPP, blockBrightness);
-        int brXYZPPP = renderer.getAoBrightness(aoBrightnessYZPP, aoBrightnessXYPP, aoBrightnessXYZPPP, blockBrightness);
-        int brXYZPPN = renderer.getAoBrightness(aoBrightnessYZPN, aoBrightnessXYZPPN, aoBrightnessXYPP, blockBrightness);
-        int brXYZNPN = renderer.getAoBrightness(aoBrightnessXYZNPN, aoBrightnessXYNP, aoBrightnessYZPN, blockBrightness);
+        int brXYZPPN = renderer.getAoBrightness(aoBrightnessXYNP, aoBrightnessXYZNPP, aoBrightnessYZPP, blockBrightness);
+        int brXYZNPN = renderer.getAoBrightness(aoBrightnessYZPP, aoBrightnessXYPP, aoBrightnessXYZPPP, blockBrightness);
+        int brXYZNPP = renderer.getAoBrightness(aoBrightnessYZPN, aoBrightnessXYZPPN, aoBrightnessXYPP, blockBrightness);
+        int brXYZPPP = renderer.getAoBrightness(aoBrightnessXYZNPN, aoBrightnessXYNP, aoBrightnessYZPN, blockBrightness);
 
-        renderer.brightnessTopLeft = renderer.mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMaxX * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMaxX) * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMaxX) * renderer.renderMaxZ, renderer.renderMaxX * renderer.renderMaxZ);
-        renderer.brightnessBottomLeft = renderer.mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMaxX * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMaxX) * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMaxX) * renderer.renderMinZ, renderer.renderMaxX * renderer.renderMinZ);
-        renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMinX * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinX) * renderer.renderMinZ, renderer.renderMinX * renderer.renderMinZ);
-        renderer.brightnessTopRight = renderer.mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMinX * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinX) * renderer.renderMaxZ, renderer.renderMinX * renderer.renderMaxZ);
+        renderer.brightnessTopLeft = mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMaxZ, renderer.renderMaxX);
+        renderer.brightnessBottomLeft = mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMinZ, renderer.renderMaxX);
+        renderer.brightnessBottomRight = mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMinZ, renderer.renderMinX);
+        renderer.brightnessTopRight = mixAoBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMaxZ, renderer.renderMinX);
 
         renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r;
         renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g;
@@ -877,5 +877,18 @@ public final class RenderUtil
         renderer.enableAO = true;
         renderer.renderFaceXPos(block, (double) x, (double) y, (double) z, icon);
         renderer.enableAO = false;
+    }
+
+    public static int mixAoBrightness(int brightTL, int brightBL, int brightBR, int brightTR, double lerpTB, double lerpLR)
+    {
+        double brightSkyL = (brightTL >> 16 & 255) * (1 - lerpTB) + (brightBL >> 16 & 255) * lerpTB;
+        double brightSkyR = (brightTR >> 16 & 255) * (1 - lerpTB) + (brightBR >> 16 & 255) * lerpTB;
+        int brightSky = (int)(brightSkyL * (1 - lerpLR) + brightSkyR * lerpLR) & 255;
+
+        double brightBlkL = (brightTL & 255) * (1 - lerpTB) + (brightBL & 255) * lerpTB;
+        double brightBlkR = (brightTR & 255) * (1 - lerpTB) + (brightBR & 255) * lerpTB;
+        int brightBlk = (int)(brightBlkL * (1 - lerpLR) + brightBlkR * lerpLR) & 255;
+
+        return brightSky << 16 | brightBlk;
     }
 }
