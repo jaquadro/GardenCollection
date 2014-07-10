@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardencore.api;
 
+import com.jaquadro.minecraft.gardencore.api.plant.*;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.CropsPlantRenderer;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.DoublePlantRenderer;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
@@ -19,9 +21,16 @@ import java.util.Map;
 
 public final class PlantRegistry
 {
+    private static final DefaultPlantInfo defaultPlantInfo = new DefaultPlantInfo();
+
+    public static final IPlantRenderer CROPS_RENDERER = new CropsPlantRenderer();
+    public static final IPlantRenderer CROSSED_SQUARES_RENDERER = new CrossedSquaresPlantRenderer();
+    public static final IPlantRenderer DOUBLE_PLANT_RENDERER = new DoublePlantRenderer();
+
     private UniqueMetaRegistry<IPlantRenderer> renderRegistry;
     private Map<Integer, IPlantRenderer> renderIdRegistry;
     private UniqueMetaRegistry<IPlantMetaResolver> metaResolverRegistry;
+    private UniqueMetaRegistry<IPlantInfo> plantInfoRegistry;
 
     private static PlantRegistry instance;
     static {
@@ -44,6 +53,7 @@ public final class PlantRegistry
         renderRegistry = new UniqueMetaRegistry<IPlantRenderer>();
         renderIdRegistry = new HashMap<Integer, IPlantRenderer>();
         metaResolverRegistry = new UniqueMetaRegistry<IPlantMetaResolver>();
+        plantInfoRegistry = new UniqueMetaRegistry<IPlantInfo>();
 
         registerPlantRenderer(1, new CrossedSquaresPlantRenderer());
         registerPlantRenderer(40, new DoublePlantRenderer());
@@ -55,6 +65,9 @@ public final class PlantRegistry
         registerPlantMetaResolver(Blocks.brown_mushroom, vanillaResolver);
         registerPlantMetaResolver(Blocks.tallgrass, vanillaResolver);
         registerPlantMetaResolver(Blocks.double_plant, vanillaResolver);
+
+        for (int i = 0; i < 6; i++)
+            registerPlantInfo(Blocks.double_plant, i, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.LARGE, 2, 2, new int[] { i, i | 8 }));
     }
 
     public void registerPlantRenderer (int renderId, IPlantRenderer renderer) {
@@ -111,12 +124,58 @@ public final class PlantRegistry
         metaResolverRegistry.register(id, resolver);
     }
 
+    public void registerPlantMetaResolver (String modId, String block, int meta, IPlantMetaResolver resolver) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, meta);
+        metaResolverRegistry.register(id, resolver);
+    }
+
     public IPlantMetaResolver getPlantMetaResolver (Block block, int meta) {
         UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
         if (id == null)
             return null;
 
         return metaResolverRegistry.getEntry(id);
+    }
+
+    public void registerPlantInfo (Block block, IPlantInfo info) {
+        registerPlantInfo(block, OreDictionary.WILDCARD_VALUE, info);
+    }
+
+    public void registerPlantInfo (Block block, int meta, IPlantInfo info) {
+        UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
+        if (id != null)
+            plantInfoRegistry.register(id, info);
+    }
+
+    public void registerPlantInfo (String modId, IPlantInfo info) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId);
+        plantInfoRegistry.register(id, info);
+    }
+
+    public void registerPlantInfo (String modId, String block, IPlantInfo info) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block);
+        plantInfoRegistry.register(id, info);
+    }
+
+    public void registerPlantInfo (String modId, String block, int meta, IPlantInfo info) {
+        UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, meta);
+        plantInfoRegistry.register(id, info);
+    }
+
+    public IPlantInfo getPlantInfo (Block block, int meta) {
+        UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
+        if (id == null)
+            return null;
+
+        return plantInfoRegistry.getEntry(id);
+    }
+
+    public IPlantInfo getPlantInfoOrDefault (Block block, int meta) {
+        IPlantInfo info = getPlantInfo(block, meta);
+        if (info != null)
+            return info;
+
+        return defaultPlantInfo;
     }
 
 

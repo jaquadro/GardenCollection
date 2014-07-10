@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.util;
 import com.google.common.base.Objects;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraftforge.oredict.OreDictionary;
 
 public final class UniqueMetaIdentifier
 {
@@ -11,6 +12,12 @@ public final class UniqueMetaIdentifier
     public final int meta;
 
     private GameRegistry.UniqueIdentifier cachedUID;
+
+    public UniqueMetaIdentifier (String modId, String name) {
+        this.modId = modId;
+        this.name = name;
+        this.meta = OreDictionary.WILDCARD_VALUE;
+    }
 
     public UniqueMetaIdentifier (String modId, String name, int meta) {
         this.modId = modId;
@@ -29,16 +36,32 @@ public final class UniqueMetaIdentifier
         String[] parts1 = compoundName.split(";");
         String[] parts2 = parts1[0].split(":");
         this.modId = parts2[0];
-        this.name = parts2[1];
-        this.meta = Integer.parseInt(parts1[1]);
+
+        if (parts2.length >= 2)
+            this.name = parts2[1];
+        else
+            this.name = "";
+
+        if (parts1.length >= 2)
+            this.meta = Integer.parseInt(parts1[1]);
+        else
+            this.meta = OreDictionary.WILDCARD_VALUE;
     }
 
     public UniqueMetaIdentifier (String compoundName, char separator) {
         String[] parts1 = compoundName.split("[ ]*" + separator + "[ ]*");
         String[] parts2 = parts1[0].split(":");
         this.modId = parts2[0];
-        this.name = parts2[1];
-        this.meta = Integer.parseInt(parts1[1]);
+
+        if (parts2.length >= 2)
+            this.name = parts2[1];
+        else
+            this.name = "";
+
+        if (parts1.length >= 2)
+            this.meta = Integer.parseInt(parts1[1]);
+        else
+            this.meta = OreDictionary.WILDCARD_VALUE;
     }
 
     public GameRegistry.UniqueIdentifier getUniqueIdentifier () {

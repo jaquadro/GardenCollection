@@ -23,9 +23,15 @@ public class UniqueMetaRegistry<E>
             return registry.get(id);
 
         if (id.meta != OreDictionary.WILDCARD_VALUE) {
-            id = new UniqueMetaIdentifier(id.modId, id.name, OreDictionary.WILDCARD_VALUE);
+            id = new UniqueMetaIdentifier(id.modId, id.name);
             if (registry.containsKey(id))
                 return registry.get(id);
+
+            if (!id.name.isEmpty()) {
+                id = new UniqueMetaIdentifier(id.modId);
+                if (registry.containsKey(id))
+                    return registry.get(id);
+            }
         }
 
         return null;
