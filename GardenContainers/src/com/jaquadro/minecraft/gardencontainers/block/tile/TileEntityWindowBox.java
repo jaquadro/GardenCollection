@@ -1,18 +1,40 @@
 package com.jaquadro.minecraft.gardencontainers.block.tile;
 
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityWindowBox extends TileEntityGarden
 {
+    public static final int SLOT_COVER = 1;
+    public static final int SLOT_NW = 2;
+    public static final int SLOT_NE = 3;
+    public static final int SLOT_SW = 4;
+    public static final int SLOT_SE = 5;
+
     private static final int[] PLANT_SLOTS = new int[] {
         1, 2, 3, 4, 5
     };
 
-    private static final SlotMapping[][] SLOT_MAP = new SlotMapping[][] {
-        null, null, null, null, null
-    };
+    protected static class SlotProfileWindowBox extends SlotProfile
+    {
+        PlantTypeClass[] normalType = new PlantTypeClass[] { PlantTypeClass.NORMAL };
+        PlantSizeClass[] smallSize = new PlantSizeClass[] { PlantSizeClass.SMALL };
+
+        public SlotProfileWindowBox () {
+            slots = new Slot[] {
+                new Slot(SLOT_COVER, new PlantTypeClass[] { PlantTypeClass.COVER_GROUND }, smallSize),
+                new Slot(SLOT_NW, normalType, smallSize),
+                new Slot(SLOT_NE, normalType, smallSize),
+                new Slot(SLOT_SW, normalType, smallSize),
+                new Slot(SLOT_SE, normalType, smallSize),
+            };
+        }
+    }
+
+    private static final SlotProfileWindowBox profile = new SlotProfileWindowBox();
 
     private int direction;
 
@@ -44,6 +66,11 @@ public class TileEntityWindowBox extends TileEntityGarden
     @Override
     public int[] getPlantSlots () {
         return PLANT_SLOTS;
+    }
+
+    @Override
+    protected SlotProfile getSlotProfile () {
+        return profile;
     }
 
     @Override

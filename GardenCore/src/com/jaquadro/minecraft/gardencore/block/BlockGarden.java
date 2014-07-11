@@ -214,9 +214,10 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     @Override
-    public TileEntityGarden createNewTileEntity (World var1, int var2) {
+    /*public TileEntityGarden createNewTileEntity (World var1, int var2) {
         return new TileEntityGarden();
-    }
+    }*/
+    public abstract TileEntityGarden createNewTileEntity (World var1, int var2);
 
     @Override
     public boolean canSustainPlant (IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {

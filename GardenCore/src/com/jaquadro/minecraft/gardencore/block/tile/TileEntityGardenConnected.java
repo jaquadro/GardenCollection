@@ -1,5 +1,12 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
+import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
+import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
+import net.minecraft.block.Block;
+import net.minecraftforge.common.IPlantable;
+
 public class TileEntityGardenConnected extends TileEntityGarden
 {
     public static final int SLOT_CENTER = 0;
@@ -20,6 +27,50 @@ public class TileEntityGardenConnected extends TileEntityGarden
     private static final int[] PLANT_SLOTS = new int[] {
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
     };
+
+    protected static class SlotProfileConnected extends SlotProfile
+    {
+        public SlotProfileConnected () {
+            PlantTypeClass[] commonType = new PlantTypeClass[] { PlantTypeClass.NORMAL, PlantTypeClass.AQUATIC, PlantTypeClass.AQUATIC_NORMAL };
+
+            PlantSizeClass[] smallSize = new PlantSizeClass[] { PlantSizeClass.SMALL };
+            PlantSizeClass[] commonSize = new PlantSizeClass[] { PlantSizeClass.LARGE, PlantSizeClass.SMALL };
+            PlantSizeClass[] allSize = new PlantSizeClass[] { PlantSizeClass.FULL, PlantSizeClass.LARGE, PlantSizeClass.SMALL };
+
+            slots = new Slot[] {
+                new Slot(SLOT_CENTER, commonType, allSize),
+                new Slot(SLOT_COVER, new PlantTypeClass[] { PlantTypeClass.COVER_GROUND }, allSize),
+                new Slot(SLOT_NW, commonType, smallSize),
+                new Slot(SLOT_NE, commonType, smallSize),
+                new Slot(SLOT_SW, commonType, smallSize),
+                new Slot(SLOT_SE, commonType, smallSize),
+                new Slot(SLOT_TOP_LEFT, commonType, commonSize),
+                new Slot(SLOT_TOP, commonType, commonSize),
+                new Slot(SLOT_TOP_RIGHT, commonType, commonSize),
+                new Slot(SLOT_RIGHT, commonType, commonSize),
+                new Slot(SLOT_BOTTOM_RIGHT, commonType, commonSize),
+                new Slot(SLOT_BOTTOM, commonType, commonSize),
+                new Slot(SLOT_BOTTOM_LEFT, commonType, commonSize),
+                new Slot(SLOT_LEFT, commonType, commonSize),
+            };
+        }
+
+        @Override
+        public boolean isValidPlant (TileEntityGarden garden, int slot, IPlantable plant, IPlantInfo plantInfo) {
+            if (!super.isValidPlant(garden, slot, plant, plantInfo))
+                return false;
+
+            return true;
+        }
+
+        protected PlantSizeClass getContainerInteriorSizeClass (TileEntityGarden garden) {
+            return null;
+        }
+
+        protected boolean isContainerAquatic (TileEntityGarden garden) {
+            return false;
+        }
+    }
 
     private static final SlotMapping[][] SLOT_MAP = new SlotMapping[][] {
         null, null, null, null, null, null,
@@ -49,9 +100,16 @@ public class TileEntityGardenConnected extends TileEntityGarden
         new SlotMapping[] { new SlotMapping(SLOT_LEFT, SLOT_RIGHT, -1, 0) },
     };
 
+    private static final SlotProfileConnected profile = new SlotProfileConnected();
+
     @Override
     protected int containerSlotCount () {
         return PLANT_SLOTS.length;
+    }
+
+    @Override
+    public int[] getPlantSlots () {
+        return PLANT_SLOTS;
     }
 
     @Override
@@ -60,5 +118,10 @@ public class TileEntityGardenConnected extends TileEntityGarden
             return null;
 
         return SLOT_MAP[slot];
+    }
+
+    @Override
+    protected SlotProfile getSlotProfile () {
+        return profile;
     }
 }

@@ -31,4 +31,16 @@ public enum PlantTypeClass
      * Examples: Vines.  Third party ivy.
      */
     HANGING_SIDE,
+
+    /**
+     * Like NORMAL, but plants must be placed underwater.
+     * Examples: Third party corals, kelp.
+     */
+    AQUATIC,
+
+    /**
+     * A plant that must be rooted underwater but can grow above water.
+     * Examples: Third party reeds.
+     */
+    AQUATIC_NORMAL,
 }

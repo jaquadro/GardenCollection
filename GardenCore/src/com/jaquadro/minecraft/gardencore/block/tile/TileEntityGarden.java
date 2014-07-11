@@ -2,6 +2,9 @@ package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
+import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import net.minecraft.block.Block;
@@ -22,8 +25,65 @@ import net.minecraftforge.common.IPlantable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TileEntityGarden extends TileEntity implements IInventory
+public abstract class TileEntityGarden extends TileEntity implements IInventory
 {
+    protected static class Slot {
+        public int slot;
+        public List<PlantTypeClass> validTypeClasses = new ArrayList<PlantTypeClass>();
+        public List<PlantSizeClass> validSizeClasses = new ArrayList<PlantSizeClass>();
+
+        public Slot (int slot, PlantTypeClass[] typeClasses, PlantSizeClass[] sizeClasses) {
+            this.slot = slot;
+
+            for (int i = 0; i < typeClasses.length; i++)
+                validTypeClasses.add(typeClasses[i]);
+            for (int i = 0; i < sizeClasses.length; i++)
+                validSizeClasses.add(sizeClasses[i]);
+        }
+    }
+
+    protected static class SlotProfile {
+        protected Slot[] slots;
+
+        public boolean isValidPlant (TileEntityGarden garden, int slot, IPlantable plant, IPlantInfo plantInfo) {
+            if (slots == null || slot < 0 || slot >= slots.length)
+                return false;
+            if (slots[slot] == null)
+                return false;
+
+            Block plantBlock = plant.getPlant(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
+            int plantMeta = plant.getPlantMetadata(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
+
+            PlantTypeClass plantType = plantInfo.getPlantTypeClass(plantBlock, plantMeta);
+            PlantSizeClass plantSize = plantInfo.getPlantSizeClass(plantBlock, plantMeta);
+
+            if (!slots[slot].validTypeClasses.contains(plantType))
+                return false;
+            if (!slots[slot].validSizeClasses.contains(plantSize))
+                return false;
+
+            if (isContainerAquatic(garden) && (plantType == PlantTypeClass.AQUATIC || plantType == PlantTypeClass.AQUATIC_NORMAL)) {
+                PlantSizeClass containerSize = getContainerInteriorSizeClass(garden);
+                if (containerSize == null)
+                    return false;
+                if (plantSize == PlantSizeClass.FULL && (containerSize == PlantSizeClass.LARGE || containerSize == PlantSizeClass.SMALL))
+                    return false;
+                if (plantSize == PlantSizeClass.LARGE && containerSize == PlantSizeClass.SMALL)
+                    return false;
+            }
+
+            return true;
+        }
+
+        protected PlantSizeClass getContainerInteriorSizeClass (TileEntityGarden garden) {
+            return null;
+        }
+
+        protected boolean isContainerAquatic (TileEntityGarden garden) {
+            return false;
+        }
+    }
+
     protected static class SlotMapping {
         public int slot;
         public int mappedSlot;
@@ -42,51 +102,10 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     public static final int SLOT_INVALID = -1;
     public static final int SLOT_CENTER = 0;
-    public static final int SLOT_COVER = 1;
     public static final int SLOT_NW = 2;
     public static final int SLOT_NE = 3;
     public static final int SLOT_SW = 4;
     public static final int SLOT_SE = 5;
-    public static final int SLOT_TOP_LEFT = 6;
-    public static final int SLOT_TOP = 7;
-    public static final int SLOT_TOP_RIGHT = 8;
-    public static final int SLOT_RIGHT = 9;
-    public static final int SLOT_BOTTOM_RIGHT = 10;
-    public static final int SLOT_BOTTOM = 11;
-    public static final int SLOT_BOTTOM_LEFT = 12;
-    public static final int SLOT_LEFT = 13;
-
-    private static final int[] PLANT_SLOTS = new int[] {
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    };
-
-    private static final SlotMapping[][] SLOT_MAP = new SlotMapping[][] {
-        null, null, null, null, null, null,
-        new SlotMapping[] {
-            new SlotMapping(SLOT_TOP_LEFT, SLOT_TOP_RIGHT, -1, 0),
-            new SlotMapping(SLOT_TOP_LEFT, SLOT_BOTTOM_LEFT, 0, -1),
-            new SlotMapping(SLOT_TOP_LEFT, SLOT_BOTTOM_RIGHT, -1, -1)
-        },
-        new SlotMapping[] { new SlotMapping(SLOT_TOP, SLOT_BOTTOM, 0, -1) },
-        new SlotMapping[] {
-            new SlotMapping(SLOT_TOP_RIGHT, SLOT_TOP_LEFT, 1, 0),
-            new SlotMapping(SLOT_TOP_RIGHT, SLOT_BOTTOM_RIGHT, 0, -1),
-            new SlotMapping(SLOT_TOP_RIGHT, SLOT_BOTTOM_LEFT, 1, -1)
-        },
-        new SlotMapping[] { new SlotMapping(SLOT_RIGHT, SLOT_LEFT, 1, 0) },
-        new SlotMapping[] {
-            new SlotMapping(SLOT_BOTTOM_RIGHT, SLOT_BOTTOM_LEFT, 1, 0),
-            new SlotMapping(SLOT_BOTTOM_RIGHT, SLOT_TOP_RIGHT, 0, 1),
-            new SlotMapping(SLOT_BOTTOM_RIGHT, SLOT_TOP_LEFT, 1, 1)
-        },
-        new SlotMapping[] { new SlotMapping(SLOT_BOTTOM, SLOT_TOP, 0, 1) },
-        new SlotMapping[] {
-            new SlotMapping(SLOT_BOTTOM_LEFT, SLOT_BOTTOM_RIGHT, -1, 0),
-            new SlotMapping(SLOT_BOTTOM_LEFT, SLOT_TOP_LEFT, 0, 1),
-            new SlotMapping(SLOT_BOTTOM_LEFT, SLOT_TOP_RIGHT, -1, 1)
-        },
-        new SlotMapping[] { new SlotMapping(SLOT_LEFT, SLOT_RIGHT, -1, 0) },
-    };
 
     private ItemStack[] containerStacks;
     private String customName;
@@ -101,19 +120,14 @@ public class TileEntityGarden extends TileEntity implements IInventory
         containerStacks = new ItemStack[containerSlotCount()];
     }
 
-    protected int containerSlotCount () {
-        return 14;
-    }
+    protected abstract int containerSlotCount ();
 
-    public int[] getPlantSlots () {
-        return PLANT_SLOTS;
-    }
+    protected abstract SlotProfile getSlotProfile ();
+
+    public abstract int[] getPlantSlots ();
 
     protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
-        if (slot >= SLOT_MAP.length)
-            return null;
-
-        return SLOT_MAP[slot];
+        return null;
     }
 
     public ItemStack getPlantInSlot (int slot) {
@@ -529,11 +543,17 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     @Override
     public boolean isItemValidForSlot (int slot, ItemStack itemStack) {
-        if (!isSlotValid(slot))
-            return  false;
+        IPlantable plant = PlantRegistry.getPlantable(itemStack);
+        if (plant == null)
+            return false;
 
-        if (itemStack != null && itemStack.getItem() instanceof IPlantable)
+        Block plantBlock = plant.getPlant(worldObj, xCoord, yCoord, zCoord);
+        int plantMeta = plant.getPlantMetadata(worldObj, xCoord, yCoord, zCoord);
+
+        IPlantInfo info = PlantRegistry.instance().getPlantInfoOrDefault(plantBlock, plantMeta);
+        if (getSlotProfile().isValidPlant(this, slot, plant, info))
             return isSlotValid(slot);
+
         return false;
     }
 }

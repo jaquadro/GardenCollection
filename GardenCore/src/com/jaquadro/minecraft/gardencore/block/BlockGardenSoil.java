@@ -1,6 +1,9 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -11,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class BlockGardenSoil extends BlockGarden
 {
@@ -32,6 +36,11 @@ public class BlockGardenSoil extends BlockGarden
     @Override
     protected boolean isValidSubstrate (ItemStack itemStack) {
         return false;
+    }
+
+    @Override
+    public TileEntityGardenConnected createNewTileEntity (World var1, int var2) {
+        return new TileEntityGardenConnected();
     }
 
     @Override
