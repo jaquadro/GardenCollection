@@ -32,66 +32,61 @@ public class BiomesOPlentyIntegration
 
         plantReg.registerPlantRenderer(MOD_ID, "foliage", new BOPShrubRenderer());
 
-        plantReg.registerPlantInfo(MOD_ID, "plants", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Dead Grass
-        plantReg.registerPlantInfo(MOD_ID, "plants", 1, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Desert Grass
-        plantReg.registerPlantInfo(MOD_ID, "plants", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Desert Sprouts
-        plantReg.registerPlantInfo(MOD_ID, "plants", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Dune Grass
-        plantReg.registerPlantInfo(MOD_ID, "plants", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Spectral Fern
-        plantReg.registerPlantInfo(MOD_ID, "plants", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Thorn
+        // Default: deadgrass, desertgrass, desertsprouts, dunegrass, spectralfern, thorn
         plantReg.registerPlantInfo(MOD_ID, "plants", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Barley
-        plantReg.registerPlantInfo(MOD_ID, "plants", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Cattail -- Switch to 2-height, 9/10
+        plantReg.registerPlantInfo(MOD_ID, "plants", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL, 1, 2));  // Cattail Stage 1 (cattail)
         plantReg.registerPlantInfo(MOD_ID, "plants", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Rivercane
+        plantReg.registerPlantInfo(MOD_ID, "plants", 10, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL, 2, 2, new int[] { 10, 9 }));  // Cattail Stage 2 (cattalbottom)
         plantReg.registerPlantInfo(MOD_ID, "plants", 11, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Wild carrot
         plantReg.registerPlantInfo(MOD_ID, "plants", 12, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));  // Cactus
         plantReg.registerPlantInfo(MOD_ID, "plants", 13, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Witherwart
         plantReg.registerPlantInfo(MOD_ID, "plants", 14, new SimplePlantInfo(PlantType.AQUATIC_EMERGENT, PlantSize.FULL, 2, 2));  // Reed
         plantReg.registerPlantInfo(MOD_ID, "plants", 15, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE));  // Root
 
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 0, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.FULL));
+        // Default: shortgrass, mediumgrass, bush, sprout, poisonivy, berrybush, shrub, wheatgrass, dampgrass, koru
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 0, new SimplePlantInfo(PlantType.AQUATIC_COVER, PlantSize.FULL)); // duckweed
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE, 2, 2, new int[] { 3, 6 })); // hedgebottom
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 13, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // cloverpatch
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 14, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // leafpile
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 15, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // deadleafpile
 
-        // Foliage (Default: shortgrass, mediumgrass, bush, sprout, poisonivy, berrybush, shrub, wheatgrass, dampgrass, koru)
-        // duckweed: Full aquatic cover
-        // hedgebottom: Large Normal 2x special renderer
-        // cloverpatch: Full cover
-        // leafpile: Full cover
-        // deadleafpile: Full cover
+        // Default: swampflower, hydrangia, wildflower, violet, anemone, enderlotus, bromeliad
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 0, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // cloverpatch
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // deadbloom
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // glowflower
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // cosmos
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // daffodil
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 10, new SimplePlantInfo(PlantType.AQUATIC_SURFACE, PlantSize.SMALL)); // lilyflower
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 13, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE, 2, 2, new int[] { 13, 14 })); // eyebulbbottom
+        plantReg.registerPlantInfo(MOD_ID, "flowers", 15, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // dandelion
 
-        // Flower 1 (Default: swampflower, hydrangia, wildflower, violet, anemone, enderlotus, bromeliad)
-        // clover: Full cover
-        // deadbloom: Small normal
-        // Glowflower: Small normal
-        // cosmos: Small normal
-        // daffodil: Small normal
-        // lilyflower: Small aquatic_surface (req. lilypad cover)
-        // eyebulbtop: Large normal 2x
-        // dandelion: Small normal
+        // Default: hibiscus, lilyofthevalley, burningblossom, lavender, bluebells, minersdelight, icyiris
+        plantReg.registerPlantInfo(MOD_ID, "flowers2", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // goldenrod
+        plantReg.registerPlantInfo(MOD_ID, "flowers2", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // rose
 
-        // Flower 2 (Default: hibiscus, lilyofthevalley, burningblossom, lavender, bluebells, minersdelight, icyiris)
-        // goldenrod: Small normal
-        // rose: Small normal
+        // TODO: Probably can't use SimplePlantInfo for these.  Kelp needs extra special treatment.
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 8, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE, 2, 2, new int[] { 8, 10 })); // kelpbottom
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 11, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE, 1, 2)); // kelpsingle
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 12, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE)); // pinkcoral
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 13, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE)); // orangecoral
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 14, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE)); // bluecoral
+        plantReg.registerPlantInfo(MOD_ID, "coral1", 15, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE)); // glowcoral
 
-        // Coral (Default: )
-        // kelpsingle: Large aquatic 1-?
-        // pinkcoral: Large aquatic
-        // orangecoral: Large aquatic
-        // bluecoral: Large aquatic
-        // glowcoral: Large aquatic
-        // algae: Large aquatic
+        plantReg.registerPlantInfo(MOD_ID, "coral2", 8, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.LARGE)); // algae
 
-        // BlockIvy: Full Side Hang
-        // BlockFlowerFine: Full Side Hang
-        // BlockMoss: Full Side Cover
+        plantReg.registerPlantInfo(MOD_ID, "ivy", new SimplePlantInfo(PlantType.HANGING_SIDE, PlantSize.FULL));
+        plantReg.registerPlantInfo(MOD_ID, "flowervine", new SimplePlantInfo(PlantType.HANGING_SIDE, PlantSize.FULL));
+        plantReg.registerPlantInfo(MOD_ID, "moss", new SimplePlantInfo(PlantType.SIDE_COVER, PlantSize.FULL));
 
-        // BlockStoneFormations:
-        // stalagmite: Large ground
-        // stalactite: Large hanging
+        // Default: stalagmite
+        plantReg.registerPlantInfo(MOD_ID, "stoneFormations", 1, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE)); // stalacmite
 
-        // BlockBOPMushroom (Default: glowshroom, flatmushroom, shadowshroom)
-        // toadstool: Small normal
-        // portobello: Small normal
-        // bluemilk: Small normal
+        // Default: glowshroom, flatmushroom, shadowshroom
+        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // toadstool
+        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 1, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // portabello
+        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // bluemilk
 
-        // BlockTurnip: Staged crop
+        plantReg.registerPlantInfo(MOD_ID, "turnip", new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
     }
 
     private static void initWood () {
