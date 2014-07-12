@@ -50,7 +50,7 @@ public class ContainerGarden extends Container
         storageSlots = new ArrayList<Slot>();
         for (int i = 0; i < storageSlotIndex.length; i++) {
             if (tileEntity.isSlotValid(storageSlotIndex[i]))
-                storageSlots.add(addSlotToContainer(new Slot(gardenInventory, storageSlotIndex[i], StorageX + 18 * storageXIndex[i], StorageY + 18 * storageYIndex[i])));
+                storageSlots.add(addSlotToContainer(new PlantSlot(gardenInventory, storageSlotIndex[i], StorageX + 18 * storageXIndex[i], StorageY + 18 * storageYIndex[i])));
         }
 
         playerSlots = new ArrayList<Slot>();

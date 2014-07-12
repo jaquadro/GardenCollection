@@ -1,6 +1,9 @@
 package com.jaquadro.minecraft.gardencore.integration;
 
 import com.jaquadro.minecraft.gardencore.api.*;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
+import com.jaquadro.minecraft.gardencore.api.plant.SimplePlantInfo;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -28,6 +31,67 @@ public class BiomesOPlentyIntegration
         plantReg.registerPlantMetaResolver(MOD_ID, "foliage", metaResolver);
 
         plantReg.registerPlantRenderer(MOD_ID, "foliage", new BOPShrubRenderer());
+
+        plantReg.registerPlantInfo(MOD_ID, "plants", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Dead Grass
+        plantReg.registerPlantInfo(MOD_ID, "plants", 1, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Desert Grass
+        plantReg.registerPlantInfo(MOD_ID, "plants", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Desert Sprouts
+        plantReg.registerPlantInfo(MOD_ID, "plants", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Dune Grass
+        plantReg.registerPlantInfo(MOD_ID, "plants", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Spectral Fern
+        plantReg.registerPlantInfo(MOD_ID, "plants", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));  // Thorn
+        plantReg.registerPlantInfo(MOD_ID, "plants", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Barley
+        plantReg.registerPlantInfo(MOD_ID, "plants", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Cattail -- Switch to 2-height, 9/10
+        plantReg.registerPlantInfo(MOD_ID, "plants", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Rivercane
+        plantReg.registerPlantInfo(MOD_ID, "plants", 11, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Wild carrot
+        plantReg.registerPlantInfo(MOD_ID, "plants", 12, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));  // Cactus
+        plantReg.registerPlantInfo(MOD_ID, "plants", 13, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Witherwart
+        plantReg.registerPlantInfo(MOD_ID, "plants", 14, new SimplePlantInfo(PlantType.AQUATIC_EMERGENT, PlantSize.FULL, 2, 2));  // Reed
+        plantReg.registerPlantInfo(MOD_ID, "plants", 15, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE));  // Root
+
+        plantReg.registerPlantInfo(MOD_ID, "foliage", 0, new SimplePlantInfo(PlantType.AQUATIC, PlantSize.FULL));
+
+        // Foliage (Default: shortgrass, mediumgrass, bush, sprout, poisonivy, berrybush, shrub, wheatgrass, dampgrass, koru)
+        // duckweed: Full aquatic cover
+        // hedgebottom: Large Normal 2x special renderer
+        // cloverpatch: Full cover
+        // leafpile: Full cover
+        // deadleafpile: Full cover
+
+        // Flower 1 (Default: swampflower, hydrangia, wildflower, violet, anemone, enderlotus, bromeliad)
+        // clover: Full cover
+        // deadbloom: Small normal
+        // Glowflower: Small normal
+        // cosmos: Small normal
+        // daffodil: Small normal
+        // lilyflower: Small aquatic_surface (req. lilypad cover)
+        // eyebulbtop: Large normal 2x
+        // dandelion: Small normal
+
+        // Flower 2 (Default: hibiscus, lilyofthevalley, burningblossom, lavender, bluebells, minersdelight, icyiris)
+        // goldenrod: Small normal
+        // rose: Small normal
+
+        // Coral (Default: )
+        // kelpsingle: Large aquatic 1-?
+        // pinkcoral: Large aquatic
+        // orangecoral: Large aquatic
+        // bluecoral: Large aquatic
+        // glowcoral: Large aquatic
+        // algae: Large aquatic
+
+        // BlockIvy: Full Side Hang
+        // BlockFlowerFine: Full Side Hang
+        // BlockMoss: Full Side Cover
+
+        // BlockStoneFormations:
+        // stalagmite: Large ground
+        // stalactite: Large hanging
+
+        // BlockBOPMushroom (Default: glowshroom, flatmushroom, shadowshroom)
+        // toadstool: Small normal
+        // portobello: Small normal
+        // bluemilk: Small normal
+
+        // BlockTurnip: Staged crop
     }
 
     private static void initWood () {

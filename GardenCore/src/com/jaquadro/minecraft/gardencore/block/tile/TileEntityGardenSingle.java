@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
-import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 
 public class TileEntityGardenSingle extends TileEntityGarden
 {
@@ -15,12 +15,12 @@ public class TileEntityGardenSingle extends TileEntityGarden
     protected static class SlotProfileSingle extends SlotProfile
     {
         public SlotProfileSingle () {
-            PlantTypeClass[] commonType = new PlantTypeClass[] { PlantTypeClass.NORMAL, PlantTypeClass.AQUATIC, PlantTypeClass.AQUATIC_NORMAL };
-            PlantSizeClass[] allSize = new PlantSizeClass[] { PlantSizeClass.FULL, PlantSizeClass.LARGE, PlantSizeClass.SMALL };
+            PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
+            PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
             slots = new Slot[] {
                 new Slot(SLOT_CENTER, commonType, allSize),
-                new Slot(SLOT_COVER, new PlantTypeClass[] { PlantTypeClass.COVER_GROUND }, allSize),
+                new Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
             };
         }
     }

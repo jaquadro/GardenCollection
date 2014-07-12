@@ -5,9 +5,9 @@ import net.minecraft.block.Block;
 
 public interface IPlantInfo extends IPlantMetaResolver
 {
-    public PlantTypeClass getPlantTypeClass (Block block, int meta);
+    public PlantType getPlantTypeClass (Block block, int meta);
 
-    public PlantSizeClass getPlantSizeClass (Block block, int meta);
+    public PlantSize getPlantSizeClass (Block block, int meta);
 
     public int getPlantMaxHeight (Block block, int meta);
 }

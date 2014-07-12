@@ -5,13 +5,13 @@ import net.minecraft.block.Block;
 public class DefaultPlantInfo implements IPlantInfo
 {
     @Override
-    public PlantTypeClass getPlantTypeClass (Block block, int meta) {
-        return PlantTypeClass.NORMAL;
+    public PlantType getPlantTypeClass (Block block, int meta) {
+        return PlantType.GROUND;
     }
 
     @Override
-    public PlantSizeClass getPlantSizeClass (Block block, int meta) {
-        return block.getRenderType() == 6 ? PlantSizeClass.FULL : PlantSizeClass.LARGE;
+    public PlantSize getPlantSizeClass (Block block, int meta) {
+        return block.getRenderType() == 6 ? PlantSize.FULL : PlantSize.LARGE;
     }
 
     @Override

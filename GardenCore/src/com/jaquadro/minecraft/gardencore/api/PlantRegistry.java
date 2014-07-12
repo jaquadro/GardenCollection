@@ -69,22 +69,22 @@ public final class PlantRegistry
 
 
         for (int i : new int[] { 0, 2, 3, 4, 5, 6, 7, 8 })
-            registerPlantInfo(Blocks.red_flower, i, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.SMALL));
+            registerPlantInfo(Blocks.red_flower, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
         for (int i : new int[] { 0 })
-            registerPlantInfo(Blocks.yellow_flower, i, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.SMALL));
+            registerPlantInfo(Blocks.yellow_flower, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
         for (int i : new int[] { 0, 1, 2, 3, 4, 5 })
-            registerPlantInfo(Blocks.double_plant, i, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.LARGE, 2, 2, new int[] { i, i | 8 }));
+            registerPlantInfo(Blocks.double_plant, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE, 2, 2, new int[] { i, i | 8 }));
         for (int i : new int[] { 2 })
-            registerPlantInfo(Blocks.tallgrass, i, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.SMALL));
+            registerPlantInfo(Blocks.tallgrass, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
 
-        registerPlantInfo(Blocks.red_mushroom, 0, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.SMALL));
-        registerPlantInfo(Blocks.brown_mushroom, 0, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.SMALL));
-        registerPlantInfo(Blocks.waterlily, new SimplePlantInfo(PlantTypeClass.COVER_GROUND, PlantSizeClass.FULL));
+        registerPlantInfo(Blocks.red_mushroom, 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        registerPlantInfo(Blocks.brown_mushroom, 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        registerPlantInfo(Blocks.waterlily, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));
 
-        registerPlantInfo(Blocks.wheat, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.FULL));
-        registerPlantInfo(Blocks.carrots, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.FULL));
-        registerPlantInfo(Blocks.potatoes, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.FULL));
-        registerPlantInfo(Blocks.nether_wart, new SimplePlantInfo(PlantTypeClass.NORMAL, PlantSizeClass.FULL));
+        registerPlantInfo(Blocks.wheat, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
+        registerPlantInfo(Blocks.carrots, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
+        registerPlantInfo(Blocks.potatoes, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
+        registerPlantInfo(Blocks.nether_wart, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
     }
 
     public void registerPlantRenderer (int renderId, IPlantRenderer renderer) {

@@ -4,27 +4,27 @@ import net.minecraft.block.Block;
 
 public class SimplePlantInfo implements IPlantInfo
 {
-    private PlantTypeClass typeClass;
-    private PlantSizeClass sizeClass;
+    private PlantType typeClass;
+    private PlantSize sizeClass;
     private int initialHeight;
     private int maxHeight;
     private int[] sectionMeta;
 
-    public SimplePlantInfo (PlantTypeClass typeClass, PlantSizeClass sizeClass) {
+    public SimplePlantInfo (PlantType typeClass, PlantSize sizeClass) {
         this.typeClass = typeClass;
         this.sizeClass = sizeClass;
         this.initialHeight = 1;
         this.maxHeight = 1;
     }
 
-    public SimplePlantInfo (PlantTypeClass typeClass, PlantSizeClass sizeClass, int initialHeight, int maxHeight) {
+    public SimplePlantInfo (PlantType typeClass, PlantSize sizeClass, int initialHeight, int maxHeight) {
         this.typeClass = typeClass;
         this.sizeClass = sizeClass;
         this.initialHeight = initialHeight;
         this.maxHeight = maxHeight;
     }
 
-    public SimplePlantInfo (PlantTypeClass typeClass, PlantSizeClass sizeClass, int initialHeight, int maxHeight, int[] sectionMeta) {
+    public SimplePlantInfo (PlantType typeClass, PlantSize sizeClass, int initialHeight, int maxHeight, int[] sectionMeta) {
         this(typeClass, sizeClass, initialHeight, maxHeight);
 
         this.sectionMeta = new int[sectionMeta.length];
@@ -33,12 +33,12 @@ public class SimplePlantInfo implements IPlantInfo
     }
 
     @Override
-    public PlantTypeClass getPlantTypeClass (Block block, int meta) {
+    public PlantType getPlantTypeClass (Block block, int meta) {
         return typeClass;
     }
 
     @Override
-    public PlantSizeClass getPlantSizeClass (Block block, int meta) {
+    public PlantSize getPlantSizeClass (Block block, int meta) {
         return sizeClass;
     }
 

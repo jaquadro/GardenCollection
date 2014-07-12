@@ -3,8 +3,8 @@ package com.jaquadro.minecraft.gardencore.block.tile;
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import net.minecraft.block.Block;
@@ -29,10 +29,10 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
 {
     protected static class Slot {
         public int slot;
-        public List<PlantTypeClass> validTypeClasses = new ArrayList<PlantTypeClass>();
-        public List<PlantSizeClass> validSizeClasses = new ArrayList<PlantSizeClass>();
+        public List<PlantType> validTypeClasses = new ArrayList<PlantType>();
+        public List<PlantSize> validSizeClasses = new ArrayList<PlantSize>();
 
-        public Slot (int slot, PlantTypeClass[] typeClasses, PlantSizeClass[] sizeClasses) {
+        public Slot (int slot, PlantType[] typeClasses, PlantSize[] sizeClasses) {
             this.slot = slot;
 
             for (int i = 0; i < typeClasses.length; i++)
@@ -54,28 +54,28 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
             Block plantBlock = plant.getPlant(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
             int plantMeta = plant.getPlantMetadata(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
 
-            PlantTypeClass plantType = plantInfo.getPlantTypeClass(plantBlock, plantMeta);
-            PlantSizeClass plantSize = plantInfo.getPlantSizeClass(plantBlock, plantMeta);
+            PlantType plantType = plantInfo.getPlantTypeClass(plantBlock, plantMeta);
+            PlantSize plantSize = plantInfo.getPlantSizeClass(plantBlock, plantMeta);
 
             if (!slots[slot].validTypeClasses.contains(plantType))
                 return false;
             if (!slots[slot].validSizeClasses.contains(plantSize))
                 return false;
 
-            if (isContainerAquatic(garden) && (plantType == PlantTypeClass.AQUATIC || plantType == PlantTypeClass.AQUATIC_NORMAL)) {
-                PlantSizeClass containerSize = getContainerInteriorSizeClass(garden);
+            if (isContainerAquatic(garden) && (plantType == PlantType.AQUATIC || plantType == PlantType.AQUATIC_EMERGENT)) {
+                PlantSize containerSize = getContainerInteriorSizeClass(garden);
                 if (containerSize == null)
                     return false;
-                if (plantSize == PlantSizeClass.FULL && (containerSize == PlantSizeClass.LARGE || containerSize == PlantSizeClass.SMALL))
+                if (plantSize == PlantSize.FULL && (containerSize == PlantSize.LARGE || containerSize == PlantSize.SMALL))
                     return false;
-                if (plantSize == PlantSizeClass.LARGE && containerSize == PlantSizeClass.SMALL)
+                if (plantSize == PlantSize.LARGE && containerSize == PlantSize.SMALL)
                     return false;
             }
 
             return true;
         }
 
-        protected PlantSizeClass getContainerInteriorSizeClass (TileEntityGarden garden) {
+        protected PlantSize getContainerInteriorSizeClass (TileEntityGarden garden) {
             return null;
         }
 

@@ -1,10 +1,8 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
-import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
-import net.minecraft.block.Block;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import net.minecraftforge.common.IPlantable;
 
 public class TileEntityGardenConnected extends TileEntityGarden
@@ -31,15 +29,15 @@ public class TileEntityGardenConnected extends TileEntityGarden
     protected static class SlotProfileConnected extends SlotProfile
     {
         public SlotProfileConnected () {
-            PlantTypeClass[] commonType = new PlantTypeClass[] { PlantTypeClass.NORMAL, PlantTypeClass.AQUATIC, PlantTypeClass.AQUATIC_NORMAL };
+            PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
 
-            PlantSizeClass[] smallSize = new PlantSizeClass[] { PlantSizeClass.SMALL };
-            PlantSizeClass[] commonSize = new PlantSizeClass[] { PlantSizeClass.LARGE, PlantSizeClass.SMALL };
-            PlantSizeClass[] allSize = new PlantSizeClass[] { PlantSizeClass.FULL, PlantSizeClass.LARGE, PlantSizeClass.SMALL };
+            PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
+            PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
+            PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
             slots = new Slot[] {
                 new Slot(SLOT_CENTER, commonType, allSize),
-                new Slot(SLOT_COVER, new PlantTypeClass[] { PlantTypeClass.COVER_GROUND }, allSize),
+                new Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
                 new Slot(SLOT_NW, commonType, smallSize),
                 new Slot(SLOT_NE, commonType, smallSize),
                 new Slot(SLOT_SW, commonType, smallSize),
@@ -63,7 +61,7 @@ public class TileEntityGardenConnected extends TileEntityGarden
             return true;
         }
 
-        protected PlantSizeClass getContainerInteriorSizeClass (TileEntityGarden garden) {
+        protected PlantSize getContainerInteriorSizeClass (TileEntityGarden garden) {
             return null;
         }
 

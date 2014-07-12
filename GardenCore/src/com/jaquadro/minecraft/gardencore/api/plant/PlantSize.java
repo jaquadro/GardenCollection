@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.gardencore.api.plant;
 
-public enum PlantSizeClass
+public enum PlantSize
 {
     /**
      * A plant that takes up a full block and can't share between-slots with neighbors.

@@ -1,24 +1,30 @@
 package com.jaquadro.minecraft.gardencore.api.plant;
 
-public enum PlantTypeClass
+public enum PlantType
 {
+    /**
+     * Technical IPlantables that should not be recognized as plants.
+     * Examples: Third party stalagmites.
+     */
+    INVALID,
+
     /**
      * Plants that grow out of the ground and occupy nontrivial volume.
      * Examples: Most plants.  Crops, grass, flowers, saplings.
      */
-    NORMAL,
+    GROUND,
 
     /**
      * Plants that cover the ground with almost no height.
-     * Examples: Lily pads.  Third party clovers, leaf litter, moss.
+     * Examples: Third party clovers, leaf litter, moss.
      */
-    COVER_GROUND,
+    GROUND_COVER,
 
     /**
      * Plants that cover a side surface with almost no depth.
      * Examples: Third party moss.
      */
-    COVER_SIDE,
+    SIDE_COVER,
 
     /**
      * Plants that hang from a ceiling surface and occupy volume in the middle of a block.
@@ -33,14 +39,26 @@ public enum PlantTypeClass
     HANGING_SIDE,
 
     /**
-     * Like NORMAL, but plants must be placed underwater.
+     * Like GROUND, but plants must be placed underwater.
      * Examples: Third party corals, kelp.
      */
     AQUATIC,
 
     /**
+     * Plants that cover water surface with almost no height.
+     * Examples: Lily pads.
+     */
+    AQUATIC_COVER,
+
+    /**
+     * Plants that sit on the surface of water and occupy nontrivial volume.
+     * Examples: Third party water lily.
+     */
+    AQUATIC_SURFACE,
+
+    /**
      * A plant that must be rooted underwater but can grow above water.
      * Examples: Third party reeds.
      */
-    AQUATIC_NORMAL,
+    AQUATIC_EMERGENT,
 }

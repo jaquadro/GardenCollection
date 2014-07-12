@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.gardencontainers.block.tile;
 
-import com.jaquadro.minecraft.gardencore.api.plant.PlantSizeClass;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantTypeClass;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,12 +20,12 @@ public class TileEntityWindowBox extends TileEntityGarden
 
     protected static class SlotProfileWindowBox extends SlotProfile
     {
-        PlantTypeClass[] normalType = new PlantTypeClass[] { PlantTypeClass.NORMAL };
-        PlantSizeClass[] smallSize = new PlantSizeClass[] { PlantSizeClass.SMALL };
+        PlantType[] normalType = new PlantType[] { PlantType.GROUND};
+        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
 
         public SlotProfileWindowBox () {
             slots = new Slot[] {
-                new Slot(SLOT_COVER, new PlantTypeClass[] { PlantTypeClass.COVER_GROUND }, smallSize),
+                new Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, smallSize),
                 new Slot(SLOT_NW, normalType, smallSize),
                 new Slot(SLOT_NE, normalType, smallSize),
                 new Slot(SLOT_SW, normalType, smallSize),
