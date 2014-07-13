@@ -6,10 +6,13 @@ import com.jaquadro.minecraft.gardencontainers.config.PatternConfig;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,7 +35,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockLargePot extends BlockGarden
+public abstract class BlockLargePot extends BlockGardenContainer
 {
     @SideOnly(Side.CLIENT)
     private IIcon[] iconOverlayArray;
@@ -51,26 +54,21 @@ public abstract class BlockLargePot extends BlockGarden
     public abstract String[] getSubTypes ();
 
     @Override
-    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
-        TileEntityGarden te = getTileEntity(world, x, y, z);
-        return (te != null) ? te.getSubstrate() : null;
-    }
-
-    @Override
     public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
         return -.0625f;
     }
 
     @Override
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
-        Block block = plant.getPlant(world, 0, 0, 0);
-        int meta = plant.getPlantMetadata(world, 0, 0, 0);
-
-        IPlantInfo info = PlantRegistry.instance().getPlantInfo(block, meta);
-        if (info.getPlantTypeClass(block, meta) == PlantType.GROUND_COVER)
-            return TileEntityGardenConnected.SLOT_COVER;
-
+    protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return TileEntityGardenConnected.SLOT_CENTER;
+    }
+
+    @Override
+    protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
+        if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
+            return TileEntityGardenSingle.SLOT_COVER;
+
+        return TileEntityGardenSingle.SLOT_CENTER;
     }
 
     @Override
@@ -194,106 +192,58 @@ public abstract class BlockLargePot extends BlockGarden
         return items;
     }
 
-    @Override
-    protected boolean isValidSubstrate (ItemStack itemStack) {
-        if (itemStack.getItem() == Items.water_bucket)
-            return true;
-
-        Block block = Block.getBlockFromItem(itemStack.getItem());
-        if (block == null)
-            return false;
-
-        if (block == Blocks.water)
-            return true;
-
-        return super.isValidSubstrate(itemStack);
-    }
-
     private boolean isSubstrateSolid (Item item) {
         Block block = Block.getBlockFromItem(item);
         return block != Blocks.water;
     }
 
     @Override
-    protected void applySubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) {
-        ItemStack substrate = player.inventory.getCurrentItem();
+    protected boolean applySubstrateToGarden (World world, int x, int y, int z, EntityPlayer player, int slot, ItemStack itemStack) {
+        if (getGardenSubstrate(world, x, y, z, slot) != null)
+            return false;
 
-        if (substrate.getItem() == Items.water_bucket) {
-            tileEntity.setSubstrate(new ItemStack(Blocks.water));
-            tileEntity.markDirty();
+        if (itemStack.getItem() == Items.water_bucket) {
+            TileEntityGarden garden = getTileEntity(world, x, y, z);
+            garden.setSubstrate(new ItemStack(Blocks.water));
+            garden.markDirty();
 
-            if (!player.capabilities.isCreativeMode)
+            if (player != null && !player.capabilities.isCreativeMode)
                 player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.bucket));
 
             world.markBlockForUpdate(x, y, z);
-            return;
+            return true;
         }
 
-        super.applySubstrate(world, x, y, z, tileEntity, player);
+        return super.applySubstrateToGarden(world, x, y, z, player, slot, itemStack);
     }
 
     @Override
-    protected boolean canApplyItemToSubstrate (TileEntityGarden tileEntity, ItemStack itemStack) {
-        return itemStack.getItem() == Items.water_bucket
-            //|| itemStack.getItem() == ModItems.usedSoilTestKit
-            || itemStack.getItem() == Items.bucket
-            || itemStack.getItem() instanceof ItemHoe
-            || itemStack.getItem() instanceof ItemTool
-            || super.canApplyItemToSubstrate(tileEntity, itemStack);
-    }
+    protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
+        TileEntityGarden garden = getTileEntity(world, x, y, z);
 
-    @Override
-    protected void applyItemToSubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) {
-        if (tileEntity.getSubstrate() == null)
-            return;
-
-        ItemStack item = player.inventory.getCurrentItem();
-        if (item.getItem() == Items.bucket) {
-            if (Block.getBlockFromItem(tileEntity.getSubstrate().getItem()) == Blocks.water) {
-                player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.water_bucket));
-                tileEntity.setSubstrate(null);
-                tileEntity.markDirty();
-                world.markBlockForUpdate(x, y, z);
-            }
-            return;
-        }
-
-        /*if (item.getItem() instanceof ItemTool && item.getItem().getToolClasses(item).contains("shovel")) {
-            if (Block.getBlockFromItem(tileEntity.getSubstrate()) != Blocks.water) {
-                ItemStack drop = new ItemStack(tileEntity.getSubstrate(), 1, tileEntity.getSubstrateOriginalData());
-                dropBlockAsItem(world, x, y, z, drop);
-
-                if (tile.getFlowerPotItem() != null) {
-                    drop = new ItemStack(tile.getFlowerPotItem(), 1, tile.getFlowerPotData());
-                    dropBlockAsItem(world, x, y, z, drop);
+        if (garden.getSubstrate() != null) {
+            ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
+            if (item.getItem() == Items.bucket) {
+                if (Block.getBlockFromItem(garden.getSubstrate().getItem()) == Blocks.water) {
+                    player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.water_bucket));
+                    garden.setSubstrate(null);
+                    garden.markDirty();
+                    world.markBlockForUpdate(x, y, z);
                 }
-
-                tile.setSubstrate(null, 0);
-                tile.setItem(null, 0);
-                tile.markDirty();
-                world.markBlockForUpdate(x, y, z);
-
-                world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.dirt.stepSound.getStepResourcePath(),
-                    (Blocks.dirt.stepSound.getVolume() + 1) / 2f, Blocks.dirt.stepSound.getPitch() * .8f);
-
-                if (world.getBlock(x, y + 1, z) == ModBlocks.largePotPlantProxy)
-                    world.setBlockToAir(x, y + 1, z);
+                return true;
             }
-            return;
-        }*/
 
-        if (item.getItem() == Items.water_bucket) {
-            applyWaterToSubstrate(world, x, y, z, tileEntity, player);
-            return;
+            if (item.getItem() == Items.water_bucket) {
+                applyWaterToSubstrate(world, x, y, z, garden, player);
+                return true;
+            }
+            else if (item.getItem() instanceof ItemHoe) {
+                applyHoeToSubstrate(world, x, y, z, garden, player);
+                return true;
+            }
         }
-        else if (item.getItem() instanceof ItemHoe) {
-            applyHoeToSubstrate(world, x, y, z, tileEntity, player);
-            return;
-        }
-        //else if (item.getItem() == ModItems.usedSoilTestKit)
-        //    applyTestKit(world, x, y, z, item);
 
-        super.applyItemToSubstrate(world, x, y, z, tileEntity, player);
+        return super.applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, hitValid);
     }
 
     protected void applyWaterToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {

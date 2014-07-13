@@ -33,7 +33,7 @@ public class BlockLargePotStandard extends BlockLargePot
     }
 
     @Override
-    protected void applySubstrate (World world, int x, int y, int z, TileEntityGarden tileEntity, EntityPlayer player) {
+    protected boolean applySubstrateToGarden (World world, int x, int y, int z, EntityPlayer player, int slot, ItemStack itemStack) {
         if (world.getBlockMetadata(x, y, z) == 1) {
             world.setBlockToAir(x, y, z);
             world.playSoundAtEntity(player, "dig.sand", 1.0f, 1.0f);
@@ -41,10 +41,10 @@ public class BlockLargePotStandard extends BlockLargePot
             for (int i = 0; i < 4; i++)
                 dropBlockAsItem(world, x, y, z, new ItemStack(Items.clay_ball));
 
-            return;
+            return true;
         }
 
-        super.applySubstrate(world, x, y, z, tileEntity, player);
+        return super.applySubstrateToGarden(world, x, y, z, player, slot, itemStack);
     }
 
     @Override

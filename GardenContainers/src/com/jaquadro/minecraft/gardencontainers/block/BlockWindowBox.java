@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencontainers.block;
 
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
@@ -51,7 +52,7 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
-    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
+    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z, int slot) {
         return substrate;
     }
 
@@ -65,7 +66,7 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+    protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
 
         if (hitX <= .5) {
@@ -82,6 +83,11 @@ public class BlockWindowBox extends BlockGarden
         }
 
         return TileEntityGarden.SLOT_INVALID;
+    }
+
+    @Override
+    protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant, float hitX, float hitY, float hitZ) {
+        return getSlot(world, x, y, z, player, hitX, hitY, hitZ);
     }
 
     @Override

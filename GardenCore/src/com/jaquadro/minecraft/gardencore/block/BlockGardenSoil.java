@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
@@ -31,23 +33,26 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
-    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
+    public TileEntityGardenConnected createNewTileEntity (World var1, int var2) {
+        return new TileEntityGardenConnected();
+    }
+
+    @Override
+    public ItemStack getGardenSubstrate (IBlockAccess blockAccess, int x, int y, int z, int slot) {
         return substrate;
     }
 
     @Override
-    protected boolean isValidSubstrate (ItemStack itemStack) {
-        return false;
-    }
-
-    @Override
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+    protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return TileEntityGardenSingle.SLOT_CENTER;
     }
 
     @Override
-    public TileEntityGardenConnected createNewTileEntity (World var1, int var2) {
-        return new TileEntityGardenConnected();
+    protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
+        if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
+            return TileEntityGardenSingle.SLOT_COVER;
+
+        return TileEntityGardenSingle.SLOT_CENTER;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.jaquadro.minecraft.gardencontainers.client.renderer;
 
 import com.jaquadro.minecraft.gardencontainers.block.BlockDecorativePot;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -83,7 +85,7 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setScaledExteriorColor(baseColor, .75f, 1);
         boxRenderer.renderSolidBox(renderer, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
-        ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z);
+        ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z, TileEntityGardenSingle.SLOT_CENTER);
         if (substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
             Block substrate = Block.getBlockFromItem(substrateItem.getItem());
             IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateItem.getItemDamage());

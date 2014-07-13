@@ -239,11 +239,11 @@ public class BlockGardenProxy extends Block
 
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
-        ItemStack itemStack = player.inventory.getCurrentItem();
+        /*ItemStack itemStack = player.inventory.getCurrentItem();
         if (itemStack != null) {
             if (itemStack.getItem() == ModItems.usedSoilTestKit)
                 return applyTestKit(world, x, y, z, itemStack);
-        }
+        }*/
 
         TileEntityGarden te = getGardenEntity(world, x, y, z);
         if (te == null)
@@ -263,10 +263,17 @@ public class BlockGardenProxy extends Block
             }
         }
 
-        return flag;
+        if (flag)
+            return true;
+
+        BlockGarden block = getGardenBlock(world, x, y, z);
+        if (block != null)
+            return block.applyItemToGarden(world, x, y, z, player, null);
+
+        return false;
     }
 
-    public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
+    /*public boolean applyTestKit (World world, int x, int y, int z, ItemStack testKit) {
         BlockGarden block = getGardenBlock(world, x, y, z);
         if (block == null)
             return false;
@@ -274,7 +281,7 @@ public class BlockGardenProxy extends Block
         y = getBaseBlockYCoord(world, x, y, z);
 
         return block.applyTestKit(world, x, y, z, testKit);
-    }
+    }*/
 
     public boolean applyBonemeal (World world, int x, int y, int z) {
         BlockGarden block = getGardenBlock(world, x, y, z);

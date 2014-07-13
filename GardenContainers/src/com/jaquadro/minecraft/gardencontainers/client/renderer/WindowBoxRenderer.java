@@ -99,7 +99,7 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
         }
 
-        ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z);
+        ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z, TileEntityGarden.SLOT_INVALID);
         if (substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
             Block substrate = Block.getBlockFromItem(substrateItem.getItem());
             IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateItem.getItemDamage());

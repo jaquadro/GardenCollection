@@ -1,7 +1,10 @@
 package com.jaquadro.minecraft.gardencontainers.block;
 
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
@@ -22,7 +25,7 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
-public class BlockDecorativePot extends BlockGarden
+public class BlockDecorativePot extends BlockGardenContainer
 {
     public BlockDecorativePot (String blockName) {
         super(blockName, Material.rock);
@@ -33,21 +36,23 @@ public class BlockDecorativePot extends BlockGarden
     }
 
     @Override
-    public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z) {
-        TileEntityGarden te = getTileEntity(world, x, y, z);
-        return (te != null) ? te.getSubstrate() : null;
-    }
-
-    @Override
-    protected boolean isValidSubstrate (ItemStack itemStack) {
+    protected boolean isValidSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {
         if (Block.getBlockFromItem(itemStack.getItem()) == Blocks.netherrack)
             return true;
 
-        return super.isValidSubstrate(itemStack);
+        return super.isValidSubstrate(world, x, y, z, slot, itemStack);
     }
 
     @Override
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+    protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
+        return TileEntityGardenSingle.SLOT_CENTER;
+    }
+
+    @Override
+    protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
+        if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
+            return TileEntityGardenSingle.SLOT_COVER;
+
         return TileEntityGardenSingle.SLOT_CENTER;
     }
 
@@ -93,10 +98,11 @@ public class BlockDecorativePot extends BlockGarden
     }
 
     @Override
-    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        ItemStack itemStack = player.inventory.getCurrentItem();
-        if (side == 1 && itemStack != null && itemStack.getItem() == Items.flint_and_steel) {
-            ItemStack substrate = getGardenSubstrate(world, x, y, z);
+    protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
+        ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
+
+        if (item != null && item.getItem() == Items.flint_and_steel) {
+            ItemStack substrate = getGardenSubstrate(world, x, y, z, TileEntityGardenSingle.SLOT_CENTER);
             if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack)) {
                 if (world.isAirBlock(x, y + 1, z)) {
                     world.playSoundEffect(x + .5, y + .5, z + .5, "fire.ignite", 1, world.rand.nextFloat() * .4f + .8f);
@@ -111,7 +117,7 @@ public class BlockDecorativePot extends BlockGarden
             }
         }
 
-        return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
+        return super.applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, hitValid);
     }
 
     @Override
@@ -140,7 +146,7 @@ public class BlockDecorativePot extends BlockGarden
     }
 
     private boolean isSconceLit (IBlockAccess world, int x, int y, int z) {
-        ItemStack substrate = getGardenSubstrate(world, x, y, z);
+        ItemStack substrate = getGardenSubstrate(world, x, y, z, TileEntityGardenSingle.SLOT_CENTER);
         if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack))
             return world.getBlock(x, y + 1, z) == ModBlocks.smallFire;
 
