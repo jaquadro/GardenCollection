@@ -267,8 +267,10 @@ public class BlockGardenProxy extends Block
             return true;
 
         BlockGarden block = getGardenBlock(world, x, y, z);
-        if (block != null)
+        if (block != null) {
+            y = getBaseBlockYCoord(world, x, y, z);
             return block.applyItemToGarden(world, x, y, z, player, null);
+        }
 
         return false;
     }

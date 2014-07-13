@@ -42,7 +42,7 @@ public class PlantItem
             return null;
 
         Block block = Block.getBlockFromItem(itemStack.getItem());
-        if (block == null)
+        if (block == null || !(block instanceof IPlantable))
             return null;
 
         return new PlantItem(block, itemStack.getItemDamage());

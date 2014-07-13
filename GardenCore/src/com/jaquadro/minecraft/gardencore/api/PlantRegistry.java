@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.*;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.CropsPlantRenderer;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.DoublePlantRenderer;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.GroundCoverPlantRenderer;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.integration.VanillaMetaResolver;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
@@ -27,6 +28,7 @@ public final class PlantRegistry
     public static final IPlantRenderer CROPS_RENDERER = new CropsPlantRenderer();
     public static final IPlantRenderer CROSSED_SQUARES_RENDERER = new CrossedSquaresPlantRenderer();
     public static final IPlantRenderer DOUBLE_PLANT_RENDERER = new DoublePlantRenderer();
+    public static final IPlantRenderer GROUND_COVER_RENDERER = new GroundCoverPlantRenderer();
 
     private UniqueMetaRegistry<IPlantRenderer> renderRegistry;
     private Map<Integer, IPlantRenderer> renderIdRegistry;

@@ -23,9 +23,10 @@ public abstract class BlockGardenContainer extends BlockGarden
 
     @Override
     protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
+        ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
         int slot = getSlot(world, x, y, z, player, hitX, hitY, hitZ);
 
-        if (applySubstrateToGarden(world, x, y, z, player, slot, itemStack))
+        if (applySubstrateToGarden(world, x, y, z, (itemStack == null) ? player : null, slot, item))
             return true;
 
         return super.applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, hitValid);
