@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -185,6 +186,13 @@ public final class PlantRegistry
             return null;
 
         return plantInfoRegistry.getEntry(id);
+    }
+
+    public IPlantInfo getPlantInfo (IBlockAccess world, IPlantable plant) {
+        Block block = plant.getPlant(world, 0, 0, 0);
+        int meta = plant.getPlantMetadata(world, 0, 0, 0);
+
+        return  getPlantInfo(block, meta);
     }
 
     public IPlantInfo getPlantInfoOrDefault (Block block, int meta) {

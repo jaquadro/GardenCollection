@@ -18,6 +18,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
@@ -64,20 +65,20 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
         TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
 
         if (hitX <= .5) {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NW))
-                return TileEntityGarden.SLOT_NW;
-            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SW))
-                return TileEntityGarden.SLOT_SW;
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityWindowBox.SLOT_NW))
+                return TileEntityWindowBox.SLOT_NW;
+            else if (tileEntity.isSlotValid(TileEntityWindowBox.SLOT_SW))
+                return TileEntityWindowBox.SLOT_SW;
         }
         else {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityGarden.SLOT_NE))
-                return TileEntityGarden.SLOT_NE;
-            else if (tileEntity.isSlotValid(TileEntityGarden.SLOT_SE))
-                return TileEntityGarden.SLOT_SE;
+            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityWindowBox.SLOT_NE))
+                return TileEntityWindowBox.SLOT_NE;
+            else if (tileEntity.isSlotValid(TileEntityWindowBox.SLOT_SE))
+                return TileEntityWindowBox.SLOT_SE;
         }
 
         return TileEntityGarden.SLOT_INVALID;
@@ -91,10 +92,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(TileEntityGarden.SLOT_NE);
-        boolean validNW = te.isSlotValid(TileEntityGarden.SLOT_NW);
-        boolean validSE = te.isSlotValid(TileEntityGarden.SLOT_SE);
-        boolean validSW = te.isSlotValid(TileEntityGarden.SLOT_SW);
+        boolean validNE = te.isSlotValid(TileEntityWindowBox.SLOT_NE);
+        boolean validNW = te.isSlotValid(TileEntityWindowBox.SLOT_NW);
+        boolean validSE = te.isSlotValid(TileEntityWindowBox.SLOT_SE);
+        boolean validSW = te.isSlotValid(TileEntityWindowBox.SLOT_SW);
 
         float yMin = te.isUpper() ? .5f : 0;
         float yMax = te.isUpper() ? 1 : .5f;
@@ -122,10 +123,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(TileEntityGarden.SLOT_NE);
-        boolean validNW = te.isSlotValid(TileEntityGarden.SLOT_NW);
-        boolean validSE = te.isSlotValid(TileEntityGarden.SLOT_SE);
-        boolean validSW = te.isSlotValid(TileEntityGarden.SLOT_SW);
+        boolean validNE = te.isSlotValid(TileEntityWindowBox.SLOT_NE);
+        boolean validNW = te.isSlotValid(TileEntityWindowBox.SLOT_NW);
+        boolean validSE = te.isSlotValid(TileEntityWindowBox.SLOT_SE);
+        boolean validSW = te.isSlotValid(TileEntityWindowBox.SLOT_SW);
 
         setBlockBounds(world, x, y, z, validNW, validNE, validSW, validSE);
     }

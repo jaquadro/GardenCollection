@@ -91,8 +91,8 @@ public abstract class BlockGarden extends BlockContainer
         return true;
     }
 
-    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ) {
-        return TileEntityGarden.SLOT_CENTER;
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+        return TileEntityGarden.SLOT_INVALID;
     }
 
     protected boolean isValidSubstrate (ItemStack itemStack) {
@@ -292,26 +292,20 @@ public abstract class BlockGarden extends BlockContainer
             world.setTileEntity(x, y, z, tileEntity);
         }
 
-        IPlantable plantable = null;
-        Item item = itemStack.getItem();
-        if (item instanceof IPlantable)
-            plantable = (IPlantable) item;
-        else if (item instanceof ItemBlock) {
-            Block itemBlock = Block.getBlockFromItem(item);
-            if (itemBlock instanceof IPlantable)
-                plantable = (IPlantable) itemBlock;
-        }
-
         if (getGardenSubstrate(world, x, y, z) == null && isValidSubstrate(itemStack)) {
             applySubstrate(world, x, y, z, tileEntity, player);
             return true;
         }
+
         if (canApplyItemToSubstrate(tileEntity, itemStack)) {
             applyItemToSubstrate(world, x, y, z, tileEntity, player);
             return true;
         }
-        else if (plantable != null && canSustainPlantable(world, x, y, z, plantable)) {
-            int slot = getSlot(world, x, y, z, side, player, hitX, hitY, hitZ);
+
+        IPlantable plantable = PlantRegistry.getPlantable(itemStack);
+
+        if (plantable != null && canSustainPlantable(world, x, y, z, plantable)) {
+            int slot = getSlot(world, x, y, z, side, player, hitX, hitY, hitZ, plantable);
             if (slot == TileEntityGarden.SLOT_INVALID)
                 return false;
             if (tileEntity.getStackInSlot(slot) != null)

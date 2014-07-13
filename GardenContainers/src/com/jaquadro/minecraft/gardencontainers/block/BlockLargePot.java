@@ -4,8 +4,12 @@ import com.jaquadro.minecraft.gardencontainers.GardenContainers;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.config.PatternConfig;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
+import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,6 +26,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -54,6 +59,18 @@ public abstract class BlockLargePot extends BlockGarden
     @Override
     public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
         return -.0625f;
+    }
+
+    @Override
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+        Block block = plant.getPlant(world, 0, 0, 0);
+        int meta = plant.getPlantMetadata(world, 0, 0, 0);
+
+        IPlantInfo info = PlantRegistry.instance().getPlantInfo(block, meta);
+        if (info.getPlantTypeClass(block, meta) == PlantType.GROUND_COVER)
+            return TileEntityGardenConnected.SLOT_COVER;
+
+        return TileEntityGardenConnected.SLOT_CENTER;
     }
 
     @Override

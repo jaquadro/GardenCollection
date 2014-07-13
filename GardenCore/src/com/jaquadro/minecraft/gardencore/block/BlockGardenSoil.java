@@ -10,11 +10,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 public class BlockGardenSoil extends BlockGarden
 {
@@ -36,6 +38,11 @@ public class BlockGardenSoil extends BlockGarden
     @Override
     protected boolean isValidSubstrate (ItemStack itemStack) {
         return false;
+    }
+
+    @Override
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+        return TileEntityGardenSingle.SLOT_CENTER;
     }
 
     @Override

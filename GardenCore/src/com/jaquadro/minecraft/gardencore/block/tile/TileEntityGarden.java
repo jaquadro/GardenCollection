@@ -101,11 +101,6 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
     private static final int DEFAULT_BIOME_DATA = 65407;
 
     public static final int SLOT_INVALID = -1;
-    public static final int SLOT_CENTER = 0;
-    public static final int SLOT_NW = 2;
-    public static final int SLOT_NE = 3;
-    public static final int SLOT_SW = 4;
-    public static final int SLOT_SE = 5;
 
     private ItemStack[] containerStacks;
     private String customName;

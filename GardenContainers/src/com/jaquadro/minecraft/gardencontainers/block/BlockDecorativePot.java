@@ -18,6 +18,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 
@@ -43,6 +44,11 @@ public class BlockDecorativePot extends BlockGarden
             return true;
 
         return super.isValidSubstrate(itemStack);
+    }
+
+    @Override
+    protected int getSlot (World world, int x, int y, int z, int side, EntityPlayer player, float hitX, float hitY, float hitZ, IPlantable plant) {
+        return TileEntityGardenSingle.SLOT_CENTER;
     }
 
     @Override
