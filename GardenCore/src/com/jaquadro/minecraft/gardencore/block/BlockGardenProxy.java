@@ -110,8 +110,12 @@ public class BlockGardenProxy extends Block
         if (te == null)
             return null;
 
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (garden == null)
+            return null;
+
         AxisAlignedBB aabb = null;
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -139,11 +143,12 @@ public class BlockGardenProxy extends Block
     @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z) {
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return super.getSelectedBoundingBoxFromPool(world, x, y, z);
 
         AxisAlignedBB aabb = null;
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -174,12 +179,13 @@ public class BlockGardenProxy extends Block
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null) {
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null) {
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
             return;
         }
 
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -205,11 +211,12 @@ public class BlockGardenProxy extends Block
     @Override
     public MovingObjectPosition collisionRayTrace (World world, int x, int y, int z, Vec3 startVec, Vec3 endVec) {
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return super.collisionRayTrace(world, x, y, z, startVec, endVec);
 
         MovingObjectPosition mop = null;
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -239,18 +246,13 @@ public class BlockGardenProxy extends Block
 
     @Override
     public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
-        /*ItemStack itemStack = player.inventory.getCurrentItem();
-        if (itemStack != null) {
-            if (itemStack.getItem() == ModItems.usedSoilTestKit)
-                return applyTestKit(world, x, y, z, itemStack);
-        }*/
-
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return false;
 
         boolean flag = false;
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -295,7 +297,7 @@ public class BlockGardenProxy extends Block
         TileEntityGarden te = block.getTileEntity(world, x, y, z);
 
         boolean handled = false;
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : block.getSlotProfile().getPlantSlots()) {
             for (IBonemealHandler handler : GardenCoreAPI.instance().getBonemealHandlers()) {
                 if (handler.applyBonemeal(world, x, y, z, block, slot)) {
                     handled = true;
@@ -322,8 +324,10 @@ public class BlockGardenProxy extends Block
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
         if (hasValidUnderBlock(world, x, y, z) && !isApplyingBonemealTo(x, y, z)) {
             TileEntityGarden te = getGardenEntity(world, x, y, z);
-            if (te != null) {
-                for (int slot : te.getPlantSlots()) {
+            BlockGarden garden = getGardenBlock(world, x, y, z);
+
+            if (te != null && block != null) {
+                for (int slot : garden.getSlotProfile().getPlantSlots()) {
                     ItemStack item = te.getPlantInSlot(slot);
                     if (item != null)
                         dropBlockAsItem(world, x, y, z, item);
@@ -359,10 +363,11 @@ public class BlockGardenProxy extends Block
         int value = 0;
 
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             value = super.getLightValue(world, x, y, z);
         else {
-            for (int slot : te.getPlantSlots()) {
+            for (int slot : garden.getSlotProfile().getPlantSlots()) {
                 Block block = getPlantBlock(te, slot);
                 if (block == null)
                     continue;
@@ -385,10 +390,11 @@ public class BlockGardenProxy extends Block
     @Override
     public void onEntityCollidedWithBlock (World world, int x, int y, int z, Entity entity) {
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return;
 
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
                 continue;
@@ -450,10 +456,11 @@ public class BlockGardenProxy extends Block
     @Override
     public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
         TileEntityGarden te = getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return true;
 
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             int blockData = getPlantData(te, slot);
             if (block == null)

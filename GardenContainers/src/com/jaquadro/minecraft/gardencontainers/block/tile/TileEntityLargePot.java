@@ -1,11 +1,19 @@
 package com.jaquadro.minecraft.gardencontainers.block.tile;
 
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
+import com.jaquadro.minecraft.gardencontainers.core.ModBlocks;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityLargePot extends TileEntityGardenConnected
+public class TileEntityLargePot extends TileEntityGarden
 {
     private int carving;
+
+    @Override
+    protected int containerSlotCount () {
+        return ModBlocks.largePot.getSlotProfile().getPlantSlots().length;
+    }
 
     public int getCarving () {
         return carving;

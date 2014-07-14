@@ -139,7 +139,12 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     public static void validateBlockState (TileEntityGarden tileEntity) {
-        int plantHeight = tileEntity.getPlantHeight();
+        Block baseBlock = tileEntity.getWorldObj().getBlock(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
+        if (!(baseBlock instanceof BlockGarden))
+            return;
+
+        BlockGarden garden = (BlockGarden) baseBlock;
+        int plantHeight = garden.getAggregatePlantHeight(tileEntity.getWorldObj(), tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
 
         World world = tileEntity.getWorldObj();
         int x = tileEntity.xCoord;
@@ -156,6 +161,22 @@ public abstract class BlockGarden extends BlockContainer
 
         while (world.getBlock(x, y, z) instanceof BlockGardenProxy)
             world.setBlockToAir(x, y++, z);
+    }
+
+    public int getAggregatePlantHeight (IBlockAccess blockAccess, int x, int y, int z) {
+        TileEntityGarden garden = getTileEntity(blockAccess, x, y, z);
+
+        int height = 0;
+        for (int slot : slotProfile.getPlantSlots()) {
+            ItemStack item = garden.getStackInSlot(slot);
+            PlantItem plant = PlantItem.getForItem(blockAccess, item);
+            if (plant == null)
+                continue;
+
+            height = Math.max(height, plant.getPlantHeight());
+        }
+
+        return height;
     }
 
     public float getPlantOffsetX (IBlockAccess world, int x, int y, int z, int slot) {
@@ -230,6 +251,9 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     public boolean isPlantValidForSlot (World world, int x, int y, int z, int slot, PlantItem plant) {
+        if (!slotProfile.isPlantValidForSlot(world, x, y, z, slot, plant))
+            return false;
+
         if (!enoughSpaceAround(world, x, y, z, slot, plant))
             return false;
 

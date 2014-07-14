@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
+import com.jaquadro.minecraft.gardencore.block.support.SlotMapping;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,14 +21,15 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TileEntityGarden extends TileEntity implements IInventory
+public class TileEntityGarden extends TileEntity implements IInventory
 {
-    protected static class Slot {
+    /*protected static class Slot {
         public int slot;
         public List<PlantType> validTypeClasses = new ArrayList<PlantType>();
         public List<PlantSize> validSizeClasses = new ArrayList<PlantSize>();
@@ -90,7 +92,7 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
             this.mappedX = mappedX;
             this.mappedZ = mappedY;
         }
-    }
+    }*/
 
     private static final int DEFAULT_BIOME_DATA = 65407;
 
@@ -109,14 +111,16 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         containerStacks = new ItemStack[containerSlotCount()];
     }
 
-    protected abstract int containerSlotCount ();
+    //protected abstract SlotProfile getSlotProfile ();
 
-    protected abstract SlotProfile getSlotProfile ();
+    //public abstract int[] getPlantSlots ();
 
-    public abstract int[] getPlantSlots ();
+    //protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
+    //    return null;
+    //}
 
-    protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
-        return null;
+    protected int containerSlotCount () {
+        return 0;
     }
 
     public ItemStack getPlantInSlot (int slot) {
@@ -124,7 +128,9 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
     }
 
     public void clearPlantedContents () {
-        clearReachableContents(0, containerSlotCount());
+        BlockGarden block = getGardenBlock();
+        if (block != null)
+            clearReachableContents(0, containerSlotCount());
     }
 
     public void clearReachableContents () {
@@ -152,16 +158,7 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         return contents;
     }
 
-    public int getPlantCount () {
-        int count = 0;
-        for (int slot : getPlantSlots()) {
-            if (getPlantInSlot(slot) != null)
-                count++;
-        }
-        return count;
-    }
-
-    public int getPlantHeight () {
+    /*public int getPlantHeight () {
         int height = 0;
         for (int slot : getPlantSlots()) {
             IPlantable plant = getPlantable(getPlantInSlot(slot));
@@ -182,9 +179,9 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         }
 
         return height;
-    }
+    }*/
 
-    public static IPlantable getPlantable (ItemStack plant) {
+    /*public static IPlantable getPlantable (ItemStack plant) {
         if (plant == null || plant.getItem() == null)
             return null;
 
@@ -199,10 +196,14 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         }
 
         return plantable;
-    }
+    }*/
 
     public boolean isSharedSlot (int slot) {
-        SlotMapping[] nmap = getNeighborMappingsForSlot(slot);
+        BlockGarden block = getGardenBlock();
+        if (block == null)
+            return false;
+
+        SlotMapping[] nmap = block.getSlotShareProfile().getNeighborsForSlot(slot);
         return nmap != null && nmap.length > 0;
     }
 
@@ -210,15 +211,24 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         if (!isSharedSlot(slot))
             return true;
 
-        for (SlotMapping mapping : getNeighborMappingsForSlot(slot)) {
-            if (!isAttachedNeighbor(xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ))
+        BlockGarden block = getGardenBlock();
+        for (SlotMapping mapping : block.getSlotShareProfile().getNeighborsForSlot(slot)) {
+            if (!block.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ))
                 return false;
         }
 
         return true;
     }
 
-    public boolean isAttachedNeighbor (int x, int y, int z) {
+    public boolean isAttachedNeighbor (int nx, int ny, int nz) {
+        BlockGarden garden = getGardenBlock();
+        if (garden == null)
+            return false;
+
+        return garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, nx, ny, nz);
+    }
+
+    /*public boolean isAttachedNeighbor (int x, int y, int z) {
         if (yCoord != y || Math.abs(x - xCoord) > 1 || Math.abs(z - zCoord) > 1)
             return false;
 
@@ -246,6 +256,14 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         }
 
         return true;
+    }*/
+
+    public BlockGarden getGardenBlock () {
+        Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
+        if (block instanceof BlockGarden)
+            return (BlockGarden) block;
+
+        return null;
     }
 
     public ItemStack getSubstrate () {
@@ -419,7 +437,8 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         if (stack != null)
             return stack;
 
-        for (SlotMapping mapping : getNeighborMappingsForSlot(slot)) {
+        BlockGarden block = getGardenBlock();
+        for (SlotMapping mapping : block.getSlotShareProfile().getNeighborsForSlot(slot)) {
             TileEntity te = worldObj.getTileEntity(xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ);
             if (te == null || !(te instanceof TileEntityGarden))
                 continue;
@@ -474,8 +493,9 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
             return;
         }
 
-        for (SlotMapping mapping : getNeighborMappingsForSlot(slot)) {
-            if (!isAttachedNeighbor(xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ))
+        BlockGarden block = getGardenBlock();
+        for (SlotMapping mapping : block.getSlotShareProfile().getNeighborsForSlot(slot)) {
+            if (!block.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ))
                 continue;
 
             TileEntity te = worldObj.getTileEntity(xCoord + mapping.mappedX, yCoord, zCoord + mapping.mappedZ);
@@ -539,14 +559,11 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
         if (plant == null)
             return false;
 
-        Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-        if (!(block instanceof BlockGarden))
+        BlockGarden block = getGardenBlock();
+        if (block == null)
             return false;
 
-        if (!getSlotProfile().isValidPlant(this, slot, plant))
-            return false;
-
-        if (!((BlockGarden) block).isPlantValidForSlot(worldObj, xCoord, yCoord, zCoord, slot, plant))
+        if (block.isPlantValidForSlot(worldObj, xCoord, yCoord, zCoord, slot, plant))
             return false;
 
         return true;

@@ -26,11 +26,21 @@ public class BasicSlotProfile implements ISlotProfile
     }
 
     protected Slot[] slots;
+    protected int[] slotIndexes;
 
     protected BasicSlotProfile () { }
 
     public BasicSlotProfile (Slot[] slots) {
         this.slots = slots;
+
+        slotIndexes = new int[slots.length];
+        for (int i = 0; i < slots.length; i++)
+            slotIndexes[i] = slots[i].slot;
+    }
+
+    @Override
+    public int[] getPlantSlots () {
+        return slotIndexes;
     }
 
     @Override

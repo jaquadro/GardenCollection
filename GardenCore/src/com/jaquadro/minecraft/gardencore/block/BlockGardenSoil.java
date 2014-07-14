@@ -6,11 +6,9 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.support.BasicConnectionProfile;
 import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
-import com.jaquadro.minecraft.gardencore.block.support.ContainerConnectionProfile;
 import com.jaquadro.minecraft.gardencore.block.support.SlotShare8Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSoil;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,7 +21,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IPlantable;
 
 public class BlockGardenSoil extends BlockGarden
 {
@@ -79,8 +76,8 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
-    public TileEntityGardenConnected createNewTileEntity (World var1, int var2) {
-        return new TileEntityGardenConnected();
+    public TileEntityGardenSoil createNewTileEntity (World var1, int var2) {
+        return new TileEntityGardenSoil();
     }
 
     @Override
@@ -90,15 +87,15 @@ public class BlockGardenSoil extends BlockGarden
 
     @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
-        return TileEntityGardenSingle.SLOT_CENTER;
+        return SLOT_CENTER;
     }
 
     @Override
     protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
         if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
-            return TileEntityGardenSingle.SLOT_COVER;
+            return SLOT_COVER;
 
-        return TileEntityGardenSingle.SLOT_CENTER;
+        return SLOT_CENTER;
     }
 
     @Override

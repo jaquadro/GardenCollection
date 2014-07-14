@@ -5,6 +5,8 @@ import net.minecraft.world.IBlockAccess;
 
 public interface ISlotProfile
 {
+    public int[] getPlantSlots ();
+
     public boolean isPlantValidForSlot (IBlockAccess blockAccess, int x, int y, int z, int slot, PlantItem plant);
 
     public int getNextAvailableSlot (IBlockAccess blockAccess, int x, int y, int z, int slot, PlantItem plant);

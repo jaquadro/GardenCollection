@@ -1,14 +1,16 @@
 package com.jaquadro.minecraft.gardencontainers.block.tile;
 
+import com.jaquadro.minecraft.gardencontainers.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityWindowBox extends TileEntityGarden
 {
-    public static final int SLOT_COVER = 1;
+    /*public static final int SLOT_COVER = 1;
     public static final int SLOT_NW = 2;
     public static final int SLOT_NE = 3;
     public static final int SLOT_SW = 4;
@@ -16,9 +18,14 @@ public class TileEntityWindowBox extends TileEntityGarden
 
     private static final int[] PLANT_SLOTS = new int[] {
         1, 2, 3, 4, 5
-    };
+    };*/
 
-    protected static class SlotProfileWindowBox extends SlotProfile
+    @Override
+    protected int containerSlotCount () {
+        return 6;
+    }
+
+    /*protected static class SlotProfileWindowBox extends SlotProfile
     {
         PlantType[] normalType = new PlantType[] { PlantType.GROUND};
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
@@ -34,7 +41,7 @@ public class TileEntityWindowBox extends TileEntityGarden
         }
     }
 
-    private static final SlotProfileWindowBox profile = new SlotProfileWindowBox();
+    private static final SlotProfileWindowBox profile = new SlotProfileWindowBox();*/
 
     private int direction;
 
@@ -58,7 +65,7 @@ public class TileEntityWindowBox extends TileEntityGarden
         //invalidate();
     }
 
-    @Override
+    /*@Override
     protected int containerSlotCount () {
         return 14;
     }
@@ -76,14 +83,18 @@ public class TileEntityWindowBox extends TileEntityGarden
     @Override
     protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
         return null;
-    }
+    }*/
 
     @Override
     public boolean isSlotValid (int slot) {
         int dir = getDirection();
 
+        BlockGarden garden = getGardenBlock();
+        if (garden == null)
+            return false;
+
         // Outer corner check
-        if (isAttachedNeighbor(dir)) {
+        if (garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, dir)) {
             int facingDir = getNeighborDirection(dir);
             switch (slot) {
                 case 2: // Z- X-
@@ -116,7 +127,7 @@ public class TileEntityWindowBox extends TileEntityGarden
         int rdir = (dir % 2 == 0) ? dir + 1 : dir - 1;
 
         // Inner corner check
-        if (isAttachedNeighbor(rdir)) {
+        if (garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, rdir)) {
             int facingDir = getNeighborDirection(rdir);
             switch (slot) {
                 case 2: // Z- X-
@@ -189,7 +200,7 @@ public class TileEntityWindowBox extends TileEntityGarden
         return -1;
     }
 
-    private int neighborToDirection (int x, int z) {
+    /*private int neighborToDirection (int x, int z) {
         if (z < zCoord)
             return 2;
         if (z > zCoord)
@@ -291,7 +302,7 @@ public class TileEntityWindowBox extends TileEntityGarden
         }
 
         return true;
-    }
+    }*/
 
     @Override
     public void readFromNBT (NBTTagCompound tag) {

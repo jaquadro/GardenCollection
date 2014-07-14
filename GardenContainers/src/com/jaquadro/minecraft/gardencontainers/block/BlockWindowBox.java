@@ -1,9 +1,14 @@
 package com.jaquadro.minecraft.gardencontainers.block;
 
+import com.jaquadro.minecraft.gardencontainers.block.support.WindowBoxConnectionProfile;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
+import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -25,6 +30,12 @@ import java.util.List;
 
 public class BlockWindowBox extends BlockGarden
 {
+    public static final int SLOT_COVER = 1;
+    public static final int SLOT_NW = 2;
+    public static final int SLOT_NE = 3;
+    public static final int SLOT_SW = 4;
+    public static final int SLOT_SE = 5;
+
     private static ItemStack substrate = new ItemStack(Blocks.dirt, 1);
 
     public BlockWindowBox (String blockName) {
@@ -34,6 +45,21 @@ public class BlockWindowBox extends BlockGarden
         setHardness(0.5f);
         setStepSound(Block.soundTypeWood);
         //setLightOpacity(255);
+
+        connectionProfile = new WindowBoxConnectionProfile();
+        slotShareProfile = new SlotShare0Profile();
+
+        PlantType[] commonType = new PlantType[] { PlantType.GROUND };
+        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+
+        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[]{
+            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER }, allSize),
+            new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_SW, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_SE, commonType, smallSize),
+        });
     }
 
     @Override
@@ -70,16 +96,16 @@ public class BlockWindowBox extends BlockGarden
         TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
 
         if (hitX <= .5) {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityWindowBox.SLOT_NW))
-                return TileEntityWindowBox.SLOT_NW;
-            else if (tileEntity.isSlotValid(TileEntityWindowBox.SLOT_SW))
-                return TileEntityWindowBox.SLOT_SW;
+            if (hitZ <= .5 && tileEntity.isSlotValid(SLOT_NW))
+                return SLOT_NW;
+            else if (tileEntity.isSlotValid(SLOT_SW))
+                return SLOT_SW;
         }
         else {
-            if (hitZ <= .5 && tileEntity.isSlotValid(TileEntityWindowBox.SLOT_NE))
-                return TileEntityWindowBox.SLOT_NE;
-            else if (tileEntity.isSlotValid(TileEntityWindowBox.SLOT_SE))
-                return TileEntityWindowBox.SLOT_SE;
+            if (hitZ <= .5 && tileEntity.isSlotValid(SLOT_NE))
+                return SLOT_NE;
+            else if (tileEntity.isSlotValid(SLOT_SE))
+                return SLOT_SE;
         }
 
         return TileEntityGarden.SLOT_INVALID;
@@ -98,10 +124,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(TileEntityWindowBox.SLOT_NE);
-        boolean validNW = te.isSlotValid(TileEntityWindowBox.SLOT_NW);
-        boolean validSE = te.isSlotValid(TileEntityWindowBox.SLOT_SE);
-        boolean validSW = te.isSlotValid(TileEntityWindowBox.SLOT_SW);
+        boolean validNE = te.isSlotValid(SLOT_NE);
+        boolean validNW = te.isSlotValid(SLOT_NW);
+        boolean validSE = te.isSlotValid(SLOT_SE);
+        boolean validSW = te.isSlotValid(SLOT_SW);
 
         float yMin = te.isUpper() ? .5f : 0;
         float yMax = te.isUpper() ? 1 : .5f;
@@ -129,10 +155,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(TileEntityWindowBox.SLOT_NE);
-        boolean validNW = te.isSlotValid(TileEntityWindowBox.SLOT_NW);
-        boolean validSE = te.isSlotValid(TileEntityWindowBox.SLOT_SE);
-        boolean validSW = te.isSlotValid(TileEntityWindowBox.SLOT_SW);
+        boolean validNE = te.isSlotValid(SLOT_NE);
+        boolean validNW = te.isSlotValid(SLOT_NW);
+        boolean validSE = te.isSlotValid(SLOT_SE);
+        boolean validSW = te.isSlotValid(SLOT_SW);
 
         setBlockBounds(world, x, y, z, validNW, validNE, validSW, validSE);
     }

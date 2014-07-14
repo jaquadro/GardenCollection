@@ -2,12 +2,13 @@ package com.jaquadro.minecraft.gardencontainers.core;
 
 import com.jaquadro.minecraft.gardencontainers.GardenContainers;
 import com.jaquadro.minecraft.gardencontainers.block.*;
+import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityDecorativePot;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityPotteryTable;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencontainers.item.ItemLargePot;
 import com.jaquadro.minecraft.gardencontainers.item.ItemWindowBox;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
@@ -37,7 +38,7 @@ public class ModBlocks
         GameRegistry.registerBlock(potteryTable, "pottery_table");
 
         GameRegistry.registerTileEntity(TileEntityWindowBox.class, ModBlocks.getQualifiedName(windowBox));
-        GameRegistry.registerTileEntity(TileEntityGardenSingle.class, ModBlocks.getQualifiedName(decorativePot));
+        GameRegistry.registerTileEntity(TileEntityDecorativePot.class, ModBlocks.getQualifiedName(decorativePot));
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePotColored));
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));

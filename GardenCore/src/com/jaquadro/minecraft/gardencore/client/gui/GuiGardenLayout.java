@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.client.gui;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.inventory.ContainerGarden;
 import net.minecraft.client.gui.inventory.GuiContainer;

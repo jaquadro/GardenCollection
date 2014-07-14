@@ -10,31 +10,31 @@ public class SlotShare8Profile implements ISlotShareProfile
 
     public SlotShare8Profile (int slotXZNN, int slotZN, int slotXZPN, int slotXP, int slotXZPP, int slotZP, int slotXZNP, int slotXN) {
         indexBase = min(slotXZNN, slotZN, slotXZPN, slotXP, slotXZPP, slotZP, slotXZNP, slotXN);
-        int length = max(slotXZNN, slotZN, slotXZPN, slotXP, slotXZPP, slotZP, slotXZNP, slotXN) - indexBase;
+        int length = max(slotXZNN, slotZN, slotXZPN, slotXP, slotXZPP, slotZP, slotXZNP, slotXN) - indexBase + 1;
 
         map = new SlotMapping[length][];
 
-        map[slotZN] = new SlotMapping[] { new SlotMapping(slotZN, slotZP, 0, -1) };
-        map[slotXP] = new SlotMapping[] { new SlotMapping(slotXP, slotXN, 1, 0) };
-        map[slotZP] = new SlotMapping[] { new SlotMapping(slotZP, slotZN, 0, 1) };
-        map[slotXN] = new SlotMapping[] { new SlotMapping(slotXN, slotXP, -1, 0) };
+        map[slotZN - indexBase] = new SlotMapping[] { new SlotMapping(slotZN, slotZP, 0, -1) };
+        map[slotXP - indexBase] = new SlotMapping[] { new SlotMapping(slotXP, slotXN, 1, 0) };
+        map[slotZP - indexBase] = new SlotMapping[] { new SlotMapping(slotZP, slotZN, 0, 1) };
+        map[slotXN - indexBase] = new SlotMapping[] { new SlotMapping(slotXN, slotXP, -1, 0) };
 
-        map[slotXZNN] = new SlotMapping[] {
+        map[slotXZNN - indexBase] = new SlotMapping[] {
             new SlotMapping(slotXZNN, slotXZPN, -1, 0),
             new SlotMapping(slotXZNN, slotXZNP, 0, -1),
             new SlotMapping(slotXZNN, slotXZPP, -1, -1)
         };
-        map[slotXZPN] = new SlotMapping[] {
+        map[slotXZPN - indexBase] = new SlotMapping[] {
             new SlotMapping(slotXZPN, slotXZNN, 1, 0),
             new SlotMapping(slotXZPN, slotXZPP, 0, -1),
             new SlotMapping(slotXZPN, slotXZNP, 1, -1)
         };
-        map[slotXZPP] = new SlotMapping[] {
+        map[slotXZPP - indexBase] = new SlotMapping[] {
             new SlotMapping(slotXZPP, slotXZNP, 1, 0),
             new SlotMapping(slotXZPP, slotXZPN, 0, 1),
             new SlotMapping(slotXZPP, slotXZNN, 1, 1)
         };
-        map[slotXZNP] = new SlotMapping[] {
+        map[slotXZNP - indexBase] = new SlotMapping[] {
             new SlotMapping(slotXZNP, slotXZNP, -1, 0),
             new SlotMapping(slotXZNP, slotXZNN, 0, 1),
             new SlotMapping(slotXZNP, slotXZPN, -1, 1)

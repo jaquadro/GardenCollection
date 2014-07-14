@@ -3,7 +3,7 @@ package com.jaquadro.minecraft.gardencore.core;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.block.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSoil;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
@@ -29,7 +29,7 @@ public class ModBlocks
         GameRegistry.registerBlock(smallFire, "small_fire");
         GameRegistry.registerBlock(compostBin, "compost_bin");
 
-        GameRegistry.registerTileEntity(TileEntityGardenConnected.class, ModBlocks.getQualifiedName(gardenSoil));
+        GameRegistry.registerTileEntity(TileEntityGardenSoil.class, ModBlocks.getQualifiedName(gardenSoil));
     }
 
     public static Block get (String name) {

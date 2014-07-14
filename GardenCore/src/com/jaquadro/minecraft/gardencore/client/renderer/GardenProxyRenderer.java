@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.client.renderer;
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.IPlantRenderer;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
@@ -43,7 +44,8 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
 
     private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockGardenProxy block, int modelId, RenderBlocks renderer) {
         TileEntityGarden te = block.getGardenEntity(world, x, y, z);
-        if (te == null)
+        BlockGarden garden = block.getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
             return true;
 
         int section = y - te.yCoord;
@@ -51,7 +53,7 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
         Tessellator tessellator = Tessellator.instance;
         //tessellator.addTranslation(0, -.0625f, 0);
 
-        for (int slot : te.getPlantSlots()) {
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block subBlock = block.getPlantBlockRestricted(te, slot);
             int subBlockData = block.getPlantData(te, slot);
             if (subBlock == null)

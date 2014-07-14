@@ -77,10 +77,10 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setCutColor(activeRimColor);
 
         TileEntityWindowBox te = block.getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(TileEntityWindowBox.SLOT_NE);
-        boolean validNW = te.isSlotValid(TileEntityWindowBox.SLOT_NW);
-        boolean validSE = te.isSlotValid(TileEntityWindowBox.SLOT_SE);
-        boolean validSW = te.isSlotValid(TileEntityWindowBox.SLOT_SW);
+        boolean validNE = te.isSlotValid(BlockWindowBox.SLOT_NE);
+        boolean validNW = te.isSlotValid(BlockWindowBox.SLOT_NW);
+        boolean validSE = te.isSlotValid(BlockWindowBox.SLOT_SE);
+        boolean validSW = te.isSlotValid(BlockWindowBox.SLOT_SW);
 
         if (validNW) {
             int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSW ? ModularBoxRenderer.CONNECT_ZPOS : 0);
