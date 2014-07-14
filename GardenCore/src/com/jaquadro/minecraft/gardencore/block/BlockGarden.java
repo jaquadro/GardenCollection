@@ -1,6 +1,9 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.block.support.IConnectionProfile;
+import com.jaquadro.minecraft.gardencore.block.support.ISlotProfile;
+import com.jaquadro.minecraft.gardencore.block.support.ISlotShareProfile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
@@ -18,6 +21,10 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class BlockGarden extends BlockContainer
 {
+    protected IConnectionProfile connectionProfile;
+    protected ISlotProfile slotProfile;
+    protected ISlotShareProfile slotShareProfile;
+
     protected BlockGarden (String blockName, Material material) {
         super(material);
 
@@ -68,6 +75,18 @@ public abstract class BlockGarden extends BlockContainer
         }
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    public IConnectionProfile getConnectionProfile () {
+        return connectionProfile;
+    }
+
+    public ISlotProfile getSlotProfile () {
+        return slotProfile;
+    }
+
+    public ISlotShareProfile getSlotShareProfile () {
+        return slotShareProfile;
     }
 
     public void clearPlantedContents (IBlockAccess world, int x, int y, int z) {
@@ -206,15 +225,22 @@ public abstract class BlockGarden extends BlockContainer
         return enough;
     }
 
-    protected boolean isValidSubstrate (ItemStack substrate, PlantItem plant) {
+    protected boolean isPlantValidForSubstrate (ItemStack substrate, PlantItem plant) {
+        return true;
+    }
+
+    public boolean isPlantValidForSlot (World world, int x, int y, int z, int slot, PlantItem plant) {
+        if (!enoughSpaceAround(world, x, y, z, slot, plant))
+            return false;
+
+        if (!isPlantValidForSubstrate(getGardenSubstrate(world, x, y, z, slot), plant))
+            return false;
+
         return true;
     }
 
     protected boolean applyPlantToGarden (World world, int x, int y, int z, EntityPlayer player, int slot, PlantItem plant) {
-        if (!enoughSpaceAround(world, x, y, z, slot, plant))
-            return false;
-
-        if (!isValidSubstrate(getGardenSubstrate(world, x, y, z, slot), plant))
+        if (!isPlantValidForSlot(world, x, y, z, slot, plant))
             return false;
 
         TileEntityGarden garden = getTileEntity(world, x, y, z);

@@ -2,7 +2,12 @@ package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
+import com.jaquadro.minecraft.gardencore.block.support.BasicConnectionProfile;
+import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
+import com.jaquadro.minecraft.gardencore.block.support.ContainerConnectionProfile;
+import com.jaquadro.minecraft.gardencore.block.support.SlotShare8Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenConnected;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSingle;
@@ -22,6 +27,21 @@ import net.minecraftforge.common.IPlantable;
 
 public class BlockGardenSoil extends BlockGarden
 {
+    public static final int SLOT_CENTER = 0;
+    public static final int SLOT_COVER = 1;
+    public static final int SLOT_NW = 2;
+    public static final int SLOT_NE = 3;
+    public static final int SLOT_SW = 4;
+    public static final int SLOT_SE = 5;
+    public static final int SLOT_TOP_LEFT = 6;
+    public static final int SLOT_TOP = 7;
+    public static final int SLOT_TOP_RIGHT = 8;
+    public static final int SLOT_RIGHT = 9;
+    public static final int SLOT_BOTTOM_RIGHT = 10;
+    public static final int SLOT_BOTTOM = 11;
+    public static final int SLOT_BOTTOM_LEFT = 12;
+    public static final int SLOT_LEFT = 13;
+
     private static ItemStack substrate = new ItemStack(Blocks.dirt, 1);
 
     public BlockGardenSoil (String blockName) {
@@ -30,6 +50,32 @@ public class BlockGardenSoil extends BlockGarden
         setCreativeTab(ModCreativeTabs.tabGardenCore);
         setHardness(0.5f);
         setStepSound(Block.soundTypeGravel);
+
+        connectionProfile = new BasicConnectionProfile();
+        slotShareProfile = new SlotShare8Profile(SLOT_TOP_LEFT, SLOT_TOP, SLOT_TOP_RIGHT, SLOT_RIGHT, SLOT_BOTTOM_RIGHT, SLOT_BOTTOM, SLOT_BOTTOM_LEFT, SLOT_LEFT);
+
+        PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
+
+        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
+        PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+
+        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[] {
+            new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
+            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
+            new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_SW, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_SE, commonType, smallSize),
+            new BasicSlotProfile.Slot(SLOT_TOP_LEFT, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_TOP, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_TOP_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_BOTTOM_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_BOTTOM, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_BOTTOM_LEFT, commonType, commonSize),
+            new BasicSlotProfile.Slot(SLOT_LEFT, commonType, commonSize),
+        });
     }
 
     @Override

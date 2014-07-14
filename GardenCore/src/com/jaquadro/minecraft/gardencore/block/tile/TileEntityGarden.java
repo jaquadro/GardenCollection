@@ -2,7 +2,7 @@ package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
-import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
@@ -45,30 +45,24 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
     protected static class SlotProfile {
         protected Slot[] slots;
 
-        public boolean isValidPlant (TileEntityGarden garden, int slot, IPlantable plant, IPlantInfo plantInfo) {
+        public boolean isValidPlant (TileEntityGarden garden, int slot, PlantItem plant) {
             if (slots == null || slot < 0 || slot >= slots.length)
                 return false;
             if (slots[slot] == null)
                 return false;
 
-            Block plantBlock = plant.getPlant(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
-            int plantMeta = plant.getPlantMetadata(garden.worldObj, garden.xCoord, garden.yCoord, garden.zCoord);
-
-            PlantType plantType = plantInfo.getPlantTypeClass(plantBlock, plantMeta);
-            PlantSize plantSize = plantInfo.getPlantSizeClass(plantBlock, plantMeta);
-
-            if (!slots[slot].validTypeClasses.contains(plantType))
+            if (!slots[slot].validTypeClasses.contains(plant.getPlantTypeClass()))
                 return false;
-            if (!slots[slot].validSizeClasses.contains(plantSize))
+            if (!slots[slot].validSizeClasses.contains(plant.getPlantSizeClass()))
                 return false;
 
-            if (isContainerAquatic(garden) && (plantType == PlantType.AQUATIC || plantType == PlantType.AQUATIC_EMERGENT)) {
+            if (isContainerAquatic(garden) && (plant.getPlantTypeClass() == PlantType.AQUATIC || plant.getPlantTypeClass() == PlantType.AQUATIC_EMERGENT)) {
                 PlantSize containerSize = getContainerInteriorSizeClass(garden);
                 if (containerSize == null)
                     return false;
-                if (plantSize == PlantSize.FULL && (containerSize == PlantSize.LARGE || containerSize == PlantSize.SMALL))
+                if (plant.getPlantSizeClass() == PlantSize.FULL && (containerSize == PlantSize.LARGE || containerSize == PlantSize.SMALL))
                     return false;
-                if (plantSize == PlantSize.LARGE && containerSize == PlantSize.SMALL)
+                if (plant.getPlantSizeClass() == PlantSize.LARGE && containerSize == PlantSize.SMALL)
                     return false;
             }
 
@@ -538,17 +532,23 @@ public abstract class TileEntityGarden extends TileEntity implements IInventory
 
     @Override
     public boolean isItemValidForSlot (int slot, ItemStack itemStack) {
-        IPlantable plant = PlantRegistry.getPlantable(itemStack);
+        if (!isSlotValid(slot))
+            return false;
+
+        PlantItem plant = PlantItem.getForItem(worldObj, itemStack);
         if (plant == null)
             return false;
 
-        Block plantBlock = plant.getPlant(worldObj, xCoord, yCoord, zCoord);
-        int plantMeta = plant.getPlantMetadata(worldObj, xCoord, yCoord, zCoord);
+        Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
+        if (!(block instanceof BlockGarden))
+            return false;
 
-        IPlantInfo info = PlantRegistry.instance().getPlantInfoOrDefault(plantBlock, plantMeta);
-        if (getSlotProfile().isValidPlant(this, slot, plant, info))
-            return isSlotValid(slot);
+        if (!getSlotProfile().isValidPlant(this, slot, plant))
+            return false;
 
-        return false;
+        if (!((BlockGarden) block).isPlantValidForSlot(worldObj, xCoord, yCoord, zCoord, slot, plant))
+            return false;
+
+        return true;
     }
 }

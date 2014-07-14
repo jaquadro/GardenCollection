@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.plant.IPlantInfo;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import net.minecraftforge.common.IPlantable;
@@ -54,8 +55,8 @@ public class TileEntityGardenConnected extends TileEntityGarden
         }
 
         @Override
-        public boolean isValidPlant (TileEntityGarden garden, int slot, IPlantable plant, IPlantInfo plantInfo) {
-            if (!super.isValidPlant(garden, slot, plant, plantInfo))
+        public boolean isValidPlant (TileEntityGarden garden, int slot, PlantItem plant) {
+            if (!super.isValidPlant(garden, slot, plant))
                 return false;
 
             return true;
