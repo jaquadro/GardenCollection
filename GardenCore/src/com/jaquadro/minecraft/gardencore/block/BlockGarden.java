@@ -21,6 +21,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public abstract class BlockGarden extends BlockContainer
 {
+    public static final int SLOT_INVALID = -1;
+
     protected IConnectionProfile connectionProfile;
     protected ISlotProfile slotProfile;
     protected ISlotShareProfile slotShareProfile;

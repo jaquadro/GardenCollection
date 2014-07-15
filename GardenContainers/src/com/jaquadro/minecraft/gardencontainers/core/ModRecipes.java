@@ -34,5 +34,10 @@ public class ModRecipes
 
         GameRegistry.addRecipe(new ItemStack(ModBlocks.decorativePot, 3), "x x", "xxx", " x ",
             'x', Blocks.quartz_block);
+
+        for (int i = 0; i < 6; i++) {
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.windowBox, 1, i), "yxy",
+                'x', Items.flower_pot, 'y', new ItemStack(Blocks.planks, 1, i));
+        }
     }
 }

@@ -92,10 +92,30 @@ public class BlockGardenSoil extends BlockGarden
 
     @Override
     protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
-        if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
-            return SLOT_COVER;
+        TileEntityGarden garden = getTileEntity(world, x, y, z);
 
-        return SLOT_CENTER;
+        if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
+            return garden.getStackInSlot(SLOT_COVER) == null ? SLOT_COVER : SLOT_INVALID;
+
+        if (plant.getPlantSizeClass() == PlantSize.FULL)
+            return garden.getStackInSlot(SLOT_CENTER) == null ? SLOT_CENTER : SLOT_INVALID;
+
+        if (garden.getStackInSlot(SLOT_CENTER) == null)
+            return SLOT_CENTER;
+
+        if (plant.getPlantSizeClass() == PlantSize.SMALL) {
+            for (int slot : new int[] { SLOT_NE, SLOT_SW, SLOT_NW, SLOT_SE }) {
+                if (garden.getStackInSlot(slot) == null)
+                    return slot;
+            }
+        }
+
+        for (int slot : new int[] { SLOT_LEFT, SLOT_RIGHT, SLOT_TOP, SLOT_BOTTOM, SLOT_TOP_LEFT, SLOT_BOTTOM_RIGHT, SLOT_TOP_RIGHT, SLOT_BOTTOM_LEFT }) {
+            if (garden.getStackInSlot(slot) == null)
+                return slot;
+        }
+
+        return SLOT_INVALID;
     }
 
     @Override

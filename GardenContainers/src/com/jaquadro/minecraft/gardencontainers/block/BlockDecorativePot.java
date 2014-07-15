@@ -128,7 +128,7 @@ public class BlockDecorativePot extends BlockGardenContainer
                     world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
                 }
 
-                itemStack.damageItem(1, player);
+                item.damageItem(1, player);
                 return true;
             }
         }

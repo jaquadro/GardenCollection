@@ -1,16 +1,25 @@
 package com.jaquadro.minecraft.gardencontainers.item;
 
+import com.jaquadro.minecraft.gardencontainers.block.BlockWindowBox;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemWindowBox extends ItemBlock
+public class ItemWindowBox extends ItemMultiTexture
 {
     public ItemWindowBox (Block block) {
-        super(block);
+        super(block, block, getSubTypes(block));
+    }
+
+    private static String[] getSubTypes (Block block) {
+        if (block instanceof BlockWindowBox)
+            return ((BlockWindowBox) block).getSubTypes();
+        else
+            return new String[0];
     }
 
     @Override

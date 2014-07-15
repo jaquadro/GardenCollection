@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencontainers.block;
 import com.jaquadro.minecraft.gardencontainers.block.support.WindowBoxConnectionProfile;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
@@ -13,10 +14,12 @@ import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -30,6 +33,8 @@ import java.util.List;
 
 public class BlockWindowBox extends BlockGarden
 {
+    public  static final String[] subTypes = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
+
     public static final int SLOT_COVER = 1;
     public static final int SLOT_NW = 2;
     public static final int SLOT_NE = 3;
@@ -122,6 +127,11 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
+    public int damageDropped (int meta) {
+        return meta;
+    }
+
+    @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
         boolean validNE = te.isSlotValid(SLOT_NE);
@@ -205,6 +215,13 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
+    public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
+        for (int i = 0; i < 6; i++)
+            blockList.add(new ItemStack(item, 1, i));
+
+    }
+
+    @Override
     public IIcon getIcon (int side, int meta) {
         return Blocks.planks.getIcon(side, meta);
     }
@@ -212,6 +229,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
         return Blocks.planks.getIcon(world, x, y, z, side);
+    }
+
+    public String[] getSubTypes () {
+        return subTypes;
     }
 
     public TileEntityWindowBox getTileEntity (IBlockAccess world, int x, int y, int z) {
