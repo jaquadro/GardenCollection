@@ -437,10 +437,10 @@ public final class RenderUtil
             blockBrightness = block.getMixedBrightnessForBlock(renderer.blockAccess, x, y + 1, z);
 
         float aoOpposingBlock = renderer.blockAccess.getBlock(x, y + 1, z).getAmbientOcclusionLightValue();
-        float aoXYZNPP = (aoLightValueScratchXYZNPP + aoLightValueScratchXYNP + aoLightValueScratchYZPP + aoOpposingBlock) / 4.0F;  // TR
-        float aoXYZPPP = (aoLightValueScratchYZPP + aoOpposingBlock + aoLightValueScratchXYZPPP + aoLightValueScratchXYPP) / 4.0F;  // TL
-        float aoXYZPPN = (aoOpposingBlock + aoLightValueScratchYZPN + aoLightValueScratchXYPP + aoLightValueScratchXYZPPN) / 4.0F;  // BL
-        float aoXYZNPN = (aoLightValueScratchXYNP + aoLightValueScratchXYZNPN + aoOpposingBlock + aoLightValueScratchYZPN) / 4.0F;  // BR
+        float aoXYZNPN = (aoLightValueScratchXYZNPP + aoLightValueScratchXYNP + aoLightValueScratchYZPP + aoOpposingBlock) / 4.0F;  // TR
+        float aoXYZNPP = (aoLightValueScratchYZPP + aoOpposingBlock + aoLightValueScratchXYZPPP + aoLightValueScratchXYPP) / 4.0F;  // TL
+        float aoXYZPPP = (aoOpposingBlock + aoLightValueScratchYZPN + aoLightValueScratchXYPP + aoLightValueScratchXYZPPN) / 4.0F;  // BL
+        float aoXYZPPN = (aoLightValueScratchXYNP + aoLightValueScratchXYZNPN + aoOpposingBlock + aoLightValueScratchYZPN) / 4.0F;  // BR
 
         float aoTL = (float)((double)aoXYZPPP * renderer.renderMaxX * (1.0D - renderer.renderMaxZ) + (double)aoXYZNPP * renderer.renderMaxX * renderer.renderMaxZ + (double)aoXYZNPN * (1.0D - renderer.renderMaxX) * renderer.renderMaxZ + (double)aoXYZPPN * (1.0D - renderer.renderMaxX) * (1.0D - renderer.renderMaxZ));
         float aoBL = (float)((double)aoXYZPPP * renderer.renderMaxX * (1.0D - renderer.renderMinZ) + (double)aoXYZNPP * renderer.renderMaxX * renderer.renderMinZ + (double)aoXYZNPN * (1.0D - renderer.renderMaxX) * renderer.renderMinZ + (double)aoXYZPPN * (1.0D - renderer.renderMaxX) * (1.0D - renderer.renderMinZ));
