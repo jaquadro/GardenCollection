@@ -66,7 +66,7 @@ public abstract class BlockLargePot extends BlockGardenContainer
         connectionProfile = new ContainerConnectionProfile();
         slotShareProfile = new SlotShare8Profile(SLOT_TOP_LEFT, SLOT_TOP, SLOT_TOP_RIGHT, SLOT_RIGHT, SLOT_BOTTOM_RIGHT, SLOT_BOTTOM, SLOT_BOTTOM_LEFT, SLOT_LEFT);
 
-        PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
+        PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC_COVER, PlantType.AQUATIC_SURFACE};
 
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
         PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
@@ -159,6 +159,11 @@ public abstract class BlockLargePot extends BlockGardenContainer
     @Override
     public int getRenderType () {
         return ClientProxy.largePotRenderID;
+    }
+
+    @Override
+    public int getRenderBlockPass () {
+        return 1;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block;
 
+import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
+import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -57,6 +59,28 @@ public abstract class BlockGardenContainer extends BlockGarden
         }
 
         return true;
+    }
+
+    @Override
+    protected boolean isPlantValidForSubstrate (ItemStack substrate, PlantItem plant) {
+        if (substrate == null || substrate.getItem() == null)
+            return false;
+
+        switch (plant.getPlantTypeClass()) {
+            case AQUATIC:
+            case AQUATIC_COVER:
+            case AQUATIC_EMERGENT:
+            case AQUATIC_SURFACE:
+                if (Block.getBlockFromItem(substrate.getItem()) != Blocks.water)
+                    return false;
+                break;
+            case GROUND:
+            case GROUND_COVER:
+                if (Block.getBlockFromItem(substrate.getItem()) == Blocks.water)
+                    return false;
+        }
+
+        return super.isPlantValidForSubstrate(substrate, plant);
     }
 
     protected boolean isValidSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {
