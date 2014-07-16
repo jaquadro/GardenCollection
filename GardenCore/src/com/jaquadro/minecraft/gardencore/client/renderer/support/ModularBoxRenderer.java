@@ -653,26 +653,7 @@ public class ModularBoxRenderer
         float g = interiorColor[face][1];
         float b = interiorColor[face][2];
 
-        switch (face) {
-            case FACE_YNEG:
-                RenderUtil.renderFaceYNegColorMult(renderer, block, (int)x, (int)y, (int)z, icon, r, g, b);
-                break;
-            case FACE_YPOS:
-                RenderUtil.renderFaceYPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-            case FACE_ZNEG:
-                RenderUtil.renderFaceZNegColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-            case FACE_ZPOS:
-                RenderUtil.renderFaceZPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-            case FACE_XNEG:
-                RenderUtil.renderFaceXNegColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-            case FACE_XPOS:
-                RenderUtil.renderFaceXPosColorMult(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-        }
+        renderFace(face, renderer, block, x, y, z, icon, r, g, b);
     }
 
     private void renderCutFace (int face, RenderBlocks renderer, Block block, double x, double y, double z) {
