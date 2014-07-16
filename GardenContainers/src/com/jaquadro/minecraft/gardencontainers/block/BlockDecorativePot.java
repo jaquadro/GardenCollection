@@ -14,6 +14,7 @@ import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -170,12 +171,22 @@ public class BlockDecorativePot extends BlockGardenContainer
     }
 
     @Override
+    public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
+        for (int i = 0; i < 3; i++)
+            blockList.add(new ItemStack(item, 1, i));
+    }
+
+    @Override
     public IIcon getIcon (int side, int meta) {
-        return Blocks.quartz_block.getIcon(side, 2);
+        if (meta == 2)
+            side = 1;
+        return Blocks.quartz_block.getIcon(side, meta);
     }
 
     @Override
     public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
+        if (world.getBlockMetadata(x, y, z) == 2)
+            side = 1;
         return Blocks.quartz_block.getIcon(world, x, y, z, side);
     }
 }

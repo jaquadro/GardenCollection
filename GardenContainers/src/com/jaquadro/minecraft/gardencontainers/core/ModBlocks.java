@@ -6,9 +6,9 @@ import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityDecorativePo
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityPotteryTable;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
+import com.jaquadro.minecraft.gardencontainers.item.ItemDecorativePot;
 import com.jaquadro.minecraft.gardencontainers.item.ItemLargePot;
 import com.jaquadro.minecraft.gardencontainers.item.ItemWindowBox;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
@@ -32,7 +32,7 @@ public class ModBlocks
         potteryTable = new BlockPotteryTable("potteryTable");
 
         GameRegistry.registerBlock(windowBox, ItemWindowBox.class, "window_box");
-        GameRegistry.registerBlock(decorativePot, "decorative_pot");
+        GameRegistry.registerBlock(decorativePot, ItemDecorativePot.class, "decorative_pot");
         GameRegistry.registerBlock(largePot, ItemLargePot.class, "large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePot.class, "large_pot_colored");
         GameRegistry.registerBlock(potteryTable, "pottery_table");

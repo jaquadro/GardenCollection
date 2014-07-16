@@ -32,8 +32,10 @@ public class ModRecipes
                 GameRegistry.addSmelting(new ItemStack(ModBlocks.largePot, 1, 1 | (i << 8)), new ItemStack(ModBlocks.largePot, 1, (i << 8)), 0);
         }
 
-        GameRegistry.addRecipe(new ItemStack(ModBlocks.decorativePot, 3), "x x", "xxx", " x ",
-            'x', Blocks.quartz_block);
+        for (int i = 0; i < 6; i++) {
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.decorativePot, 3, i), "x x", "xxx", " x ",
+                'x', new ItemStack(Blocks.quartz_block, 1, i));
+        }
 
         for (int i = 0; i < 6; i++) {
             GameRegistry.addRecipe(new ItemStack(ModBlocks.windowBox, 1, i), "yxy",

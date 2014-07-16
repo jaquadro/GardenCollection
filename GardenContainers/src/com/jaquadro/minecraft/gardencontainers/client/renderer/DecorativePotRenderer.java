@@ -63,13 +63,14 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
 
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
-        IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, data);
 
         RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
 
         float unit = .0625f;
 
-        boxRenderer.setIcon(icon);
+        for (int i = 0; i < 6; i++)
+            boxRenderer.setIcon(renderer.getBlockIconFromSideAndMetadata(block, i, data), i);
+
         boxRenderer.setColor(baseColor);
         boxRenderer.renderBox(renderer, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
         boxRenderer.setScaledColor(baseColor, .9375f);
