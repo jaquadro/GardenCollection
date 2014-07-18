@@ -111,6 +111,8 @@ public class BlockGardenSoil extends BlockGarden
         }
 
         for (int slot : new int[] { SLOT_LEFT, SLOT_RIGHT, SLOT_TOP, SLOT_BOTTOM, SLOT_TOP_LEFT, SLOT_BOTTOM_RIGHT, SLOT_TOP_RIGHT, SLOT_BOTTOM_LEFT }) {
+            if (!garden.isSlotValid(slot))
+                continue;
             if (garden.getStackInSlot(slot) == null)
                 return slot;
         }
