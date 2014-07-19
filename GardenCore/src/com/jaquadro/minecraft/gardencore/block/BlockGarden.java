@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -217,9 +218,19 @@ public abstract class BlockGarden extends BlockContainer
 
             if (plantSlot == TileEntityGarden.SLOT_INVALID)
                 return false;
+            if (canSustainPlantIndependently(world, x, y, z, plant))
+                return false;
 
             return applyPlantToGarden(world, x, y, z, (itemStack == null) ? player : null, plantSlot, plant);
         }
+
+        return false;
+    }
+
+    public boolean canSustainPlantIndependently (IBlockAccess blockAccess, int x, int y, int z, PlantItem plant) {
+        Item item = plant.getPlantSourceItem().getItem();
+        if (item instanceof IPlantable)
+            return canSustainPlant(blockAccess, x, y, z, ForgeDirection.UP, (IPlantable) item);
 
         return false;
     }
@@ -271,7 +282,7 @@ public abstract class BlockGarden extends BlockContainer
 
         TileEntityGarden garden = getTileEntity(world, x, y, z);
 
-        garden.setInventorySlotContents(slot, new ItemStack(plant.getPlantBlock(), 1, plant.getPlantMeta()));
+        garden.setInventorySlotContents(slot, plant.getPlantSourceItem());
 
         if (player != null && !player.capabilities.isCreativeMode) {
             ItemStack currentItem = player.inventory.getCurrentItem();

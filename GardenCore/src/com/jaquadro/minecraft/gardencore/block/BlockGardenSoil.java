@@ -21,6 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockGardenSoil extends BlockGarden
 {
@@ -73,6 +76,20 @@ public class BlockGardenSoil extends BlockGarden
             new BasicSlotProfile.Slot(SLOT_BOTTOM_LEFT, commonType, commonSize),
             new BasicSlotProfile.Slot(SLOT_LEFT, commonType, commonSize),
         });
+    }
+
+    @Override
+    public boolean isFertile (World world, int x, int y, int z) {
+        return true;
+    }
+
+    @Override
+    public boolean canSustainPlant (IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {
+       EnumPlantType plantType = plantable.getPlantType(world, x, y, z);
+        if (plantType == EnumPlantType.Crop)
+            return true;
+
+        return super.canSustainPlant(world, x, y, z, direction, plantable);
     }
 
     @Override

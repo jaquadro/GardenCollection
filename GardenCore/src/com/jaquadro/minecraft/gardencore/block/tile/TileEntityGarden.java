@@ -22,6 +22,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
@@ -29,76 +30,14 @@ import java.util.List;
 
 public class TileEntityGarden extends TileEntity implements IInventory
 {
-    /*protected static class Slot {
-        public int slot;
-        public List<PlantType> validTypeClasses = new ArrayList<PlantType>();
-        public List<PlantSize> validSizeClasses = new ArrayList<PlantSize>();
-
-        public Slot (int slot, PlantType[] typeClasses, PlantSize[] sizeClasses) {
-            this.slot = slot;
-
-            for (int i = 0; i < typeClasses.length; i++)
-                validTypeClasses.add(typeClasses[i]);
-            for (int i = 0; i < sizeClasses.length; i++)
-                validSizeClasses.add(sizeClasses[i]);
-        }
-    }
-
-    protected static class SlotProfile {
-        protected Slot[] slots;
-
-        public boolean isValidPlant (TileEntityGarden garden, int slot, PlantItem plant) {
-            if (slots == null || slot < 0 || slot >= slots.length)
-                return false;
-            if (slots[slot] == null)
-                return false;
-
-            if (!slots[slot].validTypeClasses.contains(plant.getPlantTypeClass()))
-                return false;
-            if (!slots[slot].validSizeClasses.contains(plant.getPlantSizeClass()))
-                return false;
-
-            if (isContainerAquatic(garden) && (plant.getPlantTypeClass() == PlantType.AQUATIC || plant.getPlantTypeClass() == PlantType.AQUATIC_EMERGENT)) {
-                PlantSize containerSize = getContainerInteriorSizeClass(garden);
-                if (containerSize == null)
-                    return false;
-                if (plant.getPlantSizeClass() == PlantSize.FULL && (containerSize == PlantSize.LARGE || containerSize == PlantSize.SMALL))
-                    return false;
-                if (plant.getPlantSizeClass() == PlantSize.LARGE && containerSize == PlantSize.SMALL)
-                    return false;
-            }
-
-            return true;
-        }
-
-        protected PlantSize getContainerInteriorSizeClass (TileEntityGarden garden) {
-            return null;
-        }
-
-        protected boolean isContainerAquatic (TileEntityGarden garden) {
-            return false;
-        }
-    }
-
-    protected static class SlotMapping {
-        public int slot;
-        public int mappedSlot;
-        public int mappedX;
-        public int mappedZ;
-
-        public SlotMapping (int slot, int mappedSlot, int mappedX, int mappedY) {
-            this.slot = slot;
-            this.mappedSlot = mappedSlot;
-            this.mappedX = mappedX;
-            this.mappedZ = mappedY;
-        }
-    }*/
-
     private static final int DEFAULT_BIOME_DATA = 65407;
 
     public static final int SLOT_INVALID = -1;
 
     private ItemStack[] containerStacks;
+    private PlantItem[] containerPlants;
+
+    //private ItemStack[] containerStacks;
     private String customName;
 
     private ItemStack substrate;
@@ -110,14 +49,6 @@ public class TileEntityGarden extends TileEntity implements IInventory
     public TileEntityGarden () {
         containerStacks = new ItemStack[containerSlotCount()];
     }
-
-    //protected abstract SlotProfile getSlotProfile ();
-
-    //public abstract int[] getPlantSlots ();
-
-    //protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
-    //    return null;
-    //}
 
     protected int containerSlotCount () {
         return 0;
@@ -158,46 +89,6 @@ public class TileEntityGarden extends TileEntity implements IInventory
         return contents;
     }
 
-    /*public int getPlantHeight () {
-        int height = 0;
-        for (int slot : getPlantSlots()) {
-            IPlantable plant = getPlantable(getPlantInSlot(slot));
-            if (plant == null)
-                continue;
-
-            Block plantBlock = plant.getPlant(worldObj, xCoord, yCoord + 1, zCoord);
-            int plantMeta = getPlantInSlot(slot).getItemDamage();
-
-            IPlantMetaResolver resolver = PlantRegistry.instance().getPlantMetaResolver(plantBlock, plantMeta);
-            if (resolver != null)
-                return resolver.getPlantHeight(plantBlock, plantMeta);
-
-            if (plantBlock instanceof BlockDoublePlant)
-                height = Math.max(height, 2);
-            else
-                height = Math.max(height, 1);
-        }
-
-        return height;
-    }*/
-
-    /*public static IPlantable getPlantable (ItemStack plant) {
-        if (plant == null || plant.getItem() == null)
-            return null;
-
-        IPlantable plantable = null;
-        Item item = plant.getItem();
-        if (item instanceof IPlantable)
-            plantable = (IPlantable) item;
-        else if (item instanceof ItemBlock) {
-            Block itemBlock = Block.getBlockFromItem(item);
-            if (itemBlock instanceof IPlantable)
-                plantable = (IPlantable) itemBlock;
-        }
-
-        return plantable;
-    }*/
-
     public boolean isSharedSlot (int slot) {
         BlockGarden block = getGardenBlock();
         if (block == null)
@@ -227,36 +118,6 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
         return garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, nx, ny, nz);
     }
-
-    /*public boolean isAttachedNeighbor (int x, int y, int z) {
-        if (yCoord != y || Math.abs(x - xCoord) > 1 || Math.abs(z - zCoord) > 1)
-            return false;
-
-        Block sBlock = worldObj.getBlock(xCoord, yCoord, zCoord);
-        Block nBlock = worldObj.getBlock(x, y, z);
-        if (sBlock != nBlock)
-            return false;
-
-        int sData = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-        int nData = worldObj.getBlockMetadata(x, y, z);
-        if (sData != nData)
-            return false;
-
-        TileEntity nEntity = worldObj.getTileEntity(x, y, z);
-        if (nEntity == null || getClass() != nEntity.getClass())
-            return false;
-
-        TileEntityGarden nGarden = (TileEntityGarden) nEntity;
-        if ((substrate == null || nGarden.substrate == null) && substrate != nGarden.substrate)
-            return false;
-
-        if (substrate != null) {
-            if (substrate.getItem() != nGarden.substrate.getItem() || substrate.getItemDamage() != nGarden.substrate.getItemDamage())
-                return false;
-        }
-
-        return true;
-    }*/
 
     public BlockGarden getGardenBlock () {
         Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
@@ -305,12 +166,51 @@ public class TileEntityGarden extends TileEntity implements IInventory
         this.hasBiomeOverride = true;
     }
 
+    private ItemStack getStackLocal (int slot) {
+        if (containerPlants == null && hasWorldObj())
+            initializeContainerPlants();
+
+        if (containerPlants != null)
+            return containerPlants[slot].getPlantSourceItem();
+        else
+            return containerStacks[slot];
+    }
+
+    private void setStackLocal (int slot, ItemStack itemStack) {
+        if (containerPlants == null && hasWorldObj())
+            initializeContainerPlants();
+
+        if (containerPlants != null && hasWorldObj())
+            containerPlants[slot] = PlantItem.getForItem(worldObj, itemStack);
+
+        containerStacks[slot] = itemStack;
+    }
+
+    private void initializeContainerPlants () {
+        containerPlants = new PlantItem[containerStacks.length];
+        for (int i = 0; i < containerStacks.length; i++) {
+            if (containerStacks[i] != null)
+                containerPlants[i] = PlantItem.getForItem(worldObj, containerStacks[i]);
+        }
+    }
+
+    @Override
+    public void setWorldObj (World world) {
+        super.setWorldObj(world);
+
+        if (containerPlants == null && world != null)
+            initializeContainerPlants();
+        else if (world == null)
+            containerPlants = null;
+    }
+
     @Override
     public void readFromNBT (NBTTagCompound tag) {
         super.readFromNBT(tag);
 
         NBTTagList itemList = tag.getTagList("Items", 10);
         containerStacks = new ItemStack[getSizeInventory()];
+        containerPlants = null;
 
         for (int i = 0; i < itemList.tagCount(); i++) {
             NBTTagCompound item = itemList.getCompoundTagAt(i);
@@ -328,7 +228,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
             short itemData = item.getShort("Data");
 
-            containerStacks[slot] = new ItemStack(itemObj, 1, itemData);
+            setStackLocal(slot, new ItemStack(itemObj, 1, itemData));
         }
 
         customName = null;
@@ -412,13 +312,6 @@ public class TileEntityGarden extends TileEntity implements IInventory
         while (getWorldObj().getBlock(xCoord, ++y, zCoord) instanceof BlockGardenProxy)
             getWorldObj().func_147479_m(xCoord, y, zCoord);
     }
-
-    /*@Override
-    public void updateEntity () {
-        if (!worldObj.isRemote) {
-            BlockGarden.validateBlockState(this);
-        }
-    }*/
 
     @Override
     public int getSizeInventory () {

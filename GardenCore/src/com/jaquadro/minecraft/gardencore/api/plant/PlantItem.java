@@ -8,11 +8,13 @@ import net.minecraftforge.common.IPlantable;
 
 public class PlantItem
 {
+    private ItemStack plantSourceItem;
     private Block plantBlock;
     private int plantMeta;
     private IPlantInfo plantInfo;
 
-    private PlantItem (Block plantBlock, int plantMeta) {
+    private PlantItem (ItemStack plantSourceItem, Block plantBlock, int plantMeta) {
+        this.plantSourceItem = plantSourceItem;
         this.plantBlock = plantBlock;
         this.plantMeta = plantMeta;
         this.plantInfo = PlantRegistry.instance().getPlantInfoOrDefault(plantBlock, plantMeta);
@@ -34,7 +36,7 @@ public class PlantItem
         if (meta == 0)
             meta = itemStack.getItemDamage();
 
-        return new PlantItem(block, meta);
+        return new PlantItem(itemStack, block, meta);
     }
 
     public static PlantItem getForItem (ItemStack itemStack) {
@@ -45,7 +47,11 @@ public class PlantItem
         if (block == null || !(block instanceof IPlantable))
             return null;
 
-        return new PlantItem(block, itemStack.getItemDamage());
+        return new PlantItem(itemStack, block, itemStack.getItemDamage());
+    }
+
+    public ItemStack getPlantSourceItem () {
+        return plantSourceItem;
     }
 
     public Block getPlantBlock () {

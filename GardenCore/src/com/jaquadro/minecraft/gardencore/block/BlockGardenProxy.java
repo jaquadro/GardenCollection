@@ -29,6 +29,7 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BlockGardenProxy extends Block
 {
@@ -55,6 +56,7 @@ public class BlockGardenProxy extends Block
         setHardness(0);
         setLightOpacity(0);
         setBlockName(blockName);
+        //setTickRandomly(true);
     }
 
     public float getPlantOffsetX (int slot) {
@@ -175,6 +177,37 @@ public class BlockGardenProxy extends Block
 
         return aabb;
     }
+
+    /* All plants that derive from BlockBush will do a check-and-drop.  updateTick may be too unpredictable to
+    support
+
+    @Override
+    public void updateTick (World world, int x, int y, int z, Random random) {
+        TileEntityGarden te = getGardenEntity(world, x, y, z);
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
+            return;
+
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
+            Block block = getPlantBlock(te, slot);
+            int data = getPlantData(te, slot);
+            if (block == null || !block.getTickRandomly())
+                continue;
+
+            try {
+                bindSlot(world, x, y, z, te, slot);
+                block.updateTick(world, x, y, z, random);
+
+                int postTickData = world.getBlockMetadata(x, y, z);
+                if (data != postTickData)
+                    setPlantData(te, slot, postTickData);
+            } catch (Exception e) {
+                continue;
+            } finally {
+                unbindSlot(world, x, y, z, te);
+            }
+        }
+    }*/
 
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
@@ -571,6 +604,14 @@ public class BlockGardenProxy extends Block
             return 0;
 
         return itemStack.getItemDamage();
+    }
+
+    private void setPlantData (TileEntityGarden tileEntity, int slot, int data) {
+        ItemStack itemStack = tileEntity.getPlantInSlot(slot);
+        if (itemStack != null) {
+            itemStack.setItemDamage(data);
+            tileEntity.setInventorySlotContents(slot, itemStack);
+        }
     }
 
     private boolean isApplyingBonemealTo (int x, int y, int z) {
