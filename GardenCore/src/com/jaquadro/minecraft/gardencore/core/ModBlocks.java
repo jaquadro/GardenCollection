@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.core;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.block.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenFarmland;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSoil;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import cpw.mods.fml.common.FMLLog;
@@ -14,22 +15,26 @@ import org.apache.logging.log4j.Level;
 public class ModBlocks
 {
     public static BlockGardenSoil gardenSoil;
+    public static BlockGardenFarmland gardenFarmland;
     public static BlockGardenProxy gardenProxy;
     public static BlockSmallFire smallFire;
     public static BlockCompostBin compostBin;
 
     public void init () {
         gardenSoil = new BlockGardenSoil("gardenSoil");
+        gardenFarmland = new BlockGardenFarmland("gardenFarmland");
         gardenProxy = new BlockGardenProxy("gardenProxy");
         smallFire = new BlockSmallFire();
         compostBin = new BlockCompostBin();
 
         GameRegistry.registerBlock(gardenSoil, "garden_soil");
+        GameRegistry.registerBlock(gardenFarmland, "garden_farmland");
         GameRegistry.registerBlock(gardenProxy, "garden_proxy");
         GameRegistry.registerBlock(smallFire, "small_fire");
         GameRegistry.registerBlock(compostBin, "compost_bin");
 
         GameRegistry.registerTileEntity(TileEntityGardenSoil.class, ModBlocks.getQualifiedName(gardenSoil));
+        GameRegistry.registerTileEntity(TileEntityGardenFarmland.class, ModBlocks.getQualifiedName(gardenFarmland));
     }
 
     public static Block get (String name) {
