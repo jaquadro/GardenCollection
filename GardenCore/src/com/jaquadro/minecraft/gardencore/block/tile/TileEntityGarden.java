@@ -8,6 +8,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.block.support.SlotMapping;
+import com.jaquadro.minecraft.gardencore.item.ItemSoilKit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.entity.player.EntityPlayer;
@@ -221,8 +222,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
             if (slot < 0 || slot >= containerStacks.length)
                 continue;
 
-            String itemString = item.getString("Item");
-            Item itemObj = (Item) Item.itemRegistry.getObject(itemString);
+            Item itemObj = Item.getItemById(item.getShort("Item"));
             if (itemObj == null)
                 continue;
 
@@ -261,12 +261,12 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
         NBTTagList itemList = new NBTTagList();
         for (int i = 0; i < containerStacks.length; i++) {
-            if (containerStacks[i] == null)
+            if (containerStacks[i] == null || containerStacks[i].getItem() == null)
                 continue;
 
             NBTTagCompound item = new NBTTagCompound();
             item.setByte("Slot", (byte)i);
-            item.setString("Item", Item.itemRegistry.getNameForObject(containerStacks[i].getItem()));
+            item.setShort("Item", (short) Item.getIdFromItem(containerStacks[i].getItem()));
             item.setShort("Data", (short) containerStacks[i].getItemDamage());
 
             itemList.appendTag(item);
