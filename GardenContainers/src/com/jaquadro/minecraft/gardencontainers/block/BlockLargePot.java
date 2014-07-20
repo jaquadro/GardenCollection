@@ -8,9 +8,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
-import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
-import com.jaquadro.minecraft.gardencore.block.support.ContainerConnectionProfile;
-import com.jaquadro.minecraft.gardencore.block.support.SlotShare8Profile;
+import com.jaquadro.minecraft.gardencore.block.support.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
@@ -50,6 +48,18 @@ public abstract class BlockLargePot extends BlockGardenContainer
     public static final int SLOT_BOTTOM_LEFT = 12;
     public static final int SLOT_LEFT = 13;
 
+    private class LocalSlotProfile extends Slot14Profile
+    {
+        public LocalSlotProfile (Slot[] slots) {
+            super(slots);
+        }
+
+        @Override
+        public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+            return -.0625f;
+        }
+    }
+
     @SideOnly(Side.CLIENT)
     private IIcon[] iconOverlayArray;
 
@@ -72,7 +82,7 @@ public abstract class BlockLargePot extends BlockGardenContainer
         PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
-        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[] {
+        slotProfile = new BasicSlotProfile(new LocalSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
             new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
             new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),

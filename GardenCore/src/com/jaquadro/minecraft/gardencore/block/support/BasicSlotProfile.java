@@ -59,6 +59,21 @@ public class BasicSlotProfile implements ISlotProfile
     }
 
     @Override
+    public float getPlantOffsetX (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        return 0;
+    }
+
+    @Override
+    public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        return 0;
+    }
+
+    @Override
+    public float getPlantOffsetZ (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        return 0;
+    }
+
+    @Override
     public int getNextAvailableSlot (IBlockAccess blockAccess, int x, int y, int z, int slot, PlantItem plant) {
         return -1;
     }

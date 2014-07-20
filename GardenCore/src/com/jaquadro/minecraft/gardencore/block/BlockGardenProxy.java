@@ -33,12 +33,12 @@ import java.util.Random;
 
 public class BlockGardenProxy extends Block
 {
-    private static float[] plantOffsetX = new float[] {
+    /*private static float[] plantOffsetX = new float[] {
         0, 0, -.252f, .25f, -.25f, .252f, -.5f, -.001f, .5f, .5f, .5f, -.001f, -.5f, -.5f
     };
     private static float[] plantOffsetZ = new float[] {
         0, 0, -.25f, -.252f, .252f, .25f, -.501f, -.5f, -.501f, 0, .449f, .5f, .449f, 0
-    };
+    };*/
 
     @SideOnly(Side.CLIENT)
     private IIcon transpIcon;
@@ -59,8 +59,12 @@ public class BlockGardenProxy extends Block
         //setTickRandomly(true);
     }
 
-    public float getPlantOffsetX (int slot) {
-        return plantOffsetX[slot];
+    public float getPlantOffsetX (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        BlockGarden gardenBlock = getGardenBlock(blockAccess, x, y, z);
+        if (gardenBlock == null)
+            return 0;
+
+        return gardenBlock.getSlotProfile().getPlantOffsetX(blockAccess, x, getBaseBlockYCoord(blockAccess, x, y, z), z, slot);
     }
 
     public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
@@ -68,11 +72,15 @@ public class BlockGardenProxy extends Block
         if (gardenBlock == null)
             return 0;
 
-        return gardenBlock.getPlantOffsetY(blockAccess, x, getBaseBlockYCoord(blockAccess, x, y, z), z, slot);
+        return gardenBlock.getSlotProfile().getPlantOffsetY(blockAccess, x, getBaseBlockYCoord(blockAccess, x, y, z), z, slot);
     }
 
-    public float getPlantOffsetZ (int slot) {
-        return plantOffsetZ[slot];
+    public float getPlantOffsetZ (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        BlockGarden gardenBlock = getGardenBlock(blockAccess, x, y, z);
+        if (gardenBlock == null)
+            return 0;
+
+        return gardenBlock.getSlotProfile().getPlantOffsetZ(blockAccess, x, getBaseBlockYCoord(blockAccess, x, y, z), z, slot);
     }
 
     public void bindSlot (World world, int x, int y, int z, TileEntityGarden te, int slot) {
@@ -116,6 +124,8 @@ public class BlockGardenProxy extends Block
         if (garden == null)
             return null;
 
+        int baseY = getBaseBlockYCoord(world, x, y, z);
+
         AxisAlignedBB aabb = null;
         for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
@@ -127,7 +137,10 @@ public class BlockGardenProxy extends Block
                 if (sub == null)
                     continue;
 
-                sub.offset(plantOffsetX[slot], 0, plantOffsetZ[slot]);
+                float offsetX = garden.getSlotProfile().getPlantOffsetX(world, x, baseY, z, slot);
+                float offsetY = garden.getSlotProfile().getPlantOffsetY(world, x, baseY, z, slot);
+                float offsetZ = garden.getSlotProfile().getPlantOffsetZ(world, x, baseY, z, slot);
+                sub.offset(offsetX, offsetY, offsetZ);
 
                 if (aabb == null)
                     aabb = sub;
@@ -149,6 +162,8 @@ public class BlockGardenProxy extends Block
         if (te == null || garden == null)
             return super.getSelectedBoundingBoxFromPool(world, x, y, z);
 
+        int baseY = getBaseBlockYCoord(world, x, y, z);
+
         AxisAlignedBB aabb = null;
         for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
@@ -160,7 +175,10 @@ public class BlockGardenProxy extends Block
                 if (sub == null)
                     continue;
 
-                sub.offset(plantOffsetX[slot], 0, plantOffsetZ[slot]);
+                float offsetX = garden.getSlotProfile().getPlantOffsetX(world, x, baseY, z, slot);
+                float offsetY = garden.getSlotProfile().getPlantOffsetY(world, x, baseY, z, slot);
+                float offsetZ = garden.getSlotProfile().getPlantOffsetZ(world, x, baseY, z, slot);
+                sub.offset(offsetX, offsetY, offsetZ);
 
                 if (aabb == null)
                     aabb = sub;
@@ -218,6 +236,8 @@ public class BlockGardenProxy extends Block
             return;
         }
 
+        int baseY = getBaseBlockYCoord(world, x, y, z);
+
         for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
             if (block == null)
@@ -228,7 +248,11 @@ public class BlockGardenProxy extends Block
                 if (sub == null)
                     continue;
 
-                sub.offset(plantOffsetX[slot], 0, plantOffsetZ[slot]);
+                float offsetX = garden.getSlotProfile().getPlantOffsetX(world, x, baseY, z, slot);
+                float offsetY = garden.getSlotProfile().getPlantOffsetY(world, x, baseY, z, slot);
+                float offsetZ = garden.getSlotProfile().getPlantOffsetZ(world, x, baseY, z, slot);
+                sub.offset(offsetX, offsetY, offsetZ);
+
                 if (mask.intersectsWith(sub))
                     list.add(sub);
             }
@@ -248,6 +272,8 @@ public class BlockGardenProxy extends Block
         if (te == null || garden == null)
             return super.collisionRayTrace(world, x, y, z, startVec, endVec);
 
+        int baseY = getBaseBlockYCoord(world, x, y, z);
+
         MovingObjectPosition mop = null;
         for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block block = getPlantBlock(te, slot);
@@ -255,8 +281,15 @@ public class BlockGardenProxy extends Block
                 continue;
 
             try {
-                MovingObjectPosition sub = block.collisionRayTrace(world, x, y, z, startVec, endVec);
-                if (mop == null || startVec.squareDistanceTo(mop.hitVec) > startVec.squareDistanceTo(sub.hitVec))
+                float offsetX = garden.getSlotProfile().getPlantOffsetX(world, x, baseY, z, slot);
+                float offsetY = garden.getSlotProfile().getPlantOffsetY(world, x, baseY, z, slot);
+                float offsetZ = garden.getSlotProfile().getPlantOffsetZ(world, x, baseY, z, slot);
+
+                Vec3 slotStartVec = Vec3.createVectorHelper(startVec.xCoord - offsetX, startVec.yCoord - offsetY, startVec.zCoord - offsetZ);
+                Vec3 slotEndVec = Vec3.createVectorHelper(endVec.xCoord - offsetX, endVec.yCoord - offsetY, endVec.zCoord - offsetZ);
+
+                MovingObjectPosition sub = block.collisionRayTrace(world, x, y, z, slotStartVec, slotEndVec);
+                if (mop == null || slotStartVec.squareDistanceTo(mop.hitVec) > slotStartVec.squareDistanceTo(sub.hitVec))
                     mop = sub;
             }
             catch (Exception e) {

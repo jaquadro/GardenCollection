@@ -1,47 +1,17 @@
 package com.jaquadro.minecraft.gardencontainers.block.tile;
 
-import com.jaquadro.minecraft.gardencontainers.core.ModBlocks;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
-import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.support.Slot5Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityWindowBox extends TileEntityGarden
 {
-    /*public static final int SLOT_COVER = 1;
-    public static final int SLOT_NW = 2;
-    public static final int SLOT_NE = 3;
-    public static final int SLOT_SW = 4;
-    public static final int SLOT_SE = 5;
-
-    private static final int[] PLANT_SLOTS = new int[] {
-        1, 2, 3, 4, 5
-    };*/
-
     @Override
     protected int containerSlotCount () {
         return 6;
     }
-
-    /*protected static class SlotProfileWindowBox extends SlotProfile
-    {
-        PlantType[] normalType = new PlantType[] { PlantType.GROUND};
-        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
-
-        public SlotProfileWindowBox () {
-            slots = new Slot[] {
-                new Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, smallSize),
-                new Slot(SLOT_NW, normalType, smallSize),
-                new Slot(SLOT_NE, normalType, smallSize),
-                new Slot(SLOT_SW, normalType, smallSize),
-                new Slot(SLOT_SE, normalType, smallSize),
-            };
-        }
-    }
-
-    private static final SlotProfileWindowBox profile = new SlotProfileWindowBox();*/
 
     private int direction;
 
@@ -65,26 +35,6 @@ public class TileEntityWindowBox extends TileEntityGarden
         //invalidate();
     }
 
-    /*@Override
-    protected int containerSlotCount () {
-        return 14;
-    }
-
-    @Override
-    public int[] getPlantSlots () {
-        return PLANT_SLOTS;
-    }
-
-    @Override
-    protected SlotProfile getSlotProfile () {
-        return profile;
-    }
-
-    @Override
-    protected SlotMapping[] getNeighborMappingsForSlot (int slot) {
-        return null;
-    }*/
-
     @Override
     public boolean isSlotValid (int slot) {
         int dir = getDirection();
@@ -97,25 +47,25 @@ public class TileEntityWindowBox extends TileEntityGarden
         if (garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, dir)) {
             int facingDir = getNeighborDirection(dir);
             switch (slot) {
-                case 2: // Z- X-
+                case Slot5Profile.SLOT_NW: // Z- X-
                     if (dir == 2 && facingDir == 5)
                         return false;
                     if (dir == 4 && facingDir == 3)
                         return false;
                     break;
-                case 3: // Z- X+
+                case Slot5Profile.SLOT_NE: // Z- X+
                     if (dir == 2 && facingDir == 4)
                         return false;
                     if (dir == 5 && facingDir == 3)
                         return false;
                     break;
-                case 4: // Z+ X-
+                case Slot5Profile.SLOT_SW: // Z+ X-
                     if (dir == 3 && facingDir == 5)
                         return false;
                     if (dir == 4 && facingDir == 2)
                         return false;
                     break;
-                case 5: // Z+ X+
+                case Slot5Profile.SLOT_SE: // Z+ X+
                     if (dir == 3 && facingDir == 4)
                         return false;
                     if (dir == 5 && facingDir == 2)
@@ -130,25 +80,25 @@ public class TileEntityWindowBox extends TileEntityGarden
         if (garden.getConnectionProfile().isAttachedNeighbor(worldObj, xCoord, yCoord, zCoord, rdir)) {
             int facingDir = getNeighborDirection(rdir);
             switch (slot) {
-                case 2: // Z- X-
+                case Slot5Profile.SLOT_NW: // Z- X-
                     if (dir == 3 && facingDir == 4)
                         return true;
                     if (dir == 5 && facingDir == 2)
                         return true;
                     break;
-                case 3: // Z- X+
+                case Slot5Profile.SLOT_NE: // Z- X+
                     if (dir == 3 && facingDir == 5)
                         return true;
                     if (dir == 4 && facingDir == 2)
                         return true;
                     break;
-                case 4: // Z+ X-
+                case Slot5Profile.SLOT_SW: // Z+ X-
                     if (dir == 2 && facingDir == 4)
                         return true;
                     if (dir == 5 && facingDir == 3)
                         return true;
                     break;
-                case 5: // Z+ X+
+                case Slot5Profile.SLOT_SE: // Z+ X+
                     if (dir == 2 && facingDir == 5)
                         return true;
                     if (dir == 4 && facingDir == 3)
@@ -158,21 +108,21 @@ public class TileEntityWindowBox extends TileEntityGarden
         }
 
         switch (slot) {
-            case 1:
+            case Slot5Profile.SLOT_COVER:
                 return true;
-            case 2: // Z- X-
+            case Slot5Profile.SLOT_NW: // Z- X-
                 if (dir == 2 || dir == 4)
                     return true;
                 break;
-            case 3: // Z- X+
+            case Slot5Profile.SLOT_NE: // Z- X+
                 if (dir == 2 || dir == 5)
                     return true;
                 break;
-            case 4: // Z+ X-
+            case Slot5Profile.SLOT_SW: // Z+ X-
                 if (dir == 3 || dir == 4)
                     return true;
                 break;
-            case 5: // Z+ X+
+            case Slot5Profile.SLOT_SE: // Z+ X+
                 if (dir == 3 || dir == 5)
                     return  true;
                 break;
@@ -199,110 +149,6 @@ public class TileEntityWindowBox extends TileEntityGarden
 
         return -1;
     }
-
-    /*private int neighborToDirection (int x, int z) {
-        if (z < zCoord)
-            return 2;
-        if (z > zCoord)
-            return 3;
-        if (x < xCoord)
-            return 4;
-        if (x > xCoord)
-            return 5;
-
-        return -1;
-    }
-
-    private boolean isAttachedNeighbor (int direction) {
-        switch (direction) {
-            case 2:
-                return isAttachedNeighbor(xCoord, yCoord, zCoord - 1);
-            case 3:
-                return isAttachedNeighbor(xCoord, yCoord, zCoord + 1);
-            case 4:
-                return isAttachedNeighbor(xCoord - 1, yCoord, zCoord);
-            case 5:
-                return isAttachedNeighbor(xCoord + 1, yCoord, zCoord);
-            default:
-                return false;
-        }
-    }
-
-    @Override
-    public boolean isAttachedNeighbor (int x, int y, int z) {
-        if (!super.isAttachedNeighbor(x, y, z))
-            return false;
-
-        TileEntityWindowBox nte = (TileEntityWindowBox)worldObj.getTileEntity(x, y, z);
-        if (nte == null)
-            return false;
-
-        if (isUpper() != nte.isUpper())
-            return false;
-
-        int dir = getDirection();
-        int ndir = nte.getDirection();
-
-        int rdir = (dir % 2 == 0) ? dir + 1 : dir - 1;
-        int xzDir = neighborToDirection(x, z);
-
-        if (dir == xzDir || rdir == xzDir) {
-            switch (dir) {
-                case 2:
-                case 3:
-                    return ndir == 4 || ndir == 5;
-                case 4:
-                case 5:
-                    return ndir == 2 || ndir == 3;
-            }
-        }
-        else {
-            TileEntity te = null;
-            if (dir == 2)
-                te = worldObj.getTileEntity(x, y, z - 1);
-            else if (dir == 3)
-                te = worldObj.getTileEntity(x, y, z + 1);
-            else if (dir == 4)
-                te = worldObj.getTileEntity(x - 1, y, z);
-            else if (dir == 5)
-                te = worldObj.getTileEntity(x + 1, y, z);
-
-            if (te instanceof TileEntityWindowBox) {
-                TileEntityWindowBox dte = (TileEntityWindowBox) te;
-                int ddir = dte.getDirection();
-
-                if ((dir == 2 || dir == 3) && (ddir == 4 || ddir == 5))
-                    return ddir == neighborToDirection(x, z);
-                if ((dir == 4 || dir == 5) && (ddir == 2 || ddir == 3))
-                    return ddir == neighborToDirection(x, z);
-            }
-        }
-
-        switch (dir) {
-            case 2:
-            case 3:
-                if (x - xCoord != 0 && ndir == dir)
-                    break;
-                if (x - xCoord < 0 && ndir == 4)
-                    break;
-                if (x - xCoord > 0 && ndir == 5)
-                    break;
-                return false;
-            case 4:
-            case 5:
-                if (z - zCoord != 0 && ndir == dir)
-                    break;
-                if (z - zCoord < 0 && ndir == 2)
-                    break;
-                if (z - zCoord > 0 && ndir == 3)
-                    break;
-                return false;
-            default:
-                return false;
-        }
-
-        return true;
-    }*/
 
     @Override
     public void readFromNBT (NBTTagCompound tag) {

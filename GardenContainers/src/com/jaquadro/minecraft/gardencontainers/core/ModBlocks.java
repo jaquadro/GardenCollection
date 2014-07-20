@@ -14,30 +14,34 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import org.apache.logging.log4j.Level;
 
 public class ModBlocks
 {
-    public static BlockWindowBox windowBox;
+    public static BlockWindowBox woodWindowBox;
+    public static BlockWindowBox stoneWindowBox;
     public static BlockDecorativePot decorativePot;
     public static BlockLargePot largePot;
     public static BlockLargePot largePotColored;
     public static BlockPotteryTable potteryTable;
 
     public void init () {
-        windowBox = new BlockWindowBox("windowBox");
+        woodWindowBox = new BlockWindowBox("woodWindowBox", Material.wood);
+        stoneWindowBox = new BlockWindowBoxStone("stoneWindowBox");
         decorativePot = new BlockDecorativePot("decorativePot");
         largePot = new BlockLargePotStandard("largePot");
         largePotColored = new BlockLargePotColored("largePotColored");
         potteryTable = new BlockPotteryTable("potteryTable");
 
-        GameRegistry.registerBlock(windowBox, ItemWindowBox.class, "window_box");
+        GameRegistry.registerBlock(woodWindowBox, ItemWindowBox.class, "wood_window_box");
+        GameRegistry.registerBlock(stoneWindowBox, ItemWindowBox.class, "stone_window_box");
         GameRegistry.registerBlock(decorativePot, ItemDecorativePot.class, "decorative_pot");
         GameRegistry.registerBlock(largePot, ItemLargePot.class, "large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePot.class, "large_pot_colored");
         GameRegistry.registerBlock(potteryTable, "pottery_table");
 
-        GameRegistry.registerTileEntity(TileEntityWindowBox.class, ModBlocks.getQualifiedName(windowBox));
+        GameRegistry.registerTileEntity(TileEntityWindowBox.class, ModBlocks.getQualifiedName(woodWindowBox));
         GameRegistry.registerTileEntity(TileEntityDecorativePot.class, ModBlocks.getQualifiedName(decorativePot));
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePotColored));

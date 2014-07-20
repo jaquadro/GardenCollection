@@ -38,7 +38,7 @@ public class ModRecipes
         }
 
         for (int i = 0; i < 6; i++) {
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.windowBox, 1, i), "yxy",
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.woodWindowBox, 1, i), "yxy",
                 'x', Items.flower_pot, 'y', new ItemStack(Blocks.planks, 1, i));
         }
     }

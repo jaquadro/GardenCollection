@@ -60,9 +60,9 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
                 continue;
 
             block.bindSlot(te.getWorldObj(), x, y, z, te, slot);
-            float offsetX = block.getPlantOffsetX(slot);
+            float offsetX = block.getPlantOffsetX(world, x, y, z, slot);
             float offsetY = block.getPlantOffsetY(world, x, y, z, slot);
-            float offsetZ = block.getPlantOffsetZ(slot);
+            float offsetZ = block.getPlantOffsetZ(world, x, y, z, slot);
 
             int color = subBlock.colorMultiplier(world, x, y, z);
             if (color == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))

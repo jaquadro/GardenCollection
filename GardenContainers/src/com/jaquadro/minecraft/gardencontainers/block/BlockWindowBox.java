@@ -9,6 +9,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
+import com.jaquadro.minecraft.gardencore.block.support.Slot5Profile;
 import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
@@ -35,16 +36,32 @@ public class BlockWindowBox extends BlockGarden
 {
     public  static final String[] subTypes = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
-    public static final int SLOT_COVER = 1;
-    public static final int SLOT_NW = 2;
-    public static final int SLOT_NE = 3;
-    public static final int SLOT_SW = 4;
-    public static final int SLOT_SE = 5;
+    public static final int SLOT_COVER = 0;
+    public static final int SLOT_NW = 1;
+    public static final int SLOT_NE = 2;
+    public static final int SLOT_SW = 3;
+    public static final int SLOT_SE = 4;
 
     private static ItemStack substrate = new ItemStack(Blocks.dirt, 1);
 
-    public BlockWindowBox (String blockName) {
-        super(blockName, Material.wood);
+    private class LocalSlotProfile extends Slot5Profile
+    {
+        public LocalSlotProfile (Slot[] slots) {
+            super(slots);
+        }
+
+        @Override
+        public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+            TileEntityWindowBox garden = getTileEntity(blockAccess, x, y, z);
+            if (garden == null || garden.isUpper())
+                return -.0625f;
+            else
+                return -.5f - .0625f;
+        }
+    }
+
+    public BlockWindowBox (String blockName, Material material) {
+        super(blockName, material);
 
         setCreativeTab(ModCreativeTabs.tabGardenCore);
         setHardness(0.5f);
@@ -58,7 +75,7 @@ public class BlockWindowBox extends BlockGarden
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
-        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[]{
+        slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[]{
             new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER }, allSize),
             new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
             new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),

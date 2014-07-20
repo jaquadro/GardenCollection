@@ -4,11 +4,10 @@ import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
-import com.jaquadro.minecraft.gardencore.block.support.BasicConnectionProfile;
-import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
-import com.jaquadro.minecraft.gardencore.block.support.SlotShare8Profile;
+import com.jaquadro.minecraft.gardencore.block.support.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSoil;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -49,20 +49,18 @@ public class BlockGardenSoil extends BlockGarden
 
         setCreativeTab(ModCreativeTabs.tabGardenCore);
         setHardness(0.5f);
-        setStepSound(Block.soundTypeGravel);
-
-        connectionProfile = new BasicConnectionProfile();
-        slotShareProfile = new SlotShare8Profile(SLOT_TOP_LEFT, SLOT_TOP, SLOT_TOP_RIGHT, SLOT_RIGHT, SLOT_BOTTOM_RIGHT, SLOT_BOTTOM, SLOT_BOTTOM_LEFT, SLOT_LEFT);
+        setStepSound(Block.soundTypeGrass);
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
-
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
         PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
-        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[] {
+        connectionProfile = new BasicConnectionProfile();
+        slotShareProfile = new SlotShare8Profile(SLOT_TOP_LEFT, SLOT_TOP, SLOT_TOP_RIGHT, SLOT_RIGHT, SLOT_BOTTOM_RIGHT, SLOT_BOTTOM, SLOT_BOTTOM_LEFT, SLOT_LEFT);
+        slotProfile = new Slot14Profile(new BasicSlotProfile.Slot[]{
             new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
-            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
+            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
             new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
             new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),
             new BasicSlotProfile.Slot(SLOT_SW, commonType, smallSize),
@@ -76,20 +74,6 @@ public class BlockGardenSoil extends BlockGarden
             new BasicSlotProfile.Slot(SLOT_BOTTOM_LEFT, commonType, commonSize),
             new BasicSlotProfile.Slot(SLOT_LEFT, commonType, commonSize),
         });
-    }
-
-    @Override
-    public boolean isFertile (World world, int x, int y, int z) {
-        return true;
-    }
-
-    @Override
-    public boolean canSustainPlant (IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {
-       EnumPlantType plantType = plantable.getPlantType(world, x, y, z);
-        if (plantType == EnumPlantType.Crop)
-            return true;
-
-        return super.canSustainPlant(world, x, y, z, direction, plantable);
     }
 
     @Override
@@ -138,12 +122,24 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
-    public IIcon getIcon (int side, int meta) {
-        return blockIcon;
+    protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
+        ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
+
+        if (item != null && item.getItem() instanceof ItemHoe) {
+            world.playSoundEffect(x + .5, y + .5, z + .5, stepSound.getStepResourcePath(), (stepSound.getVolume() + 1) / 2, stepSound.getPitch() * .8f);
+            if (!world.isRemote) {
+                world.setBlock(x, y, z, ModBlocks.gardenFarmland);
+                item.damageItem(1, player);
+            }
+
+            return true;
+        }
+
+        return super.applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, hitValid);
     }
 
     @Override
-    public IIcon getIcon (IBlockAccess world, int x, int y, int z, int side) {
+    public IIcon getIcon (int side, int meta) {
         return blockIcon;
     }
 

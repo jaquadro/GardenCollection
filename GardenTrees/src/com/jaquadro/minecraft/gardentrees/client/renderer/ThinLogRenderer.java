@@ -123,7 +123,7 @@ public class ThinLogRenderer implements ISimpleBlockRenderingHandler
 
         Block blockUnder = world.getBlock(x, y - 1, z);
         if (blockUnder instanceof BlockGarden) {
-            float yDiff = ((BlockGarden) blockUnder).getPlantOffsetY(world, x, y, z, 0);
+            float yDiff = ((BlockGarden) blockUnder).getSlotProfile().getPlantOffsetY(world, x, y, z, 0);
             if (yDiff >= (1 - .0625f) * 2) {
                 //Tessellator tessellator = Tessellator.instance;
                 //tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
