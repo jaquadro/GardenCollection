@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.core;
 
+import com.jaquadro.minecraft.gardencore.item.ItemCompost;
 import com.jaquadro.minecraft.gardencore.item.ItemSoilKit;
 import com.jaquadro.minecraft.gardencore.item.ItemTrowel;
 import com.jaquadro.minecraft.gardencore.item.ItemUsedSoilKit;
@@ -14,13 +15,16 @@ public class ModItems
     public static Item gardenTrowel;
     public static ItemSoilKit soilTestKit;
     public static ItemUsedSoilKit usedSoilTestKit;
+    public static Item compostPile;
 
     public void init () {
         gardenTrowel = new ItemTrowel("gardenTrowel", Item.ToolMaterial.IRON);
         soilTestKit = new ItemSoilKit("soilTestKit");
         usedSoilTestKit = new ItemUsedSoilKit("soilTestKitUsed");
+        compostPile = new ItemCompost("compostPile");
 
         GameRegistry.registerItem(gardenTrowel, "garden_trowel");
+        GameRegistry.registerItem(compostPile, "compost_pile");
         GameRegistry.registerItem(soilTestKit, "soil_test_kit");
         GameRegistry.registerItem(usedSoilTestKit, "soil_test_kit_used");
     }
