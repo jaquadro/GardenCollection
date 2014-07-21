@@ -6,9 +6,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
-import com.jaquadro.minecraft.gardencore.block.support.BasicConnectionProfile;
-import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
-import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
+import com.jaquadro.minecraft.gardencore.block.support.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
@@ -33,6 +31,18 @@ public class BlockDecorativePot extends BlockGardenContainer
     public static final int SLOT_CENTER = 0;
     public static final int SLOT_COVER = 1;
 
+    private class LocalSlotProfile extends Slot2Profile
+    {
+        public LocalSlotProfile (Slot[] slots) {
+            super(slots);
+        }
+
+        @Override
+        public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+            return -.0625f;
+        }
+    }
+
     public BlockDecorativePot (String blockName) {
         super(blockName, Material.rock);
 
@@ -46,7 +56,7 @@ public class BlockDecorativePot extends BlockGardenContainer
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
-        slotProfile = new BasicSlotProfile(new BasicSlotProfile.Slot[] {
+        slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
             new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
         });
@@ -56,7 +66,7 @@ public class BlockDecorativePot extends BlockGardenContainer
     protected boolean isValidSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {
         if (itemStack == null || itemStack.getItem() == null)
             return false;
-        
+
         if (Block.getBlockFromItem(itemStack.getItem()) == Blocks.netherrack)
             return true;
 
