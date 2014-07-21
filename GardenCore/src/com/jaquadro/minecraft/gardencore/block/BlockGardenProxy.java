@@ -305,9 +305,8 @@ public class BlockGardenProxy extends Block
         TileEntityGarden te = getGardenEntity(world, x, y, z);
         if (te != null)
             BlockGarden.validateBlockState(te);
-        /*if (!hasValidUnderBlock(world, x, y, z)) {
+        else
             world.setBlockToAir(x, y, z);
-        }*/
     }
 
     @Override
