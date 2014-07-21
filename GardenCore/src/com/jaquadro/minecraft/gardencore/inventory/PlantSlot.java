@@ -12,6 +12,6 @@ public class PlantSlot extends Slot
 
     @Override
     public boolean isItemValid (ItemStack itemStack) {
-        return inventory.isItemValidForSlot(slotNumber, itemStack);
+        return inventory.isItemValidForSlot(getSlotIndex(), itemStack);
     }
 }

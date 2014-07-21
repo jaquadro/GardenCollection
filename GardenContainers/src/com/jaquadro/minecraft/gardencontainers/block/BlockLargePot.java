@@ -284,10 +284,13 @@ public abstract class BlockLargePot extends BlockGardenContainer
 
     @Override
     protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
+        ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
+        if (item == null)
+            return false;
+
         TileEntityGarden garden = getTileEntity(world, x, y, z);
 
         if (garden.getSubstrate() != null) {
-            ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
             if (item.getItem() == Items.bucket) {
                 if (Block.getBlockFromItem(garden.getSubstrate().getItem()) == Blocks.water) {
                     player.inventory.setInventorySlotContents(player.inventory.currentItem, new ItemStack(Items.water_bucket));

@@ -456,7 +456,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
         if (block == null)
             return false;
 
-        if (block.isPlantValidForSlot(worldObj, xCoord, yCoord, zCoord, slot, plant))
+        if (!block.isPlantValidForSlot(worldObj, xCoord, yCoord, zCoord, slot, plant))
             return false;
 
         return true;

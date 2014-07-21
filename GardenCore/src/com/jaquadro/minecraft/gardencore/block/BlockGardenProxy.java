@@ -33,13 +33,6 @@ import java.util.Random;
 
 public class BlockGardenProxy extends Block
 {
-    /*private static float[] plantOffsetX = new float[] {
-        0, 0, -.252f, .25f, -.25f, .252f, -.5f, -.001f, .5f, .5f, .5f, -.001f, -.5f, -.5f
-    };
-    private static float[] plantOffsetZ = new float[] {
-        0, 0, -.25f, -.252f, .252f, .25f, -.501f, -.5f, -.501f, 0, .449f, .5f, .449f, 0
-    };*/
-
     @SideOnly(Side.CLIENT)
     private IIcon transpIcon;
 
