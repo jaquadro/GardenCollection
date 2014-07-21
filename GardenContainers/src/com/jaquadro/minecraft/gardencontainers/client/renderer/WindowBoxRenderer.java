@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencontainers.client.renderer;
 import com.jaquadro.minecraft.gardencontainers.block.BlockWindowBox;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.block.support.Slot5Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
@@ -77,10 +78,10 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setCutColor(activeRimColor);
 
         TileEntityWindowBox te = block.getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(BlockWindowBox.SLOT_NE);
-        boolean validNW = te.isSlotValid(BlockWindowBox.SLOT_NW);
-        boolean validSE = te.isSlotValid(BlockWindowBox.SLOT_SE);
-        boolean validSW = te.isSlotValid(BlockWindowBox.SLOT_SW);
+        boolean validNE = te.isSlotValid(Slot5Profile.SLOT_NE);
+        boolean validNW = te.isSlotValid(Slot5Profile.SLOT_NW);
+        boolean validSE = te.isSlotValid(Slot5Profile.SLOT_SE);
+        boolean validSW = te.isSlotValid(Slot5Profile.SLOT_SW);
 
         if (validNW) {
             int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSW ? ModularBoxRenderer.CONNECT_ZPOS : 0);

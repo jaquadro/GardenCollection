@@ -33,21 +33,6 @@ import java.util.List;
 
 public abstract class BlockLargePot extends BlockGardenContainer
 {
-    public static final int SLOT_CENTER = 0;
-    public static final int SLOT_COVER = 1;
-    public static final int SLOT_NW = 2;
-    public static final int SLOT_NE = 3;
-    public static final int SLOT_SW = 4;
-    public static final int SLOT_SE = 5;
-    public static final int SLOT_TOP_LEFT = 6;
-    public static final int SLOT_TOP = 7;
-    public static final int SLOT_TOP_RIGHT = 8;
-    public static final int SLOT_RIGHT = 9;
-    public static final int SLOT_BOTTOM_RIGHT = 10;
-    public static final int SLOT_BOTTOM = 11;
-    public static final int SLOT_BOTTOM_LEFT = 12;
-    public static final int SLOT_LEFT = 13;
-
     private class LocalSlotProfile extends Slot14Profile
     {
         public LocalSlotProfile (Slot[] slots) {
@@ -74,7 +59,9 @@ public abstract class BlockLargePot extends BlockGardenContainer
         setStepSound(Block.soundTypeStone);
 
         connectionProfile = new ContainerConnectionProfile();
-        slotShareProfile = new SlotShare8Profile(SLOT_TOP_LEFT, SLOT_TOP, SLOT_TOP_RIGHT, SLOT_RIGHT, SLOT_BOTTOM_RIGHT, SLOT_BOTTOM, SLOT_BOTTOM_LEFT, SLOT_LEFT);
+        slotShareProfile = new SlotShare8Profile(Slot14Profile.SLOT_TOP_LEFT, Slot14Profile.SLOT_TOP,
+            Slot14Profile.SLOT_TOP_RIGHT, Slot14Profile.SLOT_RIGHT, Slot14Profile.SLOT_BOTTOM_RIGHT,
+            Slot14Profile.SLOT_BOTTOM, Slot14Profile.SLOT_BOTTOM_LEFT, Slot14Profile.SLOT_LEFT);
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC_COVER, PlantType.AQUATIC_SURFACE};
 
@@ -83,20 +70,20 @@ public abstract class BlockLargePot extends BlockGardenContainer
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
         slotProfile = new BasicSlotProfile(new LocalSlotProfile.Slot[] {
-            new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
-            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
-            new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_SW, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_SE, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_TOP_LEFT, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_TOP, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_TOP_RIGHT, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_RIGHT, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_BOTTOM_RIGHT, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_BOTTOM, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_BOTTOM_LEFT, commonType, commonSize),
-            new BasicSlotProfile.Slot(SLOT_LEFT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_CENTER, commonType, allSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NW, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SW, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_LEFT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_BOTTOM_RIGHT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_BOTTOM, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_BOTTOM_LEFT, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_LEFT, commonType, commonSize),
         });
     }
 
@@ -109,7 +96,7 @@ public abstract class BlockLargePot extends BlockGardenContainer
 
     @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
-        return SLOT_CENTER;
+        return Slot14Profile.SLOT_CENTER;
     }
 
     @Override
@@ -117,22 +104,24 @@ public abstract class BlockLargePot extends BlockGardenContainer
         TileEntityGarden garden = getTileEntity(world, x, y, z);
 
         if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
-            return garden.getStackInSlot(SLOT_COVER) == null ? SLOT_COVER : SLOT_INVALID;
+            return garden.getStackInSlot(Slot14Profile.SLOT_COVER) == null ? Slot14Profile.SLOT_COVER : SLOT_INVALID;
 
         if (plant.getPlantSizeClass() == PlantSize.FULL)
-            return garden.getStackInSlot(SLOT_CENTER) == null ? SLOT_CENTER : SLOT_INVALID;
+            return garden.getStackInSlot(Slot14Profile.SLOT_CENTER) == null ? Slot14Profile.SLOT_CENTER : SLOT_INVALID;
 
-        if (garden.getStackInSlot(SLOT_CENTER) == null)
-            return SLOT_CENTER;
+        if (garden.getStackInSlot(Slot14Profile.SLOT_CENTER) == null)
+            return Slot14Profile.SLOT_CENTER;
 
         if (plant.getPlantSizeClass() == PlantSize.SMALL) {
-            for (int slot : new int[] { SLOT_NE, SLOT_SW, SLOT_NW, SLOT_SE }) {
+            for (int slot : new int[] { Slot14Profile.SLOT_NE, Slot14Profile.SLOT_SW, Slot14Profile.SLOT_NW, Slot14Profile.SLOT_SE }) {
                 if (garden.getStackInSlot(slot) == null)
                     return slot;
             }
         }
 
-        for (int slot : new int[] { SLOT_LEFT, SLOT_RIGHT, SLOT_TOP, SLOT_BOTTOM, SLOT_TOP_LEFT, SLOT_BOTTOM_RIGHT, SLOT_TOP_RIGHT, SLOT_BOTTOM_LEFT }) {
+        for (int slot : new int[] { Slot14Profile.SLOT_LEFT, Slot14Profile.SLOT_RIGHT, Slot14Profile.SLOT_TOP,
+            Slot14Profile.SLOT_BOTTOM, Slot14Profile.SLOT_TOP_LEFT, Slot14Profile.SLOT_BOTTOM_RIGHT,
+            Slot14Profile.SLOT_TOP_RIGHT, Slot14Profile.SLOT_BOTTOM_LEFT }) {
             if (!garden.isSlotValid(slot))
                 continue;
             if (garden.getStackInSlot(slot) == null)

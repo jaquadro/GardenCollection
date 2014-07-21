@@ -36,12 +36,6 @@ public class BlockWindowBox extends BlockGarden
 {
     public  static final String[] subTypes = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
-    public static final int SLOT_COVER = 0;
-    public static final int SLOT_NW = 1;
-    public static final int SLOT_NE = 2;
-    public static final int SLOT_SW = 3;
-    public static final int SLOT_SE = 4;
-
     private static ItemStack substrate = new ItemStack(Blocks.dirt, 1);
 
     private class LocalSlotProfile extends Slot5Profile
@@ -76,11 +70,11 @@ public class BlockWindowBox extends BlockGarden
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[]{
-            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER }, allSize),
-            new BasicSlotProfile.Slot(SLOT_NW, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_NE, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_SW, commonType, smallSize),
-            new BasicSlotProfile.Slot(SLOT_SE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot5Profile.SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER }, allSize),
+            new BasicSlotProfile.Slot(Slot5Profile.SLOT_NW, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot5Profile.SLOT_NE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot5Profile.SLOT_SW, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot5Profile.SLOT_SE, commonType, smallSize),
         });
     }
 
@@ -118,16 +112,16 @@ public class BlockWindowBox extends BlockGarden
         TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
 
         if (hitX <= .5) {
-            if (hitZ <= .5 && tileEntity.isSlotValid(SLOT_NW))
-                return SLOT_NW;
-            else if (tileEntity.isSlotValid(SLOT_SW))
-                return SLOT_SW;
+            if (hitZ <= .5 && tileEntity.isSlotValid(Slot5Profile.SLOT_NW))
+                return Slot5Profile.SLOT_NW;
+            else if (tileEntity.isSlotValid(Slot5Profile.SLOT_SW))
+                return Slot5Profile.SLOT_SW;
         }
         else {
-            if (hitZ <= .5 && tileEntity.isSlotValid(SLOT_NE))
-                return SLOT_NE;
-            else if (tileEntity.isSlotValid(SLOT_SE))
-                return SLOT_SE;
+            if (hitZ <= .5 && tileEntity.isSlotValid(Slot5Profile.SLOT_NE))
+                return Slot5Profile.SLOT_NE;
+            else if (tileEntity.isSlotValid(Slot5Profile.SLOT_SE))
+                return Slot5Profile.SLOT_SE;
         }
 
         return TileEntityGarden.SLOT_INVALID;
@@ -151,10 +145,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(SLOT_NE);
-        boolean validNW = te.isSlotValid(SLOT_NW);
-        boolean validSE = te.isSlotValid(SLOT_SE);
-        boolean validSW = te.isSlotValid(SLOT_SW);
+        boolean validNE = te.isSlotValid(Slot5Profile.SLOT_NE);
+        boolean validNW = te.isSlotValid(Slot5Profile.SLOT_NW);
+        boolean validSE = te.isSlotValid(Slot5Profile.SLOT_SE);
+        boolean validSW = te.isSlotValid(Slot5Profile.SLOT_SW);
 
         float yMin = te.isUpper() ? .5f : 0;
         float yMax = te.isUpper() ? 1 : .5f;
@@ -182,10 +176,10 @@ public class BlockWindowBox extends BlockGarden
     @Override
     public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
         TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        boolean validNE = te.isSlotValid(SLOT_NE);
-        boolean validNW = te.isSlotValid(SLOT_NW);
-        boolean validSE = te.isSlotValid(SLOT_SE);
-        boolean validSW = te.isSlotValid(SLOT_SW);
+        boolean validNE = te.isSlotValid(Slot5Profile.SLOT_NE);
+        boolean validNW = te.isSlotValid(Slot5Profile.SLOT_NW);
+        boolean validSE = te.isSlotValid(Slot5Profile.SLOT_SE);
+        boolean validSW = te.isSlotValid(Slot5Profile.SLOT_SW);
 
         setBlockBounds(world, x, y, z, validNW, validNE, validSW, validSE);
     }

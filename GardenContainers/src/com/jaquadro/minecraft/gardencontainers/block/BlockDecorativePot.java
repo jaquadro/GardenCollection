@@ -28,9 +28,6 @@ import java.util.List;
 
 public class BlockDecorativePot extends BlockGardenContainer
 {
-    public static final int SLOT_CENTER = 0;
-    public static final int SLOT_COVER = 1;
-
     private class LocalSlotProfile extends Slot2Profile
     {
         public LocalSlotProfile (Slot[] slots) {
@@ -57,8 +54,8 @@ public class BlockDecorativePot extends BlockGardenContainer
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[] {
-            new BasicSlotProfile.Slot(SLOT_CENTER, commonType, allSize),
-            new BasicSlotProfile.Slot(SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
+            new BasicSlotProfile.Slot(Slot2Profile.SLOT_CENTER, commonType, allSize),
+            new BasicSlotProfile.Slot(Slot2Profile.SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
         });
     }
 
@@ -75,15 +72,15 @@ public class BlockDecorativePot extends BlockGardenContainer
 
     @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
-        return SLOT_CENTER;
+        return Slot2Profile.SLOT_CENTER;
     }
 
     @Override
     protected int getEmptySlotForPlant (World world, int x, int y, int z, EntityPlayer player, PlantItem plant) {
         if (plant.getPlantTypeClass() == PlantType.GROUND_COVER)
-            return SLOT_COVER;
+            return Slot2Profile.SLOT_COVER;
 
-        return SLOT_CENTER;
+        return Slot2Profile.SLOT_CENTER;
     }
 
     @Override
@@ -132,7 +129,7 @@ public class BlockDecorativePot extends BlockGardenContainer
         ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
 
         if (item != null && item.getItem() == Items.flint_and_steel) {
-            ItemStack substrate = getGardenSubstrate(world, x, y, z, SLOT_CENTER);
+            ItemStack substrate = getGardenSubstrate(world, x, y, z, Slot2Profile.SLOT_CENTER);
             if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack)) {
                 if (world.isAirBlock(x, y + 1, z)) {
                     world.playSoundEffect(x + .5, y + .5, z + .5, "fire.ignite", 1, world.rand.nextFloat() * .4f + .8f);
@@ -176,7 +173,7 @@ public class BlockDecorativePot extends BlockGardenContainer
     }
 
     private boolean isSconceLit (IBlockAccess world, int x, int y, int z) {
-        ItemStack substrate = getGardenSubstrate(world, x, y, z, SLOT_CENTER);
+        ItemStack substrate = getGardenSubstrate(world, x, y, z, Slot2Profile.SLOT_CENTER);
         if (substrate != null && substrate.getItem() == Item.getItemFromBlock(Blocks.netherrack))
             return world.getBlock(x, y + 1, z) == ModBlocks.smallFire;
 
