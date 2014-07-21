@@ -1,3 +1,4 @@
+
 buildscript {
     repositories {
         mavenCentral()
@@ -18,8 +19,8 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.0.0"
-group= "com.jaquadro.garden_trees" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "garden_trees"
+group= "com.jaquadro.gardencollection" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "GardenCollection"
 
 minecraft {
     version = "1.7.10-10.13.0.1180"
@@ -28,10 +29,18 @@ minecraft {
 
 sourceSets.main {
     java {
-        srcDirs project.projectDir.getPath() + '/src'
+        srcDirs = [
+                project.projectDir.getPath() + '/../GardenCore/src',
+                project.projectDir.getPath() + '/../GardenContainers/src',
+                project.projectDir.getPath() + '/../GardenTrees/src'
+        ]
     }
     resources {
-        srcDirs project.projectDir.getPath() + '/resources'
+        srcDirs = [
+                project.projectDir.getPath() + '/../GardenCore/resources',
+                project.projectDir.getPath() + '/../GardenContainers/resources',
+                project.projectDir.getPath() + '/../GardenTrees/resources'
+        ]
     }
 }
 
@@ -69,4 +78,17 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+jar {
+    classifier = 'universal'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+artifacts {
+    archives deobfJar
 }
