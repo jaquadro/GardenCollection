@@ -54,6 +54,9 @@ public class BlockDecorativePot extends BlockGardenContainer
 
     @Override
     protected boolean isValidSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {
+        if (itemStack == null || itemStack.getItem() == null)
+            return false;
+        
         if (Block.getBlockFromItem(itemStack.getItem()) == Blocks.netherrack)
             return true;
 
