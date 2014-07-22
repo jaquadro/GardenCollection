@@ -1,16 +1,20 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityCompostBin;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
-public class BlockCompostBin extends Block
+public class BlockCompostBin extends BlockContainer
 {
     private static final int ICON_SIDE = 0;
     private static final int ICON_TOP = 1;
@@ -69,5 +73,10 @@ public class BlockCompostBin extends Block
         icons[ICON_TOP] = register.registerIcon(GardenCore.MOD_ID + ":compost_bin_top");
         icons[ICON_BOTTOM] = register.registerIcon(GardenCore.MOD_ID + ":compost_bin_bottom");
         icons[ICON_INNER] = register.registerIcon(GardenCore.MOD_ID + ":compost_bin_inner");
+    }
+
+    @Override
+    public TileEntity createNewTileEntity (World world, int p_149915_2_) {
+        return new TileEntityCompostBin();
     }
 }
