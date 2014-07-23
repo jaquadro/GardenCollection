@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
+import com.jaquadro.minecraft.gardencore.core.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -22,15 +23,23 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
     private ItemStack[] compostItemStacks = new ItemStack[10];
 
     // The number of ticks remaining to decompose the current item
-    private int binDecomposeTime;
+    public int binDecomposeTime;
 
     // The slot actively being decomposed
     private int currentItemSlot;
 
     // The number of ticks that a fresh copy of the currently-decomposing item would decompose for
-    private int currentItemDecomposeTime;
+    public int currentItemDecomposeTime;
 
     private String customName;
+
+    public int getDecompTime () {
+        return binDecomposeTime;
+    }
+
+    public int getCurrentItemDecompTime () {
+        return currentItemDecomposeTime;
+    }
 
     @Override
     public void readFromNBT (NBTTagCompound tag) {
@@ -105,22 +114,28 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
             if (binDecomposeTime != 0 || filledSlotCount > 0) {
                 if (binDecomposeTime == 0) {
-                    if (compostItemStacks[currentItemSlot] != null) {
+                    /*if (currentItemSlot >= 0 && compostItemStacks[currentItemSlot] != null) {
                         --compostItemStacks[currentItemSlot].stackSize;
                         shouldUpdate = true;
-                    }
 
-                    if (compostItemStacks[currentItemSlot].stackSize == 0) {
-                        compostItemStacks[currentItemSlot] = compostItemStacks[currentItemSlot].getItem().getContainerItem(compostItemStacks[currentItemSlot]);
+                        if (compostItemStacks[currentItemSlot].stackSize == 0)
+                            compostItemStacks[currentItemSlot] = compostItemStacks[currentItemSlot].getItem().getContainerItem(compostItemStacks[currentItemSlot]);
+                    }*/
+                    if (canCompost()) {
+                        compostItem();
                         shouldUpdate = true;
                     }
 
                     currentItemSlot = selectRandomFilledSlot();
-                    currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
-                    binDecomposeTime = currentItemDecomposeTime;
+                    currentItemDecomposeTime = 0;
 
-                    if (binDecomposeTime > 0)
-                        shouldUpdate = true;
+                    if (currentItemSlot >= 0) {
+                        currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
+                        binDecomposeTime = currentItemDecomposeTime;
+
+                        if (binDecomposeTime > 0)
+                            shouldUpdate = true;
+                    }
                 }
             }
 
@@ -134,17 +149,52 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
             markDirty();
     }
 
+    private boolean canCompost () {
+        if (currentItemSlot == -1)
+            return false;
+        if (compostItemStacks[currentItemSlot] == null)
+            return false;
+        if (compostItemStacks[currentItemSlot].stackSize == 0)
+            return false;
+
+        if (compostItemStacks[9] == null)
+            return true;
+
+        int result = compostItemStacks[9].stackSize + 1;
+        return result <= getInventoryStackLimit() && result <= compostItemStacks[9].getMaxStackSize();
+    }
+
+    public void compostItem () {
+        if (canCompost()) {
+            ItemStack resultStack = new ItemStack(ModItems.compostPile);
+
+            if (compostItemStacks[9] == null)
+                compostItemStacks[9] = resultStack;
+            else if (compostItemStacks[9].getItem() == resultStack.getItem())
+                compostItemStacks[9].stackSize += resultStack.stackSize;
+
+            --compostItemStacks[currentItemSlot].stackSize;
+            if (compostItemStacks[currentItemSlot].stackSize == 0)
+                compostItemStacks[currentItemSlot] = null;
+
+            currentItemSlot = -1;
+        }
+    }
+
     private int selectRandomFilledSlot () {
         int filledSlotCount = 0;
         for (int i = 0; i < 9; i++)
             filledSlotCount += (compostItemStacks[i] != null) ? 1 : 0;
 
+        if (filledSlotCount == 0)
+            return -1;
+
         int index = worldObj.rand.nextInt(filledSlotCount);
         for (int i = 0, c = 0; i < 9; i++) {
-            if (c == index)
-                return i;
-            if (compostItemStacks[i] != null)
-                c++;
+            if (compostItemStacks[i] != null) {
+                if (c++ == index)
+                    return i;
+            }
         }
 
         return -1;

@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencore.core;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.block.*;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityCompostBin;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenFarmland;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenSoil;
@@ -35,6 +36,7 @@ public class ModBlocks
 
         GameRegistry.registerTileEntity(TileEntityGardenSoil.class, ModBlocks.getQualifiedName(gardenSoil));
         GameRegistry.registerTileEntity(TileEntityGardenFarmland.class, ModBlocks.getQualifiedName(gardenFarmland));
+        GameRegistry.registerTileEntity(TileEntityCompostBin.class, ModBlocks.getQualifiedName(compostBin));
     }
 
     public static Block get (String name) {
