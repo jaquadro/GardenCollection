@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
+import com.jaquadro.minecraft.gardencore.block.BlockCompostBin;
+import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -15,6 +17,9 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.IPlantable;
 
@@ -58,7 +63,10 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
         binDecomposeTime = tag.getShort("DecompTime");
         currentItemSlot = tag.getByte("DecompSlot");
-        currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
+        if (currentItemSlot >= 0)
+            currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
+        else
+            currentItemDecomposeTime = 0;
 
         if (tag.hasKey("CustomName", 8))
             customName = tag.getString("CustomName");
@@ -85,6 +93,20 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
         if (hasCustomInventoryName())
             tag.setString("CustomName", customName);
+    }
+
+    @Override
+    public Packet getDescriptionPacket () {
+        NBTTagCompound tag = new NBTTagCompound();
+        writeToNBT(tag);
+
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 5, tag);
+    }
+
+    @Override
+    public void onDataPacket (NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        readFromNBT(pkt.func_148857_g());
+        getWorldObj().func_147479_m(xCoord, yCoord, zCoord); // markBlockForRenderUpdate
     }
 
     public boolean isDecomposing () {
@@ -141,7 +163,7 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
             if (isDecomposing != binDecomposeTime > 0) {
                 shouldUpdate = true;
-                // Update block state
+                BlockCompostBin.updateBlockState(worldObj, xCoord, yCoord, zCoord);
             }
         }
 
@@ -179,6 +201,18 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
             currentItemSlot = -1;
         }
+    }
+
+    public boolean hasInputItems () {
+        int filledSlotCount = 0;
+        for (int i = 0; i < 9; i++)
+            filledSlotCount += (compostItemStacks[i] != null) ? 1 : 0;
+
+        return filledSlotCount > 0;
+    }
+
+    public boolean hasOutputItems () {
+        return compostItemStacks[9] != null && compostItemStacks[9].stackSize > 0;
     }
 
     private int selectRandomFilledSlot () {

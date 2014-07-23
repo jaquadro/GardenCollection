@@ -1,11 +1,14 @@
 package com.jaquadro.minecraft.gardencore.client.renderer;
 
 import com.jaquadro.minecraft.gardencore.block.BlockCompostBin;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityCompostBin;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
 
 public class CompostBinRenderer implements ISimpleBlockRenderingHandler
@@ -37,6 +40,18 @@ public class CompostBinRenderer implements ISimpleBlockRenderingHandler
         }
 
         boxRenderer.renderBox(renderer, block, x, y, z, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
+
+        TileEntityCompostBin te = (TileEntityCompostBin) world.getTileEntity(x, y, z);
+        if (te != null) {
+            if (te.hasInputItems()) {
+                boxRenderer.setExteriorIcon(Blocks.dirt.getIcon(1, 2));
+                boxRenderer.renderSolidBox(renderer, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
+            }
+            else if (te.hasOutputItems()) {
+                boxRenderer.setExteriorIcon(ModBlocks.gardenSoil.getIcon(1, 0));
+                boxRenderer.renderSolidBox(renderer, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
+            }
+        }
 
         //renderer.setRenderBoundsFromBlock(block);
         //RenderUtil.renderBlock(renderer, block, x, y, z);

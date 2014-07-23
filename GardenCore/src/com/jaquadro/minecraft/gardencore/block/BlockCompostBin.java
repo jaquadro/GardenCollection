@@ -54,6 +54,15 @@ public class BlockCompostBin extends BlockContainer
         return true;
     }
 
+    public static void updateBlockState (World world, int x, int y, int z) {
+        TileEntityCompostBin te = (TileEntityCompostBin) world.getTileEntity(x, y, z);
+        if (te == null)
+            return;
+
+        world.markBlockForUpdate(x, y, z);
+        //world.func_147479_m(x, y, z);
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta) {
