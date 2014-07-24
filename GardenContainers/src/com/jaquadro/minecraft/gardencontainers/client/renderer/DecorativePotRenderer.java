@@ -31,7 +31,6 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
     }
 
     private void renderInventoryBlock (BlockDecorativePot block, int metadata, int modelId, RenderBlocks renderer) {
-        Tessellator tessellator = Tessellator.instance;
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, metadata);
 
         float unit = .0625f;
