@@ -1,4 +1,5 @@
 container.gardenLayout=Arrange Plants
+container.compostBin=Compost Bin
 
 item.soilTestKit.name=Soil Test Kit
 item.soilTestKitUsed.name=Used Soil Test Kit

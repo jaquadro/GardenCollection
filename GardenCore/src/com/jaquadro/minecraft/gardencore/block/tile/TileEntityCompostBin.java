@@ -36,6 +36,8 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
     // The number of ticks that a fresh copy of the currently-decomposing item would decompose for
     public int currentItemDecomposeTime;
 
+    public int itemDecomposeCount;
+
     private String customName;
 
     public int getDecompTime () {
@@ -63,6 +65,8 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
         binDecomposeTime = tag.getShort("DecompTime");
         currentItemSlot = tag.getByte("DecompSlot");
+        itemDecomposeCount = tag.getByte("DecompCount");
+
         if (currentItemSlot >= 0)
             currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
         else
@@ -78,6 +82,7 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
         tag.setShort("DecompTime", (short)binDecomposeTime);
         tag.setByte("DecompSlot", (byte)currentItemSlot);
+        tag.setByte("DecompCount", (byte)itemDecomposeCount);
 
         NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < compostItemStacks.length; i++) {
@@ -118,7 +123,9 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
         if (currentItemDecomposeTime == 0)
             currentItemDecomposeTime = 200;
 
-        return binDecomposeTime * scale / currentItemDecomposeTime;
+        return (8 - itemDecomposeCount) * scale / 9 + (binDecomposeTime * scale / (currentItemDecomposeTime * 9));
+
+        //return binDecomposeTime * scale / currentItemDecomposeTime;
     }
 
     @Override
@@ -151,7 +158,7 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
                     currentItemSlot = selectRandomFilledSlot();
                     currentItemDecomposeTime = 0;
 
-                    if (currentItemSlot >= 0) {
+                    if (currentItemSlot >= 0 && (compostItemStacks[9] == null || compostItemStacks[9].stackSize < 64)) {
                         currentItemDecomposeTime = getItemDecomposeTime(compostItemStacks[currentItemSlot]);
                         binDecomposeTime = currentItemDecomposeTime;
 
@@ -188,12 +195,19 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
     public void compostItem () {
         if (canCompost()) {
-            ItemStack resultStack = new ItemStack(ModItems.compostPile);
+            if (itemDecomposeCount < 8)
+                itemDecomposeCount++;
 
-            if (compostItemStacks[9] == null)
-                compostItemStacks[9] = resultStack;
-            else if (compostItemStacks[9].getItem() == resultStack.getItem())
-                compostItemStacks[9].stackSize += resultStack.stackSize;
+            if (itemDecomposeCount == 8) {
+                ItemStack resultStack = new ItemStack(ModItems.compostPile);
+
+                if (compostItemStacks[9] == null)
+                    compostItemStacks[9] = resultStack;
+                else if (compostItemStacks[9].getItem() == resultStack.getItem())
+                    compostItemStacks[9].stackSize += resultStack.stackSize;
+
+                itemDecomposeCount = 0;
+            }
 
             --compostItemStacks[currentItemSlot].stackSize;
             if (compostItemStacks[currentItemSlot].stackSize == 0)
@@ -309,7 +323,7 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
     @Override
     public String getInventoryName () {
-        return hasCustomInventoryName() ? customName : "container.compost_bin";
+        return hasCustomInventoryName() ? customName : "container.compostBin";
     }
 
     @Override

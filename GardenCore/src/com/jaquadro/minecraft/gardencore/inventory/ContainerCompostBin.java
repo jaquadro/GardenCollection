@@ -23,6 +23,7 @@ public class ContainerCompostBin extends Container
     private TileEntityCompostBin tileCompost;
     private int lastDecompTime;
     private int lastItemDecompTime;
+    private int lastDecompCount;
 
     private List<Slot> playerSlots;
     private List<Slot> hotbarSlots;
@@ -54,6 +55,7 @@ public class ContainerCompostBin extends Container
 
         crafting.sendProgressBarUpdate(this, 0, tileCompost.getDecompTime());
         crafting.sendProgressBarUpdate(this, 1, tileCompost.getCurrentItemDecompTime());
+        crafting.sendProgressBarUpdate(this, 2, tileCompost.itemDecomposeCount);
     }
 
     @Override
@@ -66,10 +68,13 @@ public class ContainerCompostBin extends Container
                 crafting.sendProgressBarUpdate(this, 0, tileCompost.getDecompTime());
             if (lastItemDecompTime != tileCompost.getCurrentItemDecompTime())
                 crafting.sendProgressBarUpdate(this, 1, tileCompost.getCurrentItemDecompTime());
+            if (lastDecompCount != tileCompost.itemDecomposeCount)
+                crafting.sendProgressBarUpdate(this, 2, tileCompost.itemDecomposeCount);
         }
 
         lastDecompTime = tileCompost.getDecompTime();
         lastItemDecompTime = tileCompost.getCurrentItemDecompTime();
+        lastDecompCount = tileCompost.itemDecomposeCount;
     }
 
     @SideOnly(Side.CLIENT)
@@ -79,6 +84,8 @@ public class ContainerCompostBin extends Container
             tileCompost.binDecomposeTime = value;
         if (id == 1)
             tileCompost.currentItemDecomposeTime = value;
+        if (id == 2)
+            tileCompost.itemDecomposeCount = value;
     }
 
     @Override
