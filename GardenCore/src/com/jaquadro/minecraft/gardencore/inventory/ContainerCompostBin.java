@@ -35,7 +35,7 @@ public class ContainerCompostBin extends Container
                 addSlotToContainer(new Slot(tileEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
         }
 
-        addSlotToContainer(new SlotFurnace(inventory.player, tileEntity, 9, 123, 34));
+        addSlotToContainer(new SlotCompost(inventory.player, tileEntity, 9, 123, 34));
 
         playerSlots = new ArrayList<Slot>();
         for (int i = 0; i < 3; i++) {

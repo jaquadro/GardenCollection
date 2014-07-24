@@ -274,21 +274,24 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
     @Override
     public ItemStack decrStackSize (int slot, int count) {
+        ItemStack returnStack = null;
+
         if (compostItemStacks[slot] != null) {
             if (compostItemStacks[slot].stackSize <= count) {
-                ItemStack itemStack = compostItemStacks[slot];
+                returnStack = compostItemStacks[slot];
                 compostItemStacks[slot] = null;
-                return itemStack;
             }
             else {
-                ItemStack itemStack = compostItemStacks[slot].splitStack(count);
+                returnStack = compostItemStacks[slot].splitStack(count);
                 if (compostItemStacks[slot].stackSize == 0)
                     compostItemStacks[slot] = null;
-                return itemStack;
             }
         }
 
-        return null;
+        if (slot == 9 && compostItemStacks[slot] == null)
+            BlockCompostBin.updateBlockState(worldObj, xCoord, yCoord, zCoord);
+
+        return returnStack;
     }
 
     @Override
