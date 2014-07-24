@@ -32,6 +32,7 @@ public class CompostBinRenderer implements ISimpleBlockRenderingHandler
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 
+        boxRenderer.setUnit(.0625);
         boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
         boxRenderer.setCutIcon(block.getInnerIcon());
         for (int side = 0; side < 6; side++) {
@@ -40,6 +41,22 @@ public class CompostBinRenderer implements ISimpleBlockRenderingHandler
         }
 
         boxRenderer.renderBox(renderer, block, x, y, z, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
+
+        boxRenderer.setUnit(0);
+        boxRenderer.setInteriorIcon(block.getIcon(world, x, y, z, 1));
+
+        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .625, .9375, .875, .75, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .25, .9375, .875, .375, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+
+        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .625, 0, .875, .75, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .25, 0, .875, .375, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+
+        boxRenderer.renderInterior(renderer, block, x, y, z, .9375, .625, .125, 1, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(renderer, block, x, y, z, .9375, .25, .125, 1, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+
+        boxRenderer.renderInterior(renderer, block, x, y, z, 0, .625, .125, .0625, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(renderer, block, x, y, z, 0, .25, .125, .0625, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+
 
         TileEntityCompostBin te = (TileEntityCompostBin) world.getTileEntity(x, y, z);
         if (te != null) {
