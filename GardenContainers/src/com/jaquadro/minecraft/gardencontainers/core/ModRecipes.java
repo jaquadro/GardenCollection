@@ -41,5 +41,18 @@ public class ModRecipes
             GameRegistry.addRecipe(new ItemStack(ModBlocks.woodWindowBox, 1, i), "yxy",
                 'x', Items.flower_pot, 'y', new ItemStack(Blocks.planks, 1, i));
         }
+        for (int i = 0; i < ModBlocks.stoneWindowBox.getSubTypes().length; i++) {
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.stoneWindowBox, 1, i), "yxy",
+                'x', Items.flower_pot, 'y', new ItemStack(ModBlocks.stoneWindowBox.getBlockFromMeta(i), 1, ModBlocks.stoneWindowBox.getMetaFromMeta(i)));
+        }
+
+        // Smelting
+
+        GameRegistry.addSmelting(new ItemStack(ModBlocks.largePot, 1, 1), new ItemStack(ModBlocks.largePot, 1, 0), 0);
+
+        for (int i = 1; i < 256; i++) {
+            if (GardenContainers.config.hasPattern(i))
+                GameRegistry.addSmelting(new ItemStack(ModBlocks.largePot, 1, 1 | (i << 8)), new ItemStack(ModBlocks.largePot, 1, (i << 8)), 0);
+        }
     }
 }

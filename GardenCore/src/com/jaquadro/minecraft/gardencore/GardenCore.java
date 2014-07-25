@@ -1,9 +1,6 @@
 package com.jaquadro.minecraft.gardencore;
 
-import com.jaquadro.minecraft.gardencore.core.CommonProxy;
-import com.jaquadro.minecraft.gardencore.core.ModBlocks;
-import com.jaquadro.minecraft.gardencore.core.ModIntegration;
-import com.jaquadro.minecraft.gardencore.core.ModItems;
+import com.jaquadro.minecraft.gardencore.core.*;
 import com.jaquadro.minecraft.gardencore.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
 import cpw.mods.fml.common.*;
@@ -33,6 +30,7 @@ public class GardenCore
     public static final ModIntegration integration = new ModIntegration();
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModItems items = new ModItems();
+    public static final ModRecipes recipes = new ModRecipes();
 
     @Mod.Instance(MOD_ID)
     public static GardenCore instance;
@@ -59,8 +57,9 @@ public class GardenCore
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         integration.postInit();
+        recipes.init();
 
-        try {
+        /*try {
             List<ModContainer> loadedMods = Loader.instance().getActiveModList();
             for (ModContainer mod : loadedMods) {
                 String baseAssetPath = "assets/" + mod.getModId() + "/textures/blocks/";
@@ -128,6 +127,6 @@ public class GardenCore
         }
         catch (IOException e) {
             FMLLog.severe("Error processing jars: %s", e.getMessage());
-        }
+        }*/
     }
 }

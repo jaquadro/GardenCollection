@@ -37,7 +37,7 @@ public class BlockWindowBoxStone extends BlockWindowBox
         return getBlockFromMeta(meta).getIcon(side, getMetaFromMeta(meta));
     }
 
-    private Block getBlockFromMeta (int meta) {
+    public Block getBlockFromMeta (int meta) {
         switch (meta) {
             case 0: return Blocks.stone_slab;
             case 1: return Blocks.stonebrick;
@@ -49,9 +49,9 @@ public class BlockWindowBoxStone extends BlockWindowBox
         }
     }
 
-    private int getMetaFromMeta (int meta) {
+    public int getMetaFromMeta (int meta) {
         switch (meta) {
-            case 3: return 1;
+            case 2: return 1;
             default: return 0;
         }
     }

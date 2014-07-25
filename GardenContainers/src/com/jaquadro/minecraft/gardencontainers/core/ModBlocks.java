@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Level;
 public class ModBlocks
 {
     public static BlockWindowBox woodWindowBox;
-    public static BlockWindowBox stoneWindowBox;
+    public static BlockWindowBoxStone stoneWindowBox;
     public static BlockDecorativePot decorativePot;
     public static BlockLargePot largePot;
     public static BlockLargePot largePotColored;
