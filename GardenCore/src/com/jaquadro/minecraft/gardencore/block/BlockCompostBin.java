@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityCompostBin;
+import com.jaquadro.minecraft.gardencore.client.particle.EntitySteamFX;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
@@ -15,6 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BlockCompostBin extends BlockContainer
 {
@@ -31,6 +34,7 @@ public class BlockCompostBin extends BlockContainer
 
         setBlockName("compostBin");
         setCreativeTab(ModCreativeTabs.tabGardenCore);
+        setTickRandomly(true);
     }
 
     @Override
@@ -61,6 +65,23 @@ public class BlockCompostBin extends BlockContainer
 
         world.markBlockForUpdate(x, y, z);
         //world.func_147479_m(x, y, z);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick (World world, int x, int y, int z, Random random) {
+        TileEntityCompostBin te = (TileEntityCompostBin) world.getTileEntity(x, y, z);
+        if (te == null)
+            return;
+
+        if (te.isDecomposing()) {
+            float px = x + .5f + random.nextFloat() * .6f - .3f;
+            float py = y + .5f + random.nextFloat() * 6f / 16f;
+            float pz = z + .5f + random.nextFloat() * .6f - .3f;
+
+            //world.spawnParticle("smoke", px, py, pz, 0, 0, 0);
+            EntitySteamFX.spawnParticle(world, px, py, pz);
+        }
     }
 
     @Override

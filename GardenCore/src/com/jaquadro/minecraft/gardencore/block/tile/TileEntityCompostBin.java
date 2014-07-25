@@ -131,6 +131,8 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
     @Override
     public void updateEntity () {
         boolean isDecomposing = binDecomposeTime > 0;
+        int decompCount = itemDecomposeCount;
+
         boolean shouldUpdate = false;
 
         if (binDecomposeTime > 0)
@@ -168,7 +170,7 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
                 }
             }
 
-            if (isDecomposing != binDecomposeTime > 0) {
+            if (isDecomposing != binDecomposeTime > 0 || decompCount != itemDecomposeCount) {
                 shouldUpdate = true;
                 BlockCompostBin.updateBlockState(worldObj, xCoord, yCoord, zCoord);
             }
