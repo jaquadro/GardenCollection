@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.gardentrees;
 
-import com.jaquadro.minecraft.gardencore.core.ModIntegration;
+import com.jaquadro.minecraft.gardentrees.core.ModIntegration;
 import com.jaquadro.minecraft.gardentrees.core.CommonProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 import com.jaquadro.minecraft.gardentrees.core.ModRecipes;

@@ -200,4 +200,65 @@ public abstract class WorldGenStandardOrnTree extends WorldGenOrnamentalTree
             }
         };
     }
+
+    public static class SmallShrubTree extends WorldGenStandardOrnTree
+    {
+        public SmallShrubTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
+            super(blockNotify, wood, metaWood, leaves, metaLeaves);
+            layers = Arrays.asList(transform(PAT_3X3PLUS, LayerType.LEAF),
+                transform(PAT_1X1, LayerType.LEAF));
+        }
+
+        public static final OrnamentalTreeFactory FACTORY = new OrnamentalTreeFactory() {
+            @Override
+            public WorldGenOrnamentalTree create (Block woodBlock, int woodMeta, Block leafBlock, int leafMeta) {
+                return new SmallShrubTree(false, woodBlock, woodMeta, leafBlock, leafMeta);
+            }
+        };
+    }
+
+    public static class TallSmallOakTree extends WorldGenStandardOrnTree
+    {
+        public TallSmallOakTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
+            super(blockNotify, wood, metaWood, leaves, metaLeaves);
+            layers = Arrays.asList(transform(PAT_1X1, LayerType.TRUNK),
+                transform(PAT_3X3PLUS, LayerType.CORE),
+                transform(PAT_3X3, LayerType.CORE),
+                transform(PAT_1X1, LayerType.LEAF));
+        }
+
+        public static final OrnamentalTreeFactory FACTORY = new OrnamentalTreeFactory() {
+            @Override
+            public WorldGenOrnamentalTree create (Block woodBlock, int woodMeta, Block leafBlock, int leafMeta) {
+                return new TallSmallOakTree(false, woodBlock, woodMeta, leafBlock, leafMeta);
+            }
+        };
+    }
+
+    public static class LargeSpruceTree extends WorldGenStandardOrnTree
+    {
+        public LargeSpruceTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
+            super(blockNotify, wood, metaWood, leaves, metaLeaves);
+        }
+
+        @Override
+        protected void prepare (World world, Random rand, int x, int y, int z, int trunkHeight) {
+            layers = new ArrayList<String>();
+            layers.add(transform(PAT_1X1, LayerType.CORE));
+            layers.add(transform(PAT_3X3PLUS, LayerType.CORE));
+            layers.add(transform(PAT_3X3, LayerType.CORE));
+            layers.add(transform(PAT_5X5PLUS, LayerType.CORE));
+            layers.add(transform(PAT_3X3, LayerType.CORE));
+            layers.add(transform(PAT_3X3PLUS, LayerType.CORE));
+            layers.add(transform(PAT_3X3PLUS, LayerType.LEAF));
+            layers.add(transform(PAT_1X1, LayerType.LEAF));
+        }
+
+        public static final OrnamentalTreeFactory FACTORY = new OrnamentalTreeFactory() {
+            @Override
+            public WorldGenOrnamentalTree create (Block woodBlock, int woodMeta, Block leafBlock, int leafMeta) {
+                return new LargeSpruceTree(false, woodBlock, woodMeta, leafBlock, leafMeta);
+            }
+        };
+    }
 }

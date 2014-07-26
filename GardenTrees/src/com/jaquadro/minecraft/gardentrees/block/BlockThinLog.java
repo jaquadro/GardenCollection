@@ -1,11 +1,11 @@
 package com.jaquadro.minecraft.gardentrees.block;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
-import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ClientProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
+import com.jaquadro.minecraft.gardentrees.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -43,7 +43,7 @@ public class BlockThinLog extends BlockContainer
     public BlockThinLog (String blockName) {
         super(Material.wood);
 
-        setCreativeTab(ModCreativeTabs.tabGardenCore);
+        setCreativeTab(ModCreativeTabs.tabGardenTrees);
         setHardness(1.5f);
         setResistance(5f);
         setLightOpacity(0);
