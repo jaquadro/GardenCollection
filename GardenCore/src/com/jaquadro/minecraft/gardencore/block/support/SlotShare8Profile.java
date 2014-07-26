@@ -35,7 +35,7 @@ public class SlotShare8Profile implements ISlotShareProfile
             new SlotMapping(slotXZPP, slotXZNN, 1, 1)
         };
         map[slotXZNP - indexBase] = new SlotMapping[] {
-            new SlotMapping(slotXZNP, slotXZNP, -1, 0),
+            new SlotMapping(slotXZNP, slotXZPP, -1, 0),
             new SlotMapping(slotXZNP, slotXZNN, 0, 1),
             new SlotMapping(slotXZNP, slotXZPN, -1, 1)
         };
