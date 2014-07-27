@@ -69,6 +69,10 @@ public class ConfigManager
             config.get(categoryPatterns.getQualifiedName(), "pattern.7", "large_pot_7; Freewheel");
             config.get(categoryPatterns.getQualifiedName(), "pattern.8", "large_pot_8; Creepy Castle");
             config.get(categoryPatterns.getQualifiedName(), "pattern.9", "large_pot_9; Savannah");
+            config.get(categoryPatterns.getQualifiedName(), "pattern.10", "large_pot_10; Scales");
+            config.get(categoryPatterns.getQualifiedName(), "pattern.11", "large_pot_11; Growth");
+            config.get(categoryPatterns.getQualifiedName(), "pattern.12", "large_pot_12; Fern");
+            config.get(categoryPatterns.getQualifiedName(), "pattern.13", "large_pot_13; Diamond");
 
             config.getCategory(CAT_SETTINGS + ".pattern_2");
             config.get(CAT_SETTINGS + ".pattern_2", "gen", "dungeonChest, 3; mineshaftCorridor, 2");
