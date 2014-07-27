@@ -3,7 +3,7 @@ container.compostBin=Compost Bin
 
 item.soilTestKit.name=Soil Test Kit
 item.soilTestKitUsed.name=Used Soil Test Kit
-item.compostPile.name=Pile of Compost
+item.compostPile.name=Enriched Soil
 
 itemGroup.gardenCore=Garden Core
 
