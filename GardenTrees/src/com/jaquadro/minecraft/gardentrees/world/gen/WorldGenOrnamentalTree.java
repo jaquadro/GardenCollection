@@ -29,6 +29,7 @@ public abstract class WorldGenOrnamentalTree extends WorldGenAbstractTree
     protected final static String PAT_3X3PLUS = " X " + "XTX" + " X ";
     protected final static String PAT_3X3IPLUS = "X X" + " T " + "X X";
     protected final static String PAT_3X3UNBAL = "0X " + "XTX" + " X ";
+    protected final static String PAT_3X3OPT = " 0 " + "1X2" + " 3 ";
     protected final static String PAT_5X5 = "XXXXX" + "XXXXX" + "XXTXX" + "XXXXX" + "XXXXX";
     protected final static String PAT_5X5PLUS = "  X  " + " XXX " + "XXTXX" + " XXX " + "  X  ";
     protected final static String PAT_5X5PLUS2 = " XXX " + "XXXXX" + "XXTXX" + "XXXXX" + " XXX ";

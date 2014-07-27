@@ -261,4 +261,26 @@ public abstract class WorldGenStandardOrnTree extends WorldGenOrnamentalTree
             }
         };
     }
+
+    public static class SmallCanopyTree extends WorldGenStandardOrnTree
+    {
+        public SmallCanopyTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
+            super(blockNotify, wood, metaWood, leaves, metaLeaves);
+        }
+
+        @Override
+        protected void prepare (World world, Random rand, int x, int y, int z, int trunkHeight) {
+            layers = new ArrayList<String>();
+            layers.add(transform(PAT_3X3OPT, LayerType.TRUNK, rand.nextInt()));
+            layers.add(transform(PAT_5X5PLUS2, LayerType.CORE));
+            layers.add(transform(PAT_3X3, LayerType.LEAF));
+        }
+
+        public static final OrnamentalTreeFactory FACTORY = new OrnamentalTreeFactory() {
+            @Override
+            public WorldGenOrnamentalTree create (Block woodBlock, int woodMeta, Block leafBlock, int leafMeta) {
+                return new SmallCanopyTree(false, woodBlock, woodMeta, leafBlock, leafMeta);
+            }
+        };
+    }
 }

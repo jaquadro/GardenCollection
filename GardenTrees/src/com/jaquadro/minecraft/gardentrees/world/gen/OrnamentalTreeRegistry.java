@@ -25,6 +25,7 @@ public class OrnamentalTreeRegistry
         registerTree("small_pine", WorldGenStandardOrnTree.SmallPineTree.FACTORY);
         registerTree("small_mahogany", WorldGenStandardOrnTree.SmallMahoganyTree.FACTORY);
         registerTree("small_shrub", WorldGenStandardOrnTree.SmallShrubTree.FACTORY);
+        registerTree("small_canopy", WorldGenStandardOrnTree.SmallCanopyTree.FACTORY);
         registerTree("tall_small_oak", WorldGenStandardOrnTree.TallSmallOakTree.FACTORY);
         registerTree("large_oak", WorldGenStandardOrnTree.LargeOakTree.FACTORY);
         registerTree("large_spruce", WorldGenStandardOrnTree.LargeSpruceTree.FACTORY);

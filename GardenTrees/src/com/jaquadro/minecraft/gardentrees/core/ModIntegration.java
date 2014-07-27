@@ -1,9 +1,6 @@
 package com.jaquadro.minecraft.gardentrees.core;
 
-import com.jaquadro.minecraft.gardentrees.integration.BiomesOPlentyIntegration;
-import com.jaquadro.minecraft.gardentrees.integration.GardenCoreIntegration;
-import com.jaquadro.minecraft.gardentrees.integration.NaturaIntegration;
-import com.jaquadro.minecraft.gardentrees.integration.TreecapitatorIntegration;
+import com.jaquadro.minecraft.gardentrees.integration.*;
 
 public class ModIntegration
 {
@@ -15,5 +12,6 @@ public class ModIntegration
         GardenCoreIntegration.init();
         BiomesOPlentyIntegration.init();
         NaturaIntegration.init();
+        TwilightForestIntegration.init();
     }
 }

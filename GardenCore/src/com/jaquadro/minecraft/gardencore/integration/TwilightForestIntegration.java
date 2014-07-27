@@ -23,32 +23,21 @@ public class TwilightForestIntegration
 
         PlantRegistry plantReg = PlantRegistry.instance();
 
-        plantReg.registerPlantInfo(MOD_ID, "TFPlant", 3, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));  // Moss patch
-        plantReg.registerPlantInfo(MOD_ID, "TFPlant", 5, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));  // Clover patch
-        plantReg.registerPlantInfo(MOD_ID, "TFPlant", 13, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE));     // Torchberry
-        plantReg.registerPlantInfo(MOD_ID, "TFPlant", 14, new SimplePlantInfo(PlantType.HANGING, PlantSize.FULL));      // Root srand
-
-        // Sickly Twilight Oak (small oak)
-        // Canopy Tree (small canopy)
-        // Twilight Mangrove (small mangrove)
-        // Darkwood (small canopy)
-        // Robust Oak (super tall / huge)
-        // Tree of Time (large oak)
-        // Tree of Transformation (small canopy)
-        // Miner's Tree (small pick)
-        // Sorting Tree (small oak)
-        // Rainbow Oak Tree (small oak)
+        plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 3, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));  // Moss patch
+        plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 5, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));  // Clover patch
+        plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 13, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE));     // Torchberry
+        plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 14, new SimplePlantInfo(PlantType.HANGING, PlantSize.FULL));      // Root srand
     }
 
     private static void initWood () {
-        Block log = GameRegistry.findBlock(MOD_ID, "TFLog");
-        Block magicLog = GameRegistry.findBlock(MOD_ID, "TFMagicLog");
+        Block log = GameRegistry.findBlock(MOD_ID, "tile.TFLog");
+        Block magicLog = GameRegistry.findBlock(MOD_ID, "tile.TFMagicLog");
 
-        Block leaves = GameRegistry.findBlock(MOD_ID, "TFLeaves");  // (oak, canopy, mangrove, rainbow)
-        Block magicLeaves = GameRegistry.findBlock(MOD_ID, "TFMagicLeaves"); // (time, trans, mine, sort)
-        Block darkLeaves = GameRegistry.findBlock(MOD_ID, "TFDarkLeaves");
+        Block leaves = GameRegistry.findBlock(MOD_ID, "tile.TFLeaves");  // (oak, canopy, mangrove, rainbow)
+        Block magicLeaves = GameRegistry.findBlock(MOD_ID, "tile.TFMagicLeaves"); // (time, trans, mine, sort)
+        Block darkLeaves = GameRegistry.findBlock(MOD_ID, "tile.DarkLeaves");
 
-        Item sapling = GameRegistry.findItem(MOD_ID, "TFSapling");
+        Item sapling = Item.getItemFromBlock(GameRegistry.findBlock(MOD_ID, "tile.TFSapling"));
 
         WoodRegistry woodReg = WoodRegistry.instance();
 
