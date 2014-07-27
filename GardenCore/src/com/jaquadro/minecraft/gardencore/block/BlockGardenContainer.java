@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.block;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +29,7 @@ public abstract class BlockGardenContainer extends BlockGarden
         ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
         if (item == null)
             return false;
-        
+
         int slot = getSlot(world, x, y, z, player, hitX, hitY, hitZ);
 
         if (applySubstrateToGarden(world, x, y, z, (itemStack == null) ? player : null, slot, item))
@@ -100,7 +101,8 @@ public abstract class BlockGardenContainer extends BlockGarden
             || block == Blocks.soul_sand
             || block == Blocks.grass
             || block == Blocks.water
-            || block == Blocks.farmland;
+            || block == Blocks.farmland
+            || block == ModBlocks.gardenSoil;
     }
 
     protected ItemStack translateSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {

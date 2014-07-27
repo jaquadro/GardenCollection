@@ -13,6 +13,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = GardenTrees.MOD_ID, name = GardenTrees.MOD_NAME, version = GardenTrees.MOD_VERSION, dependencies = "required-after:gardencore")
 public class GardenTrees
@@ -42,6 +43,7 @@ public class GardenTrees
         proxy.registerRenderers();
         integration.init();
 
+        MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
         FMLCommonHandler.instance().bus().register(new ForgeEventHandler());
 
         GameRegistry.registerFuelHandler(new FuelHandler());

@@ -21,5 +21,7 @@ public class ModRecipes
             'x', Items.stick, 'y', Items.iron_ingot, 'z', ModItems.compostPile);
         GameRegistry.addRecipe(new ItemStack(ModItems.gardenTrowel), "  x", " y ", "z  ",
             'x', Items.stick, 'y', Items.iron_ingot, 'z', ModItems.compostPile);
+
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.gardenSoil), Blocks.dirt, ModItems.compostPile);
     }
 }

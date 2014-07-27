@@ -67,7 +67,7 @@ public class ItemTrowel extends Item
             }
         }
 
-        if (world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z) && (block == Blocks.grass || block == Blocks.dirt)) {
+        /*if (world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z) && (block == Blocks.grass || block == Blocks.dirt)) {
             Block.SoundType stepSound = ModBlocks.gardenSoil.stepSound;
             world.playSoundEffect( + .5f, y + .5f, z + .5f, stepSound.getStepResourcePath(), (stepSound.getVolume() + .5f) / 2, stepSound.getPitch() * .8f);
 
@@ -77,7 +77,7 @@ public class ItemTrowel extends Item
             }
 
             return true;
-        }
+        }*/
 
         return false;
     }
