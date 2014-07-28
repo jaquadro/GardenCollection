@@ -1,10 +1,7 @@
 package com.jaquadro.minecraft.gardencore.api;
 
 import com.jaquadro.minecraft.gardencore.api.plant.*;
-import com.jaquadro.minecraft.gardencore.client.renderer.plant.CropsPlantRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.plant.DoublePlantRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.plant.GroundCoverPlantRenderer;
+import com.jaquadro.minecraft.gardencore.client.renderer.plant.*;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.integration.VanillaMetaResolver;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
@@ -60,6 +57,7 @@ public final class PlantRegistry
 
         registerPlantRenderer(1, new CrossedSquaresPlantRenderer());
         registerPlantRenderer(40, new DoublePlantRenderer());
+        registerPlantRenderer(Blocks.double_plant, 0, new SunflowerRenderer());
 
         VanillaMetaResolver vanillaResolver = new VanillaMetaResolver();
         registerPlantMetaResolver(Blocks.red_flower, vanillaResolver);
@@ -205,11 +203,20 @@ public final class PlantRegistry
         return defaultPlantInfo;
     }
 
+    public boolean isValidPlantBlock (Block block) {
+        if (block == null)
+            return false;
+        if (block instanceof IPlantable)
+            return true;
 
+        Item item = Item.getItemFromBlock(block);
+        if (item instanceof IPlantable)
+            return true;
+
+        return false;
+    }
 
     // API Stuff
-
-
 
     public static IPlantable getPlantable (ItemStack plantItemStack) {
         if (plantItemStack == null || plantItemStack.getItem() == null)
