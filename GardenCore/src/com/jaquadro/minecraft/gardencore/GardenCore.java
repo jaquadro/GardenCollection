@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 @Mod(modid = GardenCore.MOD_ID, name = GardenCore.MOD_NAME, version = GardenCore.MOD_VERSION)
 public class GardenCore
 {
-    public static final String MOD_ID = "gardencore";
+    public static final String MOD_ID = "GardenCore";
     public static final String MOD_NAME = "Garden Core";
-    public static final String MOD_VERSION = "1.0.0-1.7.2";
+    public static final String MOD_VERSION = "1.0.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencore.";
 
     public static final ModIntegration integration = new ModIntegration();

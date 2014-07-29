@@ -1,8 +1,8 @@
 [
 {
-	"modid": "GardenContainers",
-	"name": "Garden Containers",
-	"description": "A variety of containers for planting vegetation.",
+	"modid": "GardenTrees",
+	"name": "Garden Trees",
+	"description": "Ornamental trees, posts, and fences.",
 	"version": "1.0.0",
 	"credits": "By jaquadro",
 	"logoFile": "",

@@ -19,12 +19,12 @@ import net.minecraftforge.common.ChestGenHooks;
 
 import java.io.File;
 
-@Mod(modid = GardenContainers.MOD_ID, name = GardenContainers.MOD_NAME, version = GardenContainers.MOD_VERSION, dependencies = "required-after:gardencore")
+@Mod(modid = GardenContainers.MOD_ID, name = GardenContainers.MOD_NAME, version = GardenContainers.MOD_VERSION, dependencies = "required-after:GardenCore")
 public class GardenContainers
 {
-    public static final String MOD_ID = "gardencontainers";
+    public static final String MOD_ID = "GardenContainers";
     public static final String MOD_NAME = "Garden Containers";
-    public static final String MOD_VERSION = "1.0.0-1.7.2";
+    public static final String MOD_VERSION = "1.0.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencontainers.";
 
     public static final ModBlocks blocks = new ModBlocks();

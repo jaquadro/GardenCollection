@@ -15,7 +15,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class GardenCoreIntegration
 {
-    public static final String MOD_ID = "gardencore";
+    public static final String MOD_ID = "GardenCore";
 
     public static void init () {
         if (!Loader.isModLoaded(MOD_ID))

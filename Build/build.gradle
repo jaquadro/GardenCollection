@@ -19,8 +19,8 @@ buildscript {
 apply plugin: 'forge'
 
 version = "1.0.0"
-group= "com.jaquadro.gardencollection" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "GardenCollection"
+group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "GardenStuff"
 
 minecraft {
     version = "1.7.10-10.13.0.1180"
