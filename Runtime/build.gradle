@@ -22,7 +22,7 @@ group= "com.jaquadro.runtime" // http://maven.apache.org/guides/mini/guide-namin
 archivesBaseName = "runtime"
 
 minecraft {
-    version = "1.7.10-10.13.0.1160"
+    version = "1.7.10-10.13.0.1180"
     assetDir = "../Runtime/assets"
 }
 
