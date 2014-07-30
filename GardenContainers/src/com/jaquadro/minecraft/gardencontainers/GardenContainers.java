@@ -19,7 +19,7 @@ import net.minecraftforge.common.ChestGenHooks;
 
 import java.io.File;
 
-@Mod(modid = GardenContainers.MOD_ID, name = GardenContainers.MOD_NAME, version = GardenContainers.MOD_VERSION, dependencies = "required-after:GardenCore")
+@Mod(modid = GardenContainers.MOD_ID, name = GardenContainers.MOD_NAME, version = GardenContainers.MOD_VERSION, dependencies = "required-after:GardenCore@[1.0,1.1)")
 public class GardenContainers
 {
     public static final String MOD_ID = "GardenContainers";
