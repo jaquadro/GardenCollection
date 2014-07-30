@@ -81,7 +81,7 @@ processResources
 }
 
 jar {
-    classifier = 'universal'
+    //classifier = 'universal'
 }
 
 task deobfJar(type: Jar) {

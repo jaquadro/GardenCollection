@@ -148,6 +148,11 @@ public class BlockDecorativePot extends BlockGardenContainer
     }
 
     @Override
+    public boolean canHarvestBlock (EntityPlayer player, int meta) {
+        return true;
+    }
+
+    @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
         if (isSconceLit(world, x, y, z)) {
             world.notifyBlocksOfNeighborChange(x, y, z, this);

@@ -226,6 +226,11 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
+    public boolean canHarvestBlock (EntityPlayer player, int meta) {
+        return true;
+    }
+
+    @Override
     public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
         for (int i = 0; i < 6; i++)
             blockList.add(new ItemStack(item, 1, i));

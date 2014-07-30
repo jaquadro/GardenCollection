@@ -19,6 +19,24 @@ public abstract class BlockGardenContainer extends BlockGarden
     }
 
     @Override
+    public void breakBlock (World world, int x, int y, int z, Block block, int data) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+
+        if (te != null) {
+            ItemStack substrate = te.getSubstrateSource();
+            if (substrate == null)
+                substrate = te.getSubstrate();
+            if (substrate != null) {
+                ItemStack item = substrate.copy();
+                item.stackSize = 1;
+                dropBlockAsItem(world, x, y, z, item);
+            }
+        }
+
+        super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
     public ItemStack getGardenSubstrate (IBlockAccess world, int x, int y, int z, int slot) {
         TileEntityGarden te = getTileEntity(world, x, y, z);
         return (te != null) ? te.getSubstrate() : null;
