@@ -282,7 +282,7 @@ public abstract class BlockGarden extends BlockContainer
 
         TileEntityGarden garden = getTileEntity(world, x, y, z);
 
-        garden.setInventorySlotContents(slot, plant.getPlantSourceItem());
+        garden.setInventorySlotContents(slot, plant.getPlantSourceItem().copy());
 
         if (player != null && !player.capabilities.isCreativeMode) {
             ItemStack currentItem = player.inventory.getCurrentItem();
