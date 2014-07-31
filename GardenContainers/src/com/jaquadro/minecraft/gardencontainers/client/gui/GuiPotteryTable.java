@@ -21,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class GuiPotteryTable extends GuiContainer
 {
-    private static final ResourceLocation guiTextures = new ResourceLocation(GardenContainers.MOD_ID, "textures/gui/potteryTable.png");
+    private static final ResourceLocation guiTextures = new ResourceLocation("gardencontainers", "textures/gui/potteryTable.png");
     private TileEntityPotteryTable tilePotteryTable;
 
     public GuiPotteryTable (InventoryPlayer inventory, TileEntityPotteryTable tileEntity) {

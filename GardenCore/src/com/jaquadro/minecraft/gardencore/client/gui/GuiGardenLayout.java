@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiGardenLayout extends GuiContainer
 {
-    private static final ResourceLocation guiTextures = new ResourceLocation(GardenCore.MOD_ID, "textures/gui/gardenLayout.png");
+    private static final ResourceLocation guiTextures = new ResourceLocation("gardencore", "textures/gui/gardenLayout.png");
     private TileEntityGarden tileGarden;
 
     private static final int slotBaseX = 44;

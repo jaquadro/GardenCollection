@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiCompostBin extends GuiContainer
 {
-    private static final ResourceLocation compostBinGuiTextures = new ResourceLocation(GardenCore.MOD_ID, "textures/gui/compostBin.png");
+    private static final ResourceLocation compostBinGuiTextures = new ResourceLocation("gardencore", "textures/gui/compostBin.png");
     private TileEntityCompostBin tileCompost;
 
     public GuiCompostBin (InventoryPlayer inventory, TileEntityCompostBin tileEntity) {
