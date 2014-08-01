@@ -24,7 +24,7 @@ public class GardenCore
 {
     public static final String MOD_ID = "GardenCore";
     public static final String MOD_NAME = "Garden Core";
-    public static final String MOD_VERSION = "1.0.0";
+    public static final String MOD_VERSION = "1.1.0";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardencore.";
 
     public static final ModIntegration integration = new ModIntegration();

@@ -49,7 +49,7 @@ public abstract class BlockLargePot extends BlockGardenContainer
         public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
             if (gardenTile.getSubstrate() == null)
                 return null;
-            
+
             return super.openPlantGUI(playerInventory, gardenTile, client);
         }
     }
