@@ -31,6 +31,9 @@ public class ModItems
 
     public static UniqueMetaIdentifier getUniqueMetaID (Item item, int meta) {
         String name = GameData.getItemRegistry().getNameForObject(item);
+        if (name == null)
+            return null;
+
         return new UniqueMetaIdentifier(name, meta);
     }
 

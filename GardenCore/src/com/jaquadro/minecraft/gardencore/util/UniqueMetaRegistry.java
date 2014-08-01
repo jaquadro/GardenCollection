@@ -19,6 +19,9 @@ public class UniqueMetaRegistry<E>
     }
 
     public E getEntry (UniqueMetaIdentifier id) {
+        if (id == null)
+            return null;
+
         if (registry.containsKey(id))
             return registry.get(id);
 
