@@ -18,6 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.*;
@@ -42,6 +43,14 @@ public abstract class BlockLargePot extends BlockGardenContainer
         @Override
         public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
             return -.0625f;
+        }
+
+        @Override
+        public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
+            if (gardenTile.getSubstrate() == null)
+                return null;
+            
+            return super.openPlantGUI(playerInventory, gardenTile, client);
         }
     }
 

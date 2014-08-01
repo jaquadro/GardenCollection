@@ -3,6 +3,8 @@ package com.jaquadro.minecraft.gardencore.block.support;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.world.IBlockAccess;
 
 import java.util.ArrayList;
@@ -71,6 +73,11 @@ public class BasicSlotProfile implements ISlotProfile
     @Override
     public float getPlantOffsetZ (IBlockAccess blockAccess, int x, int y, int z, int slot) {
         return 0;
+    }
+
+    @Override
+    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
+        return null;
     }
 
     @Override

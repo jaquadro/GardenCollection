@@ -1,5 +1,10 @@
 package com.jaquadro.minecraft.gardencore.block.support;
 
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.client.gui.GuiGardenLayout;
+import com.jaquadro.minecraft.gardencore.inventory.ContainerGarden;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.world.IBlockAccess;
 
 public class Slot14Profile extends BasicSlotProfile
@@ -42,5 +47,13 @@ public class Slot14Profile extends BasicSlotProfile
     @Override
     public float getPlantOffsetZ (IBlockAccess blockAccess, int x, int y, int z, int slot) {
         return plantOffsetZ[slot];
+    }
+
+    @Override
+    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
+        if (client)
+            return new GuiGardenLayout(playerInventory, gardenTile);
+        else
+            return new ContainerGarden(playerInventory, gardenTile);
     }
 }
