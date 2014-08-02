@@ -13,6 +13,8 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -329,6 +331,42 @@ public class BlockThinLog extends BlockContainer
             default:
                 return Blocks.log;
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
+        BlockThinLog block = (BlockThinLog) world.getBlock(x, y, z);
+
+        if (te == null || block == null)
+            return true;
+
+        try {
+            byte count = 4;
+            for (int ix = 0; ix < count; ++ix) {
+                for (int iy = 0; iy < count; ++iy) {
+                    for (int iz = 0; iz < count; ++iz) {
+                        double xOff = (double)x + ((double)ix + 0.5D) / (double)count;
+                        double yOff = (double)y + ((double)iy + 0.5D) / (double)count;
+                        double zOff = (double)z + ((double)iz + 0.5D) / (double)count;
+
+                        int protoMeta = te.getProtoMeta();
+                        Block protoBlock = te.getProtoBlock();
+                        if (protoBlock == null)
+                            protoBlock = Blocks.log;
+
+                        EntityDiggingFX fx = new EntityDiggingFX(world, xOff, yOff, zOff, xOff - (double) x - 0.5D, yOff - (double) y - 0.5D, zOff - (double) z - 0.5D, this, meta);
+                        fx.setParticleIcon(block.getIcon(world.rand.nextInt(6), te.composeMetadata(protoBlock, protoMeta)));
+
+                        effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
+                    }
+                }
+            }
+        }
+        catch (Exception e) { }
+
+        return true;
     }
 
     private TileEntityWoodProxy getTileEntity (IBlockAccess blockAccess, int x, int y, int z) {
