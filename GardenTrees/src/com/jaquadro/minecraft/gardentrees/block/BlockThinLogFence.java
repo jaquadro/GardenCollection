@@ -11,6 +11,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -22,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -232,6 +235,84 @@ public class BlockThinLogFence extends BlockContainer
             default:
                 return Blocks.log;
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean addHitEffects (World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
+        TileEntityWoodProxy te = getTileEntity(worldObj, target.blockX, target.blockY, target.blockZ);
+        BlockThinLogFence block = (BlockThinLogFence) worldObj.getBlock(target.blockX, target.blockY, target.blockZ);
+
+        if (te == null || block == null)
+            return false;
+
+        int protoMeta = te.getProtoMeta();
+        Block protoBlock = te.getProtoBlock();
+        if (protoBlock == null)
+            protoBlock = Blocks.log;
+
+        float f = 0.1F;
+        double xPos = target.blockX + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (f * 2.0F)) + f + block.getBlockBoundsMinX();
+        double yPos = target.blockY + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxY() - block.getBlockBoundsMinY() - (f * 2.0F)) + f + block.getBlockBoundsMinY();
+        double zPos = target.blockZ + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxZ() - block.getBlockBoundsMinZ() - (f * 2.0F)) + f + block.getBlockBoundsMinZ();
+
+        if (target.sideHit == 0)
+            yPos = target.blockY + block.getBlockBoundsMinY() - f;
+        if (target.sideHit == 1)
+            yPos = target.blockY + block.getBlockBoundsMaxY() + f;
+        if (target.sideHit == 2)
+            zPos = target.blockZ + block.getBlockBoundsMinZ() - f;
+        if (target.sideHit == 3)
+            zPos = target.blockZ + block.getBlockBoundsMaxZ() + f;
+        if (target.sideHit == 4)
+            xPos = target.blockX + block.getBlockBoundsMinX() - f;
+        if (target.sideHit == 5)
+            xPos = target.blockX + block.getBlockBoundsMaxX() + f;
+
+        EntityDiggingFX fx = new EntityDiggingFX(worldObj, xPos, yPos, zPos, 0.0D, 0.0D, 0.0D, block, worldObj.getBlockMetadata(target.blockX, target.blockY, target.blockZ));
+        fx.applyColourMultiplier(target.blockX, target.blockY, target.blockZ);
+        fx.multiplyVelocity(0.2F).multipleParticleScaleBy(0.6F);
+        fx.setParticleIcon(block.getIcon(worldObj.rand.nextInt(6), te.composeMetadata(protoBlock, protoMeta)));
+
+        effectRenderer.addEffect(fx);
+
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
+        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
+        BlockThinLogFence block = (BlockThinLogFence) world.getBlock(x, y, z);
+
+        if (te == null || block == null)
+            return false;
+
+        int protoMeta = te.getProtoMeta();
+        Block protoBlock = te.getProtoBlock();
+        if (protoBlock == null)
+            protoBlock = Blocks.log;
+
+        try {
+            byte count = 4;
+            for (int ix = 0; ix < count; ++ix) {
+                for (int iy = 0; iy < count; ++iy) {
+                    for (int iz = 0; iz < count; ++iz) {
+                        double xOff = (double)x + ((double)ix + 0.5D) / (double)count;
+                        double yOff = (double)y + ((double)iy + 0.5D) / (double)count;
+                        double zOff = (double)z + ((double)iz + 0.5D) / (double)count;
+
+                        EntityDiggingFX fx = new EntityDiggingFX(world, xOff, yOff, zOff, xOff - (double) x - 0.5D, yOff - (double) y - 0.5D, zOff - (double) z - 0.5D, this, meta);
+                        fx.setParticleIcon(block.getIcon(world.rand.nextInt(6), te.composeMetadata(protoBlock, protoMeta)));
+
+                        effectRenderer.addEffect(fx.applyColourMultiplier(x, y, z));
+                    }
+                }
+            }
+        }
+        catch (Exception e) { }
+
+        return true;
     }
 
     @Override
