@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardentrees.core;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.GardenTrees;
 import com.jaquadro.minecraft.gardentrees.block.BlockFlowerLeaves;
+import com.jaquadro.minecraft.gardentrees.block.BlockGTSapling;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLogFence;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
@@ -12,6 +13,7 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemMultiTexture;
 import org.apache.logging.log4j.Level;
 
 public class ModBlocks
@@ -19,12 +21,16 @@ public class ModBlocks
     public static BlockThinLog thinLog;
     public static BlockThinLogFence thinLogFence;
     public static BlockFlowerLeaves flowerLeaves;
+    public static BlockGTSapling sapling;
 
     public void init () {
         thinLog = new BlockThinLog("thinLog");
         thinLogFence = new BlockThinLogFence("thinLogFence");
         flowerLeaves = new BlockFlowerLeaves("flowerLeaves");
+        sapling = new BlockGTSapling("sapling");
 
+        //GameRegistry.registerBlock(sapling, "sapling");
+        //GameRegistry.registerBlock(sapling, ItemMultiTexture.class, "sapling", (Block)sapling, sapling.types);
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, "flower_leaves");

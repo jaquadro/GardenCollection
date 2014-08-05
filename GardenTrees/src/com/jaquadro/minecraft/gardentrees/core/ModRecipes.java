@@ -43,6 +43,8 @@ public class ModRecipes
             }
         }
 
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling), new ItemStack(Blocks.sapling, 1, 1));
+
         addExtraWoodRecipes();
     }
 
