@@ -1,6 +1,8 @@
 itemGroup.gardenTrees=Garden Trees
 
 tile.sapling.pine.name=Ponderosa Pine Sapling
+tile.sapling.swamp.name=Swamp Sapling
+tile.sapling.tallbirch.name=Tall Birch Sapling
 tile.thinLog.name=Post
 tile.thinLog.oak.name=Oak Wood Post
 tile.thinLog.spruce.name=Spruce Wood Post

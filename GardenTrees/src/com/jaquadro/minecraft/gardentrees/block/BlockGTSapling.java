@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenForest;
+import net.minecraft.world.gen.feature.WorldGenSwamp;
 import net.minecraft.world.gen.feature.WorldGenTaiga1;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -22,7 +24,7 @@ import java.util.Random;
 
 public class BlockGTSapling extends BlockSapling
 {
-    public static final String[] types = new String[] { "pine" };
+    public static final String[] types = new String[] { "pine", "swamp", "tallbirch" };
 
     @SideOnly(Side.CLIENT)
     private static IIcon[] icons;
@@ -51,7 +53,23 @@ public class BlockGTSapling extends BlockSapling
 
         switch (id) {
             case 0:
-                generator = new WorldGenTaiga1();
+                generator = new WorldGenTaiga1() {
+                    @Override
+                    protected void setBlockAndNotifyAdequately (World world, int x, int y, int z, Block block, int meta) {
+                        world.setBlock(x, y, z, block, meta, 3);
+                    }
+                };
+                break;
+            case 1:
+                generator = new WorldGenSwamp() {
+                    @Override
+                    protected void setBlockAndNotifyAdequately (World world, int x, int y, int z, Block block, int meta) {
+                        world.setBlock(x, y, z, block, meta, 3);
+                    }
+                };
+                break;
+            case 2:
+                generator = new WorldGenForest(true, true);
                 break;
             default:
                 return;
@@ -72,6 +90,8 @@ public class BlockGTSapling extends BlockSapling
     @SideOnly(Side.CLIENT)
     public void getSubBlocks (Item item, CreativeTabs creativeTabs, List list) {
         list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 1));
+        list.add(new ItemStack(item, 1, 2));
     }
 
     @Override

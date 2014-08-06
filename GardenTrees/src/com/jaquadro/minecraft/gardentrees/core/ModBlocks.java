@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardentrees.block.BlockGTSapling;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLogFence;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
+import com.jaquadro.minecraft.gardentrees.item.ItemGTSapling;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLogFence;
 import cpw.mods.fml.common.FMLLog;
@@ -29,7 +30,7 @@ public class ModBlocks
         flowerLeaves = new BlockFlowerLeaves("flowerLeaves");
         sapling = new BlockGTSapling("sapling");
 
-        //GameRegistry.registerBlock(sapling, "sapling");
+        GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
         //GameRegistry.registerBlock(sapling, ItemMultiTexture.class, "sapling", (Block)sapling, sapling.types);
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
