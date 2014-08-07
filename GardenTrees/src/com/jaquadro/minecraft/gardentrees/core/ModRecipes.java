@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardentrees.core;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
+import com.jaquadro.minecraft.gardencore.core.ModItems;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
@@ -43,7 +44,11 @@ public class ModRecipes
             }
         }
 
-        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling), new ItemStack(Blocks.sapling, 1, 1));
+        ItemStack enrichedSoil = new ItemStack(ModItems.compostPile);
+
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling), new ItemStack(Blocks.sapling, 1, 1), enrichedSoil);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling, 1, 1), new ItemStack(Blocks.sapling), new ItemStack(Blocks.vine), enrichedSoil);
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling, 1, 2), new ItemStack(Blocks.sapling, 1, 2), enrichedSoil);
 
         addExtraWoodRecipes();
     }
