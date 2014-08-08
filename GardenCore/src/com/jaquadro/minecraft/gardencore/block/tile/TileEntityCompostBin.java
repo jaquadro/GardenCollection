@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardencore.core.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -264,6 +265,8 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
                 return 100;
             if (block instanceof IGrowable)
                 return 100;
+            if (block instanceof BlockLeavesBase)
+                return 150;
         }
 
         if (item == Items.stick)
