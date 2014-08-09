@@ -99,11 +99,6 @@ public abstract class BlockLargePot extends BlockGardenContainer
     public abstract String[] getSubTypes ();
 
     @Override
-    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
-        return -.0625f;
-    }
-
-    @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return Slot14Profile.SLOT_CENTER;
     }

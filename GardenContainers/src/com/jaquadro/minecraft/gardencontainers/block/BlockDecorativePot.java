@@ -84,11 +84,6 @@ public class BlockDecorativePot extends BlockGardenContainer
     }
 
     @Override
-    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
-        return -.0625f;
-    }
-
-    @Override
     public int getRenderType () {
         return ClientProxy.decorativePotRenderID;
     }

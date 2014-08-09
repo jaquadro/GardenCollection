@@ -28,7 +28,6 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
     }
 
     private void renderInventoryBlock (BlockLargePot block, int metadata, int modelId, RenderBlocks renderer) {
-        Tessellator tessellator = Tessellator.instance;
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, metadata & 15);
 
         boolean blendEnabled = GL11.glIsEnabled(GL11.GL_BLEND);
@@ -78,7 +77,6 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
     }
 
     private boolean renderWorldBlockPass0 (IBlockAccess world, int x, int y, int z, BlockLargePot block, int modelId, RenderBlocks renderer) {
-        Tessellator tessellator = Tessellator.instance;
         int metadata = world.getBlockMetadata(x, y, z);
 
         boxRenderer.setUnit(.0625);

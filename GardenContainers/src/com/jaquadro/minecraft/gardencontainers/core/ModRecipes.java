@@ -22,6 +22,9 @@ public class ModRecipes
                 ModBlocks.largePot, new ItemStack(Items.dye, 1, i));
         }
 
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.mediumPot, 3), "x x", "x x", " x ",
+            'x', Blocks.hardened_clay);
+
         GameRegistry.addRecipe(new ItemStack(ModBlocks.potteryTable), "x", "y",
             'x', Items.clay_ball, 'y', Blocks.crafting_table);
 

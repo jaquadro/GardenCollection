@@ -182,18 +182,6 @@ public abstract class BlockGarden extends BlockContainer
         return height;
     }
 
-    public float getPlantOffsetX (IBlockAccess world, int x, int y, int z, int slot) {
-        return 0;
-    }
-
-    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
-        return 0;
-    }
-
-    public float getPlantOffsetZ (IBlockAccess world, int x, int y, int z, int slot) {
-        return 0;
-    }
-
     public final boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ) {
         return applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, true);
     }

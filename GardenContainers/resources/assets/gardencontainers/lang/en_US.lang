@@ -20,6 +20,7 @@ tile.largePotColored.lightBlue.name=Light Blue Large Flower Pot
 tile.largePotColored.magenta.name=Magenta Large Flower Pot
 tile.largePotColored.orange.name=Orange Large Flower Pot
 tile.largePotColored.white.name=White Large Flower Pot
+tile.mediumPot.default.name=Medium Flower Pot
 tile.woodWindowBox.oak.name=Oak Window Box
 tile.woodWindowBox.spruce.name=Spruce Window Box
 tile.woodWindowBox.birch.name=Birch Window Box

@@ -99,15 +99,6 @@ public class BlockWindowBox extends BlockGarden
     }
 
     @Override
-    public float getPlantOffsetY (IBlockAccess world, int x, int y, int z, int slot) {
-        TileEntityWindowBox te = getTileEntity(world, x, y, z);
-        if (te == null)
-            return 0;
-
-        return te.isUpper() ? -.0625f : -.5f - .0625f;
-    }
-
-    @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         TileEntityWindowBox tileEntity = getTileEntity(world, x, y, z);
 
