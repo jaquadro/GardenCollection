@@ -25,6 +25,14 @@ public class ModRecipes
         GameRegistry.addRecipe(new ItemStack(ModBlocks.mediumPot, 3), "x x", "x x", " x ",
             'x', Blocks.hardened_clay);
 
+        for (int i = 0; i < 16; i++) {
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.mediumPotColored, 3, i), "x x", "x x", " x ",
+                'x', new ItemStack(Blocks.stained_hardened_clay, 1, 15 - i));
+
+            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mediumPotColored, 1, i),
+                ModBlocks.mediumPot, new ItemStack(Items.dye, 1, i));
+        }
+
         GameRegistry.addRecipe(new ItemStack(ModBlocks.potteryTable), "x", "y",
             'x', Items.clay_ball, 'y', Blocks.crafting_table);
 

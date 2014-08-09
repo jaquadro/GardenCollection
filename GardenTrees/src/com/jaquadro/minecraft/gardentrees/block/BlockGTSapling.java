@@ -78,7 +78,7 @@ public class BlockGTSapling extends BlockSapling
         world.setBlock(x, y, z, Blocks.air, 0, 4);
 
         if (!(generator.generate(world, random, x, y, z)))
-            world.setBlock(x, y, z, this, 1, 4);
+            world.setBlock(x, y, z, this, id, 4);
     }
 
     @Override
