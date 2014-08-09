@@ -10,30 +10,20 @@ import com.jaquadro.minecraft.gardencore.block.support.BasicConnectionProfile;
 import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
 import com.jaquadro.minecraft.gardencore.block.support.Slot2Profile;
 import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockMediumPot extends BlockGardenContainer
+public abstract class BlockMediumPot extends BlockGardenContainer
 {
-    public static final String[] subTypes = new String[] { "default" };
-
     private class LocalSlotProfile extends Slot2Profile
     {
         public LocalSlotProfile (Slot[] slots) {
@@ -45,9 +35,6 @@ public class BlockMediumPot extends BlockGardenContainer
             return -.0625f * 5;
         }
     }
-
-    @SideOnly(Side.CLIENT)
-    private IIcon iconSide;
 
     public BlockMediumPot (String blockName) {
         super(blockName, Material.rock);
@@ -69,9 +56,7 @@ public class BlockMediumPot extends BlockGardenContainer
         });
     }
 
-    public static String[] getSubTypes () {
-        return subTypes;
-    }
+    public abstract String[] getSubTypes ();
 
     @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
@@ -133,15 +118,5 @@ public class BlockMediumPot extends BlockGardenContainer
     public TileEntityMediumPot getTileEntity (IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         return (te != null && te instanceof TileEntityMediumPot) ? (TileEntityMediumPot) te : null;
-    }
-
-    @Override
-    public void getSubBlocks (Item item, CreativeTabs creativeTabs, List blockList) {
-        blockList.add(new ItemStack(item, 1, 0));
-    }
-
-    @Override
-    public IIcon getIcon (int side, int data) {
-        return Blocks.hardened_clay.getIcon(side, 0);
     }
 }

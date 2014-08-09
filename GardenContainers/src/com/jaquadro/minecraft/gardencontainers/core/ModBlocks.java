@@ -23,6 +23,7 @@ public class ModBlocks
     public static BlockLargePot largePot;
     public static BlockLargePot largePotColored;
     public static BlockMediumPot mediumPot;
+    public static BlockMediumPot mediumPotColored;
     public static BlockPotteryTable potteryTable;
 
     public void init () {
@@ -31,7 +32,8 @@ public class ModBlocks
         decorativePot = new BlockDecorativePot("decorativePot");
         largePot = new BlockLargePotStandard("largePot");
         largePotColored = new BlockLargePotColored("largePotColored");
-        mediumPot = new BlockMediumPot("mediumPot");
+        mediumPot = new BlockMediumPotStandard("mediumPot");
+        mediumPotColored = new BlockMediumPotColored("mediumPotColored");
         potteryTable = new BlockPotteryTable("potteryTable");
 
         GameRegistry.registerBlock(woodWindowBox, ItemWindowBox.class, "wood_window_box");
@@ -40,6 +42,7 @@ public class ModBlocks
         GameRegistry.registerBlock(largePot, ItemLargePot.class, "large_pot");
         GameRegistry.registerBlock(largePotColored, ItemLargePot.class, "large_pot_colored");
         GameRegistry.registerBlock(mediumPot, ItemMediumPot.class, "medium_pot");
+        GameRegistry.registerBlock(mediumPotColored, ItemMediumPot.class, "medium_pot_colored");
         GameRegistry.registerBlock(potteryTable, "pottery_table");
 
         GameRegistry.registerTileEntity(TileEntityWindowBox.class, ModBlocks.getQualifiedName(woodWindowBox));
@@ -47,6 +50,7 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePot));
         GameRegistry.registerTileEntity(TileEntityLargePot.class, ModBlocks.getQualifiedName(largePotColored));
         GameRegistry.registerTileEntity(TileEntityMediumPot.class, ModBlocks.getQualifiedName(mediumPot));
+        GameRegistry.registerTileEntity(TileEntityMediumPot.class, ModBlocks.getQualifiedName(mediumPotColored));
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));
     }
 
