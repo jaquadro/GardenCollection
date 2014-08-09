@@ -54,10 +54,10 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
             return false;
 
         try {
-            if (ClientProxy.renderPass == 0)
+            //if (ClientProxy.renderPass == 0)
                 return renderWorldBlockPass0(world, x, y, z, (BlockMediumPot) block, modelId, renderer);
-            else if (ClientProxy.renderPass == 1)
-                return renderWorldBlockPass1(world, x, y, z, (BlockMediumPot) block, modelId, renderer);
+            //else if (ClientProxy.renderPass == 1)
+            //    return renderWorldBlockPass1(world, x, y, z, (BlockMediumPot) block, modelId, renderer);
         }
         catch (Exception e) { }
 
