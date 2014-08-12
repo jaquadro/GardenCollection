@@ -158,6 +158,16 @@ public class BlockDecorativePot extends BlockGardenContainer
     }
 
     @Override
+    public void onNeighborBlockChange (World world, int x, int y, int z, Block block) {
+        super.onNeighborBlockChange(world, x, y, z, block);
+
+        if (block == ModBlocks.smallFire && world.getBlock(x, y + 1, z) != ModBlocks.smallFire) {
+            world.notifyBlocksOfNeighborChange(x, y, z, this);
+            world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+        }
+    }
+
+    @Override
     public int isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side) {
         return (side == 1 && isSconceLit(world, x, y, z)) ? 15 : 0;
     }
