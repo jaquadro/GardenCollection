@@ -192,6 +192,9 @@ public abstract class BlockGarden extends BlockContainer
 
     protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
         ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
+        if (item == null)
+            return false;
+        
         int slot = getSlot(world, x, y, z, player, hitX, hitY, hitZ);
 
         if (applyTestKitToGarden(world, x, y, z, slot, item))
@@ -282,7 +285,7 @@ public abstract class BlockGarden extends BlockContainer
     }
 
     protected boolean applyTestKitToGarden (World world, int x, int y, int z, int slot, ItemStack testKit) {
-        if (testKit.getItem() != ModItems.usedSoilTestKit)
+        if (testKit == null || testKit.getItem() != ModItems.usedSoilTestKit)
             return false;
 
         ItemStack substrateStack = getGardenSubstrate(world, x, y, z, slot);
