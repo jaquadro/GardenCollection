@@ -194,7 +194,7 @@ public abstract class BlockGarden extends BlockContainer
         ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
         if (item == null)
             return false;
-        
+
         int slot = getSlot(world, x, y, z, player, hitX, hitY, hitZ);
 
         if (applyTestKitToGarden(world, x, y, z, slot, item))

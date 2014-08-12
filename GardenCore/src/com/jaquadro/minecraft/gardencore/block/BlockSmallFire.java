@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.block;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -10,6 +11,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -140,5 +142,24 @@ public class BlockSmallFire extends Block
     @SideOnly(Side.CLIENT)
     public IIcon getFireIcon (int layer) {
         return icons[layer];
+    }
+
+    public static boolean extinguishSmallFire (World world, EntityPlayer player, int x, int y, int z, int direction) {
+        switch (direction) {
+            case 0: y--; break;
+            case 1: y++; break;
+            case 2: z--; break;
+            case 3: z++; break;
+            case 4: x--; break;
+            case 5: x++; break;
+        }
+
+        if (world.getBlock(x, y, z) == ModBlocks.smallFire) {
+            world.playAuxSFXAtEntity(player, 1004, x, y, z, 0);
+            world.setBlockToAir(x, y, z);
+            return true;
+        }
+
+        return false;
     }
 }
