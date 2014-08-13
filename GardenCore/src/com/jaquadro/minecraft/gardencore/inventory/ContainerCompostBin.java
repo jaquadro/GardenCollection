@@ -8,7 +8,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -33,10 +32,10 @@ public class ContainerCompostBin extends Container
 
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++)
-                addSlotToContainer(new Slot(tileEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
+                addSlotToContainer(new SlotCompost(tileEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
         }
 
-        addSlotToContainer(new SlotCompost(inventory.player, tileEntity, 9, 123, 34));
+        addSlotToContainer(new SlotCompostOutput(inventory.player, tileEntity, 9, 123, 34));
 
         playerSlots = new ArrayList<Slot>();
         for (int i = 0; i < 3; i++) {
