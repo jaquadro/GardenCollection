@@ -35,6 +35,9 @@ public class BlockCompostBin extends BlockContainer
         setBlockName("compostBin");
         setCreativeTab(ModCreativeTabs.tabGardenCore);
         setTickRandomly(true);
+        setHardness(1.5f);
+        setResistance(5f);
+        setStepSound(Block.soundTypeWood);
     }
 
     @Override
