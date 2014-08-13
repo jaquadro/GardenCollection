@@ -24,18 +24,21 @@ public class ContainerCompostBin extends Container
     private int lastItemDecompTime;
     private int lastDecompCount;
 
+    private Slot outputSlot;
+    private List<Slot> compostSlots;
     private List<Slot> playerSlots;
     private List<Slot> hotbarSlots;
 
     public ContainerCompostBin (InventoryPlayer inventory, TileEntityCompostBin tileEntity) {
         tileCompost = tileEntity;
 
+        compostSlots = new ArrayList<Slot>();
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++)
-                addSlotToContainer(new SlotCompost(tileEntity, x + y * 3, 30 + x * 18, 17 + y * 18));
+                compostSlots.add(addSlotToContainer(new SlotCompost(tileEntity, x + y * 3, 30 + x * 18, 17 + y * 18)));
         }
 
-        addSlotToContainer(new SlotCompostOutput(inventory.player, tileEntity, 9, 123, 34));
+        outputSlot = addSlotToContainer(new SlotCompostOutput(inventory.player, tileEntity, 9, 123, 34));
 
         playerSlots = new ArrayList<Slot>();
         for (int i = 0; i < 3; i++) {
@@ -97,6 +100,9 @@ public class ContainerCompostBin extends Container
         ItemStack itemStack = null;
         Slot slot = (Slot) inventorySlots.get(slotIndex);
 
+        int compostStart = compostSlots.get(0).slotNumber;
+        int compostEnd = compostSlots.get(compostSlots.size() - 1).slotNumber + 1;
+
         // Assume inventory and hotbar slot IDs are contiguous
         int inventoryStart = playerSlots.get(0).slotNumber;
         int hotbarStart = hotbarSlots.get(0).slotNumber;
@@ -106,14 +112,24 @@ public class ContainerCompostBin extends Container
             ItemStack slotStack = slot.getStack();
             itemStack = slotStack.copy();
 
-            // Try merge stacks within inventory and hotbar spaces
-            if (slotIndex >= inventoryStart && slotIndex < hotbarEnd) {
-                if (slotIndex >= inventoryStart && slotIndex < hotbarStart) {
-                    if (!mergeItemStack(slotStack, hotbarStart, hotbarEnd, false))
-                        return null;
-                } else if (slotIndex >= hotbarStart && slotIndex < hotbarEnd && !this.mergeItemStack(slotStack, inventoryStart, hotbarStart, false))
+            // Try merge output into inventory and signal change
+            if (slotIndex == outputSlot.slotNumber) {
+                if (!mergeItemStack(slotStack, inventoryStart, hotbarEnd, true))
                     return null;
+                slot.onSlotChange(slotStack, itemStack);
             }
+
+            // Try merge stacks within inventory and hotbar spaces
+            else if (slotIndex >= inventoryStart && slotIndex < hotbarEnd) {
+                if (!TileEntityCompostBin.isItemDecomposable(slotStack) || !mergeItemStack(slotStack, compostStart, compostEnd, false)) {
+                    if (slotIndex >= inventoryStart && slotIndex < hotbarStart) {
+                        if (!mergeItemStack(slotStack, hotbarStart, hotbarEnd, false))
+                            return null;
+                    } else if (slotIndex >= hotbarStart && slotIndex < hotbarEnd && !this.mergeItemStack(slotStack, inventoryStart, hotbarStart, false))
+                        return null;
+                }
+            }
+
             // Try merge stack into inventory
             else if (!mergeItemStack(slotStack, inventoryStart, hotbarEnd, false))
                 return null;
