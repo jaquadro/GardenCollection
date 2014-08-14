@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.inventory;
 
+import com.jaquadro.minecraft.gardencore.block.BlockCompostBin;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityCompostBin;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -116,7 +117,9 @@ public class ContainerCompostBin extends Container
             if (slotIndex == outputSlot.slotNumber) {
                 if (!mergeItemStack(slotStack, inventoryStart, hotbarEnd, true))
                     return null;
+
                 slot.onSlotChange(slotStack, itemStack);
+                BlockCompostBin.updateBlockState(tileCompost.getWorldObj(), tileCompost.xCoord, tileCompost.yCoord, tileCompost.zCoord);
             }
 
             // Try merge stacks within inventory and hotbar spaces
