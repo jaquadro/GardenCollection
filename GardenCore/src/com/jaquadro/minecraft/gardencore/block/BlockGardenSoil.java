@@ -38,8 +38,8 @@ public class BlockGardenSoil extends BlockGarden
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
-        PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
-        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+        PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         connectionProfile = new BasicConnectionProfile();
         slotShareProfile = new SlotShare8Profile(Slot14Profile.SLOT_TOP_LEFT, Slot14Profile.SLOT_TOP,

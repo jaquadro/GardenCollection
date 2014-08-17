@@ -51,7 +51,7 @@ public class BlockDecorativePot extends BlockGardenContainer
         slotShareProfile = new SlotShare0Profile();
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
-        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(Slot2Profile.SLOT_CENTER, commonType, allSize),

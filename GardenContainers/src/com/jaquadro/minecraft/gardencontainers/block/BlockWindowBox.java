@@ -67,7 +67,7 @@ public class BlockWindowBox extends BlockGarden
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND };
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
-        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[]{
             new BasicSlotProfile.Slot(Slot5Profile.SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER }, allSize),

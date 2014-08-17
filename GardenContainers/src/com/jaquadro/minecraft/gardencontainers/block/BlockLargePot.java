@@ -78,8 +78,8 @@ public abstract class BlockLargePot extends BlockGardenContainer
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC_COVER, PlantType.AQUATIC_SURFACE};
 
         PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
-        PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.SMALL };
-        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.SMALL };
+        PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new LocalSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_CENTER, commonType, allSize),

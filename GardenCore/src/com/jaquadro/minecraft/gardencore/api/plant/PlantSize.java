@@ -15,6 +15,13 @@ public enum PlantSize
     LARGE,
 
     /**
+     * A plant with a base that fits within 3/4 of a block's width.
+     * Parts of the plant above the base 2-3 pixels may take up a full block, like large plants.
+     * Examples: Most larger flowers.
+     */
+    MEDIUM,
+
+    /**
      * A plant that takes up a quarter of a block or less.
      * Examples: Most small plants.  Dandelions, tulips, ferns.
      */
