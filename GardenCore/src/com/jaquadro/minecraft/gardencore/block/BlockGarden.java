@@ -264,6 +264,9 @@ public abstract class BlockGarden extends BlockContainer
         if (!isPlantValidForSubstrate(getGardenSubstrate(world, x, y, z, slot), plant))
             return false;
 
+        if (canSustainPlantIndependently(world, x, y, z, plant))
+            return false;
+
         return true;
     }
 

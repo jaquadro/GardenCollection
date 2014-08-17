@@ -10,6 +10,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
 import com.jaquadro.minecraft.gardencore.block.support.*;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +28,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
@@ -267,6 +270,29 @@ public abstract class BlockLargePot extends BlockGardenContainer
     }
 
     @Override
+    public boolean canSustainPlant (IBlockAccess world, int x, int y, int z, ForgeDirection direction, IPlantable plantable) {
+        TileEntityGarden gardenTile = getTileEntity(world, x, y, z);
+        EnumPlantType plantType = plantable.getPlantType(world, x, y, z);
+
+        if (plantType == EnumPlantType.Crop)
+            return substrateSupportsCrops(gardenTile.getSubstrate());
+
+        return false;
+    }
+
+    protected boolean substrateSupportsCrops (ItemStack substrate) {
+        if (substrate.getItem() == null)
+            return false;
+
+        if (Block.getBlockFromItem(substrate.getItem()) == ModBlocks.gardenFarmland)
+            return true;
+        if (Block.getBlockFromItem(substrate.getItem()) == Blocks.farmland)
+            return true;
+
+        return false;
+    }
+
+    @Override
     protected boolean applySubstrateToGarden (World world, int x, int y, int z, EntityPlayer player, int slot, ItemStack itemStack) {
         if (getGardenSubstrate(world, x, y, z, slot) != null)
             return false;
@@ -329,14 +355,18 @@ public abstract class BlockLargePot extends BlockGardenContainer
 
     protected void applyHoeToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {
         Block substrate = Block.getBlockFromItem(tile.getSubstrate().getItem());
-        if (substrate == Blocks.dirt || substrate == Blocks.grass) {
+        if (substrate == Blocks.dirt || substrate == Blocks.grass)
             tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 1), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
-            tile.markDirty();
+        else if (substrate == ModBlocks.gardenSoil)
+            tile.setSubstrate(new ItemStack(ModBlocks.gardenFarmland), new ItemStack(ModBlocks.gardenSoil));
+        else
+            return;
 
-            world.markBlockForUpdate(x, y, z);
-            world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.farmland.stepSound.getStepResourcePath(),
-                (Blocks.farmland.stepSound.getVolume() + 1) / 2f, Blocks.farmland.stepSound.getPitch() * .8f);
-        }
+        tile.markDirty();
+
+        world.markBlockForUpdate(x, y, z);
+        world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.farmland.stepSound.getStepResourcePath(),
+            (Blocks.farmland.stepSound.getVolume() + 1) / 2f, Blocks.farmland.stepSound.getPitch() * .8f);
     }
 
     @Override
