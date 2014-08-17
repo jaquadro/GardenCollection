@@ -25,6 +25,8 @@ public class NaturaIntegration
 
         for (int i : new int[] { 0, 1, 2 })
             plantReg.registerPlantInfo(MOD_ID, "Glowshroom", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        for (int i : new int[] { 0 })
+            plantReg.registerPlantInfo(MOD_ID, "Bluebells", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
 
         // Redwood (0): Super tall / huge
         // Eucalyptis (1): large branching
