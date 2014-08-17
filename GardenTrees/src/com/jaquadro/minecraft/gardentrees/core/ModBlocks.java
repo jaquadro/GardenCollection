@@ -2,12 +2,10 @@ package com.jaquadro.minecraft.gardentrees.core;
 
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.GardenTrees;
-import com.jaquadro.minecraft.gardentrees.block.BlockFlowerLeaves;
-import com.jaquadro.minecraft.gardentrees.block.BlockGTSapling;
-import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
-import com.jaquadro.minecraft.gardentrees.block.BlockThinLogFence;
+import com.jaquadro.minecraft.gardentrees.block.*;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.item.ItemGTSapling;
+import com.jaquadro.minecraft.gardentrees.item.ItemIvy;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLogFence;
 import cpw.mods.fml.common.FMLLog;
@@ -23,18 +21,20 @@ public class ModBlocks
     public static BlockThinLogFence thinLogFence;
     public static BlockFlowerLeaves flowerLeaves;
     public static BlockGTSapling sapling;
+    public static BlockIvy ivy;
 
     public void init () {
         thinLog = new BlockThinLog("thinLog");
         thinLogFence = new BlockThinLogFence("thinLogFence");
         flowerLeaves = new BlockFlowerLeaves("flowerLeaves");
         sapling = new BlockGTSapling("sapling");
+        ivy = new BlockIvy("ivy");
 
         GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
-        //GameRegistry.registerBlock(sapling, ItemMultiTexture.class, "sapling", (Block)sapling, sapling.types);
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, "flower_leaves");
+        GameRegistry.registerBlock(ivy, ItemIvy.class, "ivy");
 
         GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
     }
