@@ -27,6 +27,13 @@ public class TwilightForestIntegration
         plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 5, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL));  // Clover patch
         plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 13, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE));     // Torchberry
         plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", 14, new SimplePlantInfo(PlantType.HANGING, PlantSize.FULL));      // Root srand
+
+        for (int i : new int[] { 4 })
+            plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        for (int i : new int[] { 8, 9, 11 })
+            plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+
+        plantReg.registerPlantInfo(MOD_ID, "tile.TFSapling", new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
     }
 
     private static void initWood () {
