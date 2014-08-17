@@ -67,16 +67,23 @@ public final class PlantRegistry
         registerPlantMetaResolver(Blocks.tallgrass, vanillaResolver);
         registerPlantMetaResolver(Blocks.double_plant, vanillaResolver);
 
-
-
         for (int i : new int[] { 0, 2, 3, 4, 5, 6, 7, 8 })
             registerPlantInfo(Blocks.red_flower, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        for (int i : new int[] { 1 })
+            registerPlantInfo(Blocks.red_flower, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
         for (int i : new int[] { 0 })
             registerPlantInfo(Blocks.yellow_flower, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
-        for (int i : new int[] { 0, 1, 2, 3, 4, 5 })
+        for (int i : new int[] { 0, 1, 3, 4, 5 })
+            registerPlantInfo(Blocks.double_plant, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM, 2, 2, new int[] { i, i | 8 }));
+        for (int i : new int[] { 2 })
             registerPlantInfo(Blocks.double_plant, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE, 2, 2, new int[] { i, i | 8 }));
         for (int i : new int[] { 2 })
             registerPlantInfo(Blocks.tallgrass, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+        for (int i : new int[] { 0 })
+            registerPlantInfo(Blocks.tallgrass, i, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
+
+        registerPlantInfo(Blocks.sapling, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
+        registerPlantInfo(Blocks.deadbush, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
 
         registerPlantInfo(Blocks.red_mushroom, 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
         registerPlantInfo(Blocks.brown_mushroom, 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
