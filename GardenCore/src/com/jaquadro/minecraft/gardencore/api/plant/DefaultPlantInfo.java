@@ -11,7 +11,7 @@ public class DefaultPlantInfo implements IPlantInfo
 
     @Override
     public PlantSize getPlantSizeClass (Block block, int meta) {
-        return block.getRenderType() == 6 ? PlantSize.FULL : PlantSize.LARGE;
+        return block.getRenderType() == 6 ? PlantSize.FULL : PlantSize.MEDIUM;
     }
 
     @Override

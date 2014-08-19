@@ -31,9 +31,11 @@ public class BiomesOPlentyIntegration
         PlantRegistry plantReg = PlantRegistry.instance();
         plantReg.registerPlantMetaResolver(MOD_ID, "foliage", metaResolver);
 
-        // Default: deadgrass, desertgrass, desertsprouts, dunegrass
-        plantReg.registerPlantInfo(MOD_ID, "plants", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Spectral Fern
-        plantReg.registerPlantInfo(MOD_ID, "plants", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Thorns
+        // Default: spectralfern, thorns
+        // deadgrass, desertgrass, desertsprouts, dunegrass
+        for (int i : new int[] { 0, 1, 2, 3 })
+            plantReg.registerPlantInfo(MOD_ID, "plants", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
+
         plantReg.registerPlantInfo(MOD_ID, "plants", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Barley
         plantReg.registerPlantInfo(MOD_ID, "plants", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL, 1, 2));  // Cattail Stage 1 (cattail)
         plantReg.registerPlantInfo(MOD_ID, "plants", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));  // Rivercane
@@ -48,14 +50,13 @@ public class BiomesOPlentyIntegration
         for (int i : new int[] { 6, 7, 8, 9, 10, 11, 13, 14})
             plantReg.registerPlantRenderer(MOD_ID, "plants", i, PlantRegistry.CROPS_RENDERER);
 
-        // Default: sprout, shrub, wheatgrass, dampgrass, koru
+        // Default: shortgrass, mediumgrass, bush, poisonivy, berrybush
+        // sprout, shrub, wheatgrass, dampgrass, koru
+        for (int i : new int[] { 5, 9, 10, 12 })
+            plantReg.registerPlantInfo(MOD_ID, "foliage", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
+
         plantReg.registerPlantInfo(MOD_ID, "foliage", 0, new SimplePlantInfo(PlantType.AQUATIC_COVER, PlantSize.FULL)); // duckweed
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 1, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Short grass
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Medium grass
         plantReg.registerPlantInfo(MOD_ID, "foliage", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE, 2, 2, new int[] { 3, 6 })); // hedgebottom
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Bush
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Poison ivy
-        plantReg.registerPlantInfo(MOD_ID, "foliage", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));  // Berry bush
         plantReg.registerPlantInfo(MOD_ID, "foliage", 13, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // cloverpatch
         plantReg.registerPlantInfo(MOD_ID, "foliage", 14, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // leafpile
         plantReg.registerPlantInfo(MOD_ID, "foliage", 15, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // deadleafpile
@@ -66,15 +67,16 @@ public class BiomesOPlentyIntegration
         for (int i : new int[] { 0, 13, 14, 15 })
             plantReg.registerPlantRenderer(MOD_ID, "foliage", i, PlantRegistry.GROUND_COVER_RENDERER);
 
-        // Default: swampflower, violet, enderlotus, bromeliad
+        // Default: hydrangia, wildflower, anemone
+        // swampflower, violet, enderlotus, bromeliad
+        for (int i : new int[] { 1, 11, 12 })
+            plantReg.registerPlantInfo(MOD_ID, "flowers", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
+
         plantReg.registerPlantInfo(MOD_ID, "flowers", 0, new SimplePlantInfo(PlantType.GROUND_COVER, PlantSize.FULL)); // cloverpatch
         plantReg.registerPlantInfo(MOD_ID, "flowers", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // deadbloom
         plantReg.registerPlantInfo(MOD_ID, "flowers", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // glowflower
-        plantReg.registerPlantInfo(MOD_ID, "flowers", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // hydrangia
         plantReg.registerPlantInfo(MOD_ID, "flowers", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // cosmos
         plantReg.registerPlantInfo(MOD_ID, "flowers", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // daffodil
-        plantReg.registerPlantInfo(MOD_ID, "flowers", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // wildflower
-        plantReg.registerPlantInfo(MOD_ID, "flowers", 9, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // anemone
         plantReg.registerPlantInfo(MOD_ID, "flowers", 10, new SimplePlantInfo(PlantType.AQUATIC_SURFACE, PlantSize.SMALL)); // lilyflower
         plantReg.registerPlantInfo(MOD_ID, "flowers", 13, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM, 2, 2, new int[] { 13, 14 })); // eyebulbbottom
         plantReg.registerPlantInfo(MOD_ID, "flowers", 15, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // dandelion
@@ -83,13 +85,13 @@ public class BiomesOPlentyIntegration
         plantReg.registerPlantRenderer(MOD_ID, "flowers", 0, PlantRegistry.GROUND_COVER_RENDERER);
         plantReg.registerPlantRenderer(MOD_ID, "flowers", 10, PlantRegistry.GROUND_COVER_RENDERER);
 
-        // Default: lilyofthevalley, burningblossom, bluebells
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // hibiscus
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // lavender
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // goldenrod
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 6, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // minersdelight
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 7, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // icyiris
-        plantReg.registerPlantInfo(MOD_ID, "flowers2", 8, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // rose
+        // Default: hibiscus, lavender, minersdelight, icyiris
+        // lilyofthevalley, burningblossom, bluebells
+        for (int i : new int[] { 1, 2, 5 })
+            plantReg.registerPlantInfo(MOD_ID, "flowers2", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
+        // goldenrod, rose
+        for (int i : new int[] { 4, 8 })
+            plantReg.registerPlantInfo(MOD_ID, "flowers2", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
 
         plantReg.registerPlantRenderer(MOD_ID, "flowers2", PlantRegistry.CROSSED_SQUARES_RENDERER);
 
@@ -110,18 +112,15 @@ public class BiomesOPlentyIntegration
         plantReg.registerPlantInfo(MOD_ID, "flowervine", new SimplePlantInfo(PlantType.HANGING_SIDE, PlantSize.FULL));
         plantReg.registerPlantInfo(MOD_ID, "moss", new SimplePlantInfo(PlantType.SIDE_COVER, PlantSize.FULL));
 
-        // Default: stalagmite
+        plantReg.registerPlantInfo(MOD_ID, "stoneFormations", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE)); // atalagmite
         plantReg.registerPlantInfo(MOD_ID, "stoneFormations", 1, new SimplePlantInfo(PlantType.HANGING, PlantSize.LARGE)); // stalacmite
 
         plantReg.registerPlantRenderer(MOD_ID, "stoneFormations", PlantRegistry.CROSSED_SQUARES_RENDERER);
 
-        // Default:
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 0, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // toadstool
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 1, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // portabello
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 2, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL)); // bluemilk
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 3, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // glowshroom
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 4, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // flatmushroom
-        plantReg.registerPlantInfo(MOD_ID, "mushrooms", 5, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM)); // shadowshroom
+        // Default: glowshroom, flatmushroom, shadowshroom
+        // toadstool, portabello, bluemilk
+        for (int i : new int[] { 0, 1, 2 })
+            plantReg.registerPlantInfo(MOD_ID, "mushrooms", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
 
         plantReg.registerPlantRenderer(MOD_ID, "mushrooms", PlantRegistry.CROSSED_SQUARES_RENDERER);
 

@@ -31,7 +31,9 @@ public class TwilightForestIntegration
         for (int i : new int[] { 4 })
             plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
         for (int i : new int[] { 8, 9, 11 })
-            plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.SMALL));
+            plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
+        for (int i : new int[] { 10 })
+            plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
 
         plantReg.registerPlantInfo(MOD_ID, "tile.TFSapling", new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
     }
