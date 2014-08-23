@@ -281,7 +281,7 @@ public abstract class BlockLargePot extends BlockGardenContainer
     }
 
     protected boolean substrateSupportsCrops (ItemStack substrate) {
-        if (substrate.getItem() == null)
+        if (substrate == null || substrate.getItem() == null)
             return false;
 
         if (Block.getBlockFromItem(substrate.getItem()) == ModBlocks.gardenFarmland)
