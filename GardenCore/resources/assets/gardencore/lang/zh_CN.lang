@@ -1,0 +1,18 @@
+container.garden=分类植物
+container.compostBin=堆肥桶
+
+item.soilTestKit.name=土壤检测试剂
+item.soilTestKitUsed.name=土壤检测试剂 <已使用>
+item.compostPile.name=富硒土壤
+
+itemGroup.gardenCore=Garden Core
+
+soilkit.rainfall=湿度
+soilkit.temperature=温度
+
+item.gardenTrowel.name=移植铲
+
+tile.gardenSoil.name=园艺土
+tile.potteryTable.name=陶器工作桌
+tile.compostBin.name=堆肥桶
+tile.gardenFarmland.name=园艺耕植土
