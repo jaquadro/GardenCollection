@@ -1,4 +1,4 @@
-container.garden=分类植物
+container.garden=管理植物
 container.compostBin=堆肥桶
 
 item.soilTestKit.name=土壤检测试剂
@@ -10,7 +10,7 @@ itemGroup.gardenCore=Garden Core
 soilkit.rainfall=湿度
 soilkit.temperature=温度
 
-item.gardenTrowel.name=移植铲
+item.gardenTrowel.name=花铲
 
 tile.gardenSoil.name=园艺土
 tile.potteryTable.name=陶器工作桌
