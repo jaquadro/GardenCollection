@@ -90,7 +90,11 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
                 IPlantRenderer plantRenderer = PlantRegistry.instance().getPlantRenderer(subBlock, subBlockData);
                 if (plantRenderer != null) {
                     IPlantMetaResolver resolver = PlantRegistry.instance().getPlantMetaResolver(subBlock, subBlockData);
-                    if (resolver == null || section <= resolver.getPlantHeight(subBlock, subBlockData))
+                    boolean shouldRender = section == 1;
+                    if (resolver != null && section <= resolver.getPlantHeight(subBlock, subBlockData))
+                        shouldRender = true;
+
+                    if (shouldRender)
                         plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, section);
                 }
                 else
