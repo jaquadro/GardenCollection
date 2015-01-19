@@ -1,0 +1,12 @@
+[
+{
+	"modid": "GardenDecor",
+	"name": "Garden Decor",
+	"description": "Decorative chains, iron work, and misc garden objects.",
+	"version": "1.2.0",
+	"credits": "By jaquadro",
+	"logoFile": "",
+	"url": "http://www.jaquadro.com/",
+	"authors": [ "jaquadro" ]
+}
+]

@@ -1,0 +1,2 @@
+include ':GardenCore'
+project(':GardenCore').projectDir = new File(settingsDir, '../GardenCore')

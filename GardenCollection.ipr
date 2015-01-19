@@ -153,6 +153,7 @@
       <module fileurl="file://$PROJECT_DIR$/Build/Build.iml" filepath="$PROJECT_DIR$/Build/Build.iml" />
       <module fileurl="file://$PROJECT_DIR$/GardenContainers/GardenContainers.iml" filepath="$PROJECT_DIR$/GardenContainers/GardenContainers.iml" />
       <module fileurl="file://$PROJECT_DIR$/GardenCore/GardenCore.iml" filepath="$PROJECT_DIR$/GardenCore/GardenCore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GardenDecor/GardenDecor.iml" filepath="$PROJECT_DIR$/GardenDecor/GardenDecor.iml" />
       <module fileurl="file://$PROJECT_DIR$/GardenTrees/GardenTrees.iml" filepath="$PROJECT_DIR$/GardenTrees/GardenTrees.iml" />
       <module fileurl="file://$PROJECT_DIR$/Runtime/Runtime.iml" filepath="$PROJECT_DIR$/Runtime/Runtime.iml" />
     </modules>
@@ -164,4 +165,3 @@
     <mapping directory="" vcs="" />
   </component>
 </project>
-
