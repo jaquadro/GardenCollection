@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.item;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.event.UseTrowelEvent;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
@@ -57,8 +58,8 @@ public class ItemTrowel extends Item
             player.openGui(GardenCore.instance, GuiHandler.gardenLayoutGuiID, world, x, y, z);
             return true;
         }
-        else if (block instanceof BlockGardenProxy) {
-            BlockGardenProxy proxy = (BlockGardenProxy) block;
+        else if (block instanceof IPlantProxy) {
+            IPlantProxy proxy = (IPlantProxy) block;
             TileEntityGarden te = proxy.getGardenEntity(world, x, y, z);
 
             if (te != null) {

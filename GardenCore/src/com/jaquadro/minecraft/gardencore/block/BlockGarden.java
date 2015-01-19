@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.block;
 
+import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.block.support.IConnectionProfile;
 import com.jaquadro.minecraft.gardencore.block.support.ISlotProfile;
@@ -245,7 +246,7 @@ public abstract class BlockGarden extends BlockContainer
 
         boolean enough = true;
         for (int i = 0; i < height; i++)
-            enough &= blockAccess.isAirBlock(x, y + 1 + i, z) || blockAccess.getBlock(x, y + 1 + i, z) instanceof BlockGardenProxy;
+            enough &= blockAccess.isAirBlock(x, y + 1 + i, z) || blockAccess.getBlock(x, y + 1 + i, z) instanceof IPlantProxy;
 
         return enough;
     }

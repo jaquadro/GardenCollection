@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
+import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
@@ -309,7 +310,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
         getWorldObj().func_147479_m(xCoord, yCoord, zCoord); // markBlockForRenderUpdate
 
         int y = yCoord;
-        while (getWorldObj().getBlock(xCoord, ++y, zCoord) instanceof BlockGardenProxy)
+        while (getWorldObj().getBlock(xCoord, ++y, zCoord) instanceof IPlantProxy)
             getWorldObj().func_147479_m(xCoord, y, zCoord);
     }
 

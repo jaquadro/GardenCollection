@@ -1,10 +1,6 @@
 package com.jaquadro.minecraft.gardencontainers.core;
 
-import com.jaquadro.minecraft.gardencontainers.client.renderer.MediumPotRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.CompostBinRenderer;
-import com.jaquadro.minecraft.gardencontainers.client.renderer.DecorativePotRenderer;
-import com.jaquadro.minecraft.gardencontainers.client.renderer.LargePotRenderer;
-import com.jaquadro.minecraft.gardencontainers.client.renderer.WindowBoxRenderer;
+import com.jaquadro.minecraft.gardencontainers.client.renderer.*;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy

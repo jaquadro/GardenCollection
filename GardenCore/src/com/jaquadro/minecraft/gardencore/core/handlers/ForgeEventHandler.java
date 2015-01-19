@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.core.handlers;
 
+import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.block.BlockSmallFire;
 import cpw.mods.fml.common.eventhandler.Event;
@@ -12,8 +13,8 @@ public class ForgeEventHandler
 {
     @SubscribeEvent
     public void applyBonemeal (BonemealEvent event) {
-        if (event.block instanceof BlockGardenProxy) {
-            BlockGardenProxy proxy = (BlockGardenProxy) event.block;
+        if (event.block instanceof IPlantProxy) {
+            IPlantProxy proxy = (IPlantProxy) event.block;
             if (proxy.applyBonemeal(event.world, event.x, event.y, event.z))
                 event.setResult(Event.Result.ALLOW);
         }

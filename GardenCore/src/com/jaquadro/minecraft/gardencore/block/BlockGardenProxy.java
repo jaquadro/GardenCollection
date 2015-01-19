@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.block;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.api.IBonemealHandler;
+import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockGardenProxy extends Block
+public class BlockGardenProxy extends Block implements IPlantProxy
 {
     @SideOnly(Side.CLIENT)
     private IIcon transpIcon;
@@ -560,7 +561,7 @@ public class BlockGardenProxy extends Block
             return false;
 
         Block underBlock = world.getBlock(x, y - 1, z);
-        return underBlock instanceof BlockGarden || underBlock instanceof BlockGardenProxy;
+        return underBlock instanceof BlockGarden || underBlock instanceof IPlantProxy;
     }
 
     private int getBaseBlockYCoord (IBlockAccess world, int x, int y, int z) {
@@ -568,7 +569,7 @@ public class BlockGardenProxy extends Block
             return 0;
 
         Block underBlock = world.getBlock(x, --y, z);
-        while (y > 0 && underBlock instanceof BlockGardenProxy)
+        while (y > 0 && underBlock instanceof IPlantProxy)
             underBlock = world.getBlock(x, --y, z);
 
         return y;
