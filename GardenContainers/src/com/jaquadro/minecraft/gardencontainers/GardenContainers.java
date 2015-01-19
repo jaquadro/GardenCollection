@@ -52,14 +52,8 @@ public class GardenContainers
         proxy.registerRenderers();
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-        for (int i = 1; i < 256; i++) {
-            if (!config.hasPattern(i))
-                continue;
-
-            PatternConfig pattern = config.getPattern(i);
-            for (int j = 0; j < pattern.getLocationCount(); j++)
-                ChestGenHooks.addItem(pattern.getGenLocation(j), new WeightedRandomChestContent(items.potteryPattern, i, 1, 1, pattern.getGenRarity(j)));
-        }
+        for (int j = 0; j < config.getPatternLocationCount(); j++)
+            ChestGenHooks.addItem(config.getPatternLocation(j), new WeightedRandomChestContent(items.potteryPatternDirty, 0, 1, 1, config.getPatternLocationRarity(j)));
 
         VillagerTradeHandler.instance().load();
     }

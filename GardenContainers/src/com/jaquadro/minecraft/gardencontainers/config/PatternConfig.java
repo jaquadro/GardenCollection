@@ -1,15 +1,11 @@
 package com.jaquadro.minecraft.gardencontainers.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PatternConfig
 {
     private int patternId;
     private String overlay;
     private String name;
-    private List<String> genLocations = new ArrayList<String>();
-    private List<Integer> genRarity = new ArrayList<Integer>();
+    private int weight;
 
     public PatternConfig (int id, String overlay, String name) {
         this.patternId = id;
@@ -29,24 +25,15 @@ public class PatternConfig
         return name;
     }
 
-    public int getLocationCount () {
-        return genLocations.size();
-    }
-
-    public String getGenLocation (int index) {
-        return genLocations.get(index);
-    }
-
-    public int getGenRarity (int index) {
-        return genRarity.get(index);
+    public int getWeight () {
+        return weight;
     }
 
     public void setName (String name) {
         this.name = name;
     }
 
-    public void addGenLocation (String location, int rarity) {
-        genLocations.add(location);
-        genRarity.add(rarity);
+    public void setWeight (int weight) {
+        this.weight = weight;
     }
 }

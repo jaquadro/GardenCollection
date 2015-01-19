@@ -5,6 +5,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigManager
 {
@@ -17,6 +19,8 @@ public class ConfigManager
     private ConfigCategory categoryPatternSettings;
 
     private ConfigCategory defaultPatternSettings;
+    private List<String> genLocations = new ArrayList<String>();
+    private List<Integer> genRarity = new ArrayList<Integer>();
 
     private PatternConfig defaultPattern;
     private PatternConfig[] patterns = new PatternConfig[256];
@@ -47,9 +51,9 @@ public class ConfigManager
             + "By default, all patterns will take their attributes from the 'pattern_default' subcategory.  To\n"
             + "customize some or all attributes for a pattern, create a new subcategory modeled like this:\n\n"
             + "  pattern_# {\n"
-            + "      S:gen=dungeonChest, 5; mineshaftCorridor, 5\n"
+            + "      I:weight=5\n"
             + "  }\n\n"
-            + "The S:gen option controls what kinds of dungeon chests the pattern's stamp item will appear in, and the\n"
+            + "The S:pattern_gen option controls what kinds of dungeon chests the pattern's stamp item will appear in, and the\n"
             + "rarity of the item appearing.  The location and rarity are separated by a comma (,), and multiple locations\n"
             + "are separated with a semicolon (;).  Rarity is a value between 1 and 100, with 1 being very rare.  Golden\n"
             + "apples and diamond horse armor also have a rarity of 1.  Most vanilla items have a rarity of 10.  The valid\n"
@@ -75,7 +79,7 @@ public class ConfigManager
             config.get(categoryPatterns.getQualifiedName(), "pattern.13", "large_pot_13; Diamond");
 
             config.getCategory(CAT_SETTINGS + ".pattern_2");
-            config.get(CAT_SETTINGS + ".pattern_2", "gen", "dungeonChest, 3; mineshaftCorridor, 2");
+            config.get(CAT_SETTINGS + ".pattern_2", "weight", 8);
 
             config.save();
         }
@@ -95,8 +99,7 @@ public class ConfigManager
                     if (patterns[i].getName() == null)
                         patterns[i].setName(defaultPattern.getName());
 
-                    for (int j = 0; j < defaultPattern.getLocationCount(); j++)
-                        patterns[i].addGenLocation(defaultPattern.getGenLocation(j), defaultPattern.getGenRarity(j));
+                    patterns[i].setWeight(defaultPattern.getWeight());
                 }
 
                 patternCount++;
@@ -109,10 +112,13 @@ public class ConfigManager
 
         defaultPatternSettings = config.getCategory(CAT_SETTINGS + ".pattern_default");
         String name = config.get(defaultPatternSettings.getQualifiedName(), "name", "Unknown").getString();
-        String gen = config.get(defaultPatternSettings.getQualifiedName(), "gen", "dungeonChest, 2; mineshaftCorridor, 1").getString();
+        int weight = config.get(defaultPatternSettings.getQualifiedName(), "weight", 5).getInt();
 
         defaultPattern.setName(name);
-        parseGenString(defaultPattern, gen);
+        defaultPattern.setWeight(weight);
+
+        String gen = config.get(CAT_SETTINGS, "pattern_gen", "dungeonChest, 1; mineshaftCorridor, 1").getString();
+        parseGenString(gen);
     }
 
     private void parsePatternAttribs (PatternConfig pattern, String category) {
@@ -123,17 +129,15 @@ public class ConfigManager
         else if (pattern.getName() == null)
             pattern.setName(defaultPattern.getName());
 
-        if (config.hasKey(category, "gen")) {
-            String gen = config.get(defaultPatternSettings.getQualifiedName(), "gen", "").getString();
-            parseGenString(pattern, gen);
+        if (config.hasKey(category, "weight")) {
+            int weight = config.get(defaultPatternSettings.getQualifiedName(), "weight", 1).getInt();
+            pattern.setWeight(weight);
         }
-        else {
-            for (int j = 0; j < defaultPattern.getLocationCount(); j++)
-                pattern.addGenLocation(defaultPattern.getGenLocation(j), defaultPattern.getGenRarity(j));
-        }
+        else
+            pattern.setWeight(defaultPattern.getWeight());
     }
 
-    private void parseGenString (PatternConfig pattern, String genString) {
+    private void parseGenString (String genString) {
         String[] strParts = genString.split("[ ]*;[ ]*");
         for (int i = 0; i < strParts.length; i++) {
             String[] locParts = strParts[i].split("[ ]*,[ ]*");
@@ -145,7 +149,8 @@ public class ConfigManager
             if (location == null)
                 continue;
 
-            pattern.addGenLocation(location, rarity);
+            genLocations.add(location);
+            genRarity.add(rarity);
         }
     }
 
@@ -182,11 +187,15 @@ public class ConfigManager
         return patternCount;
     }
 
-    /*public String getOverlayImage (int index) {
-        return overlayImages[index];
+    public int getPatternLocationCount () {
+        return genLocations.size();
     }
 
-    public String getOverlayName (int index) {
-        return overlayNames[index];
-    }*/
+    public String getPatternLocation (int index) {
+        return genLocations.get(index);
+    }
+
+    public int getPatternLocationRarity (int index) {
+        return genRarity.get(index);
+    }
 }
