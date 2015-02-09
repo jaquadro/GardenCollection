@@ -45,6 +45,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../GardenCore/GardenCore.iml" filepath="$PROJECT_DIR$/../GardenCore/GardenCore.iml"/>
       <module fileurl="file://$PROJECT_DIR$/GardenContainers.iml" filepath="$PROJECT_DIR$/GardenContainers.iml"/>
     </modules>
   </component>
