@@ -111,21 +111,10 @@ public class BlockGardenSoil extends BlockGarden
         return SLOT_INVALID;
     }
 
-    @Override
-    protected boolean applyItemToGarden (World world, int x, int y, int z, EntityPlayer player, ItemStack itemStack, float hitX, float hitY, float hitZ, boolean hitValid) {
-        ItemStack item = (itemStack == null) ? player.inventory.getCurrentItem() : itemStack;
-
-        if (item != null && item.getItem() instanceof ItemHoe) {
-            world.playSoundEffect(x + .5, y + .5, z + .5, stepSound.getStepResourcePath(), (stepSound.getVolume() + 1) / 2, stepSound.getPitch() * .8f);
-            if (!world.isRemote) {
-                world.setBlock(x, y, z, ModBlocks.gardenFarmland);
-                item.damageItem(1, player);
-            }
-
-            return true;
-        }
-
-        return super.applyItemToGarden(world, x, y, z, player, itemStack, hitX, hitY, hitZ, hitValid);
+    public void convertToFarm (World world, int x, int y, int z) {
+        world.playSoundEffect(x + .5, y + .5, z + .5, stepSound.getStepResourcePath(), (stepSound.getVolume() + 1) / 2, stepSound.getPitch() * .8f);
+        if (!world.isRemote)
+            world.setBlock(x, y, z, ModBlocks.gardenFarmland);
     }
 
     @Override

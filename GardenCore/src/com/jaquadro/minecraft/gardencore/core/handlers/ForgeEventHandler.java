@@ -2,12 +2,14 @@ package com.jaquadro.minecraft.gardencore.core.handlers;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
+import com.jaquadro.minecraft.gardencore.block.BlockGardenSoil;
 import com.jaquadro.minecraft.gardencore.block.BlockSmallFire;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 public class ForgeEventHandler
 {
@@ -38,6 +40,15 @@ public class ForgeEventHandler
                     }
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void useHoe (UseHoeEvent event) {
+        Block block = event.world.getBlock(event.x, event.y, event.z);
+        if (block instanceof BlockGardenSoil) {
+            ((BlockGardenSoil) block).convertToFarm(event.world, event.x, event.y, event.z);
+            event.setResult(Event.Result.ALLOW);
         }
     }
 }
