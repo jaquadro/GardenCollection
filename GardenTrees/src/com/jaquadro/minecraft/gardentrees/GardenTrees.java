@@ -20,7 +20,7 @@ public class GardenTrees
 {
     public static final String MOD_ID = "GardenTrees";
     public static final String MOD_NAME = "Garden Trees";
-    public static final String MOD_VERSION = "1.2.0";
+    public static final String MOD_VERSION = "1.2.1";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardentrees.";
 
     public static final ModIntegration integration = new ModIntegration();

@@ -4,14 +4,16 @@ import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
-import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
-import cpw.mods.fml.common.Loader;
+import com.jaquadro.minecraft.gardentrees.core.recipe.WoodBlockRecipe;
+import com.jaquadro.minecraft.gardentrees.core.recipe.WoodFenceRecipe;
+import com.jaquadro.minecraft.gardentrees.core.recipe.WoodPostRecipe;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Map;
@@ -56,17 +58,10 @@ public class ModRecipes
     private void addExtraWoodRecipes () {
         for (Map.Entry<UniqueMetaIdentifier, Block> entry : WoodRegistry.instance().registeredTypes()) {
             UniqueMetaIdentifier id = entry.getKey();
-            int meta = TileEntityWoodProxy.composeMetadata(id.getBlock(), id.meta);
 
-            GameRegistry.addRecipe(new ItemStack(id.getBlock(), 1, id.meta), "xx", "xx",
-                'x', new ItemStack(ModBlocks.thinLog, 1, meta));
-
-            for (int j = 0; j < axeList.length; j++)
-                GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLog, 4, meta), "x", "y",
-                    'x', new ItemStack(axeList[j], 1, OreDictionary.WILDCARD_VALUE), 'y', new ItemStack(id.getBlock(), 1, id.meta));
-
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLogFence, 2, meta), "xyx", " y ",
-                'x', Items.string, 'y', new ItemStack(ModBlocks.thinLog, 1, meta));
+            CraftingManager.getInstance().getRecipeList().add(new WoodPostRecipe(id));
+            CraftingManager.getInstance().getRecipeList().add(new WoodFenceRecipe(id));
+            CraftingManager.getInstance().getRecipeList().add(new WoodBlockRecipe(id));
         }
     }
 }
