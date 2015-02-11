@@ -27,9 +27,11 @@ public abstract class BlockGardenContainer extends BlockGarden
             if (substrate == null)
                 substrate = te.getSubstrate();
             if (substrate != null) {
-                ItemStack item = substrate.copy();
-                item.stackSize = 1;
-                dropBlockAsItem(world, x, y, z, item);
+                if (Block.getBlockFromItem(substrate.getItem()) != Blocks.water) {
+                    ItemStack item = substrate.copy();
+                    item.stackSize = 1;
+                    dropBlockAsItem(world, x, y, z, item);
+                }
             }
         }
 
