@@ -38,6 +38,8 @@ public class WoodFenceRecipe implements IRecipe
                 ItemStack wood2 = inventory.getStackInRowAndColumn(col + 1, row + 1);
                 if (wood1 == null || wood2 == null || !wood1.isItemEqual(wood2))
                     continue;
+                if (Block.getBlockFromItem(wood1.getItem()) != ModBlocks.thinLog)
+                    continue;
 
                 Block woodBlock = TileEntityWoodProxy.getBlockFromComposedMetadata(wood1.getItemDamage());
                 int woodMeta = TileEntityWoodProxy.getMetaFromComposedMetadata(wood1.getItemDamage());
