@@ -15,11 +15,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BlockMediumPot extends BlockGardenContainer
@@ -89,6 +92,20 @@ public abstract class BlockMediumPot extends BlockGardenContainer
     @Override
     public boolean shouldSideBeRendered (IBlockAccess blockAccess, int x, int y, int z, int side) {
         return true;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
+        int count = quantityDropped(metadata, fortune, world.rand);
+        for (int i = 0; i < count; i++) {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null)
+                items.add(new ItemStack(item, 1, metadata));
+        }
+
+        return items;
     }
 
     @Override
