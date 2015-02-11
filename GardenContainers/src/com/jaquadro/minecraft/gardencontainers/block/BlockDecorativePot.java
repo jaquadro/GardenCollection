@@ -7,7 +7,6 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenContainer;
 import com.jaquadro.minecraft.gardencore.block.support.*;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -19,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -101,6 +101,12 @@ public class BlockDecorativePot extends BlockGardenContainer
     @Override
     public boolean shouldSideBeRendered (IBlockAccess blockAccess, int x, int y, int z, int side) {
         return true;
+    }
+
+    @Override
+    public TileEntityDecorativePot getTileEntity (IBlockAccess world, int x, int y, int z) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        return (te != null && te instanceof TileEntityDecorativePot) ? (TileEntityDecorativePot) te : null;
     }
 
     @Override

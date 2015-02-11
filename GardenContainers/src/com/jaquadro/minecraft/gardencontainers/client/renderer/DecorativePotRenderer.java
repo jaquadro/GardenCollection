@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardencontainers.client.renderer;
 
 import com.jaquadro.minecraft.gardencontainers.block.BlockDecorativePot;
+import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityDecorativePot;
+import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityMediumPot;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.block.support.Slot2Profile;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
@@ -9,9 +11,11 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
@@ -84,17 +88,21 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setScaledExteriorColor(baseColor, .75f, 1);
         boxRenderer.renderSolidBox(renderer, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
+        TileEntityDecorativePot te = block.getTileEntity(world, x, y, z);
         ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z, Slot2Profile.SLOT_CENTER);
-        if (substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
+        if (te != null && substrateItem != null && substrateItem.getItem() instanceof ItemBlock) {
             Block substrate = Block.getBlockFromItem(substrateItem.getItem());
             IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateItem.getItemDamage());
 
-            RenderUtil.calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
+            int color = substrate.colorMultiplier(world, x, y, z);
+            if (color == Blocks.grass.colorMultiplier(world, x, y, z))
+                color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
+
+            RenderUtil.calculateBaseColor(activeSubstrateColor, color);
             RenderUtil.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
-            RenderUtil.setTessellatorColor(tessellator, activeSubstrateColor);
 
             renderer.setRenderBounds(.0625f, 0, .0625f, 1f - .0625f, 1f - .0625f, 1f - .0625f);
-            renderer.renderFaceYPos(block, x, y, z, substrateIcon);
+            RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon, activeSubstrateColor[0], activeSubstrateColor[1], activeSubstrateColor[2]);
         }
 
         return true;

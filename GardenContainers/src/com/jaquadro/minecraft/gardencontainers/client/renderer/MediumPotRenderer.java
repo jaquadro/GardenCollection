@@ -11,12 +11,14 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 public class MediumPotRenderer implements ISimpleBlockRenderingHandler
 {
     private ModularBoxRenderer boxRenderer = new ModularBoxRenderer();
+    private float[] colorScratch = new float[3];
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -82,8 +84,14 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
             if (substrate != Blocks.water) {
                 IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
 
+                int color = substrate.colorMultiplier(world, x, y, z);
+                if (color == Blocks.grass.colorMultiplier(world, x, y, z))
+                    color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
+
+                RenderUtil.calculateBaseColor(colorScratch, color);
+
                 renderer.setRenderBounds(.125, 0, .125, .875, .6875f, .875);
-                RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon);
+                RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
             }
         }
 
