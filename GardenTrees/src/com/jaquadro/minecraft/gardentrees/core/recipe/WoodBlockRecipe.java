@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardentrees.core.recipe;
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
+import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,8 @@ public class WoodBlockRecipe implements IRecipe
                 if (wood1 == null || wood2 == null || wood3 == null || wood4 == null)
                     continue;
                 if (!wood1.isItemEqual(wood2) || !wood1.isItemEqual(wood3) || !wood1.isItemEqual(wood4))
+                    continue;
+                if (Block.getBlockFromItem(wood1.getItem()) != ModBlocks.thinLog)
                     continue;
 
                 Block woodBlock = TileEntityWoodProxy.getBlockFromComposedMetadata(wood1.getItemDamage());
