@@ -416,7 +416,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     @Override
     public int getLightValue (IBlockAccess world, int x, int y, int z) {
         if (reeLightValue > 0)
-            return getLightValue();
+            return -1;
 
         reeLightValue++;
         int value = 0;
@@ -431,14 +431,20 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 if (block == null)
                     continue;
 
+                bindSlot(te.getWorldObj(), x, y, z, te, slot);
                 try {
                     int sub = block.getLightValue(world, x, y, z);
+                    if (sub == -1)
+                        sub = block.getLightValue();
+                    if (sub == -1)
+                        sub = getLightValue();
                     if (sub > value)
                         value = sub;
                 }
                 catch (Exception e) {
                     continue;
                 }
+                unbindSlot(te.getWorldObj(), x, y, z, te);
             }
         }
 
@@ -464,6 +470,29 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+        }
+    }
+
+    @Override
+    public void randomDisplayTick (World world, int x, int y, int z, Random random) {
+        TileEntityGarden te = getGardenEntity(world, x, y, z);
+        BlockGarden garden = getGardenBlock(world, x, y, z);
+        if (te == null || garden == null)
+            return;
+
+        for (int slot : garden.getSlotProfile().getPlantSlots()) {
+            Block block = getPlantBlock(te, slot);
+            if (block == null)
+                continue;
+
+            bindSlot(world, x, y, z, te, slot);
+            try {
+                block.randomDisplayTick(world, x, y, z, random);
+            }
+            catch (Exception e) {
+                continue;
+            }
+            unbindSlot(world, x, y, z, te);
         }
     }
 

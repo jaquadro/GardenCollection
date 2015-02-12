@@ -14,5 +14,6 @@ public class ModIntegration
         NaturaIntegration.init();
         TwilightForestIntegration.init();
         WeeeFlowersIntegration.init();
+        BotaniaIntegration.init();
     }
 }
