@@ -13,5 +13,6 @@ public class ModIntegration
         BiomesOPlentyIntegration.init();
         NaturaIntegration.init();
         TwilightForestIntegration.init();
+        ThaumcraftIntegration.init();
     }
 }

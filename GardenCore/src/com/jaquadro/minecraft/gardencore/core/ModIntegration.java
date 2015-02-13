@@ -15,5 +15,6 @@ public class ModIntegration
         TwilightForestIntegration.init();
         WeeeFlowersIntegration.init();
         BotaniaIntegration.init();
+        ThaumcraftIntegration.init();
     }
 }
