@@ -126,6 +126,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 AxisAlignedBB sub = block.getCollisionBoundingBoxFromPool(world, x, y, z);
                 if (sub == null)
@@ -145,6 +146,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         return aabb;
     }
@@ -164,6 +166,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 AxisAlignedBB sub = block.getSelectedBoundingBoxFromPool(world, x, y, z);
                 if (sub == null)
@@ -183,6 +186,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         if (aabb == null)
             aabb = super.getSelectedBoundingBoxFromPool(world, x, y, z);
@@ -237,6 +241,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 AxisAlignedBB sub = block.getCollisionBoundingBoxFromPool(world, x, y, z);
                 if (sub == null)
@@ -254,6 +259,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         if (list.isEmpty())
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
@@ -274,6 +280,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 float offsetX = garden.getSlotProfile().getPlantOffsetX(world, x, baseY, z, slot);
                 float offsetY = garden.getSlotProfile().getPlantOffsetY(world, x, baseY, z, slot);
@@ -290,6 +297,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         return mop;
     }
@@ -316,6 +324,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 flag |= block.onBlockActivated(world, x, y, z, player, side, vx, vy, vz);
             }
@@ -323,6 +332,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         if (flag)
             return true;
@@ -444,8 +454,8 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 catch (Exception e) {
                     continue;
                 }
-                unbindSlot(te.getWorldObj(), x, y, z, te);
             }
+            unbindSlot(te.getWorldObj(), x, y, z, te);
         }
 
         reeLightValue--;
@@ -464,6 +474,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 block.onEntityCollidedWithBlock(world, x, y, z, entity);
             }
@@ -471,6 +482,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
     }
 
     @Override
@@ -492,8 +504,8 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
-            unbindSlot(world, x, y, z, te);
         }
+        unbindSlot(world, x, y, z, te);
     }
 
     @SideOnly(Side.CLIENT)
@@ -554,6 +566,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             if (block == null)
                 continue;
 
+            bindSlot(world, x, y, z, te, slot);
             try {
                 byte count = 4;
                 for (int ix = 0; ix < count; ++ix) {
@@ -575,6 +588,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 continue;
             }
         }
+        unbindSlot(world, x, y, z, te);
 
         return true;
     }

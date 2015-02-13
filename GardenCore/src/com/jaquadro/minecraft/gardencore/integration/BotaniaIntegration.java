@@ -1,12 +1,10 @@
 package com.jaquadro.minecraft.gardencore.integration;
 
-import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.api.plant.SimplePlantInfo;
 import cpw.mods.fml.common.Loader;
-import net.minecraft.block.Block;
 
 public class BotaniaIntegration
 {
@@ -30,29 +28,6 @@ public class BotaniaIntegration
             plantReg.registerPlantInfo(MOD_ID, "shinyFlower", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
         }
 
-        // Mystical and Glimmering versions
-        // White Flower (0) Med
-        // Orange Flower (1) Med
-        // Magenta Flower (2) Sm
-        // Light Blue Flower (3) Sm/Med
-        // Yellow Flower (4) Lg
-        // Lime Flower (5) Med
-        // Pink Flower (6) Sm
-        // Gray Flower (7) Med
-        // Light Gray Flower (8) Med
-        // Cyan Flower (9) Sm
-        // Purple Flower (10) Med
-        // Blue Flower (11) Med
-        // Brown Flower (12) Med
-        // Green Flower (13) Med
-        // Red Flower (14) Med
-        // Black Flower (15) Sm
-
-        // Tile Entity
-        // Pure Daisy - Sm
-        // Manastar - Med
-
-        // Black Lotus - Med
-        // Void Lotus - Med
+        plantReg.registerPlantInfo(MOD_ID, "specialFlower", new SimplePlantInfo(PlantType.INVALID, PlantSize.MEDIUM));
     }
 }
