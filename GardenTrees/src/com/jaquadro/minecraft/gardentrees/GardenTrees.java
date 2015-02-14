@@ -15,12 +15,12 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = GardenTrees.MOD_ID, name = GardenTrees.MOD_NAME, version = GardenTrees.MOD_VERSION, dependencies = "required-after:GardenCore@[1.2,1.3)")
+@Mod(modid = GardenTrees.MOD_ID, name = GardenTrees.MOD_NAME, version = GardenTrees.MOD_VERSION, dependencies = "required-after:GardenCore")
 public class GardenTrees
 {
     public static final String MOD_ID = "GardenTrees";
     public static final String MOD_NAME = "Garden Trees";
-    public static final String MOD_VERSION = "1.2.2";
+    public static final String MOD_VERSION = "@VERSION@";
     static final String SOURCE_PATH = "com.jaquadro.minecraft.gardentrees.";
 
     public static final ModIntegration integration = new ModIntegration();

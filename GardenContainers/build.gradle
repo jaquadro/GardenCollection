@@ -24,6 +24,8 @@ archivesBaseName = "GardenContainers"
 minecraft {
     version = "1.7.10-10.13.2.1291"
     assetDir = "../Runtime/assets"
+
+    replace '@VERSION@', project.version
 }
 
 sourceSets.main {
