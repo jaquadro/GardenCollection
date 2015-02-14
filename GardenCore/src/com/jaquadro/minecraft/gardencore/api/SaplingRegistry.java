@@ -46,6 +46,9 @@ public final class SaplingRegistry
     }
 
     public void registerSapling (Item sapling, int saplingMeta, Block wood, int woodMeta, Block leaf, int leafMeta) {
+        if (sapling == null || wood == null || leaf == null)
+            return;
+
         registerSapling(ModItems.getUniqueMetaID(sapling, saplingMeta), ModBlocks.getUniqueMetaID(wood, woodMeta), ModBlocks.getUniqueMetaID(leaf, leafMeta));
     }
 

@@ -35,6 +35,9 @@ public final class WoodRegistry
     }
 
     public void registerWoodType (Block block, int meta) {
+        if (block == null)
+            return;
+
         UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
         if (id != null)
             registry.register(id, block);

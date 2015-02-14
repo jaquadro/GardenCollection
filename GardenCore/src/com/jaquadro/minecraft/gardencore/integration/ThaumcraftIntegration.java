@@ -11,9 +11,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
-/**
- * Created by Justin on 2/12/2015.
- */
 public class ThaumcraftIntegration
 {
     public static final String MOD_ID = "Thaumcraft";

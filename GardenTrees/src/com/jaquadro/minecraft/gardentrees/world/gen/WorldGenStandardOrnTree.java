@@ -262,6 +262,25 @@ public abstract class WorldGenStandardOrnTree extends WorldGenOrnamentalTree
         };
     }
 
+    public static class SmallCyprusTree extends WorldGenStandardOrnTree
+    {
+        public SmallCyprusTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
+            super(blockNotify, wood, metaWood, leaves, metaLeaves);
+            layers = Arrays.asList(transform(PAT_3X3PLUS, LayerType.CORE),
+                transform(PAT_3X3, LayerType.CORE),
+                transform(PAT_3X3PLUS, LayerType.LEAF),
+                transform(PAT_3X3PLUS, LayerType.LEAF),
+                transform(PAT_1X1, LayerType.LEAF));
+        }
+
+        public static final OrnamentalTreeFactory FACTORY = new OrnamentalTreeFactory() {
+            @Override
+            public WorldGenOrnamentalTree create (Block woodBlock, int woodMeta, Block leafBlock, int leafMeta) {
+                return new SmallCyprusTree(false, woodBlock, woodMeta, leafBlock, leafMeta);
+            }
+        };
+    }
+
     public static class SmallCanopyTree extends WorldGenStandardOrnTree
     {
         public SmallCanopyTree (boolean blockNotify, Block wood, int metaWood, Block leaves, int metaLeaves) {
