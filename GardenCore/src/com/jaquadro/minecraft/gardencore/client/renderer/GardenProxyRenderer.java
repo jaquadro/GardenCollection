@@ -51,7 +51,6 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
         int section = y - te.yCoord;
 
         Tessellator tessellator = Tessellator.instance;
-        //tessellator.addTranslation(0, -.0625f, 0);
 
         for (int slot : garden.getSlotProfile().getPlantSlots()) {
             Block subBlock = block.getPlantBlockRestricted(te, slot);
@@ -60,6 +59,7 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
                 continue;
 
             block.bindSlot(te.getWorldObj(), x, y, z, te, slot);
+
             float offsetX = block.getPlantOffsetX(world, x, y, z, slot);
             float offsetY = block.getPlantOffsetY(world, x, y, z, slot);
             float offsetZ = block.getPlantOffsetZ(world, x, y, z, slot);
@@ -100,14 +100,14 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
                 else
                     renderer.renderBlockByRenderType(subBlock, x, y, z);
             }
-            catch (Exception e) { }
-
-            tessellator.addTranslation(-offsetX, -offsetY, -offsetZ);
-
-            block.unbindSlot(te.getWorldObj(), x, y, z, te);
+            catch (Exception e) {
+                continue;
+            }
+            finally {
+                block.unbindSlot(te.getWorldObj(), x, y, z, te);
+                tessellator.addTranslation(-offsetX, -offsetY, -offsetZ);
+            }
         }
-
-        //tessellator.addTranslation(0, +.0625f, 0);
 
         return true;
     }

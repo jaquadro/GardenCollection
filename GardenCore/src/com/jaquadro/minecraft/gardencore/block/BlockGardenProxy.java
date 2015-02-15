@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
+import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -39,7 +40,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
 
     // Scratch State
     private boolean applyingBonemeal;
-    private int boundSlot = -1;
+    private BindingStack binding = new BindingStack();
 
     // Reentrant Flags
     private int reeLightValue;
@@ -78,19 +79,15 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     }
 
     public void bindSlot (World world, int x, int y, int z, TileEntityGarden te, int slot) {
-        boundSlot = slot;
+        int data = 0;
+        if (getPlantBlock(te, slot) != null)
+            data = getPlantData(te, slot);
 
-        Block block = getPlantBlock(te, slot);
-        if (block != null) {
-            int data = getPlantData(te, slot);
-           world.setBlockMetadataWithNotify(x, y, z, data, 0);
-        }
+        binding.bind(world, x, y, z, slot, data);
     }
 
     public void unbindSlot (World world, int x, int y, int z, TileEntityGarden te) {
-        boundSlot = -1;
-
-        world.setBlockMetadataWithNotify(x, y, z, 0, 0);
+        binding.unbind(world, x, y, z);
     }
 
     @Override
@@ -145,8 +142,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         return aabb;
     }
@@ -185,8 +184,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         if (aabb == null)
             aabb = super.getSelectedBoundingBoxFromPool(world, x, y, z);
@@ -258,8 +259,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         if (list.isEmpty())
             super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
@@ -296,8 +299,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         return mop;
     }
@@ -331,8 +336,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         if (flag)
             return true;
@@ -454,8 +461,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
                 catch (Exception e) {
                     continue;
                 }
+                finally {
+                    unbindSlot(te.getWorldObj(), x, y, z, te);
+                }
             }
-            unbindSlot(te.getWorldObj(), x, y, z, te);
         }
 
         reeLightValue--;
@@ -481,8 +490,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
     }
 
     @Override
@@ -504,18 +515,21 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public int colorMultiplier (IBlockAccess blockAccess, int x, int y, int z) {
+        int slot = binding.getSlot();
         TileEntityGarden te = getGardenEntity(blockAccess, x, y, z);
-        if (te == null || boundSlot == -1)
+        if (te == null || slot == -1)
             return super.colorMultiplier(blockAccess, x, y, z);
 
-        Block block = getPlantBlockRestricted(te, boundSlot);
+        Block block = getPlantBlockRestricted(te, slot);
         if (block == null)
             return super.colorMultiplier(blockAccess, x, y, z);
 
@@ -530,11 +544,12 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        int slot = binding.getSlot();
         TileEntityGarden te = getGardenEntity(blockAccess, x, y, z);
-        if (te == null || boundSlot == -1)
+        if (te == null || slot == -1)
             return super.getIcon(blockAccess, x, y, z, side);
 
-        Block block = getPlantBlockRestricted(te, boundSlot);
+        Block block = getPlantBlockRestricted(te, slot);
         if (block == null)
             return super.getIcon(blockAccess, x, y, z, side);
 
@@ -587,8 +602,10 @@ public class BlockGardenProxy extends Block implements IPlantProxy
             catch (Exception e) {
                 continue;
             }
+            finally {
+                unbindSlot(world, x, y, z, te);
+            }
         }
-        unbindSlot(world, x, y, z, te);
 
         return true;
     }
