@@ -48,7 +48,7 @@ public class WoodFenceRecipe implements IRecipe
                     continue;
 
                 if (woodBlock == woodType.getBlock() && woodMeta == woodType.meta)
-                    return new ItemStack(ModBlocks.thinLogFence, 2, TileEntityWoodProxy.composeMetadata(woodBlock, woodMeta));
+                    return new ItemStack(ModBlocks.thinLogFence, 3, TileEntityWoodProxy.composeMetadata(woodBlock, woodMeta));
             }
         }
 

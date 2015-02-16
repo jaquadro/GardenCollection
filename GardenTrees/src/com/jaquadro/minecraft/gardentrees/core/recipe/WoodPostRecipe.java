@@ -12,11 +12,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class WoodPostRecipe implements IRecipe
 {
-    private static final Item[] axeList = new Item[] {
-        Items.wooden_axe, Items.stone_axe, Items.iron_axe, Items.golden_axe, Items.diamond_axe
-    };
+    public static final List<Item> axeList = new ArrayList<Item>();
+
+    static {
+        axeList.add(Items.wooden_axe);
+        axeList.add(Items.stone_axe);
+        axeList.add(Items.iron_axe);
+        axeList.add(Items.golden_axe);
+        axeList.add(Items.diamond_axe);
+    }
 
     private UniqueMetaIdentifier woodType;
 
@@ -75,8 +84,8 @@ public class WoodPostRecipe implements IRecipe
             return false;
 
         Item item = itemStack.getItem();
-        for (Item axe : axeList) {
-            if (item == axe)
+        for (int i = 0, n = axeList.size(); i < n; i++) {
+            if (item == axeList.get(i))
                 return true;
         }
 

@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardentrees.core.handlers;
 
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
 import com.jaquadro.minecraft.gardencore.api.event.EnrichedSoilEvent;
+import com.jaquadro.minecraft.gardentrees.core.recipe.WoodPostRecipe;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -53,10 +54,11 @@ public class ForgeEventHandler
 
     private boolean isValidAxe (ItemStack itemStack) {
         Item item = itemStack.getItem();
-        return item == Items.wooden_axe
-            || item == Items.stone_axe
-            || item == Items.iron_axe
-            || item == Items.golden_axe
-            || item == Items.diamond_axe;
+        for (int i = 0, n = WoodPostRecipe.axeList.size(); i < n; i++) {
+            if (item == WoodPostRecipe.axeList.get(i))
+                return true;
+        }
+
+        return false;
     }
 }

@@ -26,7 +26,7 @@ public class ModRecipes
 
     public void init () {
         for (int i = 0; i < BlockThinLog.subNames.length; i++) {
-            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLogFence, 2, i), "xyx", " y ",
+            GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLogFence, 3, i), "xyx", " y ",
                 'x', Items.string, 'y', new ItemStack(ModBlocks.thinLog, 1, i));
 
             if (i / 4 == 0) {
