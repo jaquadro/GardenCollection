@@ -15,6 +15,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -271,8 +272,12 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
 
         if (item == Items.stick)
             return 150;
+        if (item == Items.string)
+            return 100;
         if (item instanceof IPlantable)
             return 100;
+        if (item instanceof ItemFood)
+            return 150;
 
         return 0;
     }
