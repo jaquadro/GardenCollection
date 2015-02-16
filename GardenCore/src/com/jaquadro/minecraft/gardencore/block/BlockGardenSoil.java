@@ -111,6 +111,17 @@ public class BlockGardenSoil extends BlockGarden
         return SLOT_INVALID;
     }
 
+    @Override
+    public boolean applyHoe (World world, int x, int y, int z) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        if (te != null && te.isEmpty()) {
+            convertToFarm(world, x, y, z);
+            return true;
+        }
+
+        return false;
+    }
+
     public void convertToFarm (World world, int x, int y, int z) {
         world.playSoundEffect(x + .5, y + .5, z + .5, stepSound.getStepResourcePath(), (stepSound.getVolume() + 1) / 2, stepSound.getPitch() * .8f);
         if (!world.isRemote)

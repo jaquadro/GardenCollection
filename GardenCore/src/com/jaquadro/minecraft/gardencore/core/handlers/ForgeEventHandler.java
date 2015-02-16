@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.core.handlers;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenSoil;
 import com.jaquadro.minecraft.gardencore.block.BlockSmallFire;
@@ -46,9 +47,9 @@ public class ForgeEventHandler
     @SubscribeEvent
     public void useHoe (UseHoeEvent event) {
         Block block = event.world.getBlock(event.x, event.y, event.z);
-        if (block instanceof BlockGardenSoil) {
-            ((BlockGardenSoil) block).convertToFarm(event.world, event.x, event.y, event.z);
-            event.setResult(Event.Result.ALLOW);
+        if (block instanceof BlockGarden) {
+            if (((BlockGarden) block).applyHoe(event.world, event.x, event.y, event.z))
+                event.setResult(Event.Result.ALLOW);
         }
     }
 }

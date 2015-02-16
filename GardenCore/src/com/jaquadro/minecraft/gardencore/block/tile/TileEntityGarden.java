@@ -70,6 +70,15 @@ public class TileEntityGarden extends TileEntity implements IInventory
         clearReachableContents(0, containerStacks.length);
     }
 
+    public boolean isEmpty () {
+        for (int i = 0; i < containerStacks.length; i++) {
+            if (getPlantInSlot(i) != null)
+                return false;
+        }
+
+        return true;
+    }
+
     private void clearReachableContents (int start, int length) {
         for (int i = start; i < length; i++)
             setInventorySlotContents(i, null, false);

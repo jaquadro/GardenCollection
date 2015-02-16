@@ -271,6 +271,10 @@ public abstract class BlockGarden extends BlockContainer
         return true;
     }
 
+    public boolean applyHoe (World world, int x, int y, int z) {
+        return false;
+    }
+
     protected boolean applyPlantToGarden (World world, int x, int y, int z, EntityPlayer player, int slot, PlantItem plant) {
         if (!isPlantValidForSlot(world, x, y, z, slot, plant))
             return false;

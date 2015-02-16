@@ -355,20 +355,31 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
         }
     }
 
-    protected void applyHoeToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {
+    protected boolean applyHoeToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {
         Block substrate = Block.getBlockFromItem(tile.getSubstrate().getItem());
         if (substrate == Blocks.dirt || substrate == Blocks.grass)
             tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 1), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
         else if (substrate == ModBlocks.gardenSoil)
             tile.setSubstrate(new ItemStack(ModBlocks.gardenFarmland), new ItemStack(ModBlocks.gardenSoil));
         else
-            return;
+            return false;
 
         tile.markDirty();
 
         world.markBlockForUpdate(x, y, z);
         world.playSoundEffect(x + .5f, y + .5f, z + .5f, Blocks.farmland.stepSound.getStepResourcePath(),
             (Blocks.farmland.stepSound.getVolume() + 1) / 2f, Blocks.farmland.stepSound.getPitch() * .8f);
+
+        return true;
+    }
+
+    @Override
+    public boolean applyHoe (World world, int x, int y, int z) {
+        TileEntityGarden te = getTileEntity(world, x, y, z);
+        if (te != null && te.isEmpty())
+            return applyHoeToSubstrate(world, x, y, z, te, null);
+
+        return false;
     }
 
     @Override
