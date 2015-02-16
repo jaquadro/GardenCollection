@@ -52,6 +52,8 @@ public class ModRecipes
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling, 1, 1), new ItemStack(Blocks.sapling), new ItemStack(Blocks.vine), enrichedSoil);
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.sapling, 1, 2), new ItemStack(Blocks.sapling, 1, 2), enrichedSoil);
 
+        GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ivy), new ItemStack(Blocks.vine), enrichedSoil);
+
         addExtraWoodRecipes();
     }
 

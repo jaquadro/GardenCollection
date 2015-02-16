@@ -157,7 +157,7 @@ public class BlockIvy extends Block implements IShearable
     @Override
     public void updateTick (World world, int x, int y, int z, Random random) {
         if (!world.isRemote && world.rand.nextInt(2) == 0) {
-            int limit = 7;
+            int limit = 9;
 
             worldSearch:
             for (int dx = x - 4; dx <= x + 4; dx++) {
@@ -194,7 +194,7 @@ public class BlockIvy extends Block implements IShearable
             }
             else {
                 if (dir >= 2 && dir <= 5 && (meta & 1 << facingDir) == 0) {
-                    if (limit <= 2)
+                    if (limit <= 4)
                         return;
 
                     Block block = world.getBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir]);

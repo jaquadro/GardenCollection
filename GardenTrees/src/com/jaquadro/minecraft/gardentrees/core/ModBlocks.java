@@ -5,14 +5,13 @@ import com.jaquadro.minecraft.gardentrees.GardenTrees;
 import com.jaquadro.minecraft.gardentrees.block.*;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.item.ItemGTSapling;
-import com.jaquadro.minecraft.gardentrees.item.ItemIvy;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLogFence;
+import com.jaquadro.minecraft.gardentrees.item.ItemIvy;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemMultiTexture;
 import org.apache.logging.log4j.Level;
 
 public class ModBlocks
