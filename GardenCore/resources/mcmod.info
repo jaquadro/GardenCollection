@@ -18,5 +18,15 @@
 		"logoFile": "",
 		"url": "http://www.jaquadro.com/",
 		"authors": [ "jaquadro" ]
-	}
+	},
+	{
+    	"modid": "GardenTrees",
+    	"name": "Garden Trees",
+    	"description": "Ornamental trees, posts, and fences.",
+    	"version": "1.0.0",
+    	"credits": "By jaquadro",
+    	"logoFile": "",
+    	"url": "http://www.jaquadro.com/",
+    	"authors": [ "jaquadro" ]
+    }
 ]

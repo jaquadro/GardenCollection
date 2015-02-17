@@ -663,6 +663,5 @@
     </orderEntry>
     <orderEntry type="module" module-name="GardenContainers" />
     <orderEntry type="module" module-name="GardenCore" />
-    <orderEntry type="module" module-name="GardenTrees" />
   </component>
 </module>
