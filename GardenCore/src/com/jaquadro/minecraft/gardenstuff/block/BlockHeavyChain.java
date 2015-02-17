@@ -1,7 +1,7 @@
-package com.jaquadro.minecraft.gardendecor.block;
+package com.jaquadro.minecraft.gardenstuff.block;
 
-import com.jaquadro.minecraft.gardencontainers.GardenContainers;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
+import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
@@ -17,7 +17,7 @@ public class BlockHeavyChain extends Block
         setResistance(5f);
         setStepSound(Block.soundTypeMetal);
         setBlockBounds(.5f - .125f, 0, .5f - .125f, .5f + .125f, 1, .5f + .125f);
-        setBlockTextureName(GardenContainers.MOD_ID + ":chain_heavy");
+        setBlockTextureName(GardenStuff.MOD_ID + ":chain_heavy");
         setCreativeTab(ModCreativeTabs.tabGardenCore);
     }
 

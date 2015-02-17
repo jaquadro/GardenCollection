@@ -1,6 +1,6 @@
-package com.jaquadro.minecraft.gardendecor.core;
+package com.jaquadro.minecraft.gardenstuff.core;
 
-import com.jaquadro.minecraft.gardendecor.client.renderer.LightChainRenderer;
+import com.jaquadro.minecraft.gardenstuff.renderer.LightChainRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy

@@ -1,9 +1,9 @@
-package com.jaquadro.minecraft.gardendecor.core;
+package com.jaquadro.minecraft.gardenstuff.core;
 
-import com.jaquadro.minecraft.gardendecor.GardenDecor;
-import com.jaquadro.minecraft.gardendecor.block.BlockHeavyChain;
-import com.jaquadro.minecraft.gardendecor.block.BlockLargeMountingPlate;
-import com.jaquadro.minecraft.gardendecor.block.BlockLightChain;
+import com.jaquadro.minecraft.gardenstuff.GardenStuff;
+import com.jaquadro.minecraft.gardenstuff.block.BlockHeavyChain;
+import com.jaquadro.minecraft.gardenstuff.block.BlockLargeMountingPlate;
+import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -21,11 +21,11 @@ public class ModBlocks
 
         GameRegistry.registerBlock(heavyChain, "heavy_chain");
         GameRegistry.registerBlock(lightChain, "light_chain");
-        GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
+        //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
     }
 
     public static Block get (String name) {
-        return GameRegistry.findBlock(GardenDecor.MOD_ID, name);
+        return GameRegistry.findBlock(GardenStuff.MOD_ID, name);
     }
 
     public static String getQualifiedName (Block block) {

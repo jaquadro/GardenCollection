@@ -1,4 +1,4 @@
-package com.jaquadro.minecraft.gardendecor.core;
+package com.jaquadro.minecraft.gardenstuff.core;
 
 public class CommonProxy
 {

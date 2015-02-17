@@ -1,9 +1,8 @@
-package com.jaquadro.minecraft.gardendecor.client.renderer;
+package com.jaquadro.minecraft.gardenstuff.renderer;
 
-import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
-import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
+import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
