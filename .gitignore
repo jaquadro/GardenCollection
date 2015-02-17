@@ -21,3 +21,4 @@ Runtime/options.txt
 *.iws
 Runtime/
 Images/
+.gradle/
