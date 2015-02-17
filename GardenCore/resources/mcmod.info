@@ -1,5 +1,15 @@
 [
 	{
+    	"modid": "GardenContainers",
+    	"name": "Garden Containers",
+    	"description": "A variety of containers for planting vegetation.",
+    	"version": "1.0.0",
+    	"credits": "By jaquadro",
+    	"logoFile": "",
+    	"url": "http://www.jaquadro.com/",
+    	"authors": [ "jaquadro" ]
+    },
+	{
 		"modid": "GardenCore",
 		"name": "Garden Core",
 		"description": "Base mod for a collection of garden and plant mods.",

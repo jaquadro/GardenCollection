@@ -661,7 +661,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="GardenContainers" />
     <orderEntry type="module" module-name="GardenCore" />
   </component>
 </module>
