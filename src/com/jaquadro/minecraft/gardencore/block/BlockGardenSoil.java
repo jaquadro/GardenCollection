@@ -75,6 +75,11 @@ public class BlockGardenSoil extends BlockGarden
     }
 
     @Override
+    public int getDefaultSlot () {
+        return Slot14Profile.SLOT_CENTER;
+    }
+
+    @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return Slot14Profile.SLOT_CENTER;
     }

@@ -62,6 +62,11 @@ public abstract class BlockMediumPot extends BlockGardenContainer
     public abstract String[] getSubTypes ();
 
     @Override
+    public int getDefaultSlot () {
+        return Slot2Profile.SLOT_CENTER;
+    }
+
+    @Override
     protected int getSlot (World world, int x, int y, int z, EntityPlayer player, float hitX, float hitY, float hitZ) {
         return Slot2Profile.SLOT_CENTER;
     }

@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
+import com.jaquadro.minecraft.gardencore.api.block.IGardenBlock;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.block.garden.IConnectionProfile;
 import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotProfile;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class BlockGarden extends BlockContainer
+public abstract class BlockGarden extends BlockContainer implements IGardenBlock
 {
     public static final int SLOT_INVALID = -1;
 
@@ -79,6 +80,11 @@ public abstract class BlockGarden extends BlockContainer
         }
 
         super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public int getDefaultSlot () {
+        return SLOT_INVALID;
     }
 
     public IConnectionProfile getConnectionProfile () {
