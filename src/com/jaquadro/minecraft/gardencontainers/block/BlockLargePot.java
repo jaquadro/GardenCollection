@@ -51,8 +51,9 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
         }
 
         @Override
-        public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
-            if (gardenTile.getSubstrate() == null)
+        public Object openPlantGUI (InventoryPlayer playerInventory, TileEntity gardenTile, boolean client) {
+
+            if (gardenTile instanceof TileEntityGarden && ((TileEntityGarden)gardenTile).getSubstrate() == null)
                 return null;
 
             return super.openPlantGUI(playerInventory, gardenTile, client);

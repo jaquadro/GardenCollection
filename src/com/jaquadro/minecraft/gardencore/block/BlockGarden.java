@@ -2,9 +2,9 @@ package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
-import com.jaquadro.minecraft.gardencore.block.support.IConnectionProfile;
-import com.jaquadro.minecraft.gardencore.block.support.ISlotProfile;
-import com.jaquadro.minecraft.gardencore.block.support.ISlotShareProfile;
+import com.jaquadro.minecraft.gardencore.api.block.garden.IConnectionProfile;
+import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotProfile;
+import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotShareProfile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModItems;

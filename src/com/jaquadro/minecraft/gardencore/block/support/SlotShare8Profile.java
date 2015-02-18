@@ -1,23 +1,23 @@
 package com.jaquadro.minecraft.gardencore.block.support;
 
-import java.util.Map;
-import java.util.HashMap;
+import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotMapping;
+import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotShareProfile;
 
 public class SlotShare8Profile implements ISlotShareProfile
 {
     int indexBase;
-    SlotMapping[][] map;
+    ISlotMapping[][] map;
 
     public SlotShare8Profile (int slotXZNN, int slotZN, int slotXZPN, int slotXP, int slotXZPP, int slotZP, int slotXZNP, int slotXN) {
         indexBase = min(slotXZNN, slotZN, slotXZPN, slotXP, slotXZPP, slotZP, slotXZNP, slotXN);
         int length = max(slotXZNN, slotZN, slotXZPN, slotXP, slotXZPP, slotZP, slotXZNP, slotXN) - indexBase + 1;
 
-        map = new SlotMapping[length][];
+        map = new ISlotMapping[length][];
 
-        map[slotZN - indexBase] = new SlotMapping[] { new SlotMapping(slotZN, slotZP, 0, -1) };
-        map[slotXP - indexBase] = new SlotMapping[] { new SlotMapping(slotXP, slotXN, 1, 0) };
-        map[slotZP - indexBase] = new SlotMapping[] { new SlotMapping(slotZP, slotZN, 0, 1) };
-        map[slotXN - indexBase] = new SlotMapping[] { new SlotMapping(slotXN, slotXP, -1, 0) };
+        map[slotZN - indexBase] = new ISlotMapping[] { new SlotMapping(slotZN, slotZP, 0, -1) };
+        map[slotXP - indexBase] = new ISlotMapping[] { new SlotMapping(slotXP, slotXN, 1, 0) };
+        map[slotZP - indexBase] = new ISlotMapping[] { new SlotMapping(slotZP, slotZN, 0, 1) };
+        map[slotXN - indexBase] = new ISlotMapping[] { new SlotMapping(slotXN, slotXP, -1, 0) };
 
         map[slotXZNN - indexBase] = new SlotMapping[] {
             new SlotMapping(slotXZNN, slotXZPN, -1, 0),
@@ -42,7 +42,7 @@ public class SlotShare8Profile implements ISlotShareProfile
     }
 
     @Override
-    public SlotMapping[] getNeighborsForSlot (int slot) {
+    public ISlotMapping[] getNeighborsForSlot (int slot) {
         if (slot < indexBase || slot >= indexBase + map.length)
             return null;
 

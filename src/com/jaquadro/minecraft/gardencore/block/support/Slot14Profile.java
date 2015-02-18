@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.client.gui.GuiGardenLayout;
 import com.jaquadro.minecraft.gardencore.inventory.ContainerGarden;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
 public class Slot14Profile extends BasicSlotProfile
@@ -50,10 +51,14 @@ public class Slot14Profile extends BasicSlotProfile
     }
 
     @Override
-    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
-        if (client)
-            return new GuiGardenLayout(playerInventory, gardenTile);
-        else
-            return new ContainerGarden(playerInventory, gardenTile);
+    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntity gardenTile, boolean client) {
+        if (gardenTile instanceof TileEntityGarden) {
+            if (client)
+                return new GuiGardenLayout(playerInventory, (TileEntityGarden)gardenTile);
+            else
+                return new ContainerGarden(playerInventory, (TileEntityGarden)gardenTile);
+        }
+
+        return null;
     }
 }

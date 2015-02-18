@@ -1,10 +1,11 @@
 package com.jaquadro.minecraft.gardencore.block.support;
 
+import com.jaquadro.minecraft.gardencore.api.block.garden.ISlotProfile;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
-import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 
 import java.util.ArrayList;
@@ -76,11 +77,11 @@ public class BasicSlotProfile implements ISlotProfile
     }
 
     @Override
-    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntityGarden gardenTile, boolean client) {
+    public Object openPlantGUI (InventoryPlayer playerInventory, TileEntity gardenTile, boolean client) {
         return null;
     }
 
-    @Override
+    /*@Override
     public int getNextAvailableSlot (IBlockAccess blockAccess, int x, int y, int z, int slot, PlantItem plant) {
         return -1;
     }
@@ -88,5 +89,5 @@ public class BasicSlotProfile implements ISlotProfile
     @Override
     public SlotMapping[] getSharedSlotMap (int slot) {
         return null;
-    }
+    }*/
 }
