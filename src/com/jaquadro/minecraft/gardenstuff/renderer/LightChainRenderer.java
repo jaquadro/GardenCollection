@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardenstuff.renderer;
 
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
+import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
@@ -11,12 +12,16 @@ import net.minecraft.src.FMLRenderAccessLibrary;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class LightChainRenderer implements ISimpleBlockRenderingHandler
 {
     private static final Vec3[] defaultAttachPoints = new Vec3[] {
         Vec3.createVectorHelper(.03125, 1, .03125), Vec3.createVectorHelper(.03125, 1, 1 - .03125),
         Vec3.createVectorHelper(1 - .03125, 1, .03125), Vec3.createVectorHelper(1 - .03125, 1, 1 - .03125),
+    };
+    private static final Vec3[] singleAttachPoint = new Vec3[] {
+        Vec3.createVectorHelper(.5, 1, .5),
     };
 
     @Override
@@ -26,6 +31,13 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
 
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+        if (block instanceof BlockLightChain)
+            return renderWorldBlock(world, x, y, z, (BlockLightChain)block, modelId, renderer);
+
+        return false;
+    }
+
+    private boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, BlockLightChain block, int modelId, RenderBlocks renderer) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 
@@ -40,23 +52,28 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         if (renderer.hasOverrideBlockTexture())
             icon = renderer.overrideBlockTexture;
 
-        int yMin = findMinY(world, block, x, y, z);
-        int yMax = findMaxY(world, block, x, y, z);
-        float height = yMax - yMin + 1;
+        int yMin = block.findMinY(world, x, y, z);
+        int yMax = block.findMaxY(world, x, y, z);
 
-        Block bottomBlock = world.getBlock(x, yMin - 1, z);
-        Vec3[] attachPoints = (bottomBlock instanceof IChainAttachable) ? ((IChainAttachable) bottomBlock).getChainAttachPoints() : defaultAttachPoints;
+        for (Vec3 point : block.getAttachPoints(world, x, y, z)) {
+            float height = yMax - yMin + 2 - (float)point.yCoord;
 
-        for (Vec3 point : attachPoints) {
             double cx = .5f;
             double cz = .5f;
             double dx = cx - point.xCoord;
             double dz = cz - point.zCoord;
+            double yt = y + 1;
+            double yb = y;
 
-            double lerpB = 1 - ((y - yMin) / height);
-            double lerpT = 1 - ((y + 1 - yMin) / height);
+            double localYMin = yMin + point.yCoord - 1;
 
-            drawBetween(renderer, icon, x + dx * lerpB + cx, y, z + dz * lerpB + cz, x + dx * lerpT + cx, y + 1, z + dz * lerpT + cz);
+            if (y == yMin)
+                yb = y - 1 + point.yCoord;
+
+            double lerpB = 1 - ((yb - localYMin) / height);
+            double lerpT = 1 - ((yt - localYMin) / height);
+
+            drawBetween(renderer, icon, x + dx * lerpB + cx, yb, z + dz * lerpB + cz, x + dx * lerpT + cx, yt, z + dz * lerpT + cz);
         }
 
 
@@ -71,24 +88,6 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         FMLRenderAccessLibrary.renderWorldBlock(renderer, world, x, y, z, ModBlocks.gardenProxy, ModBlocks.gardenProxy.getRenderType());
 
         return true;
-    }
-
-    private int findMinY (IBlockAccess world, Block block, int x, int y, int z) {
-        while (y > 0) {
-            if (world.getBlock(x, --y, z) != block)
-                return y + 1;
-        }
-
-        return y;
-    }
-
-    private int findMaxY (IBlockAccess world, Block block, int x, int y, int z) {
-        while (y < world.getHeight() - 1) {
-            if (world.getBlock(x, ++y, z) != block)
-                return y - 1;
-        }
-
-        return y;
     }
 
     @Override
@@ -121,6 +120,11 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         double vUy = vU.yCoord / 2;
         double vUz = vU.zCoord / 2;
 
+        if (vUx == 0 && vUy == 0) {
+            vUx = -.5;
+            vUz = .5;
+        }
+
         tessellator.addVertexWithUV(x0 + vUx, y0 + vUy, z0 + vUz, maxU, minV);
         tessellator.addVertexWithUV(x0 - vUx, y0 - vUy, z0 - vUz, minU, minV);
         tessellator.addVertexWithUV(x1 - vUx, y1 - vUy, z1 - vUz, minU, maxV);
@@ -134,6 +138,11 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         double vNx = vN.xCoord / 2;
         double vNy = vN.yCoord / 2;
         double vNz = vN.zCoord / 2;
+
+        if (vNx == 0 && vNy == 0) {
+            vNx = .5;
+            vNz = .5;
+        }
 
         tessellator.addVertexWithUV(x0 + vNx, y0 + vNy, z0 + vNz, maxU, minV);
         tessellator.addVertexWithUV(x0 - vNx, y0 - vNy, z0 - vNz, minU, minV);

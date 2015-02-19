@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencontainers.block;
 
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityMediumPot;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
+import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
@@ -19,13 +20,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockMediumPot extends BlockGardenContainer
+public abstract class BlockMediumPot extends BlockGardenContainer implements IChainAttachable
 {
     private class LocalSlotProfile extends Slot2Profile
     {
@@ -140,5 +142,15 @@ public abstract class BlockMediumPot extends BlockGardenContainer
     public TileEntityMediumPot getTileEntity (IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         return (te != null && te instanceof TileEntityMediumPot) ? (TileEntityMediumPot) te : null;
+    }
+
+    private static final Vec3[] chainAttachPoints = new Vec3[] {
+        Vec3.createVectorHelper(.125f + .03125 + .005, .75f, .125f + .03125), Vec3.createVectorHelper(.125f + .03125, .75f, 1 - .125f - .03125 - .005),
+        Vec3.createVectorHelper(1 - .125f - .03125, .75f, .125f + .03125 + .005), Vec3.createVectorHelper(1 - .125f - .03125 - .005, .75f, 1 - .125f - .03125),
+    };
+
+    @Override
+    public Vec3[] getChainAttachPoints () {
+        return chainAttachPoints;
     }
 }
