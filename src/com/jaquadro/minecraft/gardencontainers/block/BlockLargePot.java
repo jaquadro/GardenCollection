@@ -354,7 +354,7 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
 
     protected void applyWaterToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {
         if (Block.getBlockFromItem(tile.getSubstrate().getItem()) == Blocks.dirt) {
-            tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 1), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
+            tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 7), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
             tile.markDirty();
 
             world.markBlockForUpdate(x, y, z);
@@ -364,7 +364,7 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
     protected boolean applyHoeToSubstrate (World world, int x, int y, int z, TileEntityGarden tile, EntityPlayer player) {
         Block substrate = Block.getBlockFromItem(tile.getSubstrate().getItem());
         if (substrate == Blocks.dirt || substrate == Blocks.grass)
-            tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 1), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
+            tile.setSubstrate(new ItemStack(Blocks.farmland, 1, 7), new ItemStack(Blocks.dirt, 1, tile.getSubstrate().getItemDamage()));
         else if (substrate == ModBlocks.gardenSoil)
             tile.setSubstrate(new ItemStack(ModBlocks.gardenFarmland), new ItemStack(ModBlocks.gardenSoil));
         else
