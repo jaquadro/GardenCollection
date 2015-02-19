@@ -1,8 +1,10 @@
 package com.jaquadro.minecraft.gardencore;
 
+import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.core.*;
 import com.jaquadro.minecraft.gardencore.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
+import com.jaquadro.minecraft.gardencore.core.handlers.VanillaBonemealHandler;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -52,6 +54,7 @@ public class GardenCore
         MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
 
         integration.init();
+        GardenCoreAPI.instance().registerBonemealHandler(new VanillaBonemealHandler());
     }
 
     @Mod.EventHandler
