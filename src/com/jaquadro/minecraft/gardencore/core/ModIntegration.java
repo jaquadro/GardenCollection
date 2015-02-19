@@ -16,5 +16,6 @@ public class ModIntegration
         WeeeFlowersIntegration.init();
         BotaniaIntegration.init();
         ThaumcraftIntegration.init();
+        AgriCraftIntegration.init();
     }
 }
