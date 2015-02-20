@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.api.IBonemealHandler;
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
+import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 import com.jaquadro.minecraft.gardentrees.world.gen.WorldGenStandardOrnTree;
 import cpw.mods.fml.common.Loader;
 import net.minecraft.block.Block;
@@ -37,6 +38,20 @@ public class GardenCoreIntegration
             WorldGenStandardOrnTree.SmallAcaciaTree.FACTORY.create(Blocks.log2, 0, Blocks.leaves2, 0));
         saplingReg.putExtendedData(sapling, 5, "sm_generator",
             WorldGenStandardOrnTree.SmallOakTree.FACTORY.create(Blocks.log2, 1, Blocks.leaves2, 1));
+
+        Item extSapling = Item.getItemFromBlock(ModBlocks.sapling);
+
+        saplingReg.registerSapling(extSapling, 0, Blocks.log, 1, Blocks.leaves, 1);
+        saplingReg.registerSapling(extSapling, 1, Blocks.log, 0, Blocks.leaves, 0);
+        saplingReg.registerSapling(extSapling, 2, Blocks.log, 2, Blocks.leaves, 2);
+
+        saplingReg.putExtendedData(extSapling, 0, "sm_generator",
+            WorldGenStandardOrnTree.SmallSpruceTree.FACTORY.create(Blocks.log, 1, Blocks.leaves, 1));
+        saplingReg.putExtendedData(extSapling, 1, "sm_generator",
+            WorldGenStandardOrnTree.SmallOakTree.FACTORY.create(Blocks.log, 0, Blocks.leaves, 0));
+        saplingReg.putExtendedData(extSapling, 2, "sm_generator",
+            WorldGenStandardOrnTree.SmallOakTree.FACTORY.create(Blocks.log, 2, Blocks.leaves, 2));
+
 
         GardenCoreAPI.instance().registerBonemealHandler(new GardenBonemealHandler());
     }
