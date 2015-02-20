@@ -4,6 +4,8 @@ import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.BlockHeavyChain;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLargeMountingPlate;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
+import com.jaquadro.minecraft.gardenstuff.item.ItemHeavyChain;
+import com.jaquadro.minecraft.gardenstuff.item.ItemLightChain;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -19,8 +21,8 @@ public class ModBlocks
         lightChain = new BlockLightChain("lightChain");
         largeMountingPlate = new BlockLargeMountingPlate("largeMountingPlate");
 
-        GameRegistry.registerBlock(heavyChain, "heavy_chain");
-        GameRegistry.registerBlock(lightChain, "light_chain");
+        GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
+        GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
     }
 

@@ -7,10 +7,18 @@ import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,6 +28,11 @@ import java.util.List;
 
 public class BlockLightChain extends Block implements IPlantProxy
 {
+    public static final String[] types = new String[] { "iron", "gold", "rope" };
+
+    @SideOnly(Side.CLIENT)
+    private static IIcon[] icons;
+
     private static final Vec3[] defaultAttachPoints = new Vec3[] {
         Vec3.createVectorHelper(.03125, 1, .03125), Vec3.createVectorHelper(.03125, 1, 1 - .03125),
         Vec3.createVectorHelper(1 - .03125, 1, .03125), Vec3.createVectorHelper(1 - .03125, 1, 1 - .03125),
@@ -129,5 +142,31 @@ public class BlockLightChain extends Block implements IPlantProxy
             attachPoints = defaultAttachPoints;
 
         return attachPoints;
+    }
+
+    @Override
+    public int damageDropped (int meta) {
+        return MathHelper.clamp_int(meta, 0, types.length - 1);
+    }
+
+    @Override
+    public void getSubBlocks (Item item, CreativeTabs creativeTabs, List list) {
+        list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 1));
+        //list.add(new ItemStack(item, 1, 3));
+    }
+
+    @Override
+    public IIcon getIcon (int side, int meta) {
+        return icons[MathHelper.clamp_int(meta, 0, types.length - 1)];
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons (IIconRegister register) {
+        icons = new IIcon[types.length];
+
+        for (int i = 0; i < types.length; i++)
+            icons[i] = register.registerIcon(getTextureName() + "_" + types[i]);
     }
 }

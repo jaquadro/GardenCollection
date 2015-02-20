@@ -48,7 +48,7 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
 
         tessellator.setColorOpaque_F(r, g, b);
 
-        IIcon icon = block.getBlockTextureFromSide(0);
+        IIcon icon = block.getIcon(0, world.getBlockMetadata(x, y, z));
         if (renderer.hasOverrideBlockTexture())
             icon = renderer.overrideBlockTexture;
 
