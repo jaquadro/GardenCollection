@@ -122,7 +122,9 @@ public abstract class BlockGardenContainer extends BlockGarden
             || block == Blocks.grass
             || block == Blocks.water
             || block == Blocks.farmland
-            || block == ModBlocks.gardenSoil;
+            || block == Blocks.mycelium
+            || block == ModBlocks.gardenSoil
+            || block == ModBlocks.gardenFarmland;
     }
 
     protected ItemStack translateSubstrate (World world, int x, int y, int z, int slot, ItemStack itemStack) {
