@@ -9,11 +9,14 @@ import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.List;
 
 public class BlockLightChain extends Block implements IPlantProxy
 {
@@ -35,6 +38,7 @@ public class BlockLightChain extends Block implements IPlantProxy
         setBlockBounds(.5f - .0625f, 0, .5f - .0625f, .5f + .0625f, 1, .5f + .0625f);
         setBlockTextureName(GardenStuff.MOD_ID + ":chain_light");
         setCreativeTab(ModCreativeTabs.tabGardenCore);
+        setBlockBounds(0, 0, 0, 1, 1, 1);
     }
 
     @Override
@@ -55,6 +59,35 @@ public class BlockLightChain extends Block implements IPlantProxy
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z) {
         return null;
+    }
+
+    @Override
+    public AxisAlignedBB getSelectedBoundingBoxFromPool (World world, int x, int y, int z) {
+        float minX = 1;
+        float minZ = 1;
+        float maxX = 0;
+        float maxZ = 0;
+        for (Vec3 point : getAttachPoints(world, x, y, z)) {
+            if (point.xCoord < minX)
+                minX = (float) point.xCoord;
+            if (point.zCoord < minZ)
+                minZ = (float) point.zCoord;
+            if (point.xCoord > maxX)
+                maxX = (float) point.xCoord;
+            if (point.zCoord > maxZ)
+                maxZ = (float) point.zCoord;
+        }
+
+        if (maxX - minX < .125) {
+            minX = .5f - .0625f;
+            maxX = .5f + .0625f;
+        }
+        if (maxZ - minZ < .125) {
+            minZ = .5f - .0625f;
+            maxZ = .5f + .0625f;
+        }
+
+        return AxisAlignedBB.getBoundingBox(x + minX, y + 0, z + minZ, x + maxX, y + 1, z + maxZ);
     }
 
     @Override
