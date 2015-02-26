@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardentrees.integration;
 import com.jaquadro.minecraft.gardencore.api.GardenCoreAPI;
 import com.jaquadro.minecraft.gardencore.api.IBonemealHandler;
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
+import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 import com.jaquadro.minecraft.gardentrees.world.gen.WorldGenStandardOrnTree;
@@ -10,9 +11,13 @@ import cpw.mods.fml.common.Loader;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.oredict.OreDictionary;
+
+import java.util.List;
 
 public class GardenCoreIntegration
 {
@@ -52,8 +57,18 @@ public class GardenCoreIntegration
         saplingReg.putExtendedData(extSapling, 2, "sm_generator",
             WorldGenStandardOrnTree.SmallOakTree.FACTORY.create(Blocks.log, 2, Blocks.leaves, 2));
 
-
         GardenCoreAPI.instance().registerBonemealHandler(new GardenBonemealHandler());
+
+        WoodRegistry woodRegistry = WoodRegistry.instance();
+
+        List<ItemStack> woodList = OreDictionary.getOres("treeWood");
+        for (ItemStack item : woodList) {
+            if (item == null)
+                continue;
+
+            Block block = Block.getBlockFromItem(item.getItem());
+            woodRegistry.registerWoodType(block, item.getItemDamage());
+        }
     }
 
     private static class GardenBonemealHandler implements IBonemealHandler
