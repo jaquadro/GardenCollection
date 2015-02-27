@@ -1,6 +1,5 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
-import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -8,11 +7,11 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.src.FMLRenderAccessLibrary;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
+
+import static com.jaquadro.minecraft.gardencore.core.ClientProxy.gardenProxyRenderer;
 
 public class LightChainRenderer implements ISimpleBlockRenderingHandler
 {
@@ -85,7 +84,7 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         drawBetween(renderer, icon, .005 + x + lerpB, y, z + 1 - lerpB, x + lerpT, y + 1, z + 1 - lerpT);
         drawBetween(renderer, icon, .005 + x + 1 - lerpB, y, z + 1 - lerpB, x + 1 - lerpT, y + 1, z + 1 - lerpT);*/
 
-        FMLRenderAccessLibrary.renderWorldBlock(renderer, world, x, y, z, ModBlocks.gardenProxy, ModBlocks.gardenProxy.getRenderType());
+        gardenProxyRenderer.renderWorldBlock(world, x, y, z, ModBlocks.gardenProxy, ModBlocks.gardenProxy.getRenderType(), renderer);
 
         return true;
     }

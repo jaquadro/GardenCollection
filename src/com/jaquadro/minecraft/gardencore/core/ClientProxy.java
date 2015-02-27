@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.core;
 
 import com.jaquadro.minecraft.gardencore.client.renderer.*;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
@@ -11,6 +12,10 @@ public class ClientProxy extends CommonProxy
     public static int smallFireRenderID;
     public static int compostBinRenderID;
 
+    public static ISimpleBlockRenderingHandler gardenProxyRenderer;
+    public static ISimpleBlockRenderingHandler smallFireRenderer;
+    public static ISimpleBlockRenderingHandler compostBinRenderer;
+
     @Override
     public void registerRenderers ()
     {
@@ -18,8 +23,12 @@ public class ClientProxy extends CommonProxy
         smallFireRenderID = RenderingRegistry.getNextAvailableRenderId();
         compostBinRenderID = RenderingRegistry.getNextAvailableRenderId();
 
-        RenderingRegistry.registerBlockHandler(gardenProxyRenderID, new GardenProxyRenderer());
-        RenderingRegistry.registerBlockHandler(smallFireRenderID, new SmallFireRenderer());
-        RenderingRegistry.registerBlockHandler(compostBinRenderID, new CompostBinRenderer());
+        gardenProxyRenderer = new GardenProxyRenderer();
+        smallFireRenderer = new SmallFireRenderer();
+        compostBinRenderer = new CompostBinRenderer();
+
+        RenderingRegistry.registerBlockHandler(gardenProxyRenderID, gardenProxyRenderer);
+        RenderingRegistry.registerBlockHandler(smallFireRenderID, smallFireRenderer);
+        RenderingRegistry.registerBlockHandler(compostBinRenderID, compostBinRenderer);
     }
 }
