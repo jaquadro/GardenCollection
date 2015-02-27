@@ -154,11 +154,11 @@ public class TileEntityGarden extends TileEntity implements IInventory
     }
 
     public float getBiomeTemperature () {
-        return (biomeData & 255) / 255f;
+        return (biomeData & 127) / 127f;
     }
 
     public float getBiomeHumidity () {
-        return ((biomeData >> 8) & 255) / 255f;
+        return ((biomeData >> 7) & 127) / 127f;
     }
 
     public void setBiomeData (int data) {

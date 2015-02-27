@@ -45,13 +45,13 @@ public class ItemUsedSoilKit extends Item
     }
 
     public static int PackTempHumidity (float temp, float humidity) {
-        return (int)(humidity * 255) << 8 | (int)(temp * 255);
+        return (int)(humidity * 127) << 7 | (int)(temp * 127);
     }
 
     @SideOnly(Side.CLIENT)
     public int getColorFromDamage (int damage) {
-        int temperature = damage & 255;
-        int humidity = (damage >> 8) & 255;
+        int temperature = damage & 127;
+        int humidity = (damage >> 7) & 127;
         return ColorizerGrass.getGrassColor(temperature / 255f, humidity / 255f);
     }
 
@@ -70,8 +70,8 @@ public class ItemUsedSoilKit extends Item
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
-        float temperature = (itemStack.getItemDamage() & 255) / 255f;
-        float humidity = ((itemStack.getItemDamage() >> 8) & 255) / 255f;
+        float temperature = (itemStack.getItemDamage() & 127) / 127f;
+        float humidity = ((itemStack.getItemDamage() >> 7) & 127) / 127f;
 
         EnumChatFormatting tempColor = EnumChatFormatting.BLUE;
         if (temperature >= .2)
