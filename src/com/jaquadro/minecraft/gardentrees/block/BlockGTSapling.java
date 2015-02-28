@@ -32,6 +32,7 @@ public class BlockGTSapling extends BlockSapling
     public BlockGTSapling (String name) {
         setBlockName(name);
         setBlockTextureName("sapling");
+        setStepSound(Block.soundTypeGrass);
         setCreativeTab(ModCreativeTabs.tabGardenTrees);
     }
 

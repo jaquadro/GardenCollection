@@ -18,6 +18,7 @@ import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +33,7 @@ public class BlockIvy extends Block implements IShearable
 
         setBlockName(name);
         setTickRandomly(true);
+        setStepSound(Block.soundTypeGrass);
         setCreativeTab(ModCreativeTabs.tabGardenTrees);
     }
 
@@ -113,22 +115,24 @@ public class BlockIvy extends Block implements IShearable
 
     @Override
     public boolean canPlaceBlockOnSide (World world, int x, int y, int z, int side) {
+        int opSide = side - (side % 2);
         switch (side) {
             case 2:
-                return canPlaceOnBlock(world.getBlock(x, y, z + 1));
+                return canPlaceOnBlock(world, x, y, z + 1, opSide);
             case 3:
-                return canPlaceOnBlock(world.getBlock(x, y, z - 1));
+                return canPlaceOnBlock(world, x, y, z - 1, opSide);
             case 4:
-                return canPlaceOnBlock(world.getBlock(x + 1, y, z));
+                return canPlaceOnBlock(world, x + 1, y, z, opSide);
             case 5:
-                return canPlaceOnBlock(world.getBlock(x - 1, y, z));
+                return canPlaceOnBlock(world, x - 1, y, z, opSide);
             default:
                 return false;
         }
     }
 
-    private boolean canPlaceOnBlock (Block block) {
-        return block.renderAsNormalBlock() && block.getMaterial().blocksMovement();
+    private boolean canPlaceOnBlock (World world, int x, int y, int z, int side) {
+        Block block = world.getBlock(x, y, z);
+        return block.getMaterial().blocksMovement() && block.isSideSolid(world, x, y, z, ForgeDirection.getOrientation(side));
     }
 
     @Override
@@ -184,7 +188,8 @@ public class BlockIvy extends Block implements IShearable
                 int chance = world.rand.nextInt(16) & meta;
                 if (chance > 0) {
                     for (int i = 0; i <= 3; i++) {
-                        if (!canPlaceOnBlock(world.getBlock(x + Direction.offsetX[i], y + 1, z + Direction.offsetZ[i])))
+                        int opSide = Direction.directionToFacing[Direction.rotateOpposite[i]];
+                        if (!canPlaceOnBlock(world, x + Direction.offsetX[i], y + 1, z + Direction.offsetZ[i], opSide))
                             chance &= ~(1 << i);
                     }
 
@@ -198,20 +203,25 @@ public class BlockIvy extends Block implements IShearable
                         return;
 
                     Block block = world.getBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir]);
-                    if (block.getMaterial() == Material.air) {
-                        int m1 = facingDir + 1 & 3;
-                        int m2 = facingDir + 3 & 3;
+                    int opSide = Direction.directionToFacing[Direction.rotateOpposite[facingDir]];
 
-                        if ((meta & 1 << m1) != 0 && canPlaceOnBlock(world.getBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m1], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m1])))
-                            world.setBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir], this, 1 << m1, 2);
-                        else if ((meta & 1 << m2) != 0 && canPlaceOnBlock(world.getBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m2], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m2])))
-                            world.setBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir], this, 1 << m2, 2);
-                        else if ((meta & 1 << m1) != 0 && world.isAirBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m1], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m1]) && canPlaceOnBlock(world.getBlock(x + Direction.offsetX[m1], y, z + Direction.offsetZ[m1])))
-                            world.setBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m1], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m1], this, 1 << (facingDir + 2 & 3), 2);
-                        else if ((meta & 1 << m2) != 0 && world.isAirBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m2], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m2]) && canPlaceOnBlock(world.getBlock(x + Direction.offsetX[m2], y, z + Direction.offsetZ[m2])))
-                            world.setBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[m2], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[m2], this, 1 << (facingDir + 2 & 3), 2);
+                    if (block.getMaterial() == Material.air) {
+                        int dirRight = Direction.rotateRight[facingDir];
+                        int dirLeft = Direction.rotateLeft[facingDir];
+
+                        int opSideRight = Direction.directionToFacing[Direction.rotateOpposite[dirRight]];
+                        int opSideLeft = Direction.directionToFacing[Direction.rotateOpposite[dirLeft]];
+
+                        if ((meta & 1 << dirRight) != 0 && canPlaceOnBlock(world, x + Direction.offsetX[facingDir] + Direction.offsetX[dirRight], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirRight], opSideRight))
+                            world.setBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir], this, 1 << dirRight, 2);
+                        else if ((meta & 1 << dirLeft) != 0 && canPlaceOnBlock(world, x + Direction.offsetX[facingDir] + Direction.offsetX[dirLeft], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirLeft], opSideLeft))
+                            world.setBlock(x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir], this, 1 << dirLeft, 2);
+                        else if ((meta & 1 << dirRight) != 0 && world.isAirBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[dirRight], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirRight]) && canPlaceOnBlock(world, x + Direction.offsetX[dirRight], y, z + Direction.offsetZ[dirRight], opSide))
+                            world.setBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[dirRight], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirRight], this, 1 << (facingDir + 2 & 3), 2);
+                        else if ((meta & 1 << dirLeft) != 0 && world.isAirBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[dirLeft], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirLeft]) && canPlaceOnBlock(world, x + Direction.offsetX[dirLeft], y, z + Direction.offsetZ[dirLeft], opSide))
+                            world.setBlock(x + Direction.offsetX[facingDir] + Direction.offsetX[dirLeft], y, z + Direction.offsetZ[facingDir] + Direction.offsetZ[dirLeft], this, 1 << (facingDir + 2 & 3), 2);
                     }
-                    else if (block.getMaterial().isOpaque() && block.renderAsNormalBlock())
+                    else if (canPlaceOnBlock(world, x + Direction.offsetX[facingDir], y, z + Direction.offsetZ[facingDir], opSide))
                         world.setBlockMetadataWithNotify(x, y, z, meta | 1 << facingDir, 2);
                 }
             }
@@ -225,7 +235,8 @@ public class BlockIvy extends Block implements IShearable
         if (meta > 0) {
             for (int i = 0; i <= 3; i++) {
                 int bit = 1 << i;
-                if ((meta & bit) != 0 && !canPlaceOnBlock(world.getBlock(x + Direction.offsetX[i], y, z + Direction.offsetZ[i]))
+                int opSide = Direction.directionToFacing[Direction.rotateOpposite[i]];
+                if ((meta & bit) != 0 && !canPlaceOnBlock(world, x + Direction.offsetX[i], y, z + Direction.offsetZ[i], opSide)
                     && (world.getBlock(x, y + 1, z) != this || (world.getBlockMetadata(x, y + 1, z) & bit) == 0))
                     mask &= ~bit;
             }
