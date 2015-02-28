@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.core;
 
 import com.jaquadro.minecraft.gardencore.integration.*;
+import cpw.mods.fml.common.Loader;
 
 public class ModIntegration
 {
@@ -17,5 +18,8 @@ public class ModIntegration
         BotaniaIntegration.init();
         ThaumcraftIntegration.init();
         AgriCraftIntegration.init();
+
+        if (Loader.isModLoaded("plantmegapack"))
+            PlantMegaPackIntegration.init();
     }
 }

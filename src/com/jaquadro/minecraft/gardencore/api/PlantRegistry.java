@@ -163,23 +163,28 @@ public final class PlantRegistry
 
     public void registerPlantInfo (Block block, int meta, IPlantInfo info) {
         UniqueMetaIdentifier id = ModBlocks.getUniqueMetaID(block, meta);
-        if (id != null)
+        if (id != null) {
             plantInfoRegistry.register(id, info);
+            metaResolverRegistry.register(id, info);
+        }
     }
 
     public void registerPlantInfo (String modId, IPlantInfo info) {
         UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId);
         plantInfoRegistry.register(id, info);
+        metaResolverRegistry.register(id, info);
     }
 
     public void registerPlantInfo (String modId, String block, IPlantInfo info) {
         UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block);
         plantInfoRegistry.register(id, info);
+        metaResolverRegistry.register(id, info);
     }
 
     public void registerPlantInfo (String modId, String block, int meta, IPlantInfo info) {
         UniqueMetaIdentifier id = new UniqueMetaIdentifier(modId, block, meta);
         plantInfoRegistry.register(id, info);
+        metaResolverRegistry.register(id, info);
     }
 
     public IPlantInfo getPlantInfo (Block block, int meta) {

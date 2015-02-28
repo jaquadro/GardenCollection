@@ -21,6 +21,12 @@ public enum PlantType
     GROUND_COVER,
 
     /**
+     * Plants that grow out of the side of a block and occupy nontrivial volume.
+     * Examples: Third party shelf fungus.
+     */
+    SIDE,
+
+    /**
      * Plants that cover a side surface with almost no depth.
      * Examples: Third party moss.
      */
