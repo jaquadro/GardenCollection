@@ -4,5 +4,11 @@ item.ironNugget.name=Iron Nugget
 
 tile.heavyChain.iron.name=Heavy Iron Chain
 tile.heavyChain.gold.name=Heavy Gold Chain
+tile.heavyChain.rust.name=Heavy Rusted Chain
+tile.heavyChain.blackoxide.name=Heavy Black Oxide Chain
+tile.heavyChain.moss.name=Heavy Mossy Chain
 tile.lightChain.iron.name=Light Iron Chain
 tile.lightChain.gold.name=Light Gold Chain
+tile.lightChain.rust.name=Light Rusted Chain
+tile.lightChain.blackoxide.name=Light Black Oxide Chain
+tile.lightChain.moss.name=Light Mossy Chain

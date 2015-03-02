@@ -19,7 +19,7 @@ import java.util.List;
 
 public class BlockHeavyChain extends Block
 {
-    public static final String[] types = new String[] { "iron", "gold", "rope" };
+    public static final String[] types = new String[] { "iron", "gold", "rope", "rust", "blackoxide", "moss" };
 
     @SideOnly(Side.CLIENT)
     private static IIcon[] icons;
@@ -65,7 +65,10 @@ public class BlockHeavyChain extends Block
     public void getSubBlocks (Item item, CreativeTabs creativeTabs, List list) {
         list.add(new ItemStack(item, 1, 0));
         list.add(new ItemStack(item, 1, 1));
-        //list.add(new ItemStack(item, 1, 3));
+        //list.add(new ItemStack(item, 1, 2));
+        list.add(new ItemStack(item, 1, 3));
+        list.add(new ItemStack(item, 1, 4));
+        list.add(new ItemStack(item, 1, 5));
     }
 
     @Override
