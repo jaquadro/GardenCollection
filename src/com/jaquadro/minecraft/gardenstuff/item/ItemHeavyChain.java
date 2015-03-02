@@ -21,7 +21,7 @@ public class ItemHeavyChain extends ItemMultiTexture
         Block block = world.getBlock(x, y, z);
         int meta = world.getBlockMetadata(x, y, z);
 
-        if (block instanceof BlockCauldron && side == 1) {
+        if (block instanceof BlockCauldron && side == 1 && itemStack.getItemDamage() == 0) {
             int waterLevel = BlockCauldron.func_150027_b(meta);
             if (waterLevel == 0)
                 return false;

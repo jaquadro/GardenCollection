@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.item;
 
-import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
+import com.jaquadro.minecraft.gardenstuff.block.BlockLatticeMetal;
 import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
@@ -10,10 +10,10 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemLightChain extends ItemMultiTexture
+public class ItemLatticeMetal extends ItemMultiTexture
 {
-    public ItemLightChain (Block block) {
-        super(block, block, BlockLightChain.types);
+    public ItemLatticeMetal (Block block) {
+        super(block, block, BlockLatticeMetal.subNames);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class ItemLightChain extends ItemMultiTexture
             if (waterLevel == 0)
                 return false;
 
-            ItemStack newItem = new ItemStack(ModBlocks.lightChain, 1, 3);
+            ItemStack newItem = new ItemStack(ModBlocks.latticeMetal, 1, 1);
             itemStack.stackSize--;
 
             EntityItem itemEntity = new EntityItem(world, x + .5, y + 1.5, z + .5, newItem);

@@ -19,7 +19,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.3.3"
+version = "1.7.10-1.4.0"
 group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GardenStuff"
 
