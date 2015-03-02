@@ -29,7 +29,10 @@ public class ItemLightChain extends ItemMultiTexture
             ItemStack newItem = new ItemStack(ModBlocks.lightChain, 1, 3);
             itemStack.stackSize--;
 
-            world.spawnEntityInWorld(new EntityItem(world, x + .5, y + 1.5, z + .5, newItem));
+            EntityItem itemEntity = new EntityItem(world, x + .5, y + 1.5, z + .5, newItem);
+            itemEntity.playSound("random.splash", 0.25F, 1.0F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.4F);
+
+            world.spawnEntityInWorld(itemEntity);
             return true;
         }
 
