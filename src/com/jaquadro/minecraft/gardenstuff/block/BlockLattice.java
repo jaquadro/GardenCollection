@@ -5,18 +5,20 @@ import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLattice;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import com.jaquadro.minecraft.gardentrees.block.BlockThinLog;
-import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BlockLattice extends BlockContainer
 {
@@ -65,6 +67,12 @@ public abstract class BlockLattice extends BlockContainer
         float xe = (connectFlags & 32) != 0 ? 1 : 1 - margin;
 
         setBlockBounds(xs, ys, zs, xe, ye, ze);
+    }
+
+    @Override
+    public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
+        setBlockBoundsBasedOnState(world, x, y, z);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
     }
 
     @Override
