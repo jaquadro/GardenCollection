@@ -20,6 +20,7 @@ public class ModBlocks
     public static BlockLatticeMetal latticeMetal;
     public static BlockLatticeWood latticeWood;
     public static BlockRootCover rootCover;
+    public static BlockLantern lantern;
 
     public void init () {
         heavyChain = new BlockHeavyChain("heavyChain");
@@ -28,12 +29,14 @@ public class ModBlocks
         latticeMetal = new BlockLatticeMetal("latticeMetal");
         latticeWood = new BlockLatticeWood("latticeWood");
         rootCover = new BlockRootCover("rootCover");
+        lantern = new BlockLantern("lantern");
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
         GameRegistry.registerBlock(latticeMetal, ItemLatticeMetal.class, "lattice");
         GameRegistry.registerBlock(latticeWood, ItemLatticeWood.class, "lattice_wood");
         GameRegistry.registerBlock(rootCover, "root_cover");
+        GameRegistry.registerBlock(lantern, "lantern");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
