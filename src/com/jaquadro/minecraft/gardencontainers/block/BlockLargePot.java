@@ -405,8 +405,11 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
     };
 
     @Override
-    public Vec3[] getChainAttachPoints () {
-        return chainAttachPoints;
+    public Vec3[] getChainAttachPoints (int side) {
+        if (side == 1)
+            return chainAttachPoints;
+
+        return null;
     }
 
     @SideOnly(Side.CLIENT)

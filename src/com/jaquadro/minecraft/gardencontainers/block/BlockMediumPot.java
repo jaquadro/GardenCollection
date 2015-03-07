@@ -150,7 +150,10 @@ public abstract class BlockMediumPot extends BlockGardenContainer implements ICh
     };
 
     @Override
-    public Vec3[] getChainAttachPoints () {
-        return chainAttachPoints;
+    public Vec3[] getChainAttachPoints (int side) {
+        if (side == 1)
+            return chainAttachPoints;
+
+        return null;
     }
 }

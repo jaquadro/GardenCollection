@@ -4,5 +4,5 @@ import net.minecraft.util.Vec3;
 
 public interface IChainAttachable
 {
-    public Vec3[] getChainAttachPoints ();
+    public Vec3[] getChainAttachPoints (int side);
 }

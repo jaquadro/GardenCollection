@@ -4,10 +4,7 @@ import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.*;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeMetal;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeWood;
-import com.jaquadro.minecraft.gardenstuff.item.ItemHeavyChain;
-import com.jaquadro.minecraft.gardenstuff.item.ItemLatticeMetal;
-import com.jaquadro.minecraft.gardenstuff.item.ItemLatticeWood;
-import com.jaquadro.minecraft.gardenstuff.item.ItemLightChain;
+import com.jaquadro.minecraft.gardenstuff.item.*;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -36,7 +33,7 @@ public class ModBlocks
         GameRegistry.registerBlock(latticeMetal, ItemLatticeMetal.class, "lattice");
         GameRegistry.registerBlock(latticeWood, ItemLatticeWood.class, "lattice_wood");
         GameRegistry.registerBlock(rootCover, "root_cover");
-        GameRegistry.registerBlock(lantern, "lantern");
+        GameRegistry.registerBlock(lantern, ItemLantern.class, "lantern");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));

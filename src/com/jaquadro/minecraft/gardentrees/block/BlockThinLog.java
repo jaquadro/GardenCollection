@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardentrees.block;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
+import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ClientProxy;
@@ -24,6 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -32,7 +34,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
-public class BlockThinLog extends BlockContainer
+public class BlockThinLog extends BlockContainer implements IChainSingleAttachable
 {
     public static final String[] subNames = new String[] { "oak", "spruce", "birch", "jungle", "acacia", "big_oak" };
 
@@ -428,5 +430,30 @@ public class BlockThinLog extends BlockContainer
     @Override
     public TileEntity createNewTileEntity (World world, int meta) {
         return new TileEntityWoodProxy();
+    }
+
+    private final Vec3[] attachPoints = new Vec3[] {
+        Vec3.createVectorHelper(.5, getMargin(), .5),
+        Vec3.createVectorHelper(.5, 1 - getMargin(), .5),
+        Vec3.createVectorHelper(.5, .5, getMargin()),
+        Vec3.createVectorHelper(.5, .5, 1 - getMargin()),
+        Vec3.createVectorHelper(getMargin(), .5, .5),
+        Vec3.createVectorHelper(1 - getMargin(), .5, .5),
+    };
+
+    @Override
+    public Vec3 getChainAttachPoint (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        int connectFlags = calcConnectionFlags(blockAccess, x, y, z);
+
+        switch (side) {
+            case 0: return (connectFlags & 1) == 0 ? attachPoints[0] : null;
+            case 1: return (connectFlags & 2) == 0 ? attachPoints[1] : null;
+            case 2: return (connectFlags & 4) == 0 ? attachPoints[2] : null;
+            case 3: return (connectFlags & 8) == 0 ? attachPoints[3] : null;
+            case 4: return (connectFlags & 16) == 0 ? attachPoints[4] : null;
+            case 5: return (connectFlags & 32) == 0 ? attachPoints[5] : null;
+        }
+
+        return null;
     }
 }

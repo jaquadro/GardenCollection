@@ -50,6 +50,11 @@ public class BlockLantern extends Block
     }
 
     @Override
+    public String getItemIconName () {
+        return GardenStuff.MOD_ID + ":lantern";
+    }
+
+    @Override
     public boolean isOpaqueCube () {
         return false;
     }

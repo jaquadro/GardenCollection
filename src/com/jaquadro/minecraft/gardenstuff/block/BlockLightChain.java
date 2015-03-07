@@ -137,7 +137,7 @@ public class BlockLightChain extends Block implements IPlantProxy
 
         Vec3[] attachPoints = singleAttachPoint;
         if (bottomBlock instanceof IChainAttachable)
-            attachPoints = ((IChainAttachable) bottomBlock).getChainAttachPoints();
+            attachPoints = ((IChainAttachable) bottomBlock).getChainAttachPoints(1);
         else if (bottomBlock.isSideSolid(world, x, y, z, ForgeDirection.UP))
             attachPoints = defaultAttachPoints;
 

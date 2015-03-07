@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardenstuff.block;
 
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
+import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -48,7 +49,7 @@ public class BlockHeavyChain extends Block
 
     @Override
     public int getRenderType () {
-        return 1; // Crossed Squares
+        return ClientProxy.heavyChainRenderID;
     }
 
     @Override
