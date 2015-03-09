@@ -8,6 +8,11 @@ public class BindingStack
     private int[] slotStack = new int[16];
     private int[] dataStack = new int[16];
     int index = -1;
+    int defaultMeta = 0;
+
+    public void setDefaultMeta (int defaultMeta) {
+        this.defaultMeta = defaultMeta;
+    }
 
     public void bind (World world, int x, int y, int z, int slot, int data) {
         if (++index >= slotStack.length)
@@ -41,7 +46,7 @@ public class BindingStack
     }
 
     public int getData () {
-        return (index >= 0) ? dataStack[index] : 0;
+        return (index >= 0) ? dataStack[index] : defaultMeta;
     }
 
     private void growStack () {

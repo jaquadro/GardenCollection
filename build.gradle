@@ -19,7 +19,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.4.0"
+version = "1.7.10-1.4.1"
 group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GardenStuff"
 
@@ -36,6 +36,12 @@ sourceSets.main {
     }
     resources {
         srcDirs project.projectDir.getPath() + '/resources'
+    }
+}
+
+sourceSets.api {
+    java {
+        srcDirs project.projectDir.getPath() + '/api'
     }
 }
 

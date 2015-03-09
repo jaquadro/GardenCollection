@@ -1,9 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff;
 
-import com.jaquadro.minecraft.gardenstuff.core.ModRecipes;
-import com.jaquadro.minecraft.gardenstuff.core.CommonProxy;
-import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
-import com.jaquadro.minecraft.gardenstuff.core.ModItems;
+import com.jaquadro.minecraft.gardenstuff.core.*;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -24,6 +21,7 @@ public class GardenStuff
     @SidedProxy(clientSide = SOURCE_PATH + "core.ClientProxy", serverSide = SOURCE_PATH + "core.CommonProxy")
     public static CommonProxy proxy;
 
+    public static final ModIntegration integration = new ModIntegration();
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModItems items = new ModItems();
     public static final ModRecipes recipes = new ModRecipes();
@@ -37,11 +35,13 @@ public class GardenStuff
     @Mod.EventHandler
     public void init (FMLInitializationEvent event) {
         proxy.registerRenderers();
+        integration.init();
     }
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         recipes.init();
+        integration.postInit();
     }
 
 }

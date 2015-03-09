@@ -1,14 +1,28 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
+import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
+import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import com.jaquadro.minecraft.gardenstuff.integration.ColoredLightsIntegration;
+import com.jaquadro.minecraft.gardenstuff.integration.TwilightForestIntegration;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -17,10 +31,7 @@ import net.minecraft.world.World;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Justin on 3/6/2015.
- */
-public class BlockLantern extends Block
+public class BlockLantern extends BlockContainer
 {
     @SideOnly(Side.CLIENT)
     private IIcon iconBottom;
@@ -35,6 +46,8 @@ public class BlockLantern extends Block
     @SideOnly(Side.CLIENT)
     private IIcon iconCandle;
 
+    public BindingStack binding = new BindingStack();
+
     public BlockLantern (String blockName) {
         super(Material.iron);
 
@@ -47,6 +60,16 @@ public class BlockLantern extends Block
         setCreativeTab(ModCreativeTabs.tabGardenCore);
 
         setBlockBoundsForItemRender();
+    }
+
+    public boolean isGlass (ItemStack item) {
+        if (item.hasTagCompound()) {
+            NBTTagCompound tag = item.getTagCompound();
+            if (tag.hasKey("glass"))
+                return tag.getBoolean("glass");
+        }
+
+        return false;
     }
 
     @Override
@@ -96,14 +119,174 @@ public class BlockLantern extends Block
         return true;
     }
 
+    @Override
+    public int damageDropped (int meta) {
+        return meta;
+    }
+
+    @Override
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
+        if (tile == null)
+            return false;
+
+        //if (!player.isSneaking())
+        //    return false;
+
+        ItemStack item = player.inventory.getCurrentItem();
+
+        if (item == null && player.isSneaking() && tile.getLightSource() != TileEntityLantern.LightSource.NONE) {
+            switch (tile.getLightSource()) {
+                case TORCH:
+                    dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(Blocks.torch)));
+                    break;
+                case REDSTONE_TORCH:
+                    dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(Blocks.redstone_torch)));
+                    break;
+                case GLOWSTONE:
+                    dropBlockAsItem(world, x, y, z, new ItemStack(Items.glowstone_dust));
+                    break;
+                case FIREFLY:
+                    if (TwilightForestIntegration.isLoaded()) {
+                        Block firefly = Block.getBlockFromName(TwilightForestIntegration.MOD_ID + ":tile.TFFirefly");
+                        if (firefly != null)
+                            dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(firefly)));
+                    }
+                    break;
+                default:
+                    return false;
+            }
+
+            tile.setLightSource(TileEntityLantern.LightSource.NONE);
+            world.markBlockForUpdate(x, y, z);
+            world.notifyBlocksOfNeighborChange(x, y, z, this);
+            world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+            tile.markDirty();
+            return true;
+        }
+        else if (tile.getLightSource() == TileEntityLantern.LightSource.NONE) {
+            if (item.getItem() instanceof ItemBlock) {
+                Block block = Block.getBlockFromItem(item.getItem());
+                if (block == Blocks.torch)
+                    tile.setLightSource(TileEntityLantern.LightSource.TORCH);
+                else if (block == Blocks.redstone_torch) {
+                    tile.setLightSource(TileEntityLantern.LightSource.REDSTONE_TORCH);
+                    world.notifyBlocksOfNeighborChange(x, y, z, this);
+                    world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+                }
+                else if (TwilightForestIntegration.isLoaded() && block == Block.getBlockFromName(TwilightForestIntegration.MOD_ID + ":tile.TFFirefly"))
+                    tile.setLightSource(TileEntityLantern.LightSource.FIREFLY);
+                else
+                    return false;
+
+                if (player != null && !player.capabilities.isCreativeMode) {
+                    if (--item.stackSize <= 0)
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                }
+
+                world.markBlockForUpdate(x, y, z);
+                tile.markDirty();
+                return true;
+            }
+            else {
+                if (item.getItem() == Items.glowstone_dust)
+                    tile.setLightSource(TileEntityLantern.LightSource.GLOWSTONE);
+                else
+                    return false;
+
+                if (player != null && !player.capabilities.isCreativeMode) {
+                    if (--item.stackSize <= 0)
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                }
+
+                world.markBlockForUpdate(x, y, z);
+                tile.markDirty();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        double px = (double) ((float) x + 0.5F);
-        double py = (double) ((float) y + 0.6F);
-        double pz = (double) ((float) z + 0.5F);
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
 
-        world.spawnParticle("smoke", px, py, pz, 0.0D, 0.0D, 0.0D);
-        world.spawnParticle("flame", px, py, pz, 0.0D, 0.0D, 0.0D);
+        double px = x + 0.5F;
+        double py = y + 0.6F;
+        double pz = z + 0.5F;
+
+        switch (tile.getLightSource()) {
+            case TORCH:
+            case CANDLE:
+                if (tile.getLightSource() == TileEntityLantern.LightSource.TORCH)
+                    py += 0.1F;
+
+                if (tile == null || !tile.hasGlass())
+                    world.spawnParticle("smoke", px, py, pz, 0.0D, 0.0D, 0.0D);
+
+                world.spawnParticle("flame", px, py, pz, 0.0D, 0.0D, 0.0D);
+                break;
+            case REDSTONE_TORCH:
+                px += (rand.nextFloat() - 0.5F) * 0.2D;
+                py += (rand.nextFloat() - 0.5F) * 0.2D + 0.1F;
+                pz += (rand.nextFloat() - 0.5F) * 0.2D;
+
+                world.spawnParticle("reddust", px, py, pz, 0.0D, 0.0D, 0.0D);
+                break;
+            case FIREFLY:
+                if (TwilightForestIntegration.isLoaded())
+                    TwilightForestIntegration.doFireflyEffect(world, x, y, z, rand);
+                break;
+        }
+    }
+
+    @Override
+    public boolean canHarvestBlock (EntityPlayer player, int meta) {
+        return true;
+    }
+
+    @Override
+    public void breakBlock (World world, int x, int y, int z, Block block, int data) {
+        if (hasRedstoneTorch(world, x, y, z)) {
+            world.notifyBlocksOfNeighborChange(x, y, z, this);
+            world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+        }
+
+        super.breakBlock(world, x, y, z, block, data);
+    }
+
+    @Override
+    public void getSubBlocks (Item item, CreativeTabs tab, List list) {
+        list.add(new ItemStack(item, 1, 0));
+
+        NBTTagCompound glassTag = new NBTTagCompound();
+        glassTag.setBoolean("glass", true);
+
+        for (int i = 0; i < 16; i++) {
+            ItemStack entry = new ItemStack(item, 1, i);
+            entry.setTagCompound(glassTag);
+            list.add(entry);
+        }
+    }
+
+    @Override
+    public int getLightValue (IBlockAccess world, int x, int y, int z) {
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
+        if (tile != null && tile.hasGlass() && ColoredLightsIntegration.isInitialized())
+            return ColoredLightsIntegration.getPackedColor(world.getBlockMetadata(x, y, z));
+
+        switch (tile.getLightSource()) {
+            case TORCH:
+            case CANDLE:
+            case GLOWSTONE:
+            case FIREFLY:
+                return getLightValue();
+            case REDSTONE_TORCH:
+                return Blocks.redstone_torch.getLightValue();
+            default:
+                return 0;
+        }
     }
 
     @SideOnly(Side.CLIENT)
@@ -128,8 +311,13 @@ public class BlockLantern extends Block
     }
 
     @SideOnly(Side.CLIENT)
-    public IIcon getIconGlass () {
+    public IIcon getIconGlass (int meta) {
         return iconGlass;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconStainedGlass (int meta) {
+        return Blocks.stained_glass_pane.getIcon(0, meta);
     }
 
     @SideOnly(Side.CLIENT)
@@ -141,5 +329,38 @@ public class BlockLantern extends Block
         iconTop = register.registerIcon(getTextureName() + "_top");
         iconTopCross = register.registerIcon(getTextureName() + "_top_cross");
         iconCandle = register.registerIcon(GardenStuff.MOD_ID + ":candle");
+    }
+
+    @Override
+    public TileEntity createNewTileEntity (World world, int meta) {
+        return new TileEntityLantern();
+    }
+
+    @Override
+    public int isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side) {
+        return (side == 1 && hasRedstoneTorch(world, x, y, z)) ? 15 : 0;
+    }
+
+    @Override
+    public int isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side) {
+        return hasRedstoneTorch(world, x, y, z) ? 15 : 0;
+    }
+
+    @Override
+    public boolean canProvidePower () {
+        return true;
+    }
+
+    private boolean hasRedstoneTorch (IBlockAccess world, int x, int y, int z) {
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
+        if (tile != null)
+            return tile.getLightSource() == TileEntityLantern.LightSource.REDSTONE_TORCH;
+
+        return false;
+    }
+
+    public TileEntityLantern getTileEntity (IBlockAccess world, int x, int y, int z) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        return (te != null && te instanceof TileEntityLantern) ? (TileEntityLantern) te : null;
     }
 }

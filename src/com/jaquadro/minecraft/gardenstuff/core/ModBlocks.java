@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardenstuff.core;
 
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.*;
+import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeMetal;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeWood;
 import com.jaquadro.minecraft.gardenstuff.item.*;
@@ -38,6 +39,7 @@ public class ModBlocks
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
         GameRegistry.registerTileEntity(TileEntityLatticeWood.class, ModBlocks.getQualifiedName(latticeWood));
+        GameRegistry.registerTileEntity(TileEntityLantern.class, ModBlocks.getQualifiedName(lantern));
     }
 
     public static Block get (String name) {

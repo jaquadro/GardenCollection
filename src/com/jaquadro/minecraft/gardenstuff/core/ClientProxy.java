@@ -4,7 +4,10 @@ import com.jaquadro.minecraft.gardenstuff.renderer.HeavyChainRenderer;
 import com.jaquadro.minecraft.gardenstuff.renderer.LanternRenderer;
 import com.jaquadro.minecraft.gardenstuff.renderer.LatticeRenderer;
 import com.jaquadro.minecraft.gardenstuff.renderer.LightChainRenderer;
+import com.jaquadro.minecraft.gardenstuff.renderer.item.LanternItemRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy
 {
@@ -28,5 +31,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(lightChainRenderID, new LightChainRenderer());
         RenderingRegistry.registerBlockHandler(latticeRenderID, new LatticeRenderer());
         RenderingRegistry.registerBlockHandler(lanternRenderID, lanternRenderer);
+
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.lantern), new LanternItemRenderer());
     }
 }
