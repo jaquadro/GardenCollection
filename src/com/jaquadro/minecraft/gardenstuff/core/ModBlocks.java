@@ -21,13 +21,13 @@ public class ModBlocks
     public static BlockLantern lantern;
 
     public void init () {
-        heavyChain = new BlockHeavyChain("heavyChain");
-        lightChain = new BlockLightChain("lightChain");
-        largeMountingPlate = new BlockLargeMountingPlate("largeMountingPlate");
-        latticeMetal = new BlockLatticeMetal("latticeMetal");
-        latticeWood = new BlockLatticeWood("latticeWood");
-        rootCover = new BlockRootCover("rootCover");
-        lantern = new BlockLantern("lantern");
+        heavyChain = new BlockHeavyChain(makeName("heavyChain"));
+        lightChain = new BlockLightChain(makeName("lightChain"));
+        largeMountingPlate = new BlockLargeMountingPlate(makeName("largeMountingPlate"));
+        latticeMetal = new BlockLatticeMetal(makeName("latticeMetal"));
+        latticeWood = new BlockLatticeWood(makeName("latticeWood"));
+        rootCover = new BlockRootCover(makeName("rootCover"));
+        lantern = new BlockLantern(makeName("lantern"));
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -40,6 +40,10 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
         GameRegistry.registerTileEntity(TileEntityLatticeWood.class, ModBlocks.getQualifiedName(latticeWood));
         GameRegistry.registerTileEntity(TileEntityLantern.class, ModBlocks.getQualifiedName(lantern));
+    }
+
+    public static String makeName (String name) {
+        return GardenStuff.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static Block get (String name) {

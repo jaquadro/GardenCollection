@@ -72,6 +72,19 @@ public class BlockLantern extends BlockContainer
         return false;
     }
 
+    public TileEntityLantern.LightSource getLightSource (ItemStack item) {
+        if (item.hasTagCompound()) {
+            NBTTagCompound tag = item.getTagCompound();
+            if (tag.hasKey("src")) {
+                int srcVal = tag.getByte("src");
+                if (srcVal >= 0 && srcVal < TileEntityLantern.LightSource.values().length)
+                    return TileEntityLantern.LightSource.values()[srcVal];
+            }
+        }
+
+        return TileEntityLantern.LightSource.NONE;
+    }
+
     @Override
     public String getItemIconName () {
         return GardenStuff.MOD_ID + ":lantern";

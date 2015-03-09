@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
@@ -52,6 +53,21 @@ public class ItemLantern extends ItemBlock
         if (ModBlocks.lantern.isGlass(itemStack)) {
             String glassName = Blocks.stained_glass.getUnlocalizedName() + "." + ItemDye.field_150923_a[BlockColored.func_150032_b(itemStack.getItemDamage())];
             list.add(StatCollector.translateToLocal(glassName + ".name"));
+        }
+
+        String contents = StatCollector.translateToLocal(ModBlocks.makeName("lanternSource")) + ": " + EnumChatFormatting.YELLOW;
+        contents += StatCollector.translateToLocal(ModBlocks.makeName("lanternSource.") + getLanternSourceKey(ModBlocks.lantern.getLightSource(itemStack)));
+        list.add(contents);
+    }
+
+    private String getLanternSourceKey (TileEntityLantern.LightSource lightSource) {
+        switch (lightSource) {
+            case TORCH: return "torch";
+            case REDSTONE_TORCH: return "redstoneTorch";
+            case GLOWSTONE: return "glowstone";
+            case CANDLE: return "candle";
+            case FIREFLY: return "firefly";
+            default: return "none";
         }
     }
 }

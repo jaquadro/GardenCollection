@@ -16,13 +16,17 @@ public class ModItems
     public static Item ironNugget;
 
     public void init () {
-        chainLink = new ItemChainLink("chainLink");
-        ironNugget = new Item().setUnlocalizedName("ironNugget").setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":iron_nugget");
+        chainLink = new ItemChainLink(makeName("chainLink"));
+        ironNugget = new Item().setUnlocalizedName(makeName("ironNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":iron_nugget");
 
         GameRegistry.registerItem(chainLink, "chain_link");
         GameRegistry.registerItem(ironNugget, "iron_nugget");
 
         OreDictionary.registerOre("nuggetIron", ironNugget);
+    }
+
+    public static String makeName (String name) {
+        return GardenStuff.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static UniqueMetaIdentifier getUniqueMetaID (Item item, int meta) {
