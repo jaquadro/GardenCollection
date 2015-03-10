@@ -14,15 +14,23 @@ public class ModItems
 {
     public static Item chainLink;
     public static Item ironNugget;
+    public static Item wroughtIronIngot;
+    public static Item wroughtIronNugget;
 
     public void init () {
         chainLink = new ItemChainLink(makeName("chainLink"));
         ironNugget = new Item().setUnlocalizedName(makeName("ironNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":iron_nugget");
+        wroughtIronIngot = new Item().setUnlocalizedName(makeName("wroughtIronIngot")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_ingot");
+        wroughtIronNugget = new Item().setUnlocalizedName(makeName("wroughtIronNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_nugget");
 
         GameRegistry.registerItem(chainLink, "chain_link");
         GameRegistry.registerItem(ironNugget, "iron_nugget");
+        GameRegistry.registerItem(wroughtIronIngot, "wrought_iron_ingot");
+        GameRegistry.registerItem(wroughtIronNugget, "wrought_iron_nugget");
 
         OreDictionary.registerOre("nuggetIron", ironNugget);
+        OreDictionary.registerOre("ingotWroughtIron", wroughtIronIngot);
+        OreDictionary.registerOre("nuggetWroughtIron", wroughtIronNugget);
     }
 
     public static String makeName (String name) {

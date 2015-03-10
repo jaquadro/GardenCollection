@@ -20,6 +20,9 @@ public class ModRecipes
         ItemStack lightChainIron = new ItemStack(ModBlocks.lightChain);
         ItemStack latticeIron = new ItemStack(ModBlocks.latticeMetal);
         ItemStack vine = new ItemStack(Blocks.vine);
+        ItemStack blockWroughtIron = new ItemStack(ModBlocks.metalBlock);
+        ItemStack wroughtIronIngot = new ItemStack(ModItems.wroughtIronIngot);
+        ItemStack wroughtIronNugget = new ItemStack(ModItems.wroughtIronNugget);
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 1, 0), "xx", "xx", "xx", 'x', linkIron);
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 1, 1), "xx", "xx", "xx", 'x', linkGold);
@@ -33,7 +36,12 @@ public class ModRecipes
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.latticeMetal, 8, 3), "xxx", "xyx", "xxx", 'x', latticeIron, 'y', vine);
 
         GameRegistry.addShapedRecipe(new ItemStack(Items.iron_ingot), "xxx", "xxx", "xxx", 'x', ironNugget);
-        GameRegistry.addShapelessRecipe(new ItemStack(ModItems.ironNugget, 9), new ItemStack(Items.iron_ingot));
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.ironNugget, 9), "x", 'x', new ItemStack(Items.iron_ingot));
+
+        GameRegistry.addShapedRecipe(blockWroughtIron, "xxx", "xxx", "xxx", 'x', wroughtIronIngot);
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.wroughtIronIngot, 9), "x", 'x', blockWroughtIron);
+        GameRegistry.addShapedRecipe(wroughtIronIngot, "xxx", "xxx", "xxx", 'x', wroughtIronNugget);
+        GameRegistry.addShapedRecipe(new ItemStack(ModItems.wroughtIronNugget, 9), "x", 'x', wroughtIronIngot);
 
         for (int i = 0; i < 6; i++) {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.latticeWood, 8, i), " x ", "xxx", " x ", 'x', new ItemStack(Blocks.planks, 1, i));
@@ -42,5 +50,6 @@ public class ModRecipes
         GameRegistry.addSmelting(new ItemStack(ModBlocks.heavyChain, 1, 0), new ItemStack(ModBlocks.heavyChain, 1, 4), 0);
         GameRegistry.addSmelting(new ItemStack(ModBlocks.lightChain, 1, 0), new ItemStack(ModBlocks.lightChain, 1, 4), 0);
         GameRegistry.addSmelting(new ItemStack(ModBlocks.latticeMetal, 1, 0), new ItemStack(ModBlocks.latticeMetal, 1, 2), 0);
+        GameRegistry.addSmelting(new ItemStack(Items.iron_ingot), wroughtIronIngot, 0);
     }
 }

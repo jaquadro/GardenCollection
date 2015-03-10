@@ -2,6 +2,8 @@ item.gardenstuff.chainLink.name=Chain Link
 item.gardenstuff.chainLink.iron.name=Iron Chain Link
 item.gardenstuff.chainLink.gold.name=Gold Chain Link
 item.gardenstuff.ironNugget.name=Iron Nugget
+item.gardenstuff.wroughtIronIngot.name=Wrought Iron Ingot
+item.gardenstuff.wroughtIronNugget.name=Wrought Iron Nugget
 
 tile.gardenstuff.heavyChain.name=Heavy Chain
 tile.gardenstuff.heavyChain.iron.name=Heavy Iron Chain
@@ -28,6 +30,7 @@ tile.gardenstuff.latticeWood.jungle.name=Jungle Wood Lattice
 tile.gardenstuff.latticeWood.acacia.name=Acacia Wood Lattice
 tile.gardenstuff.latticeWood.big_oak.name=Dark Oak Wood Lattice
 tile.gardenstuff.lantern.name=Garden Lantern
+tile.gardenstuff.metalBlock.name=Block of Wrought Iron
 
 gardenstuff.lanternSource=Contents
 gardenstuff.lanternSource.none=Empty

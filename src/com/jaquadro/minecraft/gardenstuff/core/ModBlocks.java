@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.core;
 
+import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.*;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
@@ -9,6 +10,8 @@ import com.jaquadro.minecraft.gardenstuff.item.*;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCompressed;
+import net.minecraft.block.material.MapColor;
 
 public class ModBlocks
 {
@@ -19,6 +22,7 @@ public class ModBlocks
     public static BlockLatticeWood latticeWood;
     public static BlockRootCover rootCover;
     public static BlockLantern lantern;
+    public static Block metalBlock;
 
     public void init () {
         heavyChain = new BlockHeavyChain(makeName("heavyChain"));
@@ -28,6 +32,7 @@ public class ModBlocks
         latticeWood = new BlockLatticeWood(makeName("latticeWood"));
         rootCover = new BlockRootCover(makeName("rootCover"));
         lantern = new BlockLantern(makeName("lantern"));
+        metalBlock = new BlockCompressed(MapColor.blackColor).setBlockName(makeName("metalBlock")).setCreativeTab(ModCreativeTabs.tabGardenCore).setBlockTextureName(GardenStuff.MOD_ID + ":wrought_iron_block");
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -35,6 +40,7 @@ public class ModBlocks
         GameRegistry.registerBlock(latticeWood, ItemLatticeWood.class, "lattice_wood");
         GameRegistry.registerBlock(rootCover, "root_cover");
         GameRegistry.registerBlock(lantern, ItemLantern.class, "lantern");
+        GameRegistry.registerBlock(metalBlock, "metal_block");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
