@@ -1,9 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.core;
 
-import com.jaquadro.minecraft.gardenstuff.renderer.HeavyChainRenderer;
-import com.jaquadro.minecraft.gardenstuff.renderer.LanternRenderer;
-import com.jaquadro.minecraft.gardenstuff.renderer.LatticeRenderer;
-import com.jaquadro.minecraft.gardenstuff.renderer.LightChainRenderer;
+import com.jaquadro.minecraft.gardenstuff.renderer.*;
 import com.jaquadro.minecraft.gardenstuff.renderer.item.LanternItemRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.item.Item;
@@ -15,6 +12,7 @@ public class ClientProxy extends CommonProxy
     public static int lightChainRenderID;
     public static int latticeRenderID;
     public static int lanternRenderID;
+    public static int fenceRenderID;
 
     public static LanternRenderer lanternRenderer;
 
@@ -24,6 +22,7 @@ public class ClientProxy extends CommonProxy
         lightChainRenderID = RenderingRegistry.getNextAvailableRenderId();
         latticeRenderID = RenderingRegistry.getNextAvailableRenderId();
         lanternRenderID = RenderingRegistry.getNextAvailableRenderId();
+        fenceRenderID = RenderingRegistry.getNextAvailableRenderId();
 
         lanternRenderer = new LanternRenderer();
 
@@ -31,6 +30,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(lightChainRenderID, new LightChainRenderer());
         RenderingRegistry.registerBlockHandler(latticeRenderID, new LatticeRenderer());
         RenderingRegistry.registerBlockHandler(lanternRenderID, lanternRenderer);
+        RenderingRegistry.registerBlockHandler(fenceRenderID, new FenceRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.lantern), new LanternItemRenderer());
     }

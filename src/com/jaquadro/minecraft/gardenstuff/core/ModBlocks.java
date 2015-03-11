@@ -11,7 +11,10 @@ import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCompressed;
+import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.Material;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModBlocks
 {
@@ -23,6 +26,7 @@ public class ModBlocks
     public static BlockRootCover rootCover;
     public static BlockLantern lantern;
     public static Block metalBlock;
+    public static BlockFence fence;
 
     public void init () {
         heavyChain = new BlockHeavyChain(makeName("heavyChain"));
@@ -33,6 +37,7 @@ public class ModBlocks
         rootCover = new BlockRootCover(makeName("rootCover"));
         lantern = new BlockLantern(makeName("lantern"));
         metalBlock = new BlockCompressed(MapColor.blackColor).setBlockName(makeName("metalBlock")).setCreativeTab(ModCreativeTabs.tabGardenCore).setBlockTextureName(GardenStuff.MOD_ID + ":wrought_iron_block");
+        fence = new BlockFence(makeName("fence"));
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -41,11 +46,14 @@ public class ModBlocks
         GameRegistry.registerBlock(rootCover, "root_cover");
         GameRegistry.registerBlock(lantern, ItemLantern.class, "lantern");
         GameRegistry.registerBlock(metalBlock, "metal_block");
+        GameRegistry.registerBlock(fence, ItemFence.class, "fence");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
         GameRegistry.registerTileEntity(TileEntityLatticeWood.class, ModBlocks.getQualifiedName(latticeWood));
         GameRegistry.registerTileEntity(TileEntityLantern.class, ModBlocks.getQualifiedName(lantern));
+
+        OreDictionary.registerOre("blockWroughtIron", metalBlock);
     }
 
     public static String makeName (String name) {
