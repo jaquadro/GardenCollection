@@ -63,8 +63,6 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
     @SideOnly(Side.CLIENT)
     private IIcon[] iconOverlayArray;
 
-    private int scratchDropMetadata;
-
     public BlockLargePot (String blockName) {
         super(blockName, Material.clay);
 
@@ -249,27 +247,34 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
     }
 
     @Override
-    public void breakBlock (World world, int x, int y, int z, Block block, int data) {
-        TileEntityLargePot te = getTileEntity(world, x, y, z);
-
-        if (te != null)
-            scratchDropMetadata = te.getCarving() << 8;
-
-        super.breakBlock(world, x, y, z, block, data);
-    }
-
-    @Override
     public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        TileEntityLargePot te = getTileEntity(world, x, y, z);
         ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 
         int count = quantityDropped(metadata, fortune, world.rand);
         for (int i = 0; i < count; i++) {
             Item item = getItemDropped(metadata, world.rand, fortune);
+            int packedMeta = metadata | ((te != null) ? te.getCarving() << 8 : 0);
+
             if (item != null)
-                items.add(new ItemStack(item, 1, metadata | scratchDropMetadata));
+                items.add(new ItemStack(item, 1, packedMeta));
         }
 
         return items;
+    }
+
+    @Override
+    public boolean removedByPlayer (World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+        if (willHarvest)
+            return true;
+
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
+    }
+
+    @Override
+    public void harvestBlock (World world, EntityPlayer player, int x, int y, int z, int meta) {
+        super.harvestBlock(world, player, x, y, z, meta);
+        world.setBlockToAir(x, y, z);
     }
 
     private boolean isSubstrateSolid (Item item) {
