@@ -3,6 +3,8 @@ package com.jaquadro.minecraft.gardentrees.block;
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
+import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
+import com.jaquadro.minecraft.gardenstuff.item.ItemLantern;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ClientProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
@@ -18,6 +20,7 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,6 +33,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -41,9 +45,6 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
     // Scratch state variable for rendering purposes
     // 0 = Y, 1 = Z, 2 = X, 3 = BARK
     private int orientation;
-
-    // Scratch
-    private int scratchDropMetadata;
 
     public BlockThinLog (String blockName) {
         super(Material.wood);
@@ -150,21 +151,48 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
             }
         }
 
-        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        if (te != null && te.getProtoBlock() != null)
-            scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
-        else
-            scratchDropMetadata = 0;
-
         super.breakBlock(world, x, y, z, block, meta);
     }
 
     @Override
-    public int damageDropped (int meta) {
-        int damage = scratchDropMetadata > 0 ? scratchDropMetadata : meta;
-        scratchDropMetadata = 0;
+    public boolean removedByPlayer (World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+        if (willHarvest)
+            return true;
 
-        return damage;
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
+    }
+
+    @Override
+    public void harvestBlock (World world, EntityPlayer player, int x, int y, int z, int meta) {
+        super.harvestBlock(world, player, x, y, z, meta);
+        world.setBlockToAir(x, y, z);
+    }
+
+    @Override
+    public int damageDropped (int meta) {
+        return meta;
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        TileEntityWoodProxy tile = getTileEntity(world, x, y, z);
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+
+        int count = quantityDropped(metadata, fortune, world.rand);
+        for(int i = 0; i < count; i++)
+        {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null)
+            {
+                int damage = damageDropped(metadata);
+                if (tile != null && tile.getProtoBlock() != null)
+                    damage = TileEntityWoodProxy.composeMetadata(tile.getProtoBlock(), tile.getProtoMeta());
+
+                ItemStack stack = new ItemStack(item, 1, damage);
+                ret.add(stack);
+            }
+        }
+        return ret;
     }
 
     public int calcConnectionFlags (IBlockAccess world, int x, int y, int z) {

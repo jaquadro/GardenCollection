@@ -28,6 +28,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +38,6 @@ public class BlockThinLogFence extends BlockContainer
 
     @SideOnly(Side.CLIENT)
     IIcon sideIcon;
-
-    // Scratch
-    private int scratchDropMetadata;
 
     public BlockThinLogFence (String blockName) {
         super(Material.wood);
@@ -170,22 +168,44 @@ public class BlockThinLogFence extends BlockContainer
     }
 
     @Override
-    public void breakBlock (World world, int x, int y, int z, Block block, int meta) {
-        TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        if (te != null && te.getProtoBlock() != null)
-            scratchDropMetadata = TileEntityWoodProxy.composeMetadata(te.getProtoBlock(), te.getProtoMeta());
-        else
-            scratchDropMetadata = 0;
+    public boolean removedByPlayer (World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+        if (willHarvest)
+            return true;
 
-        super.breakBlock(world, x, y, z, block, meta);
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
+    }
+
+    @Override
+    public void harvestBlock (World world, EntityPlayer player, int x, int y, int z, int meta) {
+        super.harvestBlock(world, player, x, y, z, meta);
+        world.setBlockToAir(x, y, z);
     }
 
     @Override
     public int damageDropped (int meta) {
-        int damage = scratchDropMetadata > 0 ? scratchDropMetadata : meta;
-        scratchDropMetadata = 0;
+        return meta;
+    }
 
-        return damage;
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        TileEntityWoodProxy tile = getTileEntity(world, x, y, z);
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+
+        int count = quantityDropped(metadata, fortune, world.rand);
+        for(int i = 0; i < count; i++)
+        {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null)
+            {
+                int damage = damageDropped(metadata);
+                if (tile != null && tile.getProtoBlock() != null)
+                    damage = TileEntityWoodProxy.composeMetadata(tile.getProtoBlock(), tile.getProtoMeta());
+
+                ItemStack stack = new ItemStack(item, 1, damage);
+                ret.add(stack);
+            }
+        }
+        return ret;
     }
 
     @Override
