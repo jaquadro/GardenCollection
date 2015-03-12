@@ -41,8 +41,8 @@ public class ItemLantern extends ItemBlock
 
         TileEntityLantern tile = (TileEntityLantern) world.getTileEntity(x, y, z);
         if (tile != null) {
-            if (ModBlocks.lantern.isGlass(stack))
-                tile.setHasGlass(true);
+            tile.setHasGlass(ModBlocks.lantern.isGlass(stack));
+            tile.setLightSource(ModBlocks.lantern.getLightSource(stack));
         }
 
         return true;
@@ -62,13 +62,21 @@ public class ItemLantern extends ItemBlock
     }
 
     public ItemStack makeItemStack (int count, int meta, boolean hasGlass) {
-        ItemStack stack = new ItemStack(this, count, meta);
+        return makeItemStack(count, meta, hasGlass, TileEntityLantern.LightSource.NONE);
+    }
 
-        if (hasGlass) {
-            NBTTagCompound tag = new NBTTagCompound();
+    public ItemStack makeItemStack (int count, int meta, boolean hasGlass, TileEntityLantern.LightSource source) {
+        ItemStack stack = new ItemStack(this, count, meta);
+        NBTTagCompound tag = new NBTTagCompound();
+
+        if (hasGlass)
             tag.setBoolean("glass", true);
+
+        if (source != null && source != TileEntityLantern.LightSource.NONE)
+            tag.setByte("src", (byte)source.ordinal());
+
+        if (!tag.hasNoTags())
             stack.setTagCompound(tag);
-        }
 
         return stack;
     }

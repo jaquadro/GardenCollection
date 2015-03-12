@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import com.jaquadro.minecraft.gardenstuff.integration.ColoredLightsIntegration;
 import com.jaquadro.minecraft.gardenstuff.integration.TwilightForestIntegration;
+import com.jaquadro.minecraft.gardenstuff.item.ItemLantern;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -28,6 +29,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -135,6 +137,46 @@ public class BlockLantern extends BlockContainer
     @Override
     public int damageDropped (int meta) {
         return meta;
+    }
+
+    @Override
+    public boolean removedByPlayer (World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
+        if (willHarvest)
+            return true;
+
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
+    }
+
+    @Override
+    public void harvestBlock (World world, EntityPlayer player, int x, int y, int z, int meta) {
+        super.harvestBlock(world, player, x, y, z, meta);
+        world.setBlockToAir(x, y, z);
+    }
+
+    @Override
+    public ArrayList<ItemStack> getDrops (World world, int x, int y, int z, int metadata, int fortune) {
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
+        ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+
+        int count = quantityDropped(metadata, fortune, world.rand);
+        for(int i = 0; i < count; i++)
+        {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null)
+            {
+                boolean glass = false;
+                TileEntityLantern.LightSource source = TileEntityLantern.LightSource.NONE;
+
+                if (tile != null) {
+                    glass = tile.hasGlass();
+                    source = tile.getLightSource();
+                }
+
+                ItemStack stack = ((ItemLantern)Item.getItemFromBlock(this)).makeItemStack(1, metadata, glass, source);
+                ret.add(stack);
+            }
+        }
+        return ret;
     }
 
     @Override

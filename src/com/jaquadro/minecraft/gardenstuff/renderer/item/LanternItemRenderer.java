@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
@@ -60,13 +61,20 @@ public class LanternItemRenderer implements IItemRenderer
             renderHelper.renderBlock(renderer, block, item.getItemDamage());
             renderer.renderFromInside = false;
         }
+        else {
+            renderer.renderMaxY = .005f;
+            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, block.getIcon(0, item.getItemDamage()));
+        }
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.overrideBlockTexture = block.getIconTopCross();
         renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
-        renderer.overrideBlockTexture = block.getIconCandle();
-        renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
+        //renderer.overrideBlockTexture = block.getIconCandle();
+        //renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
         renderer.overrideBlockTexture = null;
+
+        renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
+        renderHelper.renderBlock(renderer, Blocks.torch, 0);
 
         if (block.isGlass(item)) {
             GL11.glEnable(GL11.GL_BLEND);
@@ -93,6 +101,12 @@ public class LanternItemRenderer implements IItemRenderer
             GL11.glDisable(GL11.GL_BLEND);
         }
     }
+
+    //private void renderTorchSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
+        //renderer.setRenderBoundsFromBlock(Blocks.torch);
+    //    renderHelper.renderBlock(renderer, block, 0);
+        //renderer.renderBlockAllFaces(Blocks.torch, x, y, z);
+    //}
 
     private RenderBlocks getRenderer (Object[] data) {
         for (Object obj : data) {
