@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class BlockLatticeMetal extends BlockLattice
 {
-    public static final String[] subNames = new String[] { "iron", "rust", "blackoxide", "moss" };
+    public static final String[] subNames = new String[] { "iron", "rust", "wrought_iron", "moss" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;

@@ -28,7 +28,7 @@ import java.util.List;
 
 public class BlockLightChain extends Block implements IPlantProxy
 {
-    public static final String[] types = new String[] { "iron", "gold", "rope", "rust", "blackoxide", "moss" };
+    public static final String[] types = new String[] { "iron", "gold", "rope", "rust", "wrought_iron", "moss" };
 
     @SideOnly(Side.CLIENT)
     private static IIcon[] icons;

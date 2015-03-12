@@ -13,6 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
@@ -58,6 +59,18 @@ public class ItemLantern extends ItemBlock
         String contents = StatCollector.translateToLocal(ModBlocks.makeName("lanternSource")) + ": " + EnumChatFormatting.YELLOW;
         contents += StatCollector.translateToLocal(ModBlocks.makeName("lanternSource.") + getLanternSourceKey(ModBlocks.lantern.getLightSource(itemStack)));
         list.add(contents);
+    }
+
+    public ItemStack makeItemStack (int count, int meta, boolean hasGlass) {
+        ItemStack stack = new ItemStack(this, count, meta);
+
+        if (hasGlass) {
+            NBTTagCompound tag = new NBTTagCompound();
+            tag.setBoolean("glass", true);
+            stack.setTagCompound(tag);
+        }
+
+        return stack;
     }
 
     private String getLanternSourceKey (TileEntityLantern.LightSource lightSource) {

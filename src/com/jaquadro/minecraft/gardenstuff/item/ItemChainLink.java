@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ItemChainLink extends Item
 {
-    private static final String[] types = { "iron", "gold" };
+    private static final String[] types = { "iron", "gold", "wrought_iron" };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] iconArray;
