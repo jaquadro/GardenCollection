@@ -15,6 +15,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.minecraftforge.common.util.ForgeDirection.*;
+
 public abstract class BlockConnected extends Block
 {
     public BlockConnected (String blockName, Material material) {
@@ -44,24 +46,55 @@ public abstract class BlockConnected extends Block
     }
 
     @Override
-    public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
-        int connectFlags = calcConnectionFlags(world, x, y, z);
+    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity entity) {
+        boolean flagN = this.canConnectTo(world, x, y, z - 1, NORTH);
+        boolean flagS = this.canConnectTo(world, x, y, z + 1, SOUTH);
+        boolean flagW = this.canConnectTo(world, x - 1, y, z, WEST);
+        boolean flagE = this.canConnectTo(world, x + 1, y, z, EAST);
 
-        float margin = .0625f * 6;
-        float ys = (connectFlags & 1) != 0 ? 0 : margin;
-        float ye = (connectFlags & 2) != 0 ? 1 : 1 - margin;
-        float zs = (connectFlags & 4) != 0 ? 0 : margin;
-        float ze = (connectFlags & 8) != 0 ? 1 : 1 - margin;
-        float xs = (connectFlags & 16) != 0 ? 0 : margin;
-        float xe = (connectFlags & 32) != 0 ? 1 : 1 - margin;
+        if ((flagW | flagE | flagN | flagS) == false) {
+            this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, 1.0F, 0.5625F);
+            super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
+            return;
+        }
 
-        setBlockBounds(xs, ys, zs, xe, ye, ze);
+        if (flagW || flagE) {
+            if (flagW && flagE)
+                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
+            else if (flagW)
+                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 0.5F, 1.0F, 0.5625F);
+            else if (flagE)
+                this.setBlockBounds(0.5F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
+
+            super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
+        }
+
+        if (flagN || flagS) {
+            if (flagN && flagS)
+                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 1.0F);
+            else if (flagN)
+                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 0.5F);
+            else if (flagS)
+                this.setBlockBounds(0.4375F, 0.0F, 0.5F, 0.5625F, 1.0F, 1.0F);
+
+            super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
+        }
     }
 
     @Override
-    public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
-        setBlockBoundsBasedOnState(world, x, y, z);
-        super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+    public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
+        boolean flagN = this.canConnectTo(world, x, y, z - 1, NORTH);
+        boolean flagS = this.canConnectTo(world, x, y, z + 1, SOUTH);
+        boolean flagW = this.canConnectTo(world, x - 1, y, z, WEST);
+        boolean flagE = this.canConnectTo(world, x + 1, y, z, EAST);
+
+        float margin = .0625f * 6;
+        float zs = flagN ? 0 : margin;
+        float ze = flagS ? 1 : 1 - margin;
+        float xs = flagW ? 0 : margin;
+        float xe = flagE ? 1 : 1 - margin;
+
+        setBlockBounds(xs, 0, zs, xe, 1, ze);
     }
 
     @Override
@@ -78,6 +111,16 @@ public abstract class BlockConnected extends Block
             }
         }
         return ret;
+    }
+
+    public boolean canConnectTo (IBlockAccess world, int x, int y, int z, ForgeDirection dir) {
+        return canConnectTo(world.getBlock(x, y, z))
+            || world.isSideSolid(x, y, z, dir.getOpposite(), false);
+    }
+
+    public boolean canConnectTo (Block block) {
+        return (block.getMaterial().isOpaque() && block.renderAsNormalBlock())
+            || (block == this);
     }
 
     public int calcConnectionFlags (IBlockAccess world, int x, int y, int z) {
