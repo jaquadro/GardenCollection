@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencontainers.core;
 
+import com.jaquadro.minecraft.gardencontainers.GardenContainers;
 import com.jaquadro.minecraft.gardencontainers.item.ItemLargePot;
 import com.jaquadro.minecraft.gardencontainers.item.ItemPotteryPattern;
 import com.jaquadro.minecraft.gardencontainers.item.ItemPotteryPatternDirty;
@@ -15,11 +16,15 @@ public class ModItems
     public static ItemPotteryPatternDirty potteryPatternDirty;
 
     public void init () {
-        potteryPattern = new ItemPotteryPattern("potteryPattern");
-        potteryPatternDirty = new ItemPotteryPatternDirty("potteryPatternDirty");
+        potteryPattern = new ItemPotteryPattern(makeName("potteryPattern"));
+        potteryPatternDirty = new ItemPotteryPatternDirty(makeName("potteryPatternDirty"));
 
         GameRegistry.registerItem(potteryPattern, "pottery_pattern");
         GameRegistry.registerItem(potteryPatternDirty, "pottery_pattern_dirty");
+    }
+
+    public static String makeName (String name) {
+        return GardenContainers.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static UniqueMetaIdentifier getUniqueMetaID (Item item, int meta) {

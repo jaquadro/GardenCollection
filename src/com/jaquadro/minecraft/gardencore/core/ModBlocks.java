@@ -22,11 +22,11 @@ public class ModBlocks
     public static BlockCompostBin compostBin;
 
     public void init () {
-        gardenSoil = new BlockGardenSoil("gardenSoil");
-        gardenFarmland = new BlockGardenFarmland("gardenFarmland");
-        gardenProxy = new BlockGardenProxy("gardenProxy");
-        smallFire = new BlockSmallFire();
-        compostBin = new BlockCompostBin();
+        gardenSoil = new BlockGardenSoil(makeName("gardenSoil"));
+        gardenFarmland = new BlockGardenFarmland(makeName("gardenFarmland"));
+        gardenProxy = new BlockGardenProxy(makeName("gardenProxy"));
+        smallFire = new BlockSmallFire(makeName("smallFire"));
+        compostBin = new BlockCompostBin(makeName("compostBin"));
 
         GameRegistry.registerBlock(gardenSoil, "garden_soil");
         GameRegistry.registerBlock(gardenFarmland, "garden_farmland");
@@ -37,6 +37,10 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileEntityGardenSoil.class, ModBlocks.getQualifiedName(gardenSoil));
         GameRegistry.registerTileEntity(TileEntityGardenFarmland.class, ModBlocks.getQualifiedName(gardenFarmland));
         GameRegistry.registerTileEntity(TileEntityCompostBin.class, ModBlocks.getQualifiedName(compostBin));
+    }
+
+    public static String makeName (String name) {
+        return GardenCore.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static Block get (String name) {

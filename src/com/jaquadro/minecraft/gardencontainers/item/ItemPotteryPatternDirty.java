@@ -30,7 +30,7 @@ public class ItemPotteryPatternDirty extends Item
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
-        for (String s : StatCollector.translateToLocal("item.potteryPatternDirty.description").split("\\\\n"))
+        for (String s : StatCollector.translateToLocal("item.gardencontainers.potteryPatternDirty.description").split("\\\\n"))
             list.add(s);
     }
 

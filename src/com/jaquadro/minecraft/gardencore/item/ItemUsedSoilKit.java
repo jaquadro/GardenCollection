@@ -85,8 +85,8 @@ public class ItemUsedSoilKit extends Item
         if (humidity >= .6)
             humidColor = EnumChatFormatting.DARK_GREEN;
 
-        String temperatureStr = StatCollector.translateToLocal("soilkit.temperature") + ": " + tempColor + String.format("%.2f", temperature) ;
-        String humidityStr = StatCollector.translateToLocal("soilkit.rainfall") + ": " + humidColor + String.format("%.2f", humidity);
+        String temperatureStr = StatCollector.translateToLocal("gardencore.soilkit.temperature") + ": " + tempColor + String.format("%.2f", temperature) ;
+        String humidityStr = StatCollector.translateToLocal("gardencore.soilkit.rainfall") + ": " + humidColor + String.format("%.2f", humidity);
 
         list.add(temperatureStr);
         list.add(humidityStr);

@@ -1,18 +1,100 @@
-container.garden=管理植物
-container.compostBin=堆肥桶
+itemGroup.gardenCore=Garden Stuff
+itemGroup.gardenTrees=Garden Stuff (Trees)
 
-item.soilTestKit.name=土壤检测试剂
-item.soilTestKitUsed.name=土壤检测试剂 <已使用>
-item.compostPile.name=富硒土壤
+# Garden Core
 
-itemGroup.gardenCore=Garden Core
+container.gardencore.garden=管理植物
+container.gardencore.compostBin=堆肥桶
 
-soilkit.rainfall=湿度
-soilkit.temperature=温度
+item.gardencore.gardenTrowel.name=花铲
+item.gardencore.soilTestKit.name=土壤检测试剂
+item.gardencore.soilTestKitUsed.name=土壤检测试剂 <已使用>
+item.gardencore.compostPile.name=富硒土壤
 
-item.gardenTrowel.name=花铲
+tile.gardencore.gardenSoil.name=园艺土
+tile.gardencore.potteryTable.name=陶器工作桌
+tile.gardencore.compostBin.name=堆肥桶
+tile.gardencore.gardenFarmland.name=园艺耕植土
 
-tile.gardenSoil.name=园艺土
-tile.potteryTable.name=陶器工作桌
-tile.compostBin.name=堆肥桶
-tile.gardenFarmland.name=园艺耕植土
+gardencore.soilkit.rainfall=湿度
+gardencore.soilkit.temperature=温度
+
+# Garden Containers
+
+container.gardencontainers.potteryTable=陶器工作桌
+
+item.gardencontainers.potteryPattern.name=粘土图案印章
+
+tile.gardencontainers.largePot.default.name=大型花桶
+tile.gardencontainers.largePot.raw.name=大型花桶陶坯
+tile.gardencontainers.largePotColored.black.name=黑色大型花桶
+tile.gardencontainers.largePotColored.red.name=红色大型花桶
+tile.gardencontainers.largePotColored.green.name=绿色大型花桶
+tile.gardencontainers.largePotColored.brown.name=棕色大型花桶
+tile.gardencontainers.largePotColored.blue.name=蓝色大型花桶
+tile.gardencontainers.largePotColored.purple.name=紫色大型花桶
+tile.gardencontainers.largePotColored.cyan.name=青色大型花桶
+tile.gardencontainers.largePotColored.silver.name=淡灰色大型花桶
+tile.gardencontainers.largePotColored.gray.name=灰色大型花桶
+tile.gardencontainers.largePotColored.pink.name=粉色大型花桶
+tile.gardencontainers.largePotColored.lime.name=黄绿色大型花桶
+tile.gardencontainers.largePotColored.yellow.name=黄色大型花桶
+tile.gardencontainers.largePotColored.light_blue.name=淡蓝色大型花桶
+tile.gardencontainers.largePotColored.magenta.name=品红色大型花桶
+tile.gardencontainers.largePotColored.orange.name=橙色大型花桶
+tile.gardencontainers.largePotColored.white.name=白色大型花桶
+tile.gardencontainers.mediumPot.default.name=花桶
+tile.gardencontainers.mediumPotColored.black.name=黑色花桶
+tile.gardencontainers.mediumPotColored.red.name=红色花桶
+tile.gardencontainers.mediumPotColored.green.name=绿色花桶
+tile.gardencontainers.mediumPotColored.brown.name=棕色花桶
+tile.gardencontainers.mediumPotColored.blue.name=蓝色花桶
+tile.gardencontainers.mediumPotColored.purple.name=紫色花桶
+tile.gardencontainers.mediumPotColored.cyan.name=青色花桶
+tile.gardencontainers.mediumPotColored.silver.name=淡灰色花桶
+tile.gardencontainers.mediumPotColored.gray.name=灰色花桶
+tile.gardencontainers.mediumPotColored.pink.name=粉色花桶
+tile.gardencontainers.mediumPotColored.lime.name=黄绿色花桶
+tile.gardencontainers.mediumPotColored.yellow.name=黄色花桶
+tile.gardencontainers.mediumPotColored.light_blue.name=淡蓝色花桶
+tile.gardencontainers.mediumPotColored.magenta.name=品红色花桶
+tile.gardencontainers.mediumPotColored.orange.name=橙色花桶
+tile.gardencontainers.mediumPotColored.white.name=白色花桶
+tile.gardencontainers.woodWindowBox.oak.name=橡木花箱
+tile.gardencontainers.woodWindowBox.spruce.name=云杉木花箱
+tile.gardencontainers.woodWindowBox.birch.name=白桦木花箱
+tile.gardencontainers.woodWindowBox.jungle.name=丛林木花箱
+tile.gardencontainers.woodWindowBox.acacia.name=金合欢木花箱
+tile.gardencontainers.woodWindowBox.big_oak.name=深色橡木花箱
+tile.gardencontainers.stoneWindowBox.stone_slab.name=石花箱
+tile.gardencontainers.stoneWindowBox.stone_brick.name=石砖花箱
+tile.gardencontainers.stoneWindowBox.mossy_stone_brick.name=苔石砖花箱
+tile.gardencontainers.stoneWindowBox.brick_block.name=砖花箱
+tile.gardencontainers.stoneWindowBox.nether_brick.name=地狱砖花箱
+tile.gardencontainers.stoneWindowBox.sandstone.name=沙石花箱
+tile.gardencontainers.decorativePot.default.name=景观花盆
+tile.gardencontainers.decorativePot.chiseled.name=錾制景观花盆
+tile.gardencontainers.decorativePot.lines.name=竖纹景观花盆
+tile.gardencontainers.potteryTable.name=陶器工作桌
+
+# Garden Stuff
+
+# Garden Trees
+
+tile.gardentrees.sapling.pine.name=松树树苗
+tile.gardentrees.sapling.swamp.name=沼泽树树苗
+tile.gardentrees.sapling.tallbirch.name=高白桦树树苗
+tile.gardentrees.thinLog.name=木桩
+tile.gardentrees.thinLog.oak.name=橡木桩
+tile.gardentrees.thinLog.spruce.name=云杉木桩
+tile.gardentrees.thinLog.birch.name=白桦木桩
+tile.gardentrees.thinLog.jungle.name=丛林木桩
+tile.gardentrees.thinLog.acacia.name=金合欢木桩
+tile.gardentrees.thinLog.big_oak.name=深色橡木桩
+tile.gardentrees.thinLogFence.name=木桩围栏
+tile.gardentrees.thinLogFence.oak.name=橡木围栏
+tile.gardentrees.thinLogFence.spruce.name=云杉木围栏
+tile.gardentrees.thinLogFence.birch.name=白桦木围栏
+tile.gardentrees.thinLogFence.jungle.name=丛林木围栏
+tile.gardentrees.thinLogFence.acacia.name=金合欢木围栏
+tile.gardentrees.thinLogFence.big_oak.name=深色橡木围栏

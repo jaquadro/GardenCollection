@@ -27,14 +27,14 @@ public class ModBlocks
     public static BlockPotteryTable potteryTable;
 
     public void init () {
-        woodWindowBox = new BlockWindowBox("woodWindowBox", Material.wood);
-        stoneWindowBox = new BlockWindowBoxStone("stoneWindowBox");
-        decorativePot = new BlockDecorativePot("decorativePot");
-        largePot = new BlockLargePotStandard("largePot");
-        largePotColored = new BlockLargePotColored("largePotColored");
-        mediumPot = new BlockMediumPotStandard("mediumPot");
-        mediumPotColored = new BlockMediumPotColored("mediumPotColored");
-        potteryTable = new BlockPotteryTable("potteryTable");
+        woodWindowBox = new BlockWindowBox(makeName("woodWindowBox"), Material.wood);
+        stoneWindowBox = new BlockWindowBoxStone(makeName("stoneWindowBox"));
+        decorativePot = new BlockDecorativePot(makeName("decorativePot"));
+        largePot = new BlockLargePotStandard(makeName("largePot"));
+        largePotColored = new BlockLargePotColored(makeName("largePotColored"));
+        mediumPot = new BlockMediumPotStandard(makeName("mediumPot"));
+        mediumPotColored = new BlockMediumPotColored(makeName("mediumPotColored"));
+        potteryTable = new BlockPotteryTable(makeName("potteryTable"));
 
         GameRegistry.registerBlock(woodWindowBox, ItemWindowBox.class, "wood_window_box");
         GameRegistry.registerBlock(stoneWindowBox, ItemWindowBox.class, "stone_window_box");
@@ -52,6 +52,10 @@ public class ModBlocks
         GameRegistry.registerTileEntity(TileEntityMediumPot.class, ModBlocks.getQualifiedName(mediumPot));
         GameRegistry.registerTileEntity(TileEntityMediumPot.class, ModBlocks.getQualifiedName(mediumPotColored));
         GameRegistry.registerTileEntity(TileEntityPotteryTable.class, ModBlocks.getQualifiedName(potteryTable));
+    }
+
+    public static String makeName (String name) {
+        return GardenContainers.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static Block get (String name) {

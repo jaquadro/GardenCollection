@@ -23,11 +23,11 @@ public class ModBlocks
     public static BlockIvy ivy;
 
     public void init () {
-        thinLog = new BlockThinLog("thinLog");
-        thinLogFence = new BlockThinLogFence("thinLogFence");
-        flowerLeaves = new BlockFlowerLeaves("flowerLeaves");
-        sapling = new BlockGTSapling("sapling");
-        ivy = new BlockIvy("ivy");
+        thinLog = new BlockThinLog(makeName("thinLog"));
+        thinLogFence = new BlockThinLogFence(makeName("thinLogFence"));
+        flowerLeaves = new BlockFlowerLeaves(makeName("flowerLeaves"));
+        sapling = new BlockGTSapling(makeName("sapling"));
+        ivy = new BlockIvy(makeName("ivy"));
 
         GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
@@ -36,6 +36,10 @@ public class ModBlocks
         GameRegistry.registerBlock(ivy, ItemIvy.class, "ivy");
 
         GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
+    }
+
+    public static String makeName (String name) {
+        return GardenTrees.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static Block get (String name) {

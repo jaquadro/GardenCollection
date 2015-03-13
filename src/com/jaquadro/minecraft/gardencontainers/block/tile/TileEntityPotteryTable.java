@@ -62,7 +62,7 @@ public class TileEntityPotteryTable extends TileEntity implements IInventory
 
     @Override
     public String getInventoryName () {
-        return hasCustomInventoryName() ? customName : "container.potteryTable";
+        return hasCustomInventoryName() ? customName : "container.gardencontainers.potteryTable";
     }
 
     @Override

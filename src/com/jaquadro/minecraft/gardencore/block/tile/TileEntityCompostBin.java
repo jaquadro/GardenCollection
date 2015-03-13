@@ -334,7 +334,7 @@ public class TileEntityCompostBin extends TileEntity implements ISidedInventory
 
     @Override
     public String getInventoryName () {
-        return hasCustomInventoryName() ? customName : "container.compostBin";
+        return hasCustomInventoryName() ? customName : "container.gardencore.compostBin";
     }
 
     @Override

@@ -24,12 +24,12 @@ public class BlockSmallFire extends Block
     @SideOnly(Side.CLIENT)
     private IIcon[] icons;
 
-    public BlockSmallFire () {
+    public BlockSmallFire (String name) {
         super(Material.fire);
 
         setHardness(0);
         setLightLevel(1);
-        setBlockName("smallFire");
+        setBlockName(name);
         setBlockTextureName("fire");
         disableStats();
         //setTickRandomly(true);

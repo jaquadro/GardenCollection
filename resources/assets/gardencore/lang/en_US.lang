@@ -1,19 +1,153 @@
-container.garden=Arrange Plants
-container.compostBin=Compost Bin
+itemGroup.gardenCore=Garden Stuff
+itemGroup.gardenTrees=Garden Stuff (Trees)
 
-item.soilTestKit.name=Soil Test Kit
-item.soilTestKitUsed.name=Used Soil Test Kit
-item.compostPile.name=Compost
+# Garden Core
 
-itemGroup.gardenCore=Garden Core
+container.gardencore.garden=Arrange Plants
+container.gardencore.compostBin=Compost Bin
 
-soilkit.rainfall=Rainfall
-soilkit.temperature=Temperature
+item.gardencore.gardenTrowel.name=Garden Trowel
+item.gardencore.soilTestKit.name=Soil Test Kit
+item.gardencore.soilTestKitUsed.name=Used Soil Test Kit
+item.gardencore.compostPile.name=Compost
 
-item.gardenTrowel.name=Garden Trowel
+tile.gardencore.smallFire.name=Small Fire
+tile.gardencore.gardenSoil.name=Garden Soil
+tile.gardencore.potteryTable.name=Pottery Table
+tile.gardencore.compostBin.name=Compost Bin
+tile.gardencore.gardenFarmland.name=Tilled Garden Soil
+tile.gardencore.gardenProxy.name=Garden Proxy
 
-tile.gardenSoil.name=Garden Soil
-tile.potteryTable.name=Pottery Table
-tile.compostBin.name=Compost Bin
-tile.gardenFarmland.name=Tilled Garden Soil
-tile.gardenProxy.name=Garden Proxy
+gardencore.soilkit.rainfall=Rainfall
+gardencore.soilkit.temperature=Temperature
+
+# Garden Containers
+
+container.gardencontainers.potteryTable=Pottery
+
+item.gardencontainers.potteryPattern.name=Clay Pattern Stamp
+item.gardencontainers.potteryPatternDirty.name=Clay Pattern Stamp
+item.gardencontainers.potteryPatternDirty.description=This stamp is obscured by dirt.\nWash it in a cauldron.
+
+tile.gardencontainers.largePot.default.name=Large Flower Pot
+tile.gardencontainers.largePot.raw.name=Raw Large Flower Pot
+tile.gardencontainers.largePotColored.black.name=Black Large Flower Pot
+tile.gardencontainers.largePotColored.red.name=Red Large Flower Pot
+tile.gardencontainers.largePotColored.green.name=Green Large Flower Pot
+tile.gardencontainers.largePotColored.brown.name=Brown Large Flower Pot
+tile.gardencontainers.largePotColored.blue.name=Blue Large Flower Pot
+tile.gardencontainers.largePotColored.purple.name=Purple Large Flower Pot
+tile.gardencontainers.largePotColored.cyan.name=Cyan Large Flower Pot
+tile.gardencontainers.largePotColored.silver.name=Light Gray Large Flower Pot
+tile.gardencontainers.largePotColored.gray.name=Gray Large Flower Pot
+tile.gardencontainers.largePotColored.pink.name=Pink Large Flower Pot
+tile.gardencontainers.largePotColored.lime.name=Lime Large Flower Pot
+tile.gardencontainers.largePotColored.yellow.name=Yellow Large Flower Pot
+tile.gardencontainers.largePotColored.light_blue.name=Light Blue Large Flower Pot
+tile.gardencontainers.largePotColored.magenta.name=Magenta Large Flower Pot
+tile.gardencontainers.largePotColored.orange.name=Orange Large Flower Pot
+tile.gardencontainers.largePotColored.white.name=White Large Flower Pot
+tile.gardencontainers.mediumPot.default.name=Medium Flower Pot
+tile.gardencontainers.mediumPotColored.black.name=Black Medium Flower Pot
+tile.gardencontainers.mediumPotColored.red.name=Red Medium Flower Pot
+tile.gardencontainers.mediumPotColored.green.name=Green Medium Flower Pot
+tile.gardencontainers.mediumPotColored.brown.name=Brown Medium Flower Pot
+tile.gardencontainers.mediumPotColored.blue.name=Blue Medium Flower Pot
+tile.gardencontainers.mediumPotColored.purple.name=Purple Medium Flower Pot
+tile.gardencontainers.mediumPotColored.cyan.name=Cyan Medium Flower Pot
+tile.gardencontainers.mediumPotColored.silver.name=Light Gray Medium Flower Pot
+tile.gardencontainers.mediumPotColored.gray.name=Gray Medium Flower Pot
+tile.gardencontainers.mediumPotColored.pink.name=Pink Medium Flower Pot
+tile.gardencontainers.mediumPotColored.lime.name=Lime Medium Flower Pot
+tile.gardencontainers.mediumPotColored.yellow.name=Yellow Medium Flower Pot
+tile.gardencontainers.mediumPotColored.light_blue.name=Light Blue Medium Flower Pot
+tile.gardencontainers.mediumPotColored.magenta.name=Magenta Medium Flower Pot
+tile.gardencontainers.mediumPotColored.orange.name=Orange Medium Flower Pot
+tile.gardencontainers.mediumPotColored.white.name=White Medium Flower Pot
+tile.gardencontainers.woodWindowBox.oak.name=Oak Window Box
+tile.gardencontainers.woodWindowBox.spruce.name=Spruce Window Box
+tile.gardencontainers.woodWindowBox.birch.name=Birch Window Box
+tile.gardencontainers.woodWindowBox.jungle.name=Jungle Window Box
+tile.gardencontainers.woodWindowBox.acacia.name=Acacia Window Box
+tile.gardencontainers.woodWindowBox.big_oak.name=Dark Oak Window Box
+tile.gardencontainers.stoneWindowBox.stone_slab.name=Stone Window Box
+tile.gardencontainers.stoneWindowBox.stone_brick.name=Stone Brick Window Box
+tile.gardencontainers.stoneWindowBox.mossy_stone_brick.name=Mossy Stone Brick Window Box
+tile.gardencontainers.stoneWindowBox.brick_block.name=Brick Window Box
+tile.gardencontainers.stoneWindowBox.nether_brick.name=Nether Brick Window Box
+tile.gardencontainers.stoneWindowBox.sandstone.name=Sandstone Window Box
+tile.gardencontainers.decorativePot.default.name=Decorative Flower Pot
+tile.gardencontainers.decorativePot.chiseled.name=Decorative Flower Pot (Chiseled)
+tile.gardencontainers.decorativePot.lines.name=Decorative Flower Pot (Pillar)
+tile.gardencontainers.potteryTable.name=Pottery Table
+
+# Garden Stuff
+
+item.gardenstuff.chainLink.name=Chain Link
+item.gardenstuff.chainLink.iron.name=Iron Chain Link
+item.gardenstuff.chainLink.gold.name=Gold Chain Link
+item.gardenstuff.chainLink.wrought_iron=Wrought Iron Chain Link
+item.gardenstuff.ironNugget.name=Iron Nugget
+item.gardenstuff.wroughtIronIngot.name=Wrought Iron Ingot
+item.gardenstuff.wroughtIronNugget.name=Wrought Iron Nugget
+
+tile.gardenstuff.heavyChain.name=Heavy Chain
+tile.gardenstuff.heavyChain.iron.name=Heavy Iron Chain
+tile.gardenstuff.heavyChain.gold.name=Heavy Gold Chain
+tile.gardenstuff.heavyChain.rust.name=Heavy Rusted Chain
+tile.gardenstuff.heavyChain.wrought_iron.name=Heavy Wrought Iron Chain
+tile.gardenstuff.heavyChain.moss.name=Heavy Mossy Chain
+tile.gardenstuff.lightChain.name=Light Chain
+tile.gardenstuff.lightChain.iron.name=Light Iron Chain
+tile.gardenstuff.lightChain.gold.name=Light Gold Chain
+tile.gardenstuff.lightChain.rust.name=Light Rusted Chain
+tile.gardenstuff.lightChain.wrought_iron.name=Light Wrought Iron Chain
+tile.gardenstuff.lightChain.moss.name=Light Mossy Chain
+tile.gardenstuff.latticeMetal.name=Lattice
+tile.gardenstuff.latticeMetal.iron.name=Iron Lattice
+tile.gardenstuff.latticeMetal.rust.name=Rusty Lattice
+tile.gardenstuff.latticeMetal.wrought_iron.name=Wrought Iron Lattice
+tile.gardenstuff.latticeMetal.moss.name=Mossy Lattice
+tile.gardenstuff.latticeWood.name=Lattice
+tile.gardenstuff.latticeWood.oak.name=Oak Wood Lattice
+tile.gardenstuff.latticeWood.spruce.name=Spruce Wood Lattice
+tile.gardenstuff.latticeWood.birch.name=Birch Wood Lattice
+tile.gardenstuff.latticeWood.jungle.name=Jungle Wood Lattice
+tile.gardenstuff.latticeWood.acacia.name=Acacia Wood Lattice
+tile.gardenstuff.latticeWood.big_oak.name=Dark Oak Wood Lattice
+tile.gardenstuff.lantern.name=Garden Lantern
+tile.gardenstuff.metalBlock.name=Block of Wrought Iron
+tile.gardenstuff.fence.name=Wrought Iron Fence
+tile.gardenstuff.fence.0.name=Wrought Iron Fence
+tile.gardenstuff.fence.1.name=Wrought Iron Fence
+tile.gardenstuff.fence.2.name=Wrought Iron Fence
+tile.gardenstuff.fence.3.name=Wrought Iron Fence
+
+gardenstuff.lanternSource=Contents
+gardenstuff.lanternSource.none=Empty
+gardenstuff.lanternSource.torch=Torch
+gardenstuff.lanternSource.redstoneTorch=Redstone Torch
+gardenstuff.lanternSource.glowstone=Glowstone
+gardenstuff.lanternSource.candle=Candle
+gardenstuff.lanternSource.firefly=Fireflies
+
+# Garden Trees
+
+tile.gardentrees.ivy.name=Devil's Ivy
+tile.gardentrees.sapling.pine.name=Pine Sapling
+tile.gardentrees.sapling.swamp.name=Swamp Sapling
+tile.gardentrees.sapling.tallbirch.name=Tall Birch Sapling
+tile.gardentrees.thinLog.name=Post
+tile.gardentrees.thinLog.oak.name=Oak Wood Post
+tile.gardentrees.thinLog.spruce.name=Spruce Wood Post
+tile.gardentrees.thinLog.birch.name=Birch Wood Post
+tile.gardentrees.thinLog.jungle.name=Jungle Wood Post
+tile.gardentrees.thinLog.acacia.name=Acacia Wood Post
+tile.gardentrees.thinLog.big_oak.name=Dark Oak Wood Post
+tile.gardentrees.thinLogFence.name=Post Fence
+tile.gardentrees.thinLogFence.oak.name=Oak Wood Post Fence
+tile.gardentrees.thinLogFence.spruce.name=Spruce Wood Post Fence
+tile.gardentrees.thinLogFence.birch.name=Birch Wood Post Fence
+tile.gardentrees.thinLogFence.jungle.name=Jungle Wood Post Fence
+tile.gardentrees.thinLogFence.acacia.name=Acacia Wood Post Fence
+tile.gardentrees.thinLogFence.big_oak.name=Dark Oak Wood Post Fence

@@ -415,7 +415,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
 
     @Override
     public String getInventoryName () {
-        return hasCustomInventoryName() ? customName : "container.garden";
+        return hasCustomInventoryName() ? customName : "container.gardencore.garden";
     }
 
     @Override

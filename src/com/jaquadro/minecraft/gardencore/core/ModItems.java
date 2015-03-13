@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencore.core;
 
+import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.item.ItemCompost;
 import com.jaquadro.minecraft.gardencore.item.ItemSoilKit;
 import com.jaquadro.minecraft.gardencore.item.ItemTrowel;
@@ -18,15 +19,19 @@ public class ModItems
     public static Item compostPile;
 
     public void init () {
-        gardenTrowel = new ItemTrowel("gardenTrowel", Item.ToolMaterial.IRON);
-        soilTestKit = new ItemSoilKit("soilTestKit");
-        usedSoilTestKit = new ItemUsedSoilKit("soilTestKitUsed");
-        compostPile = new ItemCompost("compostPile");
+        gardenTrowel = new ItemTrowel(makeName("gardenTrowel"), Item.ToolMaterial.IRON);
+        soilTestKit = new ItemSoilKit(makeName("soilTestKit"));
+        usedSoilTestKit = new ItemUsedSoilKit(makeName("soilTestKitUsed"));
+        compostPile = new ItemCompost(makeName("compostPile"));
 
         GameRegistry.registerItem(gardenTrowel, "garden_trowel");
         GameRegistry.registerItem(compostPile, "compost_pile");
         GameRegistry.registerItem(soilTestKit, "soil_test_kit");
         GameRegistry.registerItem(usedSoilTestKit, "soil_test_kit_used");
+    }
+
+    public static String makeName (String name) {
+        return GardenCore.MOD_ID.toLowerCase() + "." + name;
     }
 
     public static UniqueMetaIdentifier getUniqueMetaID (Item item, int meta) {

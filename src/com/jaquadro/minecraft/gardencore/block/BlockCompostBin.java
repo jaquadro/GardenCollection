@@ -31,10 +31,10 @@ public class BlockCompostBin extends BlockContainer
     @SideOnly(Side.CLIENT)
     IIcon[] icons;
 
-    public BlockCompostBin () {
+    public BlockCompostBin (String name) {
         super(Material.wood);
 
-        setBlockName("compostBin");
+        setBlockName(name);
         setCreativeTab(ModCreativeTabs.tabGardenCore);
         setTickRandomly(true);
         setHardness(1.5f);
