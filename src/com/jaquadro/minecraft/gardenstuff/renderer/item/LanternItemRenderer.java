@@ -69,12 +69,22 @@ public class LanternItemRenderer implements IItemRenderer
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderer.overrideBlockTexture = block.getIconTopCross();
         renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
-        //renderer.overrideBlockTexture = block.getIconCandle();
-        //renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
         renderer.overrideBlockTexture = null;
 
-        renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
-        renderHelper.renderBlock(renderer, Blocks.torch, 0);
+        switch (block.getLightSource(item)) {
+            case TORCH:
+                renderTorchSource(renderer);
+                break;
+            case REDSTONE_TORCH:
+                renderRedstoneTorchSource(renderer);
+                break;
+            case GLOWSTONE:
+                renderGlowstoneSource(renderer);
+                break;
+            case CANDLE:
+                renderCandleSource(renderer, block);
+                break;
+        }
 
         if (block.isGlass(item)) {
             GL11.glEnable(GL11.GL_BLEND);
@@ -102,11 +112,36 @@ public class LanternItemRenderer implements IItemRenderer
         }
     }
 
-    //private void renderTorchSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
-        //renderer.setRenderBoundsFromBlock(Blocks.torch);
-    //    renderHelper.renderBlock(renderer, block, 0);
-        //renderer.renderBlockAllFaces(Blocks.torch, x, y, z);
-    //}
+    private void renderGlowstoneSource (RenderBlocks renderer) {
+        renderer.setRenderBounds(.3, 0, .3, .7, .4, .7);
+        renderHelper.renderBlock(renderer, Blocks.glowstone, 0);
+    }
+
+    private void renderCandleSource (RenderBlocks renderer, BlockLantern block) {
+        renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
+        renderer.overrideBlockTexture = block.getIconCandle();
+        renderHelper.renderCrossedSquares(renderer, block, 0);
+        renderer.overrideBlockTexture = null;
+    }
+
+    private void renderTorchSource (RenderBlocks renderer) {
+        renderTorchBlock(renderer, Blocks.torch);
+    }
+
+    private void renderRedstoneTorchSource (RenderBlocks renderer) {
+        renderTorchBlock(renderer, Blocks.redstone_torch);
+    }
+
+    private void renderTorchBlock (RenderBlocks renderer, Block torchBlock) {
+        renderer.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
+        renderHelper.renderFace(RenderHelper.ZNEG, renderer, torchBlock, torchBlock.getIcon(2, 0));
+        renderHelper.renderFace(RenderHelper.ZPOS, renderer, torchBlock, torchBlock.getIcon(3, 0));
+        renderer.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
+        renderHelper.renderFace(RenderHelper.XNEG, renderer, torchBlock, torchBlock.getIcon(4, 0));
+        renderHelper.renderFace(RenderHelper.XPOS, renderer, torchBlock, torchBlock.getIcon(5, 0));
+        renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
+        renderHelper.renderFace(RenderHelper.YPOS, renderer, torchBlock, torchBlock.getIcon(1, 0));
+    }
 
     private RenderBlocks getRenderer (Object[] data) {
         for (Object obj : data) {

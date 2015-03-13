@@ -70,29 +70,30 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
             }
         }
         else if (renderPass == 1) {
-            IIcon glass = block.getIconGlass(world.getBlockMetadata(x, y, z));
-
             TileEntityLantern tile = block.getTileEntity(world, x, y, z);
-            if (tile != null && tile.hasGlass())
-                glass = block.getIconStainedGlass(world.getBlockMetadata(x, y, z));
+            if (tile != null && tile.hasGlass()) {
+                IIcon glass = block.getIconStainedGlass(world.getBlockMetadata(x, y, z));
 
-            RenderUtil.calculateBaseColor(colorScratch, block.getBlockColor());
-            RenderUtil.setTessellatorColor(Tessellator.instance, colorScratch);
-            Tessellator.instance.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
+                RenderUtil.calculateBaseColor(colorScratch, block.getBlockColor());
+                RenderUtil.setTessellatorColor(Tessellator.instance, colorScratch);
+                Tessellator.instance.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 
-            renderer.setRenderBoundsFromBlock(block);
-            renderer.renderMinX += .01;
-            renderer.renderMinZ += .01;
-            renderer.renderMaxX -= .01;
-            renderer.renderMaxZ -= .01;
+                renderer.setRenderBoundsFromBlock(block);
+                renderer.renderMinX += .01;
+                renderer.renderMinZ += .01;
+                renderer.renderMaxX -= .01;
+                renderer.renderMaxZ -= .01;
 
-            renderer.renderFaceXNeg(block, x, y, z, glass);
-            renderer.renderFaceXPos(block, x, y, z, glass);
-            renderer.renderFaceZNeg(block, x, y, z, glass);
-            renderer.renderFaceZPos(block, x, y, z, glass);
+                renderer.renderFaceXNeg(block, x, y, z, glass);
+                renderer.renderFaceXPos(block, x, y, z, glass);
+                renderer.renderFaceZNeg(block, x, y, z, glass);
+                renderer.renderFaceZPos(block, x, y, z, glass);
 
-            renderer.renderMaxY -= .01;
-            renderer.renderFaceYPos(block, x, y, z, glass);
+                renderer.renderMaxY -= .01;
+                renderer.renderFaceYPos(block, x, y, z, glass);
+            }
+            else
+                RenderUtil.renderEmptyPlane(block, x, y, z, renderer);
         }
 
         return true;
