@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.gardentrees.block.BlockThinLogFence;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -70,4 +71,7 @@ public class ItemThinLogFence extends ItemBlock
         TileEntityWoodProxy.syncTileEntityWithData(world, x, y, z, metadata);
         return true;
     }
+
+    @Override
+    public void registerIcons (IIconRegister register) { }
 }

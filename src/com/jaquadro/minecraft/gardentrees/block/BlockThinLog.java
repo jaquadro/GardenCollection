@@ -18,6 +18,7 @@ import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityDiggingFX;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -484,4 +485,7 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
 
         return null;
     }
+
+    @Override
+    public void registerBlockIcons (IIconRegister register) { }
 }

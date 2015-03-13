@@ -15,6 +15,7 @@ import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -246,4 +247,7 @@ public class BlockWindowBox extends BlockGarden
         TileEntity te = world.getTileEntity(x, y, z);
         return (te != null && te instanceof TileEntityWindowBox) ? (TileEntityWindowBox) te : null;
     }
+
+    @Override
+    public void registerBlockIcons (IIconRegister register) { }
 }

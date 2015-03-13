@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencontainers.item;
 import com.jaquadro.minecraft.gardencontainers.block.BlockWindowBox;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityWindowBox;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -40,4 +41,7 @@ public class ItemWindowBox extends ItemMultiTexture
 
         return true;
     }
+
+    @Override
+    public void registerIcons (IIconRegister register) { }
 }

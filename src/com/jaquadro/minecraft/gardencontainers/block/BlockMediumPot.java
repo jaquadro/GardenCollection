@@ -14,6 +14,7 @@ import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -156,4 +157,7 @@ public abstract class BlockMediumPot extends BlockGardenContainer implements ICh
 
         return null;
     }
+
+    @Override
+    public void registerBlockIcons (IIconRegister register) { }
 }

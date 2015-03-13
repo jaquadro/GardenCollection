@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardencontainers.item;
 
 import com.jaquadro.minecraft.gardencontainers.block.BlockMediumPot;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemMultiTexture;
 
 public class ItemMediumPot extends ItemMultiTexture
@@ -15,4 +16,7 @@ public class ItemMediumPot extends ItemMultiTexture
             return ((BlockMediumPot) block).getSubTypes();
         return new String[0];
     }
+
+    @Override
+    public void registerIcons (IIconRegister register) { }
 }

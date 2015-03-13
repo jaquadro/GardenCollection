@@ -11,6 +11,7 @@ import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -220,4 +221,7 @@ public class BlockDecorativePot extends BlockGardenContainer
             side = 1;
         return Blocks.quartz_block.getIcon(world, x, y, z, side);
     }
+
+    @Override
+    public void registerBlockIcons (IIconRegister register) { }
 }
