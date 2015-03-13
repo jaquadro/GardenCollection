@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class LanternItemRenderer implements IItemRenderer
 {
@@ -52,6 +53,7 @@ public class LanternItemRenderer implements IItemRenderer
             GL11.glScalef(1.2f, 1.2f, 1.2f);
         }
 
+        block.setBlockBoundsForItemRender();
         renderer.setRenderBoundsFromBlock(block);
         renderHelper.renderBlock(renderer, block, item.getItemDamage());
 
@@ -88,6 +90,8 @@ public class LanternItemRenderer implements IItemRenderer
 
         if (block.isGlass(item)) {
             GL11.glEnable(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glDisable(GL11.GL_NORMALIZE);
 
             renderHelper.calculateBaseColor(colorScratch, block.getBlockColor());
             RenderUtil.setTessellatorColor(Tessellator.instance, colorScratch);

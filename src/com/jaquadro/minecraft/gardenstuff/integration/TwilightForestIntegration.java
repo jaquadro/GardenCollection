@@ -6,6 +6,8 @@ import com.jaquadro.minecraft.gardenstuff.integration.twilightforest.EntityFiref
 import com.jaquadro.minecraft.gardenstuff.integration.twilightforest.RenderFireflyWrapper;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.effect.EntityWeatherEffect;
 import net.minecraft.world.World;
 
@@ -44,6 +46,7 @@ public class TwilightForestIntegration
         catch (Throwable t) { }
     }
 
+    @SideOnly(Side.CLIENT)
     private static void registerEntity () {
         RenderingRegistry.registerEntityRenderingHandler(EntityFireflyWrapper.class, new RenderFireflyWrapper());
     }

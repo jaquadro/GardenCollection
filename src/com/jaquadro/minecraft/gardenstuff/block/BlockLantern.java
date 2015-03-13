@@ -120,6 +120,11 @@ public class BlockLantern extends BlockContainer
 
     @Override
     public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
+        setBlockBoundsForItemRender();
+    }
+
+    @Override
+    public void setBlockBoundsForItemRender () {
         setBlockBounds(.125f, 0, .125f, .875f, .875f, .875f);
     }
 
