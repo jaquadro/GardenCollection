@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
@@ -25,7 +26,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.IPlantable;
 
-public class TileEntityCompostBin extends TileEntity implements IInventory
+public class TileEntityCompostBin extends TileEntity implements ISidedInventory
 {
     private ItemStack[] compostItemStacks = new ItemStack[10];
 
@@ -366,5 +367,31 @@ public class TileEntityCompostBin extends TileEntity implements IInventory
             return isItemDecomposable(item);
 
         return false;
+    }
+
+    private int[] accessSlots = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    @Override
+    public int[] getAccessibleSlotsFromSide (int side) {
+        return accessSlots;
+    }
+
+    @Override
+    public boolean canInsertItem (int slot, ItemStack item, int side) {
+        if (slot == 9)
+            return false;
+
+        return isItemValidForSlot(slot, item);
+    }
+
+    @Override
+    public boolean canExtractItem (int slot, ItemStack item, int side) {
+        if (slot != 9)
+            return false;
+
+        if (item == null)
+            return false;
+
+        return item.getItem() == ModItems.compostPile;
     }
 }
