@@ -57,6 +57,6 @@ public class SimplePlantInfo implements IPlantInfo
         if (sectionMeta == null || section - 1 >= sectionMeta.length)
             return meta;
 
-        return sectionMeta[section];
+        return sectionMeta[section - 1];
     }
 }
