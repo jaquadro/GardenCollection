@@ -1,16 +1,21 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
+import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class LanternRenderer implements ISimpleBlockRenderingHandler
 {
@@ -68,6 +73,8 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
                 Tessellator.instance.addTranslation(0, -.001f, 0);
                 block.binding.unbind(tile.getWorldObj(), x, y, z);
             }
+
+            renderChain(world, renderer, block, x, y, z);
         }
         else if (renderPass == 1) {
             TileEntityLantern tile = block.getTileEntity(world, x, y, z);
@@ -97,6 +104,25 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
         }
 
         return true;
+    }
+
+    private static final Vec3 defaultAttachPoint = Vec3.createVectorHelper(.5, 0, .5);
+
+    private void renderChain (IBlockAccess world, RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
+        Block lowerBlock = world.getBlock(x, y - 1, z);
+        if (lowerBlock.isSideSolid(world, x, y - 1, z, ForgeDirection.UP))
+            return;
+
+        Block upperBlock = world.getBlock(x, y + 1, z);
+        if (upperBlock instanceof IChainSingleAttachable) {
+            Vec3 attach = ((IChainSingleAttachable) upperBlock).getChainAttachPoint(world, x, y + 1, z, 0);
+            if (attach != null && attach != defaultAttachPoint) {
+                renderer.setRenderBounds(0, 0, 0, 1, attach.yCoord, 1);
+                renderer.setOverrideBlockTexture(ModBlocks.lightChain.getIcon(0, 4));
+                RenderHelper.instance.renderCrossedSquares(renderer, ModBlocks.heavyChain, x, y + 1, z);
+                renderer.setOverrideBlockTexture(null);
+            }
+        }
     }
 
     private void renderGlowstoneSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {

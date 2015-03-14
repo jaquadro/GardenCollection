@@ -87,6 +87,8 @@ public class RenderHelper
 
     private float[] colorScratch = new float[3];
 
+    public static RenderHelper instance = new RenderHelper();
+
     private void setUV (IIcon icon, double uMin, double vMin, double uMax, double vMax) {
         uv[0] = uMin + icon.getMinU();
         uv[1] = uMax + icon.getMaxU();
@@ -376,6 +378,18 @@ public class RenderHelper
 
         if (lighting)
             GL11.glEnable(GL11.GL_LIGHTING);
+    }
+
+    public void renderCrossedSquares (RenderBlocks renderer, Block block, int x, int y, int z)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
+
+        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
+        setTessellatorColor(tessellator, colorScratch);
+
+        IIcon iicon = renderer.getBlockIconFromSideAndMetadata(block, 0, renderer.blockAccess.getBlockMetadata(x, y, z));
+        drawCrossedSquares(renderer, iicon, x, y, z, 1.0F);
     }
 
     public void drawCrossedSquares(RenderBlocks renderer, IIcon icon, double x, double y, double z, float scale)
