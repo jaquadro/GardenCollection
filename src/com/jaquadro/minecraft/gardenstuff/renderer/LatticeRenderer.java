@@ -73,15 +73,13 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
 
         boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U7, U7, U9, U9, U9);
 
-        if (connectYNeg || extYNeg) {
-            float yMin = extYNeg ? UN4 : (connectYNeg ? 0 : U7);
-            float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
+        float yMin = extYNeg ? UN4 : (connectYNeg ? 0 : U7);
+        float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
 
-            if (yMin < U7)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, yMin, U7, U9, U7, U9);
-            if (yMax > U9)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U9, U7, U9, yMax, U9);
-        }
+        if (yMin < U7)
+            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, yMin, U7, U9, U7, U9);
+        if (yMax > U9)
+            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U9, U7, U9, yMax, U9);
 
         float zMin = extZNeg ? UN4 : (connectZNeg ? 0 : U7);
         float zMax = extZPos ? U20 : (connectZPos ? 1 : U9);
