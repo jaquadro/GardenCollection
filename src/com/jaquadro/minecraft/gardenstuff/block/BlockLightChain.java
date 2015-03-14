@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardenstuff.block;
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
@@ -15,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -105,6 +107,17 @@ public class BlockLightChain extends Block implements IPlantProxy
     }
 
     @Override
+    public boolean onBlockActivated (World world, int x, int y, int z, EntityPlayer player, int side, float vx, float vy, float vz) {
+        BlockGarden block = getGardenBlock(world, x, y, z);
+        if (block != null) {
+            y = getBaseBlockYCoord(world, x, y, z);
+            return block.applyItemToGarden(world, x, y, z, player, null);
+        }
+
+        return super.onBlockActivated(world, x, y, z, player, side, vx, vy, vz);
+    }
+
+    @Override
     public boolean applyBonemeal (World world, int x, int y, int z) {
         return ModBlocks.gardenProxy.applyBonemeal(world, x, y, z);
     }
@@ -177,5 +190,29 @@ public class BlockLightChain extends Block implements IPlantProxy
 
         for (int i = 0; i < types.length; i++)
             icons[i] = register.registerIcon(getTextureName() + "_" + types[i]);
+    }
+
+    private int getBaseBlockYCoord (IBlockAccess world, int x, int y, int z) {
+        if (y == 0)
+            return 0;
+
+        Block underBlock = world.getBlock(x, --y, z);
+        while (y > 0 && underBlock instanceof IPlantProxy)
+            underBlock = world.getBlock(x, --y, z);
+
+        return y;
+    }
+
+    public BlockGarden getGardenBlock (IBlockAccess world, int x, int y, int z) {
+        if (y == 0)
+            return null;
+
+        y = getBaseBlockYCoord(world, x, y, z);
+        Block underBlock = world.getBlock(x, y, z);
+
+        if (!(underBlock instanceof BlockGarden))
+            return null;
+
+        return (BlockGarden) underBlock;
     }
 }
