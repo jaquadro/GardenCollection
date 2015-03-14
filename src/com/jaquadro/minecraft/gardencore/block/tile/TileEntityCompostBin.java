@@ -275,6 +275,10 @@ public class TileEntityCompostBin extends TileEntity implements ISidedInventory
             return 150;
         if (item == Items.string)
             return 100;
+        if (item == Items.wheat)
+            return 100;
+        if (item == Items.reeds)
+            return 100;
         if (item instanceof IPlantable)
             return 100;
         if (item instanceof ItemFood)
