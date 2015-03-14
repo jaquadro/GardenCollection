@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
+import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLattice;
@@ -13,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -20,7 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockLattice extends BlockContainer
+public abstract class BlockLattice extends BlockContainer implements IChainSingleAttachable
 {
     public BlockLattice (String blockName, Material material) {
         super(material);
@@ -141,6 +143,31 @@ public abstract class BlockLattice extends BlockContainer
         TileEntity te = blockAccess.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityLattice)
             return (TileEntityLattice) te;
+
+        return null;
+    }
+
+    private final Vec3[] attachPoints = new Vec3[] {
+        Vec3.createVectorHelper(.5, .5, .5),
+        Vec3.createVectorHelper(.5, .5, .5),
+        Vec3.createVectorHelper(.5, .5, .5),
+        Vec3.createVectorHelper(.5, .5, .5),
+        Vec3.createVectorHelper(.5, .5, .5),
+        Vec3.createVectorHelper(.5, .5, .5),
+    };
+
+    @Override
+    public Vec3 getChainAttachPoint (IBlockAccess blockAccess, int x, int y, int z, int side) {
+        int connectFlags = calcConnectionFlags(blockAccess, x, y, z);
+
+        switch (side) {
+            case 0: return (connectFlags & 1) == 0 ? attachPoints[0] : null;
+            case 1: return (connectFlags & 2) == 0 ? attachPoints[1] : null;
+            case 2: return (connectFlags & 4) == 0 ? attachPoints[2] : null;
+            case 3: return (connectFlags & 8) == 0 ? attachPoints[3] : null;
+            case 4: return (connectFlags & 16) == 0 ? attachPoints[4] : null;
+            case 5: return (connectFlags & 32) == 0 ? attachPoints[5] : null;
+        }
 
         return null;
     }
