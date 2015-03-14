@@ -224,7 +224,7 @@ public class BlockLantern extends BlockContainer
             tile.markDirty();
             return true;
         }
-        else if (tile.getLightSource() == TileEntityLantern.LightSource.NONE) {
+        else if (tile.getLightSource() == TileEntityLantern.LightSource.NONE && item != null) {
             if (item.getItem() instanceof ItemBlock) {
                 Block block = Block.getBlockFromItem(item.getItem());
                 if (block == Blocks.torch)
