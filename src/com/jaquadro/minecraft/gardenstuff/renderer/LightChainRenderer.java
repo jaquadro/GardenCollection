@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
+import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -22,6 +23,8 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
     private static final Vec3[] singleAttachPoint = new Vec3[] {
         Vec3.createVectorHelper(.5, 1, .5),
     };
+
+    private static final Vec3 defaultSingleAttachPoint = Vec3.createVectorHelper(.5, 0, .5);
 
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
@@ -54,8 +57,17 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         int yMin = block.findMinY(world, x, y, z);
         int yMax = block.findMaxY(world, x, y, z);
 
+        Vec3 topAttach = defaultSingleAttachPoint;
+
+        Block blockTop = world.getBlock(x, yMax + 1, z);
+        if (blockTop instanceof IChainSingleAttachable)
+            topAttach = ((IChainSingleAttachable) blockTop).getChainAttachPoint(world, x, yMax + 1, z, 0);
+
+        if (topAttach == null)
+            topAttach = defaultSingleAttachPoint;
+
         for (Vec3 point : block.getAttachPoints(world, x, y, z)) {
-            float height = yMax - yMin + 2 - (float)point.yCoord;
+            float height = yMax - yMin + 2 - (float)point.yCoord + (float)topAttach.yCoord;
 
             double cx = .5f;
             double cz = .5f;
@@ -68,6 +80,8 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
 
             if (y == yMin)
                 yb = y - 1 + point.yCoord;
+            if (y == yMax)
+                yt = y + 1 + topAttach.yCoord;
 
             double lerpB = 1 - ((yb - localYMin) / height);
             double lerpT = 1 - ((yt - localYMin) / height);

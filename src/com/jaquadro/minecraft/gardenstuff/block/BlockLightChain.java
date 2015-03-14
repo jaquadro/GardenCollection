@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardenstuff.block;
 
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
+import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
@@ -138,6 +139,11 @@ public class BlockLightChain extends Block implements IPlantProxy
         Vec3[] attachPoints = singleAttachPoint;
         if (bottomBlock instanceof IChainAttachable)
             attachPoints = ((IChainAttachable) bottomBlock).getChainAttachPoints(1);
+        else if (bottomBlock instanceof IChainSingleAttachable) {
+            Vec3 attachPoint = ((IChainSingleAttachable) bottomBlock).getChainAttachPoint(world, x, y, z, 1);
+            if (attachPoint != null)
+                attachPoints = new Vec3[] { attachPoint };
+        }
         else if (bottomBlock.isSideSolid(world, x, y, z, ForgeDirection.UP))
             attachPoints = defaultAttachPoints;
 
