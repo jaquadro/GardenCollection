@@ -43,6 +43,7 @@ public class FenceRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setUnit(0);
         boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
         boxRenderer.setIcon(block.getIcon(meta));
+        boxRenderer.flipOpposite = false;
 
         int connectFlags = block.calcConnectionFlags(world, x, y, z);
 
@@ -65,6 +66,8 @@ public class FenceRenderer implements ISimpleBlockRenderingHandler
             if (connectXPos)
                 boxRenderer.renderSolidBox(renderer, block, x, y, z, U15, 0, U7, 1, 1, U9);
         }
+
+        boxRenderer.flipOpposite = true;
 
         boolean fenceBelow = block.isFenceBelow(world, x, y, z);
         boolean abNN = connectYNeg && !fenceBelow && !connectYPos;

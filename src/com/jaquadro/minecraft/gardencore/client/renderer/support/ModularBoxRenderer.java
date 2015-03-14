@@ -80,6 +80,8 @@ public class ModularBoxRenderer
     private IIcon[] interiorIcon = new IIcon[6];
     private IIcon[] cutIcon = new IIcon[6];
 
+    public boolean flipOpposite;
+
     private void copyFrom (float[] target, float[] source) {
         target[0] = source[0];
         target[1] = source[1];
@@ -629,7 +631,9 @@ public class ModularBoxRenderer
                 RenderUtil.renderFaceYPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZNEG:
+                renderer.flipTexture = flipOpposite;
                 RenderUtil.renderFaceZNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
+                renderer.flipTexture = false;
                 break;
             case FACE_ZPOS:
                 RenderUtil.renderFaceZPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
@@ -638,7 +642,9 @@ public class ModularBoxRenderer
                 RenderUtil.renderFaceXNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_XPOS:
+                renderer.flipTexture = flipOpposite;
                 RenderUtil.renderFaceXPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
+                renderer.flipTexture = false;
                 break;
         }
     }
