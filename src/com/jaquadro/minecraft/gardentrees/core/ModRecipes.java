@@ -20,6 +20,8 @@ import java.util.Map;
 
 public class ModRecipes
 {
+    // TODO: "Use Witchery Recipes" (Mutandis)
+    
     private static final Item[] axeList = new Item[] {
         Items.wooden_axe, Items.stone_axe, Items.iron_axe, Items.golden_axe, Items.diamond_axe
     };

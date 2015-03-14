@@ -5,9 +5,16 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes
 {
+    private static String[] dyeOreDict = { "dyeBlack", "dyeRed", "dyeGreen", "dyeBrown",
+        "dyeBlue", "dyePurple", "dyeCyan", "dyeLightGray",
+        "dyeGray", "dyePink", "dyeLime", "dyeYellow",
+        "dyeLightBlue", "dyeMagenta", "dyeOrange", "dyeWhite",
+    };
+
     public void init () {
         GameRegistry.addRecipe(new ItemStack(ModBlocks.largePot, 3, 1), "x x", "x x", "xxx",
             'x', Blocks.clay);
@@ -18,8 +25,8 @@ public class ModRecipes
             GameRegistry.addRecipe(new ItemStack(ModBlocks.largePotColored, 3, i), "x x", "x x", "xxx",
                 'x', new ItemStack(Blocks.stained_hardened_clay, 1, 15 - i));
 
-            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.largePotColored, 1, i),
-                ModBlocks.largePot, new ItemStack(Items.dye, 1, i));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.largePotColored, 1, i),
+                ModBlocks.largePot, dyeOreDict[i]));
         }
 
         GameRegistry.addRecipe(new ItemStack(ModBlocks.mediumPot, 3), "x x", "x x", " x ",
@@ -29,8 +36,8 @@ public class ModRecipes
             GameRegistry.addRecipe(new ItemStack(ModBlocks.mediumPotColored, 3, i), "x x", "x x", " x ",
                 'x', new ItemStack(Blocks.stained_hardened_clay, 1, 15 - i));
 
-            GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.mediumPotColored, 1, i),
-                ModBlocks.mediumPot, new ItemStack(Items.dye, 1, i));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModBlocks.mediumPotColored, 1, i),
+                ModBlocks.mediumPot, dyeOreDict[i]));
         }
 
         GameRegistry.addRecipe(new ItemStack(ModBlocks.potteryTable), "x", "y",
