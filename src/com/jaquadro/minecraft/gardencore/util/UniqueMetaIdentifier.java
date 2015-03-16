@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.util;
 import com.google.common.base.Objects;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.oredict.OreDictionary;
 
 public final class UniqueMetaIdentifier
@@ -44,6 +45,8 @@ public final class UniqueMetaIdentifier
 
         if (parts1.length >= 2)
             this.meta = Integer.parseInt(parts1[1]);
+        else if (parts2.length > 2)
+            this.meta = Integer.parseInt(parts2[parts2.length - 1]);
         else
             this.meta = OreDictionary.WILDCARD_VALUE;
     }
@@ -72,6 +75,10 @@ public final class UniqueMetaIdentifier
 
     public Block getBlock () {
         return GameRegistry.findBlock(modId, name);
+    }
+
+    public Item getItem () {
+        return GameRegistry.findItem(modId, name);
     }
 
     @Override

@@ -21,6 +21,7 @@ public class ModBlocks
     public static BlockFlowerLeaves flowerLeaves;
     public static BlockGTSapling sapling;
     public static BlockIvy ivy;
+    public static BlockStrangePlant strangePlant;
 
     public void init () {
         thinLog = new BlockThinLog(makeName("thinLog"));
@@ -28,12 +29,14 @@ public class ModBlocks
         flowerLeaves = new BlockFlowerLeaves(makeName("flowerLeaves"));
         sapling = new BlockGTSapling(makeName("sapling"));
         ivy = new BlockIvy(makeName("ivy"));
+        strangePlant = new BlockStrangePlant(makeName("strangePlant"));
 
         GameRegistry.registerBlock(sapling, ItemGTSapling.class, "sapling");
         GameRegistry.registerBlock(thinLog, ItemThinLog.class, "thin_log");
         GameRegistry.registerBlock(thinLogFence, ItemThinLogFence.class, "thin_log_fence");
         //GameRegistry.registerBlock(flowerLeaves, "flower_leaves");
         GameRegistry.registerBlock(ivy, ItemIvy.class, "ivy");
+        GameRegistry.registerBlock(strangePlant, "strange_plant");
 
         GameRegistry.registerTileEntity(TileEntityWoodProxy.class, ModBlocks.getQualifiedName(thinLog));
     }

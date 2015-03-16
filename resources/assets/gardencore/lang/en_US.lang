@@ -134,6 +134,8 @@ gardenstuff.lanternSource.firefly=Fireflies
 # Garden Trees
 
 tile.gardentrees.ivy.name=Devil's Ivy
+tile.gardentrees.strangePlant.name=Strange Plant
+tile.gardentrees.strangePlant.description=What is contained within its strange pods?
 tile.gardentrees.sapling.pine.name=Pine Sapling
 tile.gardentrees.sapling.swamp.name=Swamp Sapling
 tile.gardentrees.sapling.tallbirch.name=Tall Birch Sapling

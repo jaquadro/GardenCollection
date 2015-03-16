@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardentrees;
 
+import com.jaquadro.minecraft.gardentrees.config.ConfigManager;
 import com.jaquadro.minecraft.gardentrees.core.ModIntegration;
 import com.jaquadro.minecraft.gardentrees.core.CommonProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
@@ -15,6 +16,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.io.File;
+
 @Mod(modid = GardenTrees.MOD_ID, name = GardenTrees.MOD_NAME, version = GardenTrees.MOD_VERSION, dependencies = "required-after:GardenCore")
 public class GardenTrees
 {
@@ -27,6 +30,8 @@ public class GardenTrees
     public static final ModBlocks blocks = new ModBlocks();
     public static final ModRecipes recipes = new ModRecipes();
 
+    public static ConfigManager config;
+
     @Mod.Instance(MOD_ID)
     public static GardenTrees instance;
 
@@ -35,6 +40,8 @@ public class GardenTrees
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) {
+        config = new ConfigManager(new File(event.getModConfigurationDirectory(), "GardenStuff/" + MOD_ID + ".cfg"));
+
         blocks.init();
     }
 
@@ -51,6 +58,7 @@ public class GardenTrees
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
+        config.postInit();
         integration.postInit();
         recipes.init();
     }
