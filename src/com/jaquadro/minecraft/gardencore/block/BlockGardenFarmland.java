@@ -7,6 +7,7 @@ import com.jaquadro.minecraft.gardencore.block.support.BasicSlotProfile;
 import com.jaquadro.minecraft.gardencore.block.support.SlotShare0Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGardenFarmland;
+import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,6 +17,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
@@ -82,6 +84,11 @@ public class BlockGardenFarmland extends BlockGarden
         Block block = world.getBlock(x, y + 1, z);
         if (block instanceof IPlantable || block instanceof IGrowable)
             block.updateTick(world, x, y + 1, z, random);
+    }
+
+    @Override
+    public Item getItemDropped (int meta, Random rand, int fortune) {
+        return Item.getItemFromBlock(ModBlocks.gardenSoil);
     }
 
     @Override
