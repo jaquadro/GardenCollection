@@ -15,13 +15,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
 
 import java.util.Map;
 
 public class ModRecipes
 {
     // TODO: "Use Witchery Recipes" (Mutandis)
-    
+
     private static final Item[] axeList = new Item[] {
         Items.wooden_axe, Items.stone_axe, Items.iron_axe, Items.golden_axe, Items.diamond_axe
     };
@@ -60,6 +61,10 @@ public class ModRecipes
     }
 
     private void addExtraWoodRecipes () {
+        RecipeSorter.register("GardenTrees:WoodBlock", WoodBlockRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+        RecipeSorter.register("GardenTrees:WoodPost", WoodPostRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+        RecipeSorter.register("GardenTrees:WoodFence", WoodFenceRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+
         for (Map.Entry<UniqueMetaIdentifier, Block> entry : WoodRegistry.instance().registeredTypes()) {
             UniqueMetaIdentifier id = entry.getKey();
 
