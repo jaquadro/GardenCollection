@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardentrees.core.handlers;
 
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
 import com.jaquadro.minecraft.gardencore.api.event.EnrichedSoilEvent;
+import com.jaquadro.minecraft.gardentrees.GardenTrees;
 import com.jaquadro.minecraft.gardentrees.core.recipe.WoodPostRecipe;
 import com.jaquadro.minecraft.gardentrees.item.ItemThinLog;
 import cpw.mods.fml.common.eventhandler.Event;
@@ -17,6 +18,9 @@ public class ForgeEventHandler
 {
     @SubscribeEvent
     public void applyEnrichedSoil (EnrichedSoilEvent event) {
+        if (!GardenTrees.config.compostGrowsOrnamentalTrees)
+            return;
+
         Item sapling = Item.getItemFromBlock(event.block);
         int saplingMeta = event.world.getBlockMetadata(event.x, event.y, event.z);
         if (sapling == null)

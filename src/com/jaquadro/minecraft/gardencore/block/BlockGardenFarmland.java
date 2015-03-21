@@ -43,7 +43,9 @@ public class BlockGardenFarmland extends BlockGarden
         setHardness(0.5f);
         setStepSound(Block.soundTypeGrass);
         setBlockBounds(0, 0, 0, 1, .9375f, 1);
-        setTickRandomly(true);
+
+        if (GardenCore.config.enableTilledSoilGrowthBonus)
+            setTickRandomly(true);
 
         connectionProfile = new BasicConnectionProfile();
         slotShareProfile = new SlotShare0Profile();

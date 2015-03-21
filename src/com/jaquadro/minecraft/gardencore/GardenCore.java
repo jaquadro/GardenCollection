@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.gardencore.core.*;
 import com.jaquadro.minecraft.gardencore.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.GuiHandler;
 import com.jaquadro.minecraft.gardencore.core.handlers.VanillaBonemealHandler;
+import com.jaquadro.minecraft.gardencore.config.ConfigManager;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -12,14 +13,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraftforge.common.MinecraftForge;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-import java.util.regex.Pattern;
+import java.io.File;
 
 @Mod(modid = GardenCore.MOD_ID, name = GardenCore.MOD_NAME, version = GardenCore.MOD_VERSION)
 public class GardenCore
@@ -34,6 +28,8 @@ public class GardenCore
     public static final ModItems items = new ModItems();
     public static final ModRecipes recipes = new ModRecipes();
 
+    public static ConfigManager config;
+
     @Mod.Instance(MOD_ID)
     public static GardenCore instance;
 
@@ -42,6 +38,8 @@ public class GardenCore
 
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) {
+        config = new ConfigManager(new File(event.getModConfigurationDirectory(), "GardenStuff/" + MOD_ID + ".cfg"));
+
         blocks.init();
         items.init();
     }

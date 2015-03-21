@@ -23,6 +23,8 @@ public class ConfigManager
     public int strangePlantDropMin;
     public int strangePlantDropMax;
 
+    public boolean compostGrowsOrnamentalTrees;
+
     public ConfigManager (File file) {
         config = new Configuration(file);
 
@@ -40,6 +42,10 @@ public class ConfigManager
         Property propStrangePlantDropMax = config.get(Configuration.CATEGORY_GENERAL, "strangePlantDropMax", 1);
         propStrangePlantDropMax.comment = "The maximum number of items dropped when breaking a strange plant.";
         strangePlantDropMax = propStrangePlantDropMax.getInt();
+
+        Property propCompostGrowsOrnamentalTrees = config.get(Configuration.CATEGORY_GENERAL, "compostGrowsOrnamentalTrees", true);
+        propCompostGrowsOrnamentalTrees.comment = "Using compost on saplings will grow ornamental (miniature) trees instead of normal trees.";
+        compostGrowsOrnamentalTrees = propCompostGrowsOrnamentalTrees.getBoolean();
 
         config.save();
     }

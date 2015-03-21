@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.item;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.api.SaplingRegistry;
 import com.jaquadro.minecraft.gardencore.api.event.EnrichedSoilEvent;
+import com.jaquadro.minecraft.gardencore.config.ConfigManager;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import cpw.mods.fml.common.eventhandler.Event;
 import net.minecraft.block.Block;
@@ -31,10 +32,14 @@ public class ItemCompost extends Item
     }
 
     public boolean applyEnrichment (ItemStack itemStack, World world, int x, int y, int z, EntityPlayer player) {
+        ConfigManager config = GardenCore.config;
         Block block = world.getBlock(x, y, z);
 
         EnrichedSoilEvent event = new EnrichedSoilEvent(player, world, block, x, y, z);
         if (MinecraftForge.EVENT_BUS.post(event))
+            return false;
+
+        if (!config.enableCompostBonemeal)
             return false;
 
         if (event.getResult() == Event.Result.ALLOW) {
@@ -43,7 +48,8 @@ public class ItemCompost extends Item
             return true;
         }
 
-        if (world.rand.nextInt(2) == 0)
+        int prob = (config.compostBonemealStrength == 0) ? 0 : (int)(1 / config.compostBonemealStrength);
+        if (world.rand.nextInt(prob) == 0)
             return ItemDye.applyBonemeal(itemStack, world, x, y, z, player);
         else
             --itemStack.stackSize;
