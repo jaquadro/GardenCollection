@@ -101,19 +101,19 @@ public abstract class BlockLattice extends BlockContainer implements IChainSingl
         Block blockXNeg = world.getBlock(x - 1, y, z);
         Block blockXPos = world.getBlock(x + 1, y, z);
 
-        boolean hardYNeg = isNeighborHardConnection(world, x, y, z, blockYNeg, ForgeDirection.DOWN);
-        boolean hardYPos = isNeighborHardConnection(world, x, y, z, blockYPos, ForgeDirection.UP);
-        boolean hardZNeg = isNeighborHardConnection(world, x, y, z, blockZNeg, ForgeDirection.NORTH);
-        boolean hardZPos = isNeighborHardConnection(world, x, y, z, blockZPos, ForgeDirection.SOUTH);
-        boolean hardXNeg = isNeighborHardConnection(world, x, y, z, blockXNeg, ForgeDirection.WEST);
-        boolean hardXPos = isNeighborHardConnection(world, x, y, z, blockXPos, ForgeDirection.EAST);
+        boolean hardYNeg = isNeighborHardConnection(world, x, y - 1, z, blockYNeg, ForgeDirection.DOWN);
+        boolean hardYPos = isNeighborHardConnection(world, x, y + 1, z, blockYPos, ForgeDirection.UP);
+        boolean hardZNeg = isNeighborHardConnection(world, x, y, z - 1, blockZNeg, ForgeDirection.NORTH);
+        boolean hardZPos = isNeighborHardConnection(world, x, y, z + 1, blockZPos, ForgeDirection.SOUTH);
+        boolean hardXNeg = isNeighborHardConnection(world, x - 1, y, z, blockXNeg, ForgeDirection.WEST);
+        boolean hardXPos = isNeighborHardConnection(world, x + 1, y, z, blockXPos, ForgeDirection.EAST);
 
-        boolean extYNeg = isNeighborExtConnection(world, x, y, z, blockYNeg, ForgeDirection.DOWN);
-        boolean extYPos = isNeighborExtConnection(world, x, y, z, blockYPos, ForgeDirection.UP);
-        boolean extZNeg = isNeighborExtConnection(world, x, y, z, blockZNeg, ForgeDirection.NORTH);
-        boolean extZPos = isNeighborExtConnection(world, x, y, z, blockZPos, ForgeDirection.SOUTH);
-        boolean extXNeg = isNeighborExtConnection(world, x, y, z, blockXNeg, ForgeDirection.WEST);
-        boolean extXPos = isNeighborExtConnection(world, x, y, z, blockXPos, ForgeDirection.EAST);
+        boolean extYNeg = isNeighborExtConnection(world, x, y - 1, z, blockYNeg, ForgeDirection.DOWN);
+        boolean extYPos = isNeighborExtConnection(world, x, y + 1, z, blockYPos, ForgeDirection.UP);
+        boolean extZNeg = isNeighborExtConnection(world, x, y, z - 1, blockZNeg, ForgeDirection.NORTH);
+        boolean extZPos = isNeighborExtConnection(world, x, y, z + 1, blockZPos, ForgeDirection.SOUTH);
+        boolean extXNeg = isNeighborExtConnection(world, x - 1, y, z, blockXNeg, ForgeDirection.WEST);
+        boolean extXPos = isNeighborExtConnection(world, x + 1, y, z, blockXPos, ForgeDirection.EAST);
 
         return (hardYNeg ? 1 : 0) | (hardYPos ? 2 : 0) | (hardZNeg ? 4 : 0) | (hardZPos ? 8 : 0) | (hardXNeg ? 16 : 0) | (hardXPos ? 32 : 0)
             | (extYNeg ? 64 : 0) | (extYPos ? 128 : 0) | (extZNeg ? 256 : 0) | (extZPos ? 512 : 0) | (extXNeg ? 1024 : 0) | (extXPos ? 2048 : 0);
