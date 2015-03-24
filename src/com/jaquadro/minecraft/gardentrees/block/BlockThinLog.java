@@ -214,10 +214,10 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
         Block blockXNeg = world.getBlock(x - 1, y, z);
         Block blockXPos = world.getBlock(x + 1, y, z);
 
-        boolean hardZNeg = isNeighborHardConnection(world, x, y, z, blockZNeg, ForgeDirection.NORTH) || blockZNeg instanceof BlockTorch;
-        boolean hardZPos = isNeighborHardConnection(world, x, y, z, blockZPos, ForgeDirection.SOUTH) || blockZPos instanceof BlockTorch;
-        boolean hardXNeg = isNeighborHardConnection(world, x, y, z, blockXNeg, ForgeDirection.WEST) || blockXNeg instanceof BlockTorch;
-        boolean hardXPos = isNeighborHardConnection(world, x, y, z, blockXPos, ForgeDirection.EAST) || blockXPos instanceof BlockTorch;
+        boolean hardZNeg = isNeighborHardConnection(world, x, y, z - 1, blockZNeg, ForgeDirection.NORTH) || blockZNeg instanceof BlockTorch;
+        boolean hardZPos = isNeighborHardConnection(world, x, y, z + 1, blockZPos, ForgeDirection.SOUTH) || blockZPos instanceof BlockTorch;
+        boolean hardXNeg = isNeighborHardConnection(world, x - 1, y, z, blockXNeg, ForgeDirection.WEST) || blockXNeg instanceof BlockTorch;
+        boolean hardXPos = isNeighborHardConnection(world, x + 1, y, z, blockXPos, ForgeDirection.EAST) || blockXPos instanceof BlockTorch;
 
         boolean hardConnection = (flagsY & 4) != 0;
         boolean hardConnectionZNeg = hardConnection && (flagsZNeg & 4) != 0;
@@ -268,11 +268,11 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
             return 0;
 
         Block blockYNeg = world.getBlock(x, y - 1, z);
-        boolean hardYNeg = isNeighborHardConnectionY(world, x, y, z, blockYNeg, ForgeDirection.DOWN);
+        boolean hardYNeg = isNeighborHardConnectionY(world, x, y - 1, z, blockYNeg, ForgeDirection.DOWN);
         boolean connectYNeg = hardYNeg || blockYNeg == this;
 
         Block blockYPos = world.getBlock(x, y + 1, z);
-        boolean hardYPos = isNeighborHardConnectionY(world, x, y, z, blockYPos, ForgeDirection.UP);
+        boolean hardYPos = isNeighborHardConnectionY(world, x, y + 1, z, blockYPos, ForgeDirection.UP);
         boolean connectYPos = hardYPos || blockYPos == this|| blockYPos instanceof BlockTorch;
 
         return (connectYNeg ? 1 : 0) | (connectYPos ? 2 : 0) | (hardYNeg ? 4 : 0) | (hardYPos ? 8 : 0);
