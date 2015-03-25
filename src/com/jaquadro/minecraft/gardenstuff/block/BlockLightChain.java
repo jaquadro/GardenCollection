@@ -157,7 +157,7 @@ public class BlockLightChain extends Block implements IPlantProxy
             if (attachPoint != null)
                 attachPoints = new Vec3[] { attachPoint };
         }
-        else if (bottomBlock.isSideSolid(world, x, y, z, ForgeDirection.UP))
+        else if (bottomBlock.renderAsNormalBlock() && bottomBlock.getMaterial() != Material.air)
             attachPoints = defaultAttachPoints;
 
         return attachPoints;
