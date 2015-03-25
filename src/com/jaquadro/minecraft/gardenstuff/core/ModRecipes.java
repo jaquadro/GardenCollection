@@ -36,14 +36,14 @@ public class ModRecipes
         ItemStack wroughtIronIngot = new ItemStack(ModItems.wroughtIronIngot);
         ItemStack wroughtIronNugget = new ItemStack(ModItems.wroughtIronNugget);
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 1, 0), "xx", "xx", "xx", 'x', linkIron);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 1, 1), "xx", "xx", "xx", 'x', linkGold);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 1, 4), "xx", "xx", "xx", 'x', linkWroughtIron);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 4, 0), "xx", "xx", "xx", 'x', linkIron);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 4, 1), "xx", "xx", "xx", 'x', linkGold);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 4, 4), "xx", "xx", "xx", 'x', linkWroughtIron);
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 8, 5), "xxx", "xyx", "xxx", 'x', heavyChainIron, 'y', vine);
 
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 1, 0), "x", "x", "x", 'x', linkIron);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 1, 1), "x", "x", "x", 'x', linkGold);
-        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 1, 4), "x", "x", "x", 'x', linkWroughtIron);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 2, 0), "x", "x", "x", 'x', linkIron);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 2, 1), "x", "x", "x", 'x', linkGold);
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 2, 4), "x", "x", "x", 'x', linkWroughtIron);
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.lightChain, 8, 5), "xxx", "xyx", "xxx", 'x', lightChainIron, 'y', vine);
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.latticeMetal, 16, 0), " x ", "xxx", " x ", 'x', "ingotIron"));
