@@ -10,6 +10,7 @@ public class ModIntegration
     }
 
     public void postInit () {
+        //NEIIntegration.init();
         BiomesOPlentyIntegration.init();
         ExtraBiomesXLIntegration.init();
         NaturaIntegration.init();

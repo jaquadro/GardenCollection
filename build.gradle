@@ -17,6 +17,13 @@ buildscript {
     }
 }
 
+repositories {
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven/"
+    }
+}
+
 apply plugin: 'forge'
 
 version = "1.7.10-1.5.4"
@@ -46,6 +53,13 @@ sourceSets.api {
 }
 
 dependencies {
+    // http://files.minecraftforge.net/CodeChickenLib/
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
+
+    // http://chickenbones.net/maven
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev"
+
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
