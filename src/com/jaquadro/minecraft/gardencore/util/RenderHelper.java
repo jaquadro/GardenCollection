@@ -404,12 +404,12 @@ public class RenderHelper
         double vMax = icon.getInterpolatedV(16 - renderer.renderMinY * 16.0D);
 
         double d7 = 0.45D * (double)scale;
-        double xMin = x + 0.5D - d7;
-        double xMax = x + 0.5D + d7;
+        double xMin = x + .5 - (.5 - renderer.renderMinX) * 0.9;
+        double xMax = x + .5 - (.5 - renderer.renderMaxX) * 0.9;
         double yMin = y + renderer.renderMinY * scale;
         double yMax = y + renderer.renderMaxY * scale;
-        double zMin = z + 0.5D - d7;
-        double zMax = z + 0.5D + d7;
+        double zMin = z + .5 - (.5 - renderer.renderMinZ) * 0.9;
+        double zMax = z + .5 - (.5 - renderer.renderMaxZ) * 0.9;
 
         tessellator.addVertexWithUV(xMin, yMax, zMin, uMin, vMin);
         tessellator.addVertexWithUV(xMin, yMin, zMin, uMin, vMax);

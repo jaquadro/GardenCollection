@@ -5,13 +5,14 @@ import com.jaquadro.minecraft.gardencore.api.IPlantRenderer;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 public class GroundCoverPlantRenderer implements IPlantRenderer
 {
     @Override
-    public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height) {
+    public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height, AxisAlignedBB[] bounds) {
         IPlantMetaResolver resolver = PlantRegistry.instance().getPlantMetaResolver(block, meta);
         if (resolver != null)
             meta = resolver.getPlantSectionMeta(block, meta, height);

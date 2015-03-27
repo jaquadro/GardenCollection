@@ -36,6 +36,9 @@ public class TwilightForestIntegration
             plantReg.registerPlantInfo(MOD_ID, "tile.TFPlant", i, new SimplePlantInfo(PlantType.GROUND, PlantSize.LARGE));
 
         plantReg.registerPlantInfo(MOD_ID, "tile.TFSapling", new SimplePlantInfo(PlantType.GROUND, PlantSize.MEDIUM));
+
+        for (int i : new int[] { 8, 9, 10, 11 })
+            plantReg.registerPlantRenderer(MOD_ID, "tile.TFPlant", i, PlantRegistry.CROSSED_SQUARES_RENDERER);
     }
 
     private static void initWood () {

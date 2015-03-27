@@ -32,6 +32,12 @@ public abstract class BlockMediumPot extends BlockGardenContainer implements ICh
 {
     private class LocalSlotProfile extends Slot2Profile
     {
+        private AxisAlignedBB[] mainClippingBounds = new AxisAlignedBB[] {
+            AxisAlignedBB.getBoundingBox(0.1875, 0, 0.1875, 1 - 0.1875, 0.0625, 1 - 0.1875),
+            AxisAlignedBB.getBoundingBox(0.125, 0.0625, 0.125, 1 - 0.125, 0.125, 1 - 0.125),
+            AxisAlignedBB.getBoundingBox(0, 0.125, 0, 1, 1, 1),
+        };
+
         public LocalSlotProfile (Slot[] slots) {
             super(slots);
         }
@@ -39,6 +45,11 @@ public abstract class BlockMediumPot extends BlockGardenContainer implements ICh
         @Override
         public float getPlantOffsetY (IBlockAccess blockAccess, int x, int y, int z, int slot) {
             return -.0625f * 5;
+        }
+
+        @Override
+        public AxisAlignedBB[] getClippingBounds (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+            return mainClippingBounds;
         }
     }
 
@@ -54,7 +65,7 @@ public abstract class BlockMediumPot extends BlockGardenContainer implements ICh
         slotShareProfile = new SlotShare0Profile();
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND };
-        PlantSize[] allSize = new PlantSize[] { PlantSize.MEDIUM, PlantSize.SMALL };
+        PlantSize[] allSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(Slot2Profile.SLOT_CENTER, commonType, allSize),

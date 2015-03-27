@@ -163,12 +163,4 @@ public class PlantMegaPackIntegration
             return 1;
         }
     }
-
-    public static class PlantRenderer implements IPlantRenderer {
-
-        @Override
-        public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height) {
-
-        }
-    }
 }

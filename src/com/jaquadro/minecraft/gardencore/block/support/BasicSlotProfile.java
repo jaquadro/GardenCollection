@@ -6,6 +6,7 @@ import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class BasicSlotProfile implements ISlotProfile
                 validSizeClasses.add(sizeClasses[i]);
         }
     }
+
+    private static AxisAlignedBB[] defaultClippingBounds = new AxisAlignedBB[] { AxisAlignedBB.getBoundingBox(0, 0, 0, 1, 1, 1) };
 
     protected Slot[] slots;
     protected int[] slotIndexes;
@@ -79,6 +82,11 @@ public class BasicSlotProfile implements ISlotProfile
     @Override
     public Object openPlantGUI (InventoryPlayer playerInventory, TileEntity gardenTile, boolean client) {
         return null;
+    }
+
+    @Override
+    public AxisAlignedBB[] getClippingBounds (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+        return defaultClippingBounds;
     }
 
     /*@Override

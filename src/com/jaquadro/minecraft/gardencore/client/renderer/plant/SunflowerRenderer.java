@@ -6,6 +6,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
@@ -14,11 +15,11 @@ public class SunflowerRenderer implements IPlantRenderer
     private DoublePlantRenderer plantRender = new DoublePlantRenderer();
 
     @Override
-    public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height) {
+    public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height, AxisAlignedBB[] bounds) {
         if (!(block instanceof BlockDoublePlant))
             return;
 
-        plantRender.render(world, x, y, z, renderer, block, meta, height);
+        plantRender.render(world, x, y, z, renderer, block, meta, height, bounds);
         if (height != 2)
             return;
 

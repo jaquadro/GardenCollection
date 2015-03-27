@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.api.block.garden;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 
 /**
@@ -81,6 +82,8 @@ public interface ISlotProfile
      * @return An object for the opened GUI, or null if not GUI was opened.
      */
     public Object openPlantGUI (InventoryPlayer playerInventory, TileEntity gardenTile, boolean client);
+
+    public AxisAlignedBB[] getClippingBounds (IBlockAccess blockAccess, int x, int y, int z, int slot);
 
     /**
      * Gets the next available (empty) slot in a garden block.  May be used for automatically populating slots in

@@ -13,6 +13,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.IBlockAccess;
@@ -64,6 +65,8 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
             float offsetY = block.getPlantOffsetY(world, x, y, z, slot);
             float offsetZ = block.getPlantOffsetZ(world, x, y, z, slot);
 
+            AxisAlignedBB[] clippingBounds = garden.getSlotProfile().getClippingBounds(world, x, y, z, slot);
+
             int color = subBlock.colorMultiplier(world, x, y, z);
             if (color == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))
                 color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
@@ -95,7 +98,7 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
                         shouldRender = true;
 
                     if (shouldRender)
-                        plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, section);
+                        plantRenderer.render(world, x, y, z, renderer, subBlock, subBlockData, section, clippingBounds);
                 }
                 else
                     renderer.renderBlockByRenderType(subBlock, x, y, z);

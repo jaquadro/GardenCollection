@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
@@ -230,8 +231,8 @@ public class BiomesOPlentyIntegration
         private CrossedSquaresPlantRenderer crossRender = new CrossedSquaresPlantRenderer();
 
         @Override
-        public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height) {
-            crossRender.render(world, x, y, z, renderer, block, meta, height);
+        public void render (IBlockAccess world, int x, int y, int z, RenderBlocks renderer, Block block, int meta, int height, AxisAlignedBB[] bounds) {
+            crossRender.render(world, x, y, z, renderer, block, meta, height, bounds);
 
             if (meta != 3 || height > 1)
                 return;
