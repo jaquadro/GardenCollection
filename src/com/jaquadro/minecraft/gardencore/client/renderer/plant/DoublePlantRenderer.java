@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencore.client.renderer.plant;
 import com.jaquadro.minecraft.gardencore.api.IPlantMetaResolver;
 import com.jaquadro.minecraft.gardencore.api.IPlantRenderer;
 import com.jaquadro.minecraft.gardencore.api.PlantRegistry;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -29,6 +30,22 @@ public class DoublePlantRenderer implements IPlantRenderer
         int baseMeta = BlockDoublePlant.func_149890_d(meta);
 
         IIcon iicon = doublePlant.func_149888_a(isTopHalf, baseMeta);
-        renderer.drawCrossedSquares(iicon, x, y, z, 1.0F);
+
+        if (height == 1) {
+            for (AxisAlignedBB bound : bounds) {
+                renderer.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
+                RenderHelper.instance.drawCrossedSquares(renderer, iicon, x, y, z, 1);
+            }
+        }
+        else {
+            AxisAlignedBB bound = bounds[0];
+            for (AxisAlignedBB slice : bounds) {
+                if (slice.maxY > bound.maxY)
+                    bound = slice;
+            }
+
+            renderer.setRenderBounds(bound.minX, 0, bound.minZ, bound.maxX, 1, bound.maxZ);
+            RenderHelper.instance.drawCrossedSquares(renderer, iicon, x, y, z, 1);
+        }
     }
 }

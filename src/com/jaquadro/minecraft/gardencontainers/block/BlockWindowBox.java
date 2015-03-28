@@ -41,6 +41,12 @@ public class BlockWindowBox extends BlockGarden
 
     private class LocalSlotProfile extends Slot5Profile
     {
+        private AxisAlignedBB[] mainClippingBounds = new AxisAlignedBB[] {
+            AxisAlignedBB.getBoundingBox(0.3125, 0, 0.3125, 1 - 0.3125, 0.0625, 1 - 0.3125),
+            AxisAlignedBB.getBoundingBox(0.25, 0.0625, 0.25, 1 - 0.25, 0.125, 1 - 0.25),
+            AxisAlignedBB.getBoundingBox(0.1875, 0.125, 0.1875, 1 - 0.1875, 1, 1 - 0.1875),
+        };
+
         public LocalSlotProfile (Slot[] slots) {
             super(slots);
         }
@@ -52,6 +58,11 @@ public class BlockWindowBox extends BlockGarden
                 return -.0625f;
             else
                 return -.5f - .0625f;
+        }
+
+        @Override
+        public AxisAlignedBB[] getClippingBounds (IBlockAccess blockAccess, int x, int y, int z, int slot) {
+            return mainClippingBounds;
         }
     }
 
@@ -67,7 +78,7 @@ public class BlockWindowBox extends BlockGarden
         slotShareProfile = new SlotShare0Profile();
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND };
-        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
+        PlantSize[] smallSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
         slotProfile = new LocalSlotProfile(new BasicSlotProfile.Slot[]{

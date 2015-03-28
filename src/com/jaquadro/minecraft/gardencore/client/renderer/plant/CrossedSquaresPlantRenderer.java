@@ -30,7 +30,5 @@ public class CrossedSquaresPlantRenderer implements IPlantRenderer
             renderer.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
             RenderHelper.instance.drawCrossedSquares(renderer, iicon, x, y, z, 1);
         }
-
-        //renderer.drawCrossedSquares(iicon, x, y, z, 1.0F);
     }
 }
