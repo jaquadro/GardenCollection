@@ -300,11 +300,18 @@ public class BlockIvy extends Block implements IShearable
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (int side, int meta) {
         return textures[0];
     }
 
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFull () {
+        return textures[7];
+    }
+
     @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side) {
         boolean nTop = blockAccess.getBlock(x, y + 1, z) == this;
         boolean nLeft = false;
@@ -369,6 +376,7 @@ public class BlockIvy extends Block implements IShearable
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public void registerBlockIcons (IIconRegister register) {
         textures = new IIcon[8];
         for (int i = 0; i < textures.length; i++)
