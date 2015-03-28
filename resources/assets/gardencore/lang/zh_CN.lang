@@ -1,5 +1,5 @@
-itemGroup.gardenCore=Garden Stuff
-itemGroup.gardenTrees=Garden Stuff (Trees)
+itemGroup.gardenCore=园林组合
+itemGroup.gardenTrees=园林组合|树木
 
 # Garden Core
 
@@ -11,10 +11,12 @@ item.gardencore.soilTestKit.name=土壤检测试剂
 item.gardencore.soilTestKitUsed.name=土壤检测试剂 <已使用>
 item.gardencore.compostPile.name=富硒土壤
 
+tile.gardencore.smallFire.name=Small Fire
 tile.gardencore.gardenSoil.name=园艺土
 tile.gardencore.potteryTable.name=陶器工作桌
 tile.gardencore.compostBin.name=堆肥桶
 tile.gardencore.gardenFarmland.name=园艺耕植土
+tile.gardencore.gardenProxy.name=Garden Proxy
 
 gardencore.soilkit.rainfall=湿度
 gardencore.soilkit.temperature=温度
@@ -24,6 +26,8 @@ gardencore.soilkit.temperature=温度
 container.gardencontainers.potteryTable=陶器工作桌
 
 item.gardencontainers.potteryPattern.name=粘土图案印章
+item.gardencontainers.potteryPatternDirty.name=粘土图案印章
+item.gardencontainers.potteryPatternDirty.description=这枚印章被泥土弄糊了.\n快放进炼药锅里洗洗吧.
 
 tile.gardencontainers.largePot.default.name=大型花桶
 tile.gardencontainers.largePot.raw.name=大型花桶陶坯
@@ -79,8 +83,59 @@ tile.gardencontainers.potteryTable.name=陶器工作桌
 
 # Garden Stuff
 
+item.gardenstuff.chainLink.name=链节
+item.gardenstuff.chainLink.iron.name=铁链节
+item.gardenstuff.chainLink.gold.name=金链节
+item.gardenstuff.chainLink.wrought_iron=精炼铁链节
+item.gardenstuff.ironNugget.name=铁粒
+item.gardenstuff.wroughtIronIngot.name=精炼铁锭
+item.gardenstuff.wroughtIronNugget.name=精炼铁粒
+
+tile.gardenstuff.heavyChain.name=粗吊链
+tile.gardenstuff.heavyChain.iron.name=粗铁链
+tile.gardenstuff.heavyChain.gold.name=粗金吊链
+tile.gardenstuff.heavyChain.rust.name=粗生锈吊链
+tile.gardenstuff.heavyChain.wrought_iron.name=粗精炼铁链
+tile.gardenstuff.heavyChain.moss.name=粗青苔吊链
+tile.gardenstuff.lightChain.name=细吊链
+tile.gardenstuff.lightChain.iron.name=细铁链
+tile.gardenstuff.lightChain.gold.name=细金吊链
+tile.gardenstuff.lightChain.rust.name=细生锈吊链
+tile.gardenstuff.lightChain.wrought_iron.name=细精炼铁链
+tile.gardenstuff.lightChain.moss.name=细青苔吊链
+tile.gardenstuff.latticeMetal.name=金属格架
+tile.gardenstuff.latticeMetal.iron.name=铁格架
+tile.gardenstuff.latticeMetal.rust.name=生锈格架
+tile.gardenstuff.latticeMetal.wrought_iron.name=精炼铁格架
+tile.gardenstuff.latticeMetal.moss.name=青苔格架
+tile.gardenstuff.latticeWood.name=木格架
+tile.gardenstuff.latticeWood.oak.name=橡木格架
+tile.gardenstuff.latticeWood.spruce.name=云杉木格架
+tile.gardenstuff.latticeWood.birch.name=白桦木格架
+tile.gardenstuff.latticeWood.jungle.name=丛林木格架
+tile.gardenstuff.latticeWood.acacia.name=金合欢格架
+tile.gardenstuff.latticeWood.big_oak.name=深色橡木格架
+tile.gardenstuff.lantern.name=庭院灯笼
+tile.gardenstuff.metalBlock.name=精炼铁块
+tile.gardenstuff.fence.name=精炼铁栅栏
+tile.gardenstuff.fence.0.name=精炼铁栅栏
+tile.gardenstuff.fence.1.name=精炼铁栅栏
+tile.gardenstuff.fence.2.name=精炼铁栅栏
+tile.gardenstuff.fence.3.name=精炼铁栅栏
+
+gardenstuff.lanternSource=灯罩内
+gardenstuff.lanternSource.none=无
+gardenstuff.lanternSource.torch=火把
+gardenstuff.lanternSource.redstoneTorch=红石火把
+gardenstuff.lanternSource.glowstone=萤石
+gardenstuff.lanternSource.candle=蜡烛
+gardenstuff.lanternSource.firefly=萤火虫
+
 # Garden Trees
 
+tile.gardentrees.ivy.name=魔鬼藤
+tile.gardentrees.strangePlant.name=怪异的植物
+tile.gardentrees.strangePlant.description=它那奇怪的豆荚中藏着什么?
 tile.gardentrees.sapling.pine.name=松树树苗
 tile.gardentrees.sapling.swamp.name=沼泽树树苗
 tile.gardentrees.sapling.tallbirch.name=高白桦树树苗
