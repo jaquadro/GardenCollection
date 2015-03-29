@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block;
 
 import com.jaquadro.minecraft.gardencore.GardenCore;
+import com.jaquadro.minecraft.gardencore.api.block.garden.IConnectionProfile;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -37,7 +39,6 @@ public class BlockGardenSoil extends BlockGarden
         setStepSound(Block.soundTypeGrass);
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC, PlantType.AQUATIC_EMERGENT};
-        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
         PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
@@ -46,13 +47,13 @@ public class BlockGardenSoil extends BlockGarden
             Slot14Profile.SLOT_TOP_RIGHT, Slot14Profile.SLOT_RIGHT, Slot14Profile.SLOT_BOTTOM_RIGHT,
             Slot14Profile.SLOT_BOTTOM, Slot14Profile.SLOT_BOTTOM_LEFT, Slot14Profile.SLOT_LEFT);
 
-        slotProfile = new Slot14Profile(new BasicSlotProfile.Slot[]{
+        slotProfile = new Slot14ProfileBounded(this, new BasicSlotProfile.Slot[]{
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_CENTER, commonType, allSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NW, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NE, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SW, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NW, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NE, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SW, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SE, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_LEFT, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_RIGHT, commonType, commonSize),

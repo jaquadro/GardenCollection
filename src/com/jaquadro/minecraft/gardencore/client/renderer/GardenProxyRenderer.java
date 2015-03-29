@@ -65,7 +65,7 @@ public class GardenProxyRenderer implements ISimpleBlockRenderingHandler
             float offsetY = block.getPlantOffsetY(world, x, y, z, slot);
             float offsetZ = block.getPlantOffsetZ(world, x, y, z, slot);
 
-            AxisAlignedBB[] clippingBounds = garden.getSlotProfile().getClippingBounds(world, x, y, z, slot);
+            AxisAlignedBB[] clippingBounds = garden.getSlotProfile().getClippingBounds(world, x, te.yCoord, z, slot);
 
             int color = subBlock.colorMultiplier(world, x, y, z);
             if (color == world.getBiomeGenForCoords(x, z).getBiomeGrassColor(x, y, z))

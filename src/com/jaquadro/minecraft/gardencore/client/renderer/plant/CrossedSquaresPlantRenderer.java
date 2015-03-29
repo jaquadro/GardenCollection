@@ -28,7 +28,7 @@ public class CrossedSquaresPlantRenderer implements IPlantRenderer
 
         for (AxisAlignedBB bound : bounds) {
             renderer.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
-            RenderHelper.instance.drawCrossedSquares(renderer, iicon, x, y, z, 1);
+            RenderHelper.instance.drawCrossedSquaresBounded(renderer, iicon, x, y, z, 1);
         }
     }
 }

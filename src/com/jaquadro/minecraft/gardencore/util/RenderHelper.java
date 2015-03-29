@@ -404,12 +404,12 @@ public class RenderHelper
         double vMax = icon.getInterpolatedV(16 - renderer.renderMinY * 16.0D);
 
         double d7 = 0.45D * (double)scale;
-        double xMin = x + .5 - (.5 - renderer.renderMinX) * 0.9;
-        double xMax = x + .5 - (.5 - renderer.renderMaxX) * 0.9;
+        double xMin = x + 0.5D - d7;
+        double xMax = x + 0.5D + d7;
         double yMin = y + renderer.renderMinY * scale;
         double yMax = y + renderer.renderMaxY * scale;
-        double zMin = z + .5 - (.5 - renderer.renderMinZ) * 0.9;
-        double zMax = z + .5 - (.5 - renderer.renderMaxZ) * 0.9;
+        double zMin = z + 0.5D - d7;
+        double zMax = z + 0.5D + d7;
 
         tessellator.addVertexWithUV(xMin, yMax, zMin, uMin, vMin);
         tessellator.addVertexWithUV(xMin, yMin, zMin, uMin, vMax);
@@ -428,6 +428,63 @@ public class RenderHelper
         tessellator.addVertexWithUV(xMax, yMin, zMin, uMin, vMax);
         tessellator.addVertexWithUV(xMin, yMin, zMax, uMax, vMax);
         tessellator.addVertexWithUV(xMin, yMax, zMax, uMax, vMin);
+    }
+
+    public void drawCrossedSquaresBounded(RenderBlocks renderer, IIcon icon, double x, double y, double z, float scale)
+    {
+        Tessellator tessellator = Tessellator.instance;
+        if (renderer.hasOverrideBlockTexture())
+            icon = renderer.overrideBlockTexture;
+
+        double vMin = icon.getInterpolatedV(16 - renderer.renderMaxY * 16.0D);
+        double vMax = icon.getInterpolatedV(16 - renderer.renderMinY * 16.0D);
+
+        double xzNN = Math.max(renderer.renderMinX, renderer.renderMinZ);
+        double xzPP = Math.min(renderer.renderMaxX, renderer.renderMaxZ);
+
+        double xNN = x + .5 - (.5 - xzNN) * 0.9;
+        double zNN = z + .5 - (.5 - xzNN) * 0.9;
+        double xNP = x + .5 - (.5 - Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ)) * 0.9;
+        double zNP = z + .5 - (.5 - Math.min(1 - renderer.renderMinX, renderer.renderMaxZ)) * 0.9;
+        double xPN = x + .5 - (.5 - Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ)) * 0.9;
+        double zPN = z + .5 - (.5 - Math.max(1 - renderer.renderMaxX, renderer.renderMinZ)) * 0.9;
+        double xPP = x + .5 - (.5 - xzPP) * 0.9;
+        double zPP = z + .5 - (.5 - xzPP) * 0.9;
+
+        double yMin = y + renderer.renderMinY * scale;
+        double yMax = y + renderer.renderMaxY * scale;
+
+        double uNN = icon.getInterpolatedU(xzNN * 16.0D);
+        double uPP = icon.getInterpolatedU(xzPP * 16.0D);
+
+        tessellator.addVertexWithUV(xNN, yMax, zNN, uNN, vMin);
+        tessellator.addVertexWithUV(xNN, yMin, zNN, uNN, vMax);
+        tessellator.addVertexWithUV(xPP, yMin, zPP, uPP, vMax);
+        tessellator.addVertexWithUV(xPP, yMax, zPP, uPP, vMin);
+
+        uNN = icon.getInterpolatedU(16 - xzNN * 16.0D);
+        uPP = icon.getInterpolatedU(16 - xzPP * 16.0D);
+
+        tessellator.addVertexWithUV(xPP, yMax, zPP, uPP, vMin);
+        tessellator.addVertexWithUV(xPP, yMin, zPP, uPP, vMax);
+        tessellator.addVertexWithUV(xNN, yMin, zNN, uNN, vMax);
+        tessellator.addVertexWithUV(xNN, yMax, zNN, uNN, vMin);
+
+        double uNP = icon.getInterpolatedU(Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ) * 16.0D);
+        double uPN = icon.getInterpolatedU(Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ) * 16.0D);
+
+        tessellator.addVertexWithUV(xNP, yMax, zNP, uNP, vMin);
+        tessellator.addVertexWithUV(xNP, yMin, zNP, uNP, vMax);
+        tessellator.addVertexWithUV(xPN, yMin, zPN, uPN, vMax);
+        tessellator.addVertexWithUV(xPN, yMax, zPN, uPN, vMin);
+
+        uNP = icon.getInterpolatedU(16 - Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ) * 16.0D);
+        uPN = icon.getInterpolatedU(16 - Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ) * 16.0D);
+
+        tessellator.addVertexWithUV(xPN, yMax, zPN, uPN, vMin);
+        tessellator.addVertexWithUV(xPN, yMin, zPN, uPN, vMax);
+        tessellator.addVertexWithUV(xNP, yMin, zNP, uNP, vMax);
+        tessellator.addVertexWithUV(xNP, yMax, zNP, uNP, vMin);
     }
 
     private void setupColorMult (int face, RenderBlocks renderer, Block block, float r, float g, float b) {

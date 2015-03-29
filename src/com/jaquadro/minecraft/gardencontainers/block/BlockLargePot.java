@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.config.PatternConfig;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
+import com.jaquadro.minecraft.gardencore.api.block.IGardenBlock;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantItem;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
@@ -39,10 +40,10 @@ import java.util.List;
 
 public abstract class BlockLargePot extends BlockGardenContainer implements IChainAttachable
 {
-    private class LocalSlotProfile extends Slot14Profile
+    private class LocalSlotProfile extends Slot14ProfileBounded
     {
-        public LocalSlotProfile (Slot[] slots) {
-            super(slots);
+        public LocalSlotProfile (IGardenBlock garden, Slot[] slots) {
+            super(garden, slots);
         }
 
         @Override
@@ -78,17 +79,16 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
 
         PlantType[] commonType = new PlantType[] { PlantType.GROUND, PlantType.AQUATIC_COVER, PlantType.AQUATIC_SURFACE};
 
-        PlantSize[] smallSize = new PlantSize[] { PlantSize.SMALL };
         PlantSize[] commonSize = new PlantSize[] { PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
         PlantSize[] allSize = new PlantSize[] { PlantSize.FULL, PlantSize.LARGE, PlantSize.MEDIUM, PlantSize.SMALL };
 
-        slotProfile = new LocalSlotProfile(new LocalSlotProfile.Slot[] {
+        slotProfile = new LocalSlotProfile(this, new LocalSlotProfile.Slot[] {
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_CENTER, commonType, allSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_COVER, new PlantType[] { PlantType.GROUND_COVER}, allSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NW, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NE, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SW, commonType, smallSize),
-            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SE, commonType, smallSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NW, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_NE, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SW, commonType, commonSize),
+            new BasicSlotProfile.Slot(Slot14Profile.SLOT_SE, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_LEFT, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP, commonType, commonSize),
             new BasicSlotProfile.Slot(Slot14Profile.SLOT_TOP_RIGHT, commonType, commonSize),
