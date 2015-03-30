@@ -83,6 +83,8 @@ tile.gardencontainers.potteryTable.name=Pottery Table
 
 # Garden Stuff
 
+container.gardenstuff.bloomeryFurnace=Bloomery Furnace
+
 item.gardenstuff.chainLink.name=Chain Link
 item.gardenstuff.chainLink.iron.name=Iron Chain Link
 item.gardenstuff.chainLink.gold.name=Gold Chain Link
@@ -122,6 +124,7 @@ tile.gardenstuff.fence.0.name=Wrought Iron Fence
 tile.gardenstuff.fence.1.name=Wrought Iron Fence
 tile.gardenstuff.fence.2.name=Wrought Iron Fence
 tile.gardenstuff.fence.3.name=Wrought Iron Fence
+tile.gardenstuff.bloomeryFurnace.name=Bloomery Furnace
 
 gardenstuff.lanternSource=Contents
 gardenstuff.lanternSource.none=Empty

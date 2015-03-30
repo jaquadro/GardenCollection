@@ -1,11 +1,13 @@
 package com.jaquadro.minecraft.gardenstuff;
 
 import com.jaquadro.minecraft.gardenstuff.core.*;
+import com.jaquadro.minecraft.gardenstuff.core.handlers.GuiHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 @Mod(modid = GardenStuff.MOD_ID, name = GardenStuff.MOD_NAME, version = GardenStuff.MOD_VERSION, dependencies = "required-after:GardenCore")
 public class GardenStuff
@@ -35,6 +37,8 @@ public class GardenStuff
     @Mod.EventHandler
     public void init (FMLInitializationEvent event) {
         proxy.registerRenderers();
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
         integration.init();
     }
 

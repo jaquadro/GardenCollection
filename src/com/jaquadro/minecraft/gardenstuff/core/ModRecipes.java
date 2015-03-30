@@ -64,6 +64,9 @@ public class ModRecipes
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fence, 1, 3), "x", 'x', new ItemStack(ModBlocks.fence, 1, 2));
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.fence, 1, 0), "x", 'x', new ItemStack(ModBlocks.fence, 1, 3));
 
+        GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.bloomeryFurnace), "xxx", "xyx", "xxx",
+            'x', Items.brick, 'y', new ItemStack(Blocks.furnace));
+
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.lantern, 4, 0), " x ", "y y", "yxy",
             'x', "ingotWroughtIron", 'y', new ItemStack(ModBlocks.fence, 1, 0)));
         for (int i = 0; i < 16; i++) {
@@ -78,7 +81,5 @@ public class ModRecipes
         for (int i = 0; i < 6; i++) {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.latticeWood, 8, i), " x ", "xxx", " x ", 'x', new ItemStack(Blocks.planks, 1, i));
         }
-
-        GameRegistry.addSmelting(new ItemStack(Items.iron_ingot), wroughtIronIngot, 0);
     }
 }

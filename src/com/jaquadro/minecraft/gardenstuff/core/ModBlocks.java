@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardenstuff.core;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.*;
+import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityBloomeryFurnace;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeMetal;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeWood;
@@ -27,6 +28,7 @@ public class ModBlocks
     public static BlockLantern lantern;
     public static Block metalBlock;
     public static BlockFence fence;
+    public static BlockBloomeryFurnace bloomeryFurnace;
 
     public void init () {
         heavyChain = new BlockHeavyChain(makeName("heavyChain"));
@@ -38,6 +40,7 @@ public class ModBlocks
         lantern = new BlockLantern(makeName("lantern"));
         metalBlock = new BlockCompressed(MapColor.blackColor).setBlockName(makeName("metalBlock")).setCreativeTab(ModCreativeTabs.tabGardenCore).setBlockTextureName(GardenStuff.MOD_ID + ":wrought_iron_block");
         fence = new BlockFence(makeName("fence"));
+        bloomeryFurnace = new BlockBloomeryFurnace(makeName("bloomeryFurnace"));
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -47,11 +50,13 @@ public class ModBlocks
         GameRegistry.registerBlock(lantern, ItemLantern.class, "lantern");
         GameRegistry.registerBlock(metalBlock, "metal_block");
         GameRegistry.registerBlock(fence, ItemFence.class, "fence");
+        GameRegistry.registerBlock(bloomeryFurnace, "bloomery_furnace");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
         GameRegistry.registerTileEntity(TileEntityLatticeWood.class, ModBlocks.getQualifiedName(latticeWood));
         GameRegistry.registerTileEntity(TileEntityLantern.class, ModBlocks.getQualifiedName(lantern));
+        GameRegistry.registerTileEntity(TileEntityBloomeryFurnace.class, ModBlocks.getQualifiedName(bloomeryFurnace));
 
         OreDictionary.registerOre("blockWroughtIron", metalBlock);
     }
