@@ -81,5 +81,7 @@ public class ModRecipes
         for (int i = 0; i < 6; i++) {
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.latticeWood, 8, i), " x ", "xxx", " x ", 'x', new ItemStack(Blocks.planks, 1, i));
         }
+
+        GameRegistry.addSmelting(wroughtIronIngot, new ItemStack(Items.iron_ingot), 0);
     }
 }

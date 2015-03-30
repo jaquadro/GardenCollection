@@ -1,6 +1,5 @@
 package com.jaquadro.minecraft.gardencore.integration;
 
-import codechicken.nei.api.API;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import com.jaquadro.minecraft.gardencore.GardenCore;
 import com.jaquadro.minecraft.gardencore.client.gui.GuiCompostBin;
@@ -21,9 +20,11 @@ public class NEIIntegration
     }
 
     private static void registerNEI () {
-        API.registerRecipeHandler(new CompostBinRecipeHandler());
-        API.registerGuiOverlay(GuiCompostBin.class, "composting");
+        //API.registerRecipeHandler(new CompostBinRecipeHandler());
+        //API.registerGuiOverlay(GuiCompostBin.class, "composting");
     }
+
+
 
     public static class CompostBinRecipeHandler extends TemplateRecipeHandler
     {

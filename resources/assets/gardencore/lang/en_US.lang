@@ -93,6 +93,8 @@ item.gardenstuff.ironNugget.name=Iron Nugget
 item.gardenstuff.wroughtIronIngot.name=Wrought Iron Ingot
 item.gardenstuff.wroughtIronNugget.name=Wrought Iron Nugget
 
+nei.recipe.gardenstuff.bloomeryFurnace=Bloomery Process
+
 tile.gardenstuff.heavyChain.name=Heavy Chain
 tile.gardenstuff.heavyChain.iron.name=Heavy Iron Chain
 tile.gardenstuff.heavyChain.gold.name=Heavy Gold Chain
