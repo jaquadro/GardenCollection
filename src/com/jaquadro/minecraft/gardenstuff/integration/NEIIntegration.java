@@ -1,15 +1,9 @@
 package com.jaquadro.minecraft.gardenstuff.integration;
 
-import codechicken.nei.api.API;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import com.jaquadro.minecraft.gardencore.GardenCore;
-import com.jaquadro.minecraft.gardencore.client.gui.GuiCompostBin;
-import com.jaquadro.minecraft.gardencore.core.ModItems;
-import com.jaquadro.minecraft.gardenstuff.client.gui.GuiBloomeryFurnace;
-import com.jaquadro.minecraft.gardenstuff.integration.nei.BloomeryFurnaceRecipeHandler;
+import com.jaquadro.minecraft.gardenstuff.GardenStuff;
+import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import com.jaquadro.minecraft.gardenstuff.integration.nei.NEIHelper;
 import cpw.mods.fml.common.Loader;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
 
 public class NEIIntegration
 {
@@ -19,12 +13,7 @@ public class NEIIntegration
         if (!Loader.isModLoaded(MOD_ID))
             return;
 
-        registerNEI();
-    }
-
-    private static void registerNEI () {
-        API.registerRecipeHandler(new BloomeryFurnaceRecipeHandler());
-        API.registerUsageHandler(new BloomeryFurnaceRecipeHandler());
-        API.registerGuiOverlay(GuiBloomeryFurnace.class, "bloomerySmelting");
+        if (GardenStuff.proxy instanceof ClientProxy)
+            NEIHelper.registerNEI();
     }
 }
