@@ -9,6 +9,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -26,10 +27,7 @@ public class DoublePlantRenderer implements IPlantRenderer
         if (resolver != null)
             meta = resolver.getPlantSectionMeta(block, meta, height);
 
-        boolean isTopHalf = BlockDoublePlant.func_149887_c(meta);
-        int baseMeta = BlockDoublePlant.func_149890_d(meta);
-
-        IIcon iicon = doublePlant.func_149888_a(isTopHalf, baseMeta);
+        IIcon iicon = getIcon(block, world, meta);
 
         if (height == 1) {
             for (AxisAlignedBB bound : bounds) {
@@ -47,5 +45,12 @@ public class DoublePlantRenderer implements IPlantRenderer
             renderer.setRenderBounds(bound.minX, 0, bound.minZ, bound.maxX, 1, bound.maxZ);
             RenderHelper.instance.drawCrossedSquaresBounded(renderer, iicon, x, y, z, 1);
         }
+    }
+
+    public IIcon getIcon (Block block, IBlockAccess blockAccess, int meta) {
+        boolean isTopHalf = BlockDoublePlant.func_149887_c(meta);
+        int baseMeta = BlockDoublePlant.func_149890_d(meta);
+
+        return Blocks.double_plant.func_149888_a(isTopHalf, baseMeta);
     }
 }
