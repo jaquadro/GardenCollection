@@ -1,10 +1,13 @@
 package com.jaquadro.minecraft.gardenstuff.block.tile;
 
+import com.jaquadro.minecraft.gardenapi.api.component.ILanternSourceRegistry;
+import com.jaquadro.minecraft.gardenapi.internal.Api;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.Constants;
 
 public class TileEntityLantern extends TileEntity
 {
@@ -14,11 +17,12 @@ public class TileEntityLantern extends TileEntity
         REDSTONE_TORCH,
         GLOWSTONE,
         CANDLE,
-        FIREFLY;
+        FIREFLY,
     }
 
     private boolean hasGlass;
-    private LightSource source = LightSource.NONE;
+    private String source;
+    private int sourceMeta = 0;
 
     public void setHasGlass (boolean hasGlass) {
         this.hasGlass = hasGlass;
@@ -28,12 +32,20 @@ public class TileEntityLantern extends TileEntity
         return hasGlass;
     }
 
-    public void setLightSource (LightSource source) {
+    public void setLightSource (String source) {
         this.source = source;
     }
 
-    public LightSource getLightSource () {
+    public String getLightSource () {
         return source;
+    }
+
+    public void setLightSourceMeta (int meta) {
+        sourceMeta = meta;
+    }
+
+    public int getLightSourceMeta () {
+        return sourceMeta;
     }
 
     @Override
@@ -41,17 +53,31 @@ public class TileEntityLantern extends TileEntity
         super.readFromNBT(tag);
 
         hasGlass = false;
-        source = LightSource.NONE;
+        source = null;
 
         if (tag.hasKey("Glas"))
             hasGlass = tag.getBoolean("Glas");
-        if (tag.hasKey("Src")) {
+
+        if (tag.hasKey("Src", Constants.NBT.TAG_BYTE)) {
             LightSource[] values = LightSource.values();
             int index = tag.getByte("Src");
 
+            LightSource legacySource = LightSource.NONE;
             if (index >= 0 && index < values.length)
-                source = values[index];
+                legacySource = values[index];
+
+            switch (legacySource) {
+                case TORCH: source = "torch"; break;
+                case REDSTONE_TORCH: source = "redstoneTorch"; break;
+                case GLOWSTONE: source = "glowstone"; break;
+                case FIREFLY: source = "firefly"; break;
+            }
         }
+        else if (tag.hasKey("Src", Constants.NBT.TAG_STRING))
+            source = tag.getString("Src");
+
+        if (tag.hasKey("SrcMeta"))
+            sourceMeta = tag.getShort("SrcMeta");
     }
 
     @Override
@@ -60,8 +86,12 @@ public class TileEntityLantern extends TileEntity
 
         if (hasGlass)
             tag.setBoolean("Glas", true);
-        if (source != null && source != LightSource.NONE)
-            tag.setByte("Src", (byte)source.ordinal());
+
+        if (source != null)
+            tag.setString("Src", source);
+
+        if (sourceMeta != 0)
+            tag.setShort("SrcMeta", (short)sourceMeta);
     }
 
     @Override

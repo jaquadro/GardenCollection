@@ -1,6 +1,6 @@
-package com.jaquadro.minecraft.gardencore.api.registry;
+package com.jaquadro.minecraft.gardenapi.api.plant;
 
-import com.jaquadro.minecraft.gardencore.api.util.IUniqueID;
+import com.jaquadro.minecraft.gardenapi.api.util.IUniqueID;
 import net.minecraft.block.Block;
 
 import java.util.Map;

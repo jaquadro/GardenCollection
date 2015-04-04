@@ -1,10 +1,10 @@
 package com.jaquadro.minecraft.gardenstuff.renderer.item;
 
-import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
+import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
+import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -15,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 public class LanternItemRenderer implements IItemRenderer
 {
@@ -65,7 +64,7 @@ public class LanternItemRenderer implements IItemRenderer
         }
         else {
             renderer.renderMaxY = .005f;
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, block.getIcon(0, item.getItemDamage()));
+            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, block.getIcon(0, item.getItemDamage()), 0);
         }
 
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
@@ -73,20 +72,9 @@ public class LanternItemRenderer implements IItemRenderer
         renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
         renderer.overrideBlockTexture = null;
 
-        switch (block.getLightSource(item)) {
-            case TORCH:
-                renderTorchSource(renderer);
-                break;
-            case REDSTONE_TORCH:
-                renderRedstoneTorchSource(renderer);
-                break;
-            case GLOWSTONE:
-                renderGlowstoneSource(renderer);
-                break;
-            case CANDLE:
-                renderCandleSource(renderer, block);
-                break;
-        }
+        ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(block.getLightSource(item));
+        if (lanternSource != null)
+            lanternSource.renderItem(renderer, renderType, block.getLightSourceMeta(item));
 
         if (block.isGlass(item)) {
             GL11.glEnable(GL11.GL_BLEND);
@@ -106,45 +94,14 @@ public class LanternItemRenderer implements IItemRenderer
             renderer.renderMaxZ -= .01;
             renderer.renderMaxY -= .01;
 
-            renderHelper.renderFace(RenderHelper.XNEG, renderer, block, glass);
-            renderHelper.renderFace(RenderHelper.XPOS, renderer, block, glass);
-            renderHelper.renderFace(RenderHelper.ZNEG, renderer, block, glass);
-            renderHelper.renderFace(RenderHelper.ZPOS, renderer, block, glass);
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, glass);
+            renderHelper.renderFace(RenderHelper.XNEG, renderer, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.XPOS, renderer, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.ZNEG, renderer, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.ZPOS, renderer, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, glass, 0);
 
             GL11.glDisable(GL11.GL_BLEND);
         }
-    }
-
-    private void renderGlowstoneSource (RenderBlocks renderer) {
-        renderer.setRenderBounds(.3, 0, .3, .7, .4, .7);
-        renderHelper.renderBlock(renderer, Blocks.glowstone, 0);
-    }
-
-    private void renderCandleSource (RenderBlocks renderer, BlockLantern block) {
-        renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-        renderer.overrideBlockTexture = block.getIconCandle();
-        renderHelper.renderCrossedSquares(renderer, block, 0);
-        renderer.overrideBlockTexture = null;
-    }
-
-    private void renderTorchSource (RenderBlocks renderer) {
-        renderTorchBlock(renderer, Blocks.torch);
-    }
-
-    private void renderRedstoneTorchSource (RenderBlocks renderer) {
-        renderTorchBlock(renderer, Blocks.redstone_torch);
-    }
-
-    private void renderTorchBlock (RenderBlocks renderer, Block torchBlock) {
-        renderer.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
-        renderHelper.renderFace(RenderHelper.ZNEG, renderer, torchBlock, torchBlock.getIcon(2, 0));
-        renderHelper.renderFace(RenderHelper.ZPOS, renderer, torchBlock, torchBlock.getIcon(3, 0));
-        renderer.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
-        renderHelper.renderFace(RenderHelper.XNEG, renderer, torchBlock, torchBlock.getIcon(4, 0));
-        renderHelper.renderFace(RenderHelper.XPOS, renderer, torchBlock, torchBlock.getIcon(5, 0));
-        renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
-        renderHelper.renderFace(RenderHelper.YPOS, renderer, torchBlock, torchBlock.getIcon(1, 0));
     }
 
     private RenderBlocks getRenderer (Object[] data) {

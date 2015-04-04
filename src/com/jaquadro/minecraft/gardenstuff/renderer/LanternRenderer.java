@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
+import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
+import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardencore.util.RenderUtil;
@@ -52,22 +54,13 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
             TileEntityLantern tile = block.getTileEntity(world, x, y, z);
             if (tile != null) {
                 block.binding.setDefaultMeta(world.getBlockMetadata(x, y, z));
-                block.binding.bind(tile.getWorldObj(), x, y, z, 0, 0);
+                block.binding.bind(tile.getWorldObj(), x, y, z, 0, tile.getLightSourceMeta());
                 Tessellator.instance.addTranslation(0, .001f, 0);
 
-                switch (tile.getLightSource()) {
-                    case TORCH:
-                        renderTorchSource(renderer, block, x, y, z);
-                        break;
-                    case REDSTONE_TORCH:
-                        renderRedstoneTorchSource(renderer, block, x, y, z);
-                        break;
-                    case GLOWSTONE:
-                        renderGlowstoneSource(renderer, block, x, y, z);
-                        break;
-                    case CANDLE:
-                        renderCandleSource(renderer, block, x, y, z);
-                        break;
+                if (tile.getLightSource() != null) {
+                    ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());
+                    if (lanternSource != null && lanternSource.renderInPass(renderPass))
+                        lanternSource.render(renderer, x, y, z, tile.getLightSourceMeta(), renderPass);
                 }
 
                 Tessellator.instance.addTranslation(0, -.001f, 0);
@@ -101,6 +94,12 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
             }
             else
                 RenderUtil.renderEmptyPlane(block, x, y, z, renderer);
+
+            if (tile != null && tile.getLightSource() != null) {
+                ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());
+                if (lanternSource != null && lanternSource.renderInPass(renderPass))
+                    lanternSource.render(renderer, x, y, z, tile.getLightSourceMeta(), renderPass);
+            }
         }
 
         return true;
@@ -125,24 +124,11 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
         }
     }
 
-    private void renderGlowstoneSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
-        renderer.setRenderBounds(.3, 0, .3, .7, .4, .7);
-        renderer.renderStandardBlock(Blocks.glowstone, x, y, z);
-    }
-
-    private void renderCandleSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
+    /*private void renderCandleSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
         renderer.overrideBlockTexture = block.getIconCandle();
         renderer.renderCrossedSquares(block, x, y, z);
         renderer.overrideBlockTexture = null;
-    }
-
-    private void renderTorchSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
-        renderer.renderBlockAllFaces(Blocks.torch, x, y, z);
-    }
-
-    private void renderRedstoneTorchSource (RenderBlocks renderer, BlockLantern block, int x, int y, int z) {
-        renderer.renderBlockAllFaces(Blocks.redstone_torch, x, y, z);
-    }
+    }*/
 
     @Override
     public boolean shouldRender3DInInventory (int modelId) {

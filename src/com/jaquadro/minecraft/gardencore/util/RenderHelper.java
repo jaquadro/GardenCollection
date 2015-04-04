@@ -184,7 +184,7 @@ public class RenderHelper
     }
 
     public void renderBlock (RenderBlocks renderer, Block block, int meta) {
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, 0, 0, 0));
+        calculateBaseColor(colorScratch, block.getRenderColor(meta));
         float r = colorScratch[0];
         float g = colorScratch[1];
         float b = colorScratch[2];
@@ -211,8 +211,8 @@ public class RenderHelper
         renderFace(XPOS, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 5), r, g, b);
     }
 
-    public void renderFace (int face, RenderBlocks renderer, Block block, IIcon icon) {
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, 0, 0, 0));
+    public void renderFace (int face, RenderBlocks renderer, Block block, IIcon icon, int meta) {
+        calculateBaseColor(colorScratch, block.getRenderColor(meta));
         renderFaceColorMult(face, renderer, block, 0, 0, 0, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
     }
 
@@ -363,7 +363,7 @@ public class RenderHelper
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(FULL_BRIGHTNESS);
 
-        calculateBaseColor(colorScratch, block.getBlockColor());
+        calculateBaseColor(colorScratch, block.getRenderColor(meta));
         setTessellatorColor(tessellator, colorScratch);
 
         boolean lighting = GL11.glIsEnabled(GL11.GL_LIGHTING);
@@ -504,9 +504,9 @@ public class RenderHelper
         float[] rgb = rgbMap[face];
         float[] norm = normMap[face];
 
-        tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
         if (renderer.blockAccess == null) {
             tessellator.startDrawingQuads();
+            tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
             tessellator.setNormal(norm[0], norm[1], norm[2]);
         }
         else {
@@ -523,6 +523,7 @@ public class RenderHelper
                 case XPOS: brightX = (renderer.renderMaxX < 1) ? x : x + 1; break;
             }
 
+            tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
             tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, brightX, brightY, brightZ));
         }
 

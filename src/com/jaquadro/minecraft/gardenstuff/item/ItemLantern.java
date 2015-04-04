@@ -1,7 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.item;
 
-import com.jaquadro.minecraft.gardenstuff.GardenStuff;
-import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
+import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
+import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import cpw.mods.fml.relauncher.Side;
@@ -42,6 +42,7 @@ public class ItemLantern extends ItemBlock
         TileEntityLantern tile = (TileEntityLantern) world.getTileEntity(x, y, z);
         if (tile != null) {
             tile.setHasGlass(ModBlocks.lantern.isGlass(stack));
+            tile.setLightSourceMeta(ModBlocks.lantern.getLightSourceMeta(stack));
             tile.setLightSource(ModBlocks.lantern.getLightSource(stack));
         }
 
@@ -57,38 +58,42 @@ public class ItemLantern extends ItemBlock
         }
 
         String contents = StatCollector.translateToLocal(ModBlocks.makeName("lanternSource")) + ": " + EnumChatFormatting.YELLOW;
-        contents += StatCollector.translateToLocal(ModBlocks.makeName("lanternSource.") + getLanternSourceKey(ModBlocks.lantern.getLightSource(itemStack)));
+
+        String source = ModBlocks.lantern.getLightSource(itemStack);
+        ILanternSource lanternSource = (source != null) ? Api.instance.registries().lanternSources().getLanternSource(source) : null;
+
+        if (lanternSource != null)
+            contents += StatCollector.translateToLocal(lanternSource.getLanguageKey(itemStack.getItemDamage()));
+        else
+            contents += StatCollector.translateToLocal(ModBlocks.makeName("lanternSource.none"));
+
         list.add(contents);
     }
 
     public ItemStack makeItemStack (int count, int meta, boolean hasGlass) {
-        return makeItemStack(count, meta, hasGlass, TileEntityLantern.LightSource.NONE);
+        return makeItemStack(count, meta, hasGlass, null);
     }
 
-    public ItemStack makeItemStack (int count, int meta, boolean hasGlass, TileEntityLantern.LightSource source) {
+    public ItemStack makeItemStack (int count, int meta, boolean hasGlass, String source) {
+        return makeItemStack(count, meta, hasGlass, source, 0);
+    }
+
+    public ItemStack makeItemStack (int count, int meta, boolean hasGlass, String source, int sourceMeta) {
         ItemStack stack = new ItemStack(this, count, meta);
         NBTTagCompound tag = new NBTTagCompound();
 
         if (hasGlass)
             tag.setBoolean("glass", true);
 
-        if (source != null && source != TileEntityLantern.LightSource.NONE)
-            tag.setByte("src", (byte)source.ordinal());
+        if (source != null)
+            tag.setString("src", source);
+
+        if (sourceMeta != 0)
+            tag.setShort("srcMeta", (short)sourceMeta);
 
         if (!tag.hasNoTags())
             stack.setTagCompound(tag);
 
         return stack;
-    }
-
-    private String getLanternSourceKey (TileEntityLantern.LightSource lightSource) {
-        switch (lightSource) {
-            case TORCH: return "torch";
-            case REDSTONE_TORCH: return "redstoneTorch";
-            case GLOWSTONE: return "glowstone";
-            case CANDLE: return "candle";
-            case FIREFLY: return "firefly";
-            default: return "none";
-        }
     }
 }

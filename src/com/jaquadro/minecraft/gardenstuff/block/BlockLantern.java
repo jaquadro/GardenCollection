@@ -1,5 +1,8 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
+import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
+import com.jaquadro.minecraft.gardenapi.api.component.IRedstoneSource;
+import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
@@ -28,6 +31,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,17 +78,24 @@ public class BlockLantern extends BlockContainer
         return false;
     }
 
-    public TileEntityLantern.LightSource getLightSource (ItemStack item) {
+    public String getLightSource (ItemStack item) {
         if (item.hasTagCompound()) {
             NBTTagCompound tag = item.getTagCompound();
-            if (tag.hasKey("src")) {
-                int srcVal = tag.getByte("src");
-                if (srcVal >= 0 && srcVal < TileEntityLantern.LightSource.values().length)
-                    return TileEntityLantern.LightSource.values()[srcVal];
-            }
+            if (tag.hasKey("src", Constants.NBT.TAG_STRING))
+                return tag.getString("src");
         }
 
-        return TileEntityLantern.LightSource.NONE;
+        return null;
+    }
+
+    public int getLightSourceMeta (ItemStack item) {
+        if (item.hasTagCompound()) {
+            NBTTagCompound tag = item.getTagCompound();
+            if (tag.hasKey("srcMeta"))
+                return tag.getShort("srcMeta");
+        }
+
+        return 0;
     }
 
     @Override
@@ -170,14 +181,16 @@ public class BlockLantern extends BlockContainer
             if (item != null)
             {
                 boolean glass = false;
-                TileEntityLantern.LightSource source = TileEntityLantern.LightSource.NONE;
+                String source = null;
+                int sourceMeta = 0;
 
                 if (tile != null) {
                     glass = tile.hasGlass();
                     source = tile.getLightSource();
+                    sourceMeta = tile.getLightSourceMeta();
                 }
 
-                ItemStack stack = ((ItemLantern)Item.getItemFromBlock(this)).makeItemStack(1, metadata, glass, source);
+                ItemStack stack = ((ItemLantern)Item.getItemFromBlock(this)).makeItemStack(1, metadata, glass, source, sourceMeta);
                 ret.add(stack);
             }
         }
@@ -190,78 +203,37 @@ public class BlockLantern extends BlockContainer
         if (tile == null)
             return false;
 
-        //if (!player.isSneaking())
-        //    return false;
-
         ItemStack item = player.inventory.getCurrentItem();
 
-        if (item == null && player.isSneaking() && tile.getLightSource() != TileEntityLantern.LightSource.NONE) {
-            switch (tile.getLightSource()) {
-                case TORCH:
-                    dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(Blocks.torch)));
-                    break;
-                case REDSTONE_TORCH:
-                    dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(Blocks.redstone_torch)));
-                    break;
-                case GLOWSTONE:
-                    dropBlockAsItem(world, x, y, z, new ItemStack(Items.glowstone_dust));
-                    break;
-                case FIREFLY:
-                    if (TwilightForestIntegration.isLoaded()) {
-                        Block firefly = Block.getBlockFromName(TwilightForestIntegration.MOD_ID + ":tile.TFFirefly");
-                        if (firefly != null)
-                            dropBlockAsItem(world, x, y, z, new ItemStack(Item.getItemFromBlock(firefly)));
-                    }
-                    break;
-                default:
-                    return false;
-            }
+        if (item == null && player.isSneaking() && tile.getLightSource() != null) {
+            ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());
+            if (lanternSource != null)
+                dropBlockAsItem(world, x, y, z, lanternSource.getRemovedItem(tile.getLightSourceMeta()));
 
-            tile.setLightSource(TileEntityLantern.LightSource.NONE);
+            tile.setLightSource((String)null);
             world.markBlockForUpdate(x, y, z);
             world.notifyBlocksOfNeighborChange(x, y, z, this);
             world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
             tile.markDirty();
             return true;
         }
-        else if (tile.getLightSource() == TileEntityLantern.LightSource.NONE && item != null) {
-            if (item.getItem() instanceof ItemBlock) {
-                Block block = Block.getBlockFromItem(item.getItem());
-                if (block == Blocks.torch)
-                    tile.setLightSource(TileEntityLantern.LightSource.TORCH);
-                else if (block == Blocks.redstone_torch) {
-                    tile.setLightSource(TileEntityLantern.LightSource.REDSTONE_TORCH);
+        else if (tile.getLightSource() == null && item != null) {
+            for (ILanternSource lanternSource : Api.instance.registries.lanternSources.getAllLanternSources()) {
+                if (lanternSource.isValidSourceItem(item)) {
+                    tile.setLightSource(lanternSource.getSourceID());
+                    tile.setLightSourceMeta(lanternSource.getSourceMeta(item));
+
+                    if (player != null && !player.capabilities.isCreativeMode) {
+                        if (--item.stackSize <= 0)
+                            player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+                    }
+
+                    world.markBlockForUpdate(x, y, z);
                     world.notifyBlocksOfNeighborChange(x, y, z, this);
                     world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+                    tile.markDirty();
+                    return true;
                 }
-                else if (TwilightForestIntegration.isLoaded() && block == Block.getBlockFromName(TwilightForestIntegration.MOD_ID + ":tile.TFFirefly"))
-                    tile.setLightSource(TileEntityLantern.LightSource.FIREFLY);
-                else
-                    return false;
-
-                if (player != null && !player.capabilities.isCreativeMode) {
-                    if (--item.stackSize <= 0)
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                }
-
-                world.markBlockForUpdate(x, y, z);
-                tile.markDirty();
-                return true;
-            }
-            else {
-                if (item.getItem() == Items.glowstone_dust)
-                    tile.setLightSource(TileEntityLantern.LightSource.GLOWSTONE);
-                else
-                    return false;
-
-                if (player != null && !player.capabilities.isCreativeMode) {
-                    if (--item.stackSize <= 0)
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                }
-
-                world.markBlockForUpdate(x, y, z);
-                tile.markDirty();
-                return true;
             }
         }
 
@@ -271,34 +243,12 @@ public class BlockLantern extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
         TileEntityLantern tile = getTileEntity(world, x, y, z);
+        if (tile == null)
+            return;
 
-        double px = x + 0.5F;
-        double py = y + 0.6F;
-        double pz = z + 0.5F;
-
-        switch (tile.getLightSource()) {
-            case TORCH:
-            case CANDLE:
-                if (tile.getLightSource() == TileEntityLantern.LightSource.TORCH)
-                    py += 0.1F;
-
-                if (tile == null || !tile.hasGlass())
-                    world.spawnParticle("smoke", px, py, pz, 0.0D, 0.0D, 0.0D);
-
-                world.spawnParticle("flame", px, py, pz, 0.0D, 0.0D, 0.0D);
-                break;
-            case REDSTONE_TORCH:
-                px += (rand.nextFloat() - 0.5F) * 0.2D;
-                py += (rand.nextFloat() - 0.5F) * 0.2D + 0.1F;
-                pz += (rand.nextFloat() - 0.5F) * 0.2D;
-
-                world.spawnParticle("reddust", px, py, pz, 0.0D, 0.0D, 0.0D);
-                break;
-            case FIREFLY:
-                if (TwilightForestIntegration.isLoaded())
-                    TwilightForestIntegration.doFireflyEffect(world, x, y, z, rand);
-                break;
-        }
+        ILanternSource lanternSource = Api.instance.registries.lanternSources.getLanternSource(tile.getLightSource());
+        if (lanternSource != null)
+            lanternSource.renderParticle(world, x, y, z, rand, tile.getLightSourceMeta());
     }
 
     @Override
@@ -308,7 +258,7 @@ public class BlockLantern extends BlockContainer
 
     @Override
     public void breakBlock (World world, int x, int y, int z, Block block, int data) {
-        if (hasRedstoneTorch(world, x, y, z)) {
+        if (getRedstoneSource(world, x, y, z) != null) {
             world.notifyBlocksOfNeighborChange(x, y, z, this);
             world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
         }
@@ -333,20 +283,17 @@ public class BlockLantern extends BlockContainer
     @Override
     public int getLightValue (IBlockAccess world, int x, int y, int z) {
         TileEntityLantern tile = getTileEntity(world, x, y, z);
-        if (tile != null && tile.hasGlass() && ColoredLightsIntegration.isInitialized())
+        if (tile == null)
+            return 0;
+
+        if (tile.hasGlass() && ColoredLightsIntegration.isInitialized())
             return ColoredLightsIntegration.getPackedColor(world.getBlockMetadata(x, y, z));
 
-        switch (tile.getLightSource()) {
-            case TORCH:
-            case CANDLE:
-            case GLOWSTONE:
-            case FIREFLY:
-                return getLightValue();
-            case REDSTONE_TORCH:
-                return Blocks.redstone_torch.getLightValue();
-            default:
-                return 0;
-        }
+        ILanternSource lanternSource = Api.instance.registries.lanternSources.getLanternSource(tile.getLightSource());
+        if (lanternSource != null)
+            return lanternSource.getLightLevel(tile.getLightSourceMeta());
+
+        return 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -398,12 +345,14 @@ public class BlockLantern extends BlockContainer
 
     @Override
     public int isProvidingStrongPower (IBlockAccess world, int x, int y, int z, int side) {
-        return (side == 1 && hasRedstoneTorch(world, x, y, z)) ? 15 : 0;
+        IRedstoneSource source = getRedstoneSource(world, x, y, z);
+        return (side == 1 && source != null) ? source.strongPowerValue(getTileEntity(world, x, y, z).getLightSourceMeta()) : 0;
     }
 
     @Override
     public int isProvidingWeakPower (IBlockAccess world, int x, int y, int z, int side) {
-        return hasRedstoneTorch(world, x, y, z) ? 15 : 0;
+        IRedstoneSource source = getRedstoneSource(world, x, y, z);
+        return (source != null) ? source.weakPowerValue(getTileEntity(world, x, y, z).getLightSourceMeta()) : 0;
     }
 
     @Override
@@ -411,12 +360,15 @@ public class BlockLantern extends BlockContainer
         return true;
     }
 
-    private boolean hasRedstoneTorch (IBlockAccess world, int x, int y, int z) {
+    private IRedstoneSource getRedstoneSource (IBlockAccess world, int x, int y, int z) {
         TileEntityLantern tile = getTileEntity(world, x, y, z);
-        if (tile != null)
-            return tile.getLightSource() == TileEntityLantern.LightSource.REDSTONE_TORCH;
+        if (tile != null) {
+            ILanternSource source = Api.instance.registries.lanternSources.getLanternSource(tile.getLightSource());
+            if (source instanceof IRedstoneSource)
+                return (IRedstoneSource)source;
+        }
 
-        return false;
+        return null;
     }
 
     public TileEntityLantern getTileEntity (IBlockAccess world, int x, int y, int z) {
