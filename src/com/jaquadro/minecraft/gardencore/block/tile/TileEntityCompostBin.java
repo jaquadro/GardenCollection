@@ -6,9 +6,7 @@ import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
 import com.jaquadro.minecraft.gardencore.core.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeavesBase;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -25,6 +23,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityCompostBin extends TileEntity implements ISidedInventory
 {
@@ -269,6 +268,10 @@ public class TileEntityCompostBin extends TileEntity implements ISidedInventory
                 return 100;
             if (block instanceof BlockLeavesBase)
                 return 150;
+            if (block instanceof BlockMelon)
+                return 150;
+            if (block instanceof BlockHay)
+                return 150;
         }
 
         if (item == Items.stick)
@@ -279,10 +282,37 @@ public class TileEntityCompostBin extends TileEntity implements ISidedInventory
             return 100;
         if (item == Items.reeds)
             return 100;
+        if (item == Items.feather)
+            return 100;
+        if (item == Items.leather)
+            return 150;
+        if (item == Items.rotten_flesh)
+            return 150;
         if (item instanceof IPlantable)
             return 100;
         if (item instanceof ItemFood)
             return 150;
+
+        for (int id : OreDictionary.getOreIDs(itemStack)) {
+            String entry = OreDictionary.getOreName(id);
+            if (entry == null)
+                continue;
+
+            if (entry.equals("treeSapling"))
+                return 150;
+            if (entry.equals("treeLeaves"))
+                return 150;
+            if (entry.equals("treeWood"))
+                return 300;
+            if (entry.equals("stickWood"))
+                return 150;
+            if (entry.startsWith("crop"))
+                return 100;
+            if (entry.startsWith("food"))
+                return 150;
+            if (entry.startsWith("seed"))
+                return 150;
+        }
 
         return 0;
     }
