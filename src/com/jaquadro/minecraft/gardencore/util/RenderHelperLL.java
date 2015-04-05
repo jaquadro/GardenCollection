@@ -78,52 +78,32 @@ public class RenderHelperLL
     private double[] minVDiv = new double[24];
     private double[] maxVDiv = new double[24];
 
+    private int[][] brightnessLerp = new int[10][10];
+
     // u-min, u-max, v-min, v-max
     private double[] uv = new double[4];
 
     // x-min, x-max, y-min, y-max, z-min, z-max
     private double[] xyz = new double[6];
 
-    public void drawFaceYNeg (double x, double y, double z, IIcon icon) {
-        int rangeX = (int)(Math.ceil(renderMaxX + uShift) - Math.floor(renderMinX + uShift));
-        int rangeZ = (int)(Math.ceil(renderMaxZ + vShift) - Math.floor(renderMinZ + vShift));
-
-        if (rangeX == 1 && rangeZ == 1) {
-            setXYZ(x, y, z);
-            setUV(icon, renderMaxX + uShift, renderMaxZ + vShift, renderMinX + uShift, renderMinZ + vShift);
-
-            if (enableAO)
-                renderXYZUVAO(xyzuvMap[0]);
-            else
-                renderXYZUV(xyzuvMap[0]);
-            return;
-        }
-
-        double uStart = (renderMinX + uShift + rangeX) % 1.0;
-        double uStop = (renderMaxX + uShift + rangeX) % 1.0;
-        double vStart = (renderMinZ + vShift + rangeZ) % 1.0;
-        double vStop = (renderMaxZ + vShift + rangeZ) % 1.0;
-
-        setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeZ, icon);
-        setXYZ(x, y, z);
-
-        for (int ix = 0; ix < rangeX; ix++) {
-            xyz[MAXX] = xyz[MINX] + maxUDiv[ix] - minUDiv[ix];
-            xyz[MINZ] = z + renderMinZ;
-
-            for (int iz = 0; iz < rangeZ; iz++) {
-                xyz[MAXZ] = xyz[MINZ] + maxVDiv[iz] - minVDiv[iz];
-
-                setUV(minUDiv[ix], minVDiv[iz], maxUDiv[ix], maxVDiv[iz]);
-                renderXYZUV(xyzuvMap[0]);
-
-                xyz[MINZ] = xyz[MAXZ];
-            }
-            xyz[MINX] = xyz[MAXX];
+    public void drawFace (int face, double x, double y, double z, IIcon icon) {
+        switch (face) {
+            case RenderHelper.YNEG:
+            case RenderHelper.YPOS:
+                drawFaceY(face, x, y, z, icon);
+                break;
+            case RenderHelper.ZNEG:
+            case RenderHelper.ZPOS:
+                drawFaceZ(face, x, y, z, icon);
+                break;
+            case RenderHelper.XNEG:
+            case RenderHelper.XPOS:
+                drawFaceX(face, x, y, z, icon);
+                break;
         }
     }
 
-    public void drawFaceY (int face, double x, double y, double z, IIcon icon) {
+    private void drawFaceY (int face, double x, double y, double z, IIcon icon) {
         int rangeX = (int)(Math.ceil(renderMaxX + uShift) - Math.floor(renderMinX + uShift));
         int rangeZ = (int)(Math.ceil(renderMaxZ + vShift) - Math.floor(renderMinZ + vShift));
 
@@ -144,6 +124,7 @@ public class RenderHelperLL
         double vStop = (renderMaxZ + vShift + rangeZ) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeZ, icon);
+        setupAOBrightnessLerp(renderMinX, renderMaxX, renderMinZ, renderMaxZ, rangeX, rangeZ);
         setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
@@ -153,8 +134,13 @@ public class RenderHelperLL
             for (int iz = 0; iz < rangeZ; iz++) {
                 xyz[MAXZ] = xyz[MINZ] + maxVDiv[iz] - minVDiv[iz];
 
-                setUV(minUDiv[ix], minVDiv[iz], maxUDiv[ix], maxVDiv[iz]);
-                renderXYZUV(xyzuvMap[face]);
+                brightnessTopLeft = brightnessLerp[ix][iz];
+                brightnessTopRight = brightnessLerp[ix + 1][iz];
+                brightnessBottomLeft = brightnessLerp[ix][iz + 1];
+                brightnessBottomRight = brightnessLerp[ix + 1][iz + 1];
+
+                setUV(icon, minUDiv[ix], minVDiv[iz], maxUDiv[ix], maxVDiv[iz]);
+                renderXYZUVAO(xyzuvMap[face]);
 
                 xyz[MINZ] = xyz[MAXZ];
             }
@@ -162,7 +148,7 @@ public class RenderHelperLL
         }
     }
 
-    public void drawFaceZ (int face, double x, double y, double z, IIcon icon) {
+    private void drawFaceZ (int face, double x, double y, double z, IIcon icon) {
         int rangeX = (int)(Math.ceil(renderMaxX + uShift) - Math.floor(renderMinX + uShift));
         int rangeY = (int)(Math.ceil(renderMaxY + vShift) - Math.floor(renderMinY + vShift));
 
@@ -183,6 +169,7 @@ public class RenderHelperLL
         double vStop = (renderMaxY + vShift + rangeY) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeY, icon);
+        setupAOBrightnessLerp(renderMinX, renderMaxX, renderMinY, renderMaxY, rangeX, rangeY);
         setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
@@ -192,8 +179,13 @@ public class RenderHelperLL
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
 
+                brightnessTopLeft = brightnessLerp[ix][iy];
+                brightnessTopRight = brightnessLerp[ix + 1][iy];
+                brightnessBottomLeft = brightnessLerp[ix][iy + 1];
+                brightnessBottomRight = brightnessLerp[ix + 1][iy + 1];
+
                 setUV(icon, minUDiv[ix], minVDiv[iy], maxUDiv[ix], maxVDiv[iy]);
-                renderXYZUV(xyzuvMap[face]);
+                renderXYZUVAO(xyzuvMap[face]);
 
                 xyz[MINY] = xyz[MAXY];
             }
@@ -201,7 +193,7 @@ public class RenderHelperLL
         }
     }
 
-    public void drawFaceX (int face, double x, double y, double z, IIcon icon) {
+    private void drawFaceX (int face, double x, double y, double z, IIcon icon) {
         int rangeZ = (int)(Math.ceil(renderMaxZ + uShift) - Math.floor(renderMinZ + uShift));
         int rangeY = (int)(Math.ceil(renderMaxY + vShift) - Math.floor(renderMinY + vShift));
 
@@ -222,6 +214,7 @@ public class RenderHelperLL
         double vStop = (renderMaxY + vShift + rangeY) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeZ, rangeY, icon);
+        setupAOBrightnessLerp(renderMinZ, renderMaxZ, renderMinY, renderMaxY, rangeZ, rangeY);
         setXYZ(x, y, z);
 
         for (int iz = 0; iz < rangeZ; iz++) {
@@ -231,8 +224,13 @@ public class RenderHelperLL
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
 
+                brightnessTopLeft = brightnessLerp[iz][iy];
+                brightnessTopRight = brightnessLerp[iz + 1][iy];
+                brightnessBottomLeft = brightnessLerp[iz][iy + 1];
+                brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
+
                 setUV(minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
-                renderXYZUV(xyzuvMap[face]);
+                renderXYZUVAO(xyzuvMap[face]);
 
                 xyz[MINY] = xyz[MAXY];
             }
@@ -269,6 +267,33 @@ public class RenderHelperLL
             }
             minVDiv[rangeV - 1] = 0;
             maxVDiv[rangeV - 1] = vStop;
+        }
+    }
+
+    private void setupAOBrightnessLerp (double left, double right, double top, double bottom, int rangeLR, int rangeTB) {
+        double diffLR = right - left;
+        double diffTB = bottom - top;
+
+        double posLR = left;
+
+        for (int lr = 0; lr <= rangeLR; lr++) {
+            float lerpLR = (float)(posLR / diffLR);
+
+            int brightTop = RenderHelperAO.mixAOBrightness(brightnessTopLeft, brightnessTopRight, 1 - lerpLR, lerpLR);
+            int brightBottom = RenderHelperAO.mixAOBrightness(brightnessBottomLeft, brightnessBottomRight, 1 - lerpLR, lerpLR);
+
+            double posTB = top;
+            for (int tb = 0; tb <= rangeTB; tb++) {
+                float lerpTB = (float)(posTB / diffTB);
+
+                brightnessLerp[lr][tb] = RenderHelperAO.mixAOBrightness(brightTop, brightBottom, 1 - lerpTB, lerpTB);
+
+                if (tb < rangeTB)
+                    posTB += maxVDiv[tb] - minVDiv[tb];
+            }
+
+            if (lr < rangeLR)
+                posLR += maxUDiv[lr] - minUDiv[lr];
         }
     }
 

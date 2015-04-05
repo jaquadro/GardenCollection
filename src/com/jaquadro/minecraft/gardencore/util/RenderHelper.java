@@ -290,44 +290,37 @@ public class RenderHelper
     
     public void renderFaceAOPartial (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         renderer.enableAO = true;
-        //setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
-        
+        setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
 
         switch (face) {
             case YNEG:
                 aoHelper.setupYNegAOPartial(renderer, block, x, y, z, r, g, b);
-                renderer.renderFaceYNeg(block, x, y, z, icon);
+                //renderer.renderFaceYNeg(block, x, y, z, icon);
                 break;
             case YPOS:
                 aoHelper.setupYPosAOPartial(renderer, block, x, y, z, r, g, b);
-                renderer.renderFaceYPos(block, x, y, z, icon);
+                //renderer.renderFaceYPos(block, x, y, z, icon);
                 break;
             case ZNEG:
                 aoHelper.setupZNegAOPartial(renderer, block, x, y, z, r, g, b);
-                //llHelper.drawFaceZ(face, x, y, z, icon);
-                renderer.renderFaceZNeg(block, x, y, z, icon);
+                //renderer.renderFaceZNeg(block, x, y, z, icon);
                 break;
             case ZPOS:
                 aoHelper.setupZPosAOPartial(renderer, block, x, y, z, r, g, b);
-                //copyAO(renderer);
-                //setTextureOffset(.5, .5);
-                //llHelper.drawFaceZ(face, x, y, z, icon);
-                //clearTextureOffset();
-                renderer.renderFaceZPos(block, x, y, z, icon);
+                //renderer.renderFaceZPos(block, x, y, z, icon);
                 break;
             case XNEG:
                 aoHelper.setupXNegAOPartial(renderer, block, x, y, z, r, g, b);
-                //copyAO(renderer);
-                //setTextureOffset(.5, .5);
-                //llHelper.drawFaceX(face, x, y, z, icon);
-                //clearTextureOffset();
-                renderer.renderFaceXNeg(block, x, y, z, icon);
+                //renderer.renderFaceXNeg(block, x, y, z, icon);
                 break;
             case XPOS:
                 aoHelper.setupXPosAOPartial(renderer, block, x, y, z, r, g, b);
-                renderer.renderFaceXPos(block, x, y, z, icon);
+                //renderer.renderFaceXPos(block, x, y, z, icon);
                 break;
         }
+
+        copyAO(renderer);
+        llHelper.drawFace(face, x, y, z, icon);
 
         renderer.enableAO = false;
     }
