@@ -1,8 +1,10 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLattice;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -98,44 +100,72 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
         if (xMax > U9)
             boxRenderer.renderSolidBox(renderer, block, x, y, z, U9, U7, U7, xMax, U9, U9);
 
-        IIcon vineIcon = ivy.getIconFull(); // Blocks.vine.getIcon(0, 0);
+        IIcon vineIcon = Blocks.vine.getIcon(0, 0);
 
+        /*boxRenderer.setUnit(0);
+        boxRenderer.flipOpposite = true;
+        boxRenderer.setIcon(Blocks.glass_pane.getIcon(4, 0));
 
-        /*if (!connectXNeg || !connectXPos) {
-            boxRenderer.setIcon(Blocks.glass_pane.getIcon(4, 0));
-            if (connectZNeg) {
-                if (connectYPos)
-                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, U9, 0, U9, 1, U7);
-                if (connectYNeg)
-                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, 0, 0, U9, U7, U7);
-            }
-            if (connectZPos) {
-                if (connectYPos)
-                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, U9, U9, U9, 1, 1);
-                if (connectYNeg)
-                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, 0, U9, U9, U7, 1);
-            }
-        }*/
+        int cutX = ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS | ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS;
+        RenderHelper.instance.setTextureOffset(.5, .5);
 
-        /*renderer.setRenderBounds(0, .40625, 0, 1, .59375, 1);
-        RenderUtil.renderFaceYNeg(renderer, ivy, x, y, z, vineIcon);
-        RenderUtil.renderFaceYPos(renderer, ivy, x, y, z, vineIcon);
+        if (connectZNeg) {
+            if (connectYPos)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U7, U9, 0, U9, 1, U7, 0, cutX);
+            if (connectYNeg)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U7, 0, 0, U9, U7, U7, 0, cutX);
+        }
+        if (connectZPos) {
+            if (connectYPos)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U7, U9, U9, U9, 1, 1, 0, cutX);
+            if (connectYNeg)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U7, 0, U9, U9, U7, 1, 0, cutX);
+        }
+        RenderHelper.instance.clearTextureOffset();
 
-        tessellator.addTranslation(.5f, 0, .5f);
+        int cutZ = ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS | ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS;
+        RenderHelper.instance.setTextureOffset(.5, .5);
+        if (connectXNeg) {
+            if (connectYPos)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, 0, U9, U7, U7, 1, U9, 0, cutZ);
+            if (connectYNeg)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, 0, 0, U7, U7, U7, U9, 0, cutZ);
+        }
+        if (connectXPos) {
+            if (connectYPos)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U9, U9, U7, 1, 1, U9, 0, cutZ);
+            if (connectYNeg)
+                boxRenderer.renderExterior(renderer, Blocks.glass_pane, x, y, z, U9, 0, U7, 1, U7, U9, 0, cutZ);
+        }
+        RenderHelper.instance.clearTextureOffset();
+
+        boxRenderer.flipOpposite = false;*/
+
+        /*RenderHelper.instance.state.colorMultYNeg = 0.8f;
+
+        renderer.setRenderBounds(0, .40625, 0, 1, .59375, 1);
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, renderer, ivy, x, y, z, vineIcon);
+        RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, ivy, x, y, z, vineIcon);
+
         renderer.setRenderBounds(0, .59375, 0, 1, 1, 1);
-        RenderUtil.renderFaceYNeg(renderer, ivy, x + 1, y, z + 1, vineIcon);
-        tessellator.addTranslation(-.5f, 0, -.5f);*/
+        RenderHelper.instance.setTextureOffset(.5, .5);
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, renderer, ivy, x, y, z, vineIcon);
+        RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, ivy, x, y, z, vineIcon);
+        RenderHelper.instance.clearTextureOffset();
 
-        /*vineIcon = ModBlocks.rootCover.getIcon(world, x, y, z, 0); // Blocks.vine.getIcon(0, 0);
+        vineIcon = ModBlocks.rootCover.getIcon(world, x, y, z, 0); // Blocks.vine.getIcon(0, 0);
 
         renderer.setRenderBounds(0, .375, 0, 1, .625, 1);
-        RenderUtil.renderFaceYNeg(renderer, ModBlocks.rootCover, x, y, z, vineIcon);
-        RenderUtil.renderFaceYPos(renderer, ModBlocks.rootCover, x, y, z, vineIcon);
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, renderer, ModBlocks.rootCover, x, y, z, vineIcon);
+        RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, ModBlocks.rootCover, x, y, z, vineIcon);
 
         vineIcon = ModBlocks.rootCover.getIcon(world, x + 1, y, z + 1, 0);
 
         renderer.setRenderBounds(0, .625, 0, 1, 1, 1);
-        RenderUtil.renderFaceYNeg(renderer, ModBlocks.rootCover, x, y, z, vineIcon);*/
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, renderer, ModBlocks.rootCover, x, y, z, vineIcon);
+        //RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, ModBlocks.rootCover, x, y, z, vineIcon);
+
+        RenderHelper.instance.state.resetColorMult();*/
 
         return true;
     }

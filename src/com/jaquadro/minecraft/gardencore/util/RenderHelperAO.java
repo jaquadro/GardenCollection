@@ -7,6 +7,8 @@ import net.minecraft.util.MathHelper;
 
 public class RenderHelperAO
 {
+    private RenderHelperState state;
+
     private int aoBrightnessXYNI;
     private int aoBrightnessYZIN;
     private int aoBrightnessYZIP;
@@ -101,6 +103,10 @@ public class RenderHelperAO
     private float aoLightValueScratchXYZIPN;
     private float aoLightValueScratchXYZIPP;
 
+    public RenderHelperAO (RenderHelperState state) {
+        this.state = state;
+    }
+
     public void setupYNegAOPartial (RenderBlocks renderer, Block block, int x, int y, int z, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(983055);
@@ -145,9 +151,9 @@ public class RenderHelperAO
         renderer.brightnessBottomLeft = renderer.mixAoBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, renderer.renderMinX * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinX) * renderer.renderMinZ, renderer.renderMinX * renderer.renderMinZ);
         renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, renderer.renderMinX * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinX) * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinX) * renderer.renderMaxZ, renderer.renderMinX * renderer.renderMaxZ);
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * 0.5F;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * 0.5F;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * 0.5F;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultYNeg;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultYNeg;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultYNeg;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;
@@ -241,9 +247,9 @@ public class RenderHelperAO
         renderer.brightnessBottomRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMinZ, renderer.renderMinX);
         renderer.brightnessTopRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, renderer.renderMaxZ, renderer.renderMinX);
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultYPos;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultYPos;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultYPos;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;
@@ -303,9 +309,9 @@ public class RenderHelperAO
         renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, renderer.renderMinY * (1.0D - renderer.renderMaxX), renderer.renderMinY * renderer.renderMaxX, (1.0D - renderer.renderMinY) * renderer.renderMaxX, (1.0D - renderer.renderMinY) * (1.0D - renderer.renderMaxX));
         renderer.brightnessTopRight = renderer.mixAoBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, renderer.renderMinY * (1.0D - renderer.renderMinX), renderer.renderMinY * renderer.renderMinX, (1.0D - renderer.renderMinY) * renderer.renderMinX, (1.0D - renderer.renderMinY) * (1.0D - renderer.renderMinX));
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * 0.8F;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * 0.8F;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * 0.8F;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultZNeg;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultZNeg;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultZNeg;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;
@@ -365,9 +371,9 @@ public class RenderHelperAO
         renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, renderer.renderMinY * (1.0D - renderer.renderMaxX), (1.0D - renderer.renderMinY) * (1.0D - renderer.renderMaxX), (1.0D - renderer.renderMinY) * renderer.renderMaxX, renderer.renderMinY * renderer.renderMaxX);
         renderer.brightnessTopRight = renderer.mixAoBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, renderer.renderMaxY * (1.0D - renderer.renderMaxX), (1.0D - renderer.renderMaxY) * (1.0D - renderer.renderMaxX), (1.0D - renderer.renderMaxY) * renderer.renderMaxX, renderer.renderMaxY * renderer.renderMaxX);
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * 0.8F;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * 0.8F;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * 0.8F;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultZPos;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultZPos;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultZPos;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;
@@ -427,9 +433,9 @@ public class RenderHelperAO
         renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, renderer.renderMinY * renderer.renderMinZ, renderer.renderMinY * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinY) * (1.0D - renderer.renderMinZ), (1.0D - renderer.renderMinY) * renderer.renderMinZ);
         renderer.brightnessTopRight = renderer.mixAoBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, renderer.renderMinY * renderer.renderMaxZ, renderer.renderMinY * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinY) * (1.0D - renderer.renderMaxZ), (1.0D - renderer.renderMinY) * renderer.renderMaxZ);
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * 0.6F;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * 0.6F;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * 0.6F;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultXNeg;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultXNeg;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultXNeg;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;
@@ -489,9 +495,9 @@ public class RenderHelperAO
         renderer.brightnessBottomRight = renderer.mixAoBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - renderer.renderMaxY) * renderer.renderMinZ, (1.0D - renderer.renderMaxY) * (1.0D - renderer.renderMinZ), renderer.renderMaxY * (1.0D - renderer.renderMinZ), renderer.renderMaxY * renderer.renderMinZ);
         renderer.brightnessTopRight = renderer.mixAoBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - renderer.renderMaxY) * renderer.renderMaxZ, (1.0D - renderer.renderMaxY) * (1.0D - renderer.renderMaxZ), renderer.renderMaxY * (1.0D - renderer.renderMaxZ), renderer.renderMaxY * renderer.renderMaxZ);
 
-        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * 0.6F;
-        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * 0.6F;
-        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * 0.6F;
+        renderer.colorRedTopLeft = renderer.colorRedBottomLeft = renderer.colorRedBottomRight = renderer.colorRedTopRight = r * state.colorMultXPos;
+        renderer.colorGreenTopLeft = renderer.colorGreenBottomLeft = renderer.colorGreenBottomRight = renderer.colorGreenTopRight = g * state.colorMultXPos;
+        renderer.colorBlueTopLeft = renderer.colorBlueBottomLeft = renderer.colorBlueBottomRight = renderer.colorBlueTopRight = b * state.colorMultXPos;
 
         renderer.colorRedTopLeft *= aoTL;
         renderer.colorGreenTopLeft *= aoTL;

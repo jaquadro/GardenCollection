@@ -33,6 +33,8 @@ public class ModularBoxRenderer
     public static final int CUT_XNEG = 1 << 4;
     public static final int CUT_XPOS = 1 << 5;
 
+    public static final int CUT_ALL = (1 << 6) - 1;
+
     public static final int FACE_YNEG = 0;
     public static final int FACE_YPOS = 1;
     public static final int FACE_ZNEG = 2;

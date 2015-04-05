@@ -51,7 +51,10 @@ public class RenderHelperLL
         },
     };
 
+    private RenderHelperState state;
+
     public boolean enableAO = true;
+    public boolean flipTexture;
 
     public double uShift;
     public double vShift;
@@ -85,6 +88,10 @@ public class RenderHelperLL
 
     // x-min, x-max, y-min, y-max, z-min, z-max
     private double[] xyz = new double[6];
+
+    public RenderHelperLL (RenderHelperState state) {
+        this.state = state;
+    }
 
     public void drawFace (int face, double x, double y, double z, IIcon icon) {
         switch (face) {
@@ -154,7 +161,10 @@ public class RenderHelperLL
 
         if (rangeX == 1 && rangeY == 1) {
             setXYZ(x, y, z);
-            setUV(icon, renderMinX + uShift, 1 - renderMaxY + vShift, renderMaxX + uShift, 1 - renderMinY + vShift);
+            if (flipTexture)
+                setUV(icon, renderMaxX + uShift, 1 - renderMaxY + vShift, renderMinX + uShift, 1 - renderMinY + vShift);
+            else
+                setUV(icon, renderMinX + uShift, 1 - renderMaxY + vShift, renderMaxX + uShift, 1 - renderMinY + vShift);
 
             if (enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
@@ -199,7 +209,10 @@ public class RenderHelperLL
 
         if (rangeZ == 1 && rangeY == 1) {
             setXYZ(x, y, z);
-            setUV(icon, renderMinZ + uShift, 1 - renderMaxY + vShift, renderMaxZ + uShift, 1 - renderMinY + vShift);
+            if (flipTexture)
+                setUV(icon, renderMaxZ + uShift, 1 - renderMaxY + vShift, renderMinZ + uShift, 1 - renderMinY + vShift);
+            else
+                setUV(icon, renderMinZ + uShift, 1 - renderMaxY + vShift, renderMaxZ + uShift, 1 - renderMinY + vShift);
 
             if (enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
@@ -229,7 +242,11 @@ public class RenderHelperLL
                 brightnessBottomLeft = brightnessLerp[iz][iy + 1];
                 brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
 
-                setUV(minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
+                if (flipTexture)
+                    setUV(1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
+                else
+                    setUV(minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
+
                 renderXYZUVAO(xyzuvMap[face]);
 
                 xyz[MINY] = xyz[MAXY];

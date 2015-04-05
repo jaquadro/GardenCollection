@@ -77,8 +77,10 @@ public class RenderHelper
         { 1, 0, 0 },
     };
 
-    private RenderHelperAO aoHelper = new RenderHelperAO();
-    private RenderHelperLL llHelper = new RenderHelperLL();
+    public RenderHelperState state = new RenderHelperState();
+
+    private RenderHelperAO aoHelper = new RenderHelperAO(state);
+    private RenderHelperLL llHelper = new RenderHelperLL(state);
 
     // u-min, u-max, v-min, v-max
     private double[] uv = new double[4];
@@ -291,6 +293,8 @@ public class RenderHelper
     public void renderFaceAOPartial (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         renderer.enableAO = true;
         setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
+        llHelper.enableAO = renderer.enableAO;
+        llHelper.flipTexture = renderer.flipTexture;
 
         switch (face) {
             case YNEG:
