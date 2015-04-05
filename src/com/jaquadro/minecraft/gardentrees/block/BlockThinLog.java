@@ -369,15 +369,17 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
     @Override
     public boolean addHitEffects (World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
         TileEntityWoodProxy te = getTileEntity(worldObj, target.blockX, target.blockY, target.blockZ);
-        BlockThinLog block = (BlockThinLog) worldObj.getBlock(target.blockX, target.blockY, target.blockZ);
+        BlockThinLog block = getBlock(worldObj, target.blockX, target.blockY, target.blockZ);
 
         if (te == null || block == null)
             return false;
 
         int protoMeta = te.getProtoMeta();
         Block protoBlock = te.getProtoBlock();
-        if (protoBlock == null)
+        if (protoBlock == null) {
             protoBlock = Blocks.log;
+            protoMeta = worldObj.getBlockMetadata(target.blockX, target.blockY, target.blockZ);
+        }
 
         float f = 0.1F;
         double xPos = target.blockX + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (f * 2.0F)) + f + block.getBlockBoundsMinX();
@@ -411,15 +413,17 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
     @Override
     public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
         TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        BlockThinLog block = (BlockThinLog) world.getBlock(x, y, z);
+        BlockThinLog block = getBlock(world, x, y, z);
 
         if (te == null || block == null)
             return false;
 
         int protoMeta = te.getProtoMeta();
         Block protoBlock = te.getProtoBlock();
-        if (protoBlock == null)
+        if (protoBlock == null) {
             protoBlock = Blocks.log;
+            protoMeta = world.getBlockMetadata(x, y, z);
+        }
 
         try {
             byte count = 4;
@@ -447,6 +451,14 @@ public class BlockThinLog extends BlockContainer implements IChainSingleAttachab
         TileEntity te = blockAccess.getTileEntity(x, y, z);
         if (te != null && te instanceof TileEntityWoodProxy)
             return (TileEntityWoodProxy) te;
+
+        return null;
+    }
+
+    private BlockThinLog getBlock (IBlockAccess blockAccess, int x, int y, int z) {
+        Block block = blockAccess.getBlock(x, y, z);
+        if (block != null && block instanceof BlockThinLog)
+            return (BlockThinLog)block;
 
         return null;
     }

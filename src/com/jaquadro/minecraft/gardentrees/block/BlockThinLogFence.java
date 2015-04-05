@@ -241,6 +241,14 @@ public class BlockThinLogFence extends BlockContainer
         return null;
     }
 
+    private BlockThinLogFence getBlock (IBlockAccess blockAccess, int x, int y, int z) {
+        Block block = blockAccess.getBlock(x, y, z);
+        if (block != null && block instanceof BlockThinLogFence)
+            return (BlockThinLogFence)block;
+
+        return null;
+    }
+
     @SideOnly(Side.CLIENT)
     public IIcon getSideIcon () {
         return sideIcon;
@@ -261,15 +269,17 @@ public class BlockThinLogFence extends BlockContainer
     @Override
     public boolean addHitEffects (World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer) {
         TileEntityWoodProxy te = getTileEntity(worldObj, target.blockX, target.blockY, target.blockZ);
-        BlockThinLogFence block = (BlockThinLogFence) worldObj.getBlock(target.blockX, target.blockY, target.blockZ);
+        BlockThinLogFence block = getBlock(worldObj, target.blockX, target.blockY, target.blockZ);
 
         if (te == null || block == null)
             return false;
 
         int protoMeta = te.getProtoMeta();
         Block protoBlock = te.getProtoBlock();
-        if (protoBlock == null)
+        if (protoBlock == null) {
             protoBlock = Blocks.log;
+            protoMeta = worldObj.getBlockMetadata(target.blockX, target.blockY, target.blockZ);
+        }
 
         float f = 0.1F;
         double xPos = target.blockX + worldObj.rand.nextDouble() * (block.getBlockBoundsMaxX() - block.getBlockBoundsMinX() - (f * 2.0F)) + f + block.getBlockBoundsMinX();
@@ -303,15 +313,17 @@ public class BlockThinLogFence extends BlockContainer
     @Override
     public boolean addDestroyEffects (World world, int x, int y, int z, int meta, EffectRenderer effectRenderer) {
         TileEntityWoodProxy te = getTileEntity(world, x, y, z);
-        BlockThinLogFence block = (BlockThinLogFence) world.getBlock(x, y, z);
+        BlockThinLogFence block = getBlock(world, x, y, z);
 
         if (te == null || block == null)
             return false;
 
         int protoMeta = te.getProtoMeta();
         Block protoBlock = te.getProtoBlock();
-        if (protoBlock == null)
+        if (protoBlock == null) {
             protoBlock = Blocks.log;
+            protoMeta = world.getBlockMetadata(x, y, z);
+        }
 
         try {
             byte count = 4;
