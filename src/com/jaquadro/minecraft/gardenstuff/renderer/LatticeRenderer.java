@@ -7,6 +7,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
@@ -98,6 +99,23 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.renderSolidBox(renderer, block, x, y, z, U9, U7, U7, xMax, U9, U9);
 
         IIcon vineIcon = ivy.getIconFull(); // Blocks.vine.getIcon(0, 0);
+
+
+        /*if (!connectXNeg || !connectXPos) {
+            boxRenderer.setIcon(Blocks.glass_pane.getIcon(4, 0));
+            if (connectZNeg) {
+                if (connectYPos)
+                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, U9, 0, U9, 1, U7);
+                if (connectYNeg)
+                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, 0, 0, U9, U7, U7);
+            }
+            if (connectZPos) {
+                if (connectYPos)
+                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, U9, U9, U9, 1, 1);
+                if (connectYNeg)
+                    boxRenderer.renderSolidBox(renderer, Blocks.glass_pane, x, y, z, U7, 0, U9, U9, U7, 1);
+            }
+        }*/
 
         /*renderer.setRenderBounds(0, .40625, 0, 1, .59375, 1);
         RenderUtil.renderFaceYNeg(renderer, ivy, x, y, z, vineIcon);

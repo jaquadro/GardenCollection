@@ -6,7 +6,7 @@ import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.block.support.Slot5Profile;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -66,10 +66,10 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
         IIcon icon = renderer.getBlockIconFromSideAndMetadata(block, 1, data);
 
-        RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
-        RenderUtil.scaleColor(activeRimColor, baseColor, .8f);
-        RenderUtil.scaleColor(activeInWallColor, baseColor, .7f);
-        RenderUtil.scaleColor(activeBottomColor, baseColor, .6f);
+        RenderHelper.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
+        RenderHelper.scaleColor(activeRimColor, baseColor, .8f);
+        RenderHelper.scaleColor(activeInWallColor, baseColor, .7f);
+        RenderHelper.scaleColor(activeBottomColor, baseColor, .6f);
 
         boxRenderer.setIcon(icon);
         boxRenderer.setExteriorColor(baseColor);
@@ -105,9 +105,9 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
             Block substrate = Block.getBlockFromItem(substrateItem.getItem());
             IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateItem.getItemDamage());
 
-            RenderUtil.calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
-            RenderUtil.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
-            RenderUtil.setTessellatorColor(tessellator, activeSubstrateColor);
+            RenderHelper.calculateBaseColor(activeSubstrateColor, substrate.getBlockColor());
+            RenderHelper.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
+            RenderHelper.setTessellatorColor(tessellator, activeSubstrateColor);
 
             double ySubstrate = (te.isUpper() ? 1 : .5) - .0625;
             if (validNW) {

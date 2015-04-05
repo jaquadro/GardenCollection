@@ -1,8 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
-import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import com.jaquadro.minecraft.gardenstuff.block.BlockHeavyChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -10,14 +8,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 
-/**
- * Created by Justin on 3/6/2015.
- */
 public class HeavyChainRenderer implements ISimpleBlockRenderingHandler
 {
     private static final Vec3[] defaultAttachPoint = new Vec3[] {

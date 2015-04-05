@@ -1,12 +1,9 @@
 package com.jaquadro.minecraft.gardencore.client.renderer.support;
 
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.lang.reflect.Array;
 
 public class ModularBoxRenderer
 {
@@ -623,27 +620,18 @@ public class ModularBoxRenderer
     }
 
     private void renderFace (int face, RenderBlocks renderer, Block block, double x, double y, double z, IIcon icon, float r, float g, float b) {
+        RenderHelper renderHelper = RenderHelper.instance;
         switch (face) {
             case FACE_YNEG:
-                RenderUtil.renderFaceYNeg(renderer, block, (int)x, (int)y, (int)z, icon, r, g, b);
-                break;
             case FACE_YPOS:
-                RenderUtil.renderFaceYPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
+            case FACE_ZPOS:
+            case FACE_XNEG:
+                renderHelper.renderFace(face, renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 break;
             case FACE_ZNEG:
-                renderer.flipTexture = flipOpposite;
-                RenderUtil.renderFaceZNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                renderer.flipTexture = false;
-                break;
-            case FACE_ZPOS:
-                RenderUtil.renderFaceZPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
-            case FACE_XNEG:
-                RenderUtil.renderFaceXNeg(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
-                break;
             case FACE_XPOS:
                 renderer.flipTexture = flipOpposite;
-                RenderUtil.renderFaceXPos(renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
+                renderHelper.renderFace(face, renderer, block, (int) x, (int) y, (int) z, icon, r, g, b);
                 renderer.flipTexture = false;
                 break;
         }

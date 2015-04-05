@@ -4,7 +4,6 @@ import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
 import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -13,7 +12,6 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
@@ -74,8 +72,8 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
             if (tile != null && tile.hasGlass()) {
                 IIcon glass = block.getIconStainedGlass(world.getBlockMetadata(x, y, z));
 
-                RenderUtil.calculateBaseColor(colorScratch, block.getBlockColor());
-                RenderUtil.setTessellatorColor(Tessellator.instance, colorScratch);
+                RenderHelper.calculateBaseColor(colorScratch, block.getBlockColor());
+                RenderHelper.setTessellatorColor(Tessellator.instance, colorScratch);
                 Tessellator.instance.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 
                 renderer.setRenderBoundsFromBlock(block);
@@ -93,7 +91,7 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
                 renderer.renderFaceYPos(block, x, y, z, glass);
             }
             else
-                RenderUtil.renderEmptyPlane(block, x, y, z, renderer);
+                RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
 
             if (tile != null && tile.getLightSource() != null) {
                 ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());

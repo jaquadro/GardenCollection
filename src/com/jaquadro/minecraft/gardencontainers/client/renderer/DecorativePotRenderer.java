@@ -2,11 +2,10 @@ package com.jaquadro.minecraft.gardencontainers.client.renderer;
 
 import com.jaquadro.minecraft.gardencontainers.block.BlockDecorativePot;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityDecorativePot;
-import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityMediumPot;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.block.support.Slot2Profile;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -68,7 +67,7 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
 
-        RenderUtil.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
+        RenderHelper.calculateBaseColor(baseColor, block.colorMultiplier(world, x, y, z));
 
         float unit = .0625f;
 
@@ -98,11 +97,11 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
             if (color == Blocks.grass.colorMultiplier(world, x, y, z))
                 color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
 
-            RenderUtil.calculateBaseColor(activeSubstrateColor, color);
-            RenderUtil.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
+            RenderHelper.calculateBaseColor(activeSubstrateColor, color);
+            RenderHelper.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
 
             renderer.setRenderBounds(.0625f, 0, .0625f, 1f - .0625f, 1f - .0625f, 1f - .0625f);
-            RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon, activeSubstrateColor[0], activeSubstrateColor[1], activeSubstrateColor[2]);
+            RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon, activeSubstrateColor[0], activeSubstrateColor[1], activeSubstrateColor[2]);
         }
 
         return true;

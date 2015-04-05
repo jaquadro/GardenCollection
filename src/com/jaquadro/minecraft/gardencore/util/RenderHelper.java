@@ -78,6 +78,7 @@ public class RenderHelper
     };
 
     private RenderHelperAO aoHelper = new RenderHelperAO();
+    private RenderHelperLL llHelper = new RenderHelperLL();
 
     // u-min, u-max, v-min, v-max
     private double[] uv = new double[4];
@@ -183,6 +184,25 @@ public class RenderHelper
         renderer.renderFaceYNeg(block, x, y, z, Blocks.dirt.getIcon(0, 0));
     }
 
+    public void setTextureOffset (double u, double v) {
+        llHelper.uShift = u;
+        llHelper.vShift = v;
+    }
+
+    public void clearTextureOffset () {
+        llHelper.uShift = 0;
+        llHelper.vShift = 0;
+    }
+
+    public void setRenderBounds (double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
+        llHelper.renderMinX = xMin;
+        llHelper.renderMinY = yMin;
+        llHelper.renderMinZ = zMin;
+        llHelper.renderMaxX = xMax;
+        llHelper.renderMaxY = yMax;
+        llHelper.renderMaxZ = zMax;
+    }
+
     public void renderBlock (RenderBlocks renderer, Block block, int meta) {
         calculateBaseColor(colorScratch, block.getRenderColor(meta));
         float r = colorScratch[0];
@@ -248,8 +268,30 @@ public class RenderHelper
             Tessellator.instance.draw();
     }
 
+    private void copyAO (RenderBlocks renderer) {
+        llHelper.brightnessBottomLeft = renderer.brightnessBottomLeft;
+        llHelper.brightnessTopLeft = renderer.brightnessTopLeft;
+        llHelper.brightnessBottomRight = renderer.brightnessBottomRight;
+        llHelper.brightnessTopRight = renderer.brightnessTopRight;
+        
+        llHelper.colorBottomLeft[0] = renderer.colorRedBottomLeft;
+        llHelper.colorBottomLeft[1] = renderer.colorGreenBottomLeft;
+        llHelper.colorBottomLeft[2] = renderer.colorBlueBottomLeft;
+        llHelper.colorBottomRight[0] = renderer.colorRedBottomRight;
+        llHelper.colorBottomRight[1] = renderer.colorGreenBottomRight;
+        llHelper.colorBottomRight[2] = renderer.colorBlueBottomRight;
+        llHelper.colorTopLeft[0] = renderer.colorRedTopLeft;
+        llHelper.colorTopLeft[1] = renderer.colorGreenTopLeft;
+        llHelper.colorTopLeft[2] = renderer.colorBlueTopLeft;
+        llHelper.colorTopRight[0] = renderer.colorRedTopRight;
+        llHelper.colorTopRight[1] = renderer.colorGreenTopRight;
+        llHelper.colorTopRight[2] = renderer.colorBlueTopRight;
+    }
+    
     public void renderFaceAOPartial (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
         renderer.enableAO = true;
+        //setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
+        
 
         switch (face) {
             case YNEG:
@@ -262,14 +304,23 @@ public class RenderHelper
                 break;
             case ZNEG:
                 aoHelper.setupZNegAOPartial(renderer, block, x, y, z, r, g, b);
+                //llHelper.drawFaceZ(face, x, y, z, icon);
                 renderer.renderFaceZNeg(block, x, y, z, icon);
                 break;
             case ZPOS:
                 aoHelper.setupZPosAOPartial(renderer, block, x, y, z, r, g, b);
+                //copyAO(renderer);
+                //setTextureOffset(.5, .5);
+                //llHelper.drawFaceZ(face, x, y, z, icon);
+                //clearTextureOffset();
                 renderer.renderFaceZPos(block, x, y, z, icon);
                 break;
             case XNEG:
                 aoHelper.setupXNegAOPartial(renderer, block, x, y, z, r, g, b);
+                //copyAO(renderer);
+                //setTextureOffset(.5, .5);
+                //llHelper.drawFaceX(face, x, y, z, icon);
+                //clearTextureOffset();
                 renderer.renderFaceXNeg(block, x, y, z, icon);
                 break;
             case XPOS:

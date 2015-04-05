@@ -3,14 +3,12 @@ package com.jaquadro.minecraft.gardenstuff.renderer.item;
 import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
 import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.IItemRenderer;
@@ -81,8 +79,8 @@ public class LanternItemRenderer implements IItemRenderer
             GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glDisable(GL11.GL_NORMALIZE);
 
-            renderHelper.calculateBaseColor(colorScratch, block.getBlockColor());
-            RenderUtil.setTessellatorColor(Tessellator.instance, colorScratch);
+            RenderHelper.calculateBaseColor(colorScratch, block.getBlockColor());
+            RenderHelper.setTessellatorColor(Tessellator.instance, colorScratch);
             Tessellator.instance.setBrightness(RenderHelper.FULL_BRIGHTNESS);
 
             IIcon glass = block.getIconStainedGlass(item.getItemDamage());

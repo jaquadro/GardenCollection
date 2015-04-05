@@ -4,11 +4,10 @@ import com.jaquadro.minecraft.gardencontainers.block.BlockLargePot;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.core.ClientProxy;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
-import com.jaquadro.minecraft.gardencore.util.RenderUtil;
+import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
@@ -111,10 +110,10 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
                 if (color == Blocks.grass.colorMultiplier(world, x, y, z))
                     color = ColorizerGrass.getGrassColor(te.getBiomeTemperature(), te.getBiomeHumidity());
 
-                RenderUtil.calculateBaseColor(colorScratch, color);
+                RenderHelper.calculateBaseColor(colorScratch, color);
 
                 renderer.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
-                RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
+                RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
             }
         }
 
@@ -124,7 +123,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
     private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, BlockLargePot block, int modelId, RenderBlocks renderer) {
         TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
         if (tileEntity == null) {
-            RenderUtil.renderEmptyPlane(block, x, y, z, renderer);
+            RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
             return true;
         }
 
@@ -159,14 +158,14 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
                 IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
 
                 renderer.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
-                RenderUtil.renderFaceYPos(renderer, block, x, y, z, substrateIcon);
+                RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon);
 
                 didRender = true;
             }
         }
 
         if (!didRender)
-            RenderUtil.renderEmptyPlane(block, x, y, z, renderer);
+            RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
 
         return true;
     }
