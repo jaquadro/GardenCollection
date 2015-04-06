@@ -61,6 +61,8 @@ public class GardenContainers
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
         GardenCoreAPI.instance().registerSmallFlameHostBlock(ModBlocks.decorativePot, 0);
+        GardenCoreAPI.instance().registerSmallFlameHostBlock(ModBlocks.decorativePot, 1);
+        GardenCoreAPI.instance().registerSmallFlameHostBlock(ModBlocks.decorativePot, 2);
         recipes.init();
     }
 }
