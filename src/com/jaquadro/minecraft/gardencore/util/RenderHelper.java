@@ -539,7 +539,7 @@ public class RenderHelper
 
         if (renderer.blockAccess == null) {
             tessellator.startDrawingQuads();
-            tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
+            tessellator.setColorOpaque_F(r, g, b);
             tessellator.setNormal(norm[0], norm[1], norm[2]);
         }
         else {
