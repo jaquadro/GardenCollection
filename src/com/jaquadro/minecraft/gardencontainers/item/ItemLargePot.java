@@ -32,6 +32,16 @@ public class ItemLargePot extends ItemMultiTexture
     }
 
     @Override
+    public String getUnlocalizedName (ItemStack stack) {
+        int i = stack.getItemDamage() & 15;
+
+        if (i < 0 || i >= this.field_150942_c.length)
+            i = 0;
+
+        return super.getUnlocalizedName() + "." + this.field_150942_c[i];
+    }
+
+    @Override
     @SideOnly(Side.CLIENT)
     public void addInformation (ItemStack itemStack, EntityPlayer player, List list, boolean par4) {
         PatternConfig pattern = GardenContainers.config.getPattern((itemStack.getItemDamage() >> 8) & 255);
