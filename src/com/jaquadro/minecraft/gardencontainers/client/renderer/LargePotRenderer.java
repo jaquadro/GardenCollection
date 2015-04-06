@@ -35,6 +35,8 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         if (blendEnabled)
             GL11.glDisable(GL11.GL_BLEND);
 
+        GL11.glDepthMask(true);
+
         boxRenderer.setUnit(.0625);
         boxRenderer.setIcon(icon);
         boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
