@@ -26,6 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Random;
 
 public class BlockDecorativePot extends BlockGardenContainer
 {
@@ -58,6 +59,11 @@ public class BlockDecorativePot extends BlockGardenContainer
             new BasicSlotProfile.Slot(Slot2Profile.SLOT_CENTER, commonType, allSize),
             new BasicSlotProfile.Slot(Slot2Profile.SLOT_COVER, new PlantType[]{PlantType.GROUND_COVER}, allSize),
         });
+    }
+
+    @Override
+    public int damageDropped (int meta) {
+        return meta;
     }
 
     @Override
