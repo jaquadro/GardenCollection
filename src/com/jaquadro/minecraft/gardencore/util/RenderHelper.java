@@ -186,23 +186,8 @@ public class RenderHelper
         renderer.renderFaceYNeg(block, x, y, z, Blocks.dirt.getIcon(0, 0));
     }
 
-    public void setTextureOffset (double u, double v) {
-        llHelper.uShift = u;
-        llHelper.vShift = v;
-    }
-
-    public void clearTextureOffset () {
-        llHelper.uShift = 0;
-        llHelper.vShift = 0;
-    }
-
     public void setRenderBounds (double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
-        llHelper.renderMinX = xMin;
-        llHelper.renderMinY = yMin;
-        llHelper.renderMinZ = zMin;
-        llHelper.renderMaxX = xMax;
-        llHelper.renderMaxY = yMax;
-        llHelper.renderMaxZ = zMax;
+        state.setRenderBounds(xMin, yMin, zMin, xMax, yMax, zMax);
     }
 
     public void renderBlock (RenderBlocks renderer, Block block, int meta) {
@@ -294,7 +279,7 @@ public class RenderHelper
         renderer.enableAO = true;
         setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
         llHelper.enableAO = renderer.enableAO;
-        llHelper.flipTexture = renderer.flipTexture;
+        state.flipTexture = renderer.flipTexture;
 
         switch (face) {
             case YNEG:

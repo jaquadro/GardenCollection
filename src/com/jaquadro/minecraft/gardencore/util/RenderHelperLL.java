@@ -54,17 +54,6 @@ public class RenderHelperLL
     private RenderHelperState state;
 
     public boolean enableAO = true;
-    public boolean flipTexture;
-
-    public double uShift;
-    public double vShift;
-
-    public double renderMinX;
-    public double renderMinY;
-    public double renderMinZ;
-    public double renderMaxX;
-    public double renderMaxY;
-    public double renderMaxZ;
 
     public float[] colorTopLeft = new float[3];
     public float[] colorTopRight = new float[3];
@@ -111,12 +100,12 @@ public class RenderHelperLL
     }
 
     private void drawFaceY (int face, double x, double y, double z, IIcon icon) {
-        int rangeX = (int)(Math.ceil(renderMaxX + uShift) - Math.floor(renderMinX + uShift));
-        int rangeZ = (int)(Math.ceil(renderMaxZ + vShift) - Math.floor(renderMinZ + vShift));
+        int rangeX = (int)(Math.ceil(state.renderMaxX + state.shiftU) - Math.floor(state.renderMinX + state.shiftU));
+        int rangeZ = (int)(Math.ceil(state.renderMaxZ + state.shiftV) - Math.floor(state.renderMinZ + state.shiftV));
 
         if (rangeX == 1 && rangeZ == 1) {
             setXYZ(x, y, z);
-            setUV(icon, renderMinX + uShift, renderMinZ + vShift, renderMaxX + uShift, renderMaxZ + vShift);
+            setUV(icon, state.renderMinX + state.shiftU, state.renderMinZ + state.shiftV, state.renderMaxX + state.shiftU, state.renderMaxZ + state.shiftV);
 
             if (enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
@@ -125,18 +114,18 @@ public class RenderHelperLL
             return;
         }
 
-        double uStart = (renderMinX + uShift + rangeX) % 1.0;
-        double uStop = (renderMaxX + uShift + rangeX) % 1.0;
-        double vStart = (renderMinZ + vShift + rangeZ) % 1.0;
-        double vStop = (renderMaxZ + vShift + rangeZ) % 1.0;
+        double uStart = (state.renderMinX + state.shiftU + rangeX) % 1.0;
+        double uStop = (state.renderMaxX + state.shiftU + rangeX) % 1.0;
+        double vStart = (state.renderMinZ + state.shiftV + rangeZ) % 1.0;
+        double vStop = (state.renderMaxZ + state.shiftV + rangeZ) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeZ, icon);
-        setupAOBrightnessLerp(renderMinX, renderMaxX, renderMinZ, renderMaxZ, rangeX, rangeZ);
+        setupAOBrightnessLerp(state.renderMinX, state.renderMaxX, state.renderMinZ, state.renderMaxZ, rangeX, rangeZ);
         setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
             xyz[MAXX] = xyz[MINX] + maxUDiv[ix] - minUDiv[ix];
-            xyz[MINZ] = z + renderMinZ;
+            xyz[MINZ] = z + state.renderMinZ;
 
             for (int iz = 0; iz < rangeZ; iz++) {
                 xyz[MAXZ] = xyz[MINZ] + maxVDiv[iz] - minVDiv[iz];
@@ -156,15 +145,15 @@ public class RenderHelperLL
     }
 
     private void drawFaceZ (int face, double x, double y, double z, IIcon icon) {
-        int rangeX = (int)(Math.ceil(renderMaxX + uShift) - Math.floor(renderMinX + uShift));
-        int rangeY = (int)(Math.ceil(renderMaxY + vShift) - Math.floor(renderMinY + vShift));
+        int rangeX = (int)(Math.ceil(state.renderMaxX + state.shiftU) - Math.floor(state.renderMinX + state.shiftU));
+        int rangeY = (int)(Math.ceil(state.renderMaxY + state.shiftV) - Math.floor(state.renderMinY + state.shiftV));
 
         if (rangeX == 1 && rangeY == 1) {
             setXYZ(x, y, z);
-            if (flipTexture)
-                setUV(icon, renderMaxX + uShift, 1 - renderMaxY + vShift, renderMinX + uShift, 1 - renderMinY + vShift);
+            if (state.flipTexture)
+                setUV(icon, state.renderMaxX + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMinX + state.shiftU, 1 - state.renderMinY + state.shiftV);
             else
-                setUV(icon, renderMinX + uShift, 1 - renderMaxY + vShift, renderMaxX + uShift, 1 - renderMinY + vShift);
+                setUV(icon, state.renderMinX + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMaxX + state.shiftU, 1 - state.renderMinY + state.shiftV);
 
             if (enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
@@ -173,18 +162,18 @@ public class RenderHelperLL
             return;
         }
 
-        double uStart = (renderMinX + uShift + rangeX) % 1.0;
-        double uStop = (renderMaxX + uShift + rangeX) % 1.0;
-        double vStart = (renderMinY + vShift + rangeY) % 1.0;
-        double vStop = (renderMaxY + vShift + rangeY) % 1.0;
+        double uStart = (state.renderMinX + state.shiftU + rangeX) % 1.0;
+        double uStop = (state.renderMaxX + state.shiftU + rangeX) % 1.0;
+        double vStart = (state.renderMinY + state.shiftV + rangeY) % 1.0;
+        double vStop = (state.renderMaxY + state.shiftV + rangeY) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeY, icon);
-        setupAOBrightnessLerp(renderMinX, renderMaxX, renderMinY, renderMaxY, rangeX, rangeY);
+        setupAOBrightnessLerp(state.renderMinX, state.renderMaxX, state.renderMinY, state.renderMaxY, rangeX, rangeY);
         setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
             xyz[MAXX] = xyz[MINX] + maxUDiv[ix] - minUDiv[ix];
-            xyz[MINY] = y + renderMinY;
+            xyz[MINY] = y + state.renderMinY;
 
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
@@ -204,15 +193,15 @@ public class RenderHelperLL
     }
 
     private void drawFaceX (int face, double x, double y, double z, IIcon icon) {
-        int rangeZ = (int)(Math.ceil(renderMaxZ + uShift) - Math.floor(renderMinZ + uShift));
-        int rangeY = (int)(Math.ceil(renderMaxY + vShift) - Math.floor(renderMinY + vShift));
+        int rangeZ = (int)(Math.ceil(state.renderMaxZ + state.shiftU) - Math.floor(state.renderMinZ + state.shiftU));
+        int rangeY = (int)(Math.ceil(state.renderMaxY + state.shiftV) - Math.floor(state.renderMinY + state.shiftV));
 
         if (rangeZ == 1 && rangeY == 1) {
             setXYZ(x, y, z);
-            if (flipTexture)
-                setUV(icon, renderMaxZ + uShift, 1 - renderMaxY + vShift, renderMinZ + uShift, 1 - renderMinY + vShift);
+            if (state.flipTexture)
+                setUV(icon, state.renderMaxZ + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMinZ + state.shiftU, 1 - state.renderMinY + state.shiftV);
             else
-                setUV(icon, renderMinZ + uShift, 1 - renderMaxY + vShift, renderMaxZ + uShift, 1 - renderMinY + vShift);
+                setUV(icon, state.renderMinZ + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMaxZ + state.shiftU, 1 - state.renderMinY + state.shiftV);
 
             if (enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
@@ -221,18 +210,18 @@ public class RenderHelperLL
             return;
         }
 
-        double uStart = (renderMinZ + uShift + rangeZ) % 1.0;
-        double uStop = (renderMaxZ + uShift + rangeZ) % 1.0;
-        double vStart = (renderMinY + vShift + rangeY) % 1.0;
-        double vStop = (renderMaxY + vShift + rangeY) % 1.0;
+        double uStart = (state.renderMinZ + state.shiftU + rangeZ) % 1.0;
+        double uStop = (state.renderMaxZ + state.shiftU + rangeZ) % 1.0;
+        double vStart = (state.renderMinY + state.shiftV + rangeY) % 1.0;
+        double vStop = (state.renderMaxY + state.shiftV + rangeY) % 1.0;
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeZ, rangeY, icon);
-        setupAOBrightnessLerp(renderMinZ, renderMaxZ, renderMinY, renderMaxY, rangeZ, rangeY);
+        setupAOBrightnessLerp(state.renderMinZ, state.renderMaxZ, state.renderMinY, state.renderMaxY, rangeZ, rangeY);
         setXYZ(x, y, z);
 
         for (int iz = 0; iz < rangeZ; iz++) {
             xyz[MAXZ] = xyz[MINZ] + maxUDiv[iz] - minUDiv[iz];
-            xyz[MINY] = y + renderMinY;
+            xyz[MINY] = y + state.renderMinY;
 
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
@@ -242,7 +231,7 @@ public class RenderHelperLL
                 brightnessBottomLeft = brightnessLerp[iz][iy + 1];
                 brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
 
-                if (flipTexture)
+                if (state.flipTexture)
                     setUV(1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
                 else
                     setUV(minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
@@ -329,12 +318,12 @@ public class RenderHelperLL
     }
 
     private void setXYZ (double x, double y, double z) {
-        xyz[0] = x + renderMinX;
-        xyz[1] = x + renderMaxX;
-        xyz[2] = y + renderMinY;
-        xyz[3] = y + renderMaxY;
-        xyz[4] = z + renderMinZ;
-        xyz[5] = z + renderMaxZ;
+        xyz[0] = x + state.renderMinX;
+        xyz[1] = x + state.renderMaxX;
+        xyz[2] = y + state.renderMinY;
+        xyz[3] = y + state.renderMaxY;
+        xyz[4] = z + state.renderMinZ;
+        xyz[5] = z + state.renderMaxZ;
     }
 
     private void renderXYZUV (int[][] index) {
