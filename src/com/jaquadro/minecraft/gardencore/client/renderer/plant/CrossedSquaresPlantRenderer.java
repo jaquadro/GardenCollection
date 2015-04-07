@@ -27,8 +27,8 @@ public class CrossedSquaresPlantRenderer implements IPlantRenderer
         IIcon iicon = renderer.getBlockIconFromSideAndMetadata(block, 0, meta);
 
         for (AxisAlignedBB bound : bounds) {
-            renderer.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
-            RenderHelper.instance.drawCrossedSquaresBounded(renderer, iicon, x, y, z, 1);
+            RenderHelper.instance.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
+            RenderHelper.instance.drawCrossedSquaresBounded(iicon, x, y, z, 1);
         }
     }
 }

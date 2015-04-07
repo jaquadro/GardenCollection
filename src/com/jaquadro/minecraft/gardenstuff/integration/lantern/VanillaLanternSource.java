@@ -34,14 +34,14 @@ public class VanillaLanternSource
         public void renderItem (RenderBlocks renderer, IItemRenderer.ItemRenderType renderType, int meta) {
             RenderHelper renderHelper = RenderHelper.instance;
 
-            renderer.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
-            renderHelper.renderFace(RenderHelper.ZNEG, renderer, Blocks.torch, Blocks.torch.getIcon(2, 0), meta);
-            renderHelper.renderFace(RenderHelper.ZPOS, renderer, Blocks.torch, Blocks.torch.getIcon(3, 0), meta);
-            renderer.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
-            renderHelper.renderFace(RenderHelper.XNEG, renderer, Blocks.torch, Blocks.torch.getIcon(4, 0), meta);
-            renderHelper.renderFace(RenderHelper.XPOS, renderer, Blocks.torch, Blocks.torch.getIcon(5, 0), meta);
-            renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, Blocks.torch, Blocks.torch.getIcon(1, 0), meta);
+            renderHelper.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
+            renderHelper.renderFace(RenderHelper.ZNEG, null, Blocks.torch, Blocks.torch.getIcon(2, 0), meta);
+            renderHelper.renderFace(RenderHelper.ZPOS, null, Blocks.torch, Blocks.torch.getIcon(3, 0), meta);
+            renderHelper.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
+            renderHelper.renderFace(RenderHelper.XNEG, null, Blocks.torch, Blocks.torch.getIcon(4, 0), meta);
+            renderHelper.renderFace(RenderHelper.XPOS, null, Blocks.torch, Blocks.torch.getIcon(5, 0), meta);
+            renderHelper.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
+            renderHelper.renderFace(RenderHelper.YPOS, null, Blocks.torch, Blocks.torch.getIcon(1, 0), meta);
         }
 
         @Override
@@ -76,14 +76,14 @@ public class VanillaLanternSource
         public void renderItem (RenderBlocks renderer, IItemRenderer.ItemRenderType renderType, int meta) {
             RenderHelper renderHelper = RenderHelper.instance;
 
-            renderer.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
-            renderHelper.renderFace(RenderHelper.ZNEG, renderer, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(2, 0), meta);
-            renderHelper.renderFace(RenderHelper.ZPOS, renderer, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(3, 0), meta);
-            renderer.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
-            renderHelper.renderFace(RenderHelper.XNEG, renderer, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(4, 0), meta);
-            renderHelper.renderFace(RenderHelper.XPOS, renderer, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(5, 0), meta);
-            renderer.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(1, 0), meta);
+            renderHelper.setRenderBounds(0, 0, 0.4375, 1, 1, 0.5625);
+            renderHelper.renderFace(RenderHelper.ZNEG, null, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(2, 0), meta);
+            renderHelper.renderFace(RenderHelper.ZPOS, null, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(3, 0), meta);
+            renderHelper.setRenderBounds(0.4375, 0, 0, 0.5625, 1, 1);
+            renderHelper.renderFace(RenderHelper.XNEG, null, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(4, 0), meta);
+            renderHelper.renderFace(RenderHelper.XPOS, null, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(5, 0), meta);
+            renderHelper.setRenderBounds(0.4375, 0, 0.4375, 0.5625, 0.625, 0.5625);
+            renderHelper.renderFace(RenderHelper.YPOS, null, Blocks.redstone_torch, Blocks.redstone_torch.getIcon(1, 0), meta);
         }
 
         @Override
@@ -123,8 +123,8 @@ public class VanillaLanternSource
         @Override
         @SideOnly(Side.CLIENT)
         public void renderItem (RenderBlocks renderer, IItemRenderer.ItemRenderType renderType, int meta) {
-            renderer.setRenderBounds(.3, 0, .3, .7, .4, .7);
-            RenderHelper.instance.renderBlock(renderer, Blocks.glowstone, 0);
+            RenderHelper.instance.setRenderBounds(.3, 0, .3, .7, .4, .7);
+            RenderHelper.instance.renderBlock(null, Blocks.glowstone, 0);
         }
     }
 }

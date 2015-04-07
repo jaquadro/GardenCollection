@@ -44,7 +44,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         GL11.glRotatef(90, 0, 1, 0);
         GL11.glTranslatef(-.5f, -.5f, -.5f);
 
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
 
         GL11.glEnable(GL11.GL_BLEND);
 
@@ -54,7 +54,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.setUnit(0);
             boxRenderer.setIcon(block.getOverlayIcon((metadata >> 8) & 255));
 
-            boxRenderer.renderExterior(renderer, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, cutFlags);
+            boxRenderer.renderExterior(null, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, cutFlags);
         }
 
         if (!blendEnabled)
@@ -99,7 +99,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
         connectFlags |= te.isAttachedNeighbor(x, y, z + 1) ? ModularBoxRenderer.CONNECT_ZPOS : 0;
         connectFlags |= te.isAttachedNeighbor(x + 1, y, z + 1) ? ModularBoxRenderer.CONNECT_ZPOS_XPOS : 0;
 
-        boxRenderer.renderBox(renderer, block, x, y, z, 0, 0, 0, 1, 1, 1, connectFlags, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(world, block, x, y, z, 0, 0, 0, 1, 1, 1, connectFlags, ModularBoxRenderer.CUT_YPOS);
 
         if (te != null && te.getSubstrate() != null && te.getSubstrate().getItem() instanceof ItemBlock) {
             Block substrate = Block.getBlockFromItem(te.getSubstrate().getItem());
@@ -114,8 +114,8 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
 
                 RenderHelper.calculateBaseColor(colorScratch, color);
 
-                renderer.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
-                RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
+                RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
+                RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
             }
         }
 
@@ -125,7 +125,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
     private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, BlockLargePot block, int modelId, RenderBlocks renderer) {
         TileEntityLargePot tileEntity = block.getTileEntity(world, x, y, z);
         if (tileEntity == null) {
-            RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
+            RenderHelper.instance.renderEmptyPlane(x, y, z);
             return true;
         }
 
@@ -146,7 +146,7 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
                 boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
                 boxRenderer.setExteriorIcon(icon);
 
-                boxRenderer.renderExterior(renderer, block, x, y, z, 0, 0, 0, 1, 1, 1, connectFlags, cutFlags);
+                boxRenderer.renderExterior(world, block, x, y, z, 0, 0, 0, 1, 1, 1, connectFlags, cutFlags);
 
                 didRender = true;
             }
@@ -159,15 +159,15 @@ public class LargePotRenderer implements ISimpleBlockRenderingHandler
             if (substrate == Blocks.water) {
                 IIcon substrateIcon = renderer.getBlockIconFromSideAndMetadata(substrate, 1, substrateData);
 
-                renderer.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
-                RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon);
+                RenderHelper.instance.state.setRenderBounds(0, 0, 0, 1, 1 - .0625, 1);
+                RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, x, y, z, substrateIcon);
 
                 didRender = true;
             }
         }
 
         if (!didRender)
-            RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
+            RenderHelper.instance.renderEmptyPlane(x, y, z);
 
         return true;
     }

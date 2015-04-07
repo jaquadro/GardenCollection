@@ -46,7 +46,7 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
         GL11.glRotatef(90, 0, 1, 0);
         GL11.glTranslatef(-.5f, -.5f, -.5f);
 
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0 * unit, 4 * unit, 4 * unit, 16 * unit, 12 * unit, 12 * unit, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, 0 * unit, 4 * unit, 4 * unit, 16 * unit, 12 * unit, 12 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
         GL11.glTranslatef(.5f, .5f, .5f);
     }
@@ -85,19 +85,19 @@ public class WindowBoxRenderer implements ISimpleBlockRenderingHandler
 
         if (validNW) {
             int connect = 0 | (validNE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validSW ? ModularBoxRenderer.CONNECT_ZPOS : 0);
-            boxRenderer.renderOctant(renderer, block, x, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
+            boxRenderer.renderOctant(world, block, x, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
         }
         if (validNE) {
             int connect = 0 | (validNW ? ModularBoxRenderer.CONNECT_XNEG : 0) | (validSE ? ModularBoxRenderer.CONNECT_ZPOS : 0);
-            boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
+            boxRenderer.renderOctant(world, block, x + .5, y + (te.isUpper() ? .5 : 0), z, connect, ModularBoxRenderer.CUT_YPOS);
         }
         if (validSW) {
             int connect = 0 | (validSE ? ModularBoxRenderer.CONNECT_XPOS : 0) | (validNW ? ModularBoxRenderer.CONNECT_ZNEG : 0);
-            boxRenderer.renderOctant(renderer, block, x, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
+            boxRenderer.renderOctant(world, block, x, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
         }
         if (validSE) {
             int connect = 0 | (validSW ? ModularBoxRenderer.CONNECT_XNEG : 0) | (validNE ? ModularBoxRenderer.CONNECT_ZNEG : 0);
-            boxRenderer.renderOctant(renderer, block, x + .5, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
+            boxRenderer.renderOctant(world, block, x + .5, y + (te.isUpper() ? .5 : 0), z + .5, connect, ModularBoxRenderer.CUT_YPOS);
         }
 
         ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z, TileEntityGarden.SLOT_INVALID);

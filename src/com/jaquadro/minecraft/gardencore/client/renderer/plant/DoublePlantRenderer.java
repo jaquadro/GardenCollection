@@ -31,8 +31,8 @@ public class DoublePlantRenderer implements IPlantRenderer
 
         if (height == 1) {
             for (AxisAlignedBB bound : bounds) {
-                renderer.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
-                RenderHelper.instance.drawCrossedSquaresBounded(renderer, iicon, x, y, z, 1);
+                RenderHelper.instance.setRenderBounds(bound.minX, bound.minY, bound.minZ, bound.maxX, bound.maxY, bound.maxZ);
+                RenderHelper.instance.drawCrossedSquaresBounded(iicon, x, y, z, 1);
             }
         }
         else {
@@ -42,8 +42,8 @@ public class DoublePlantRenderer implements IPlantRenderer
                     bound = slice;
             }
 
-            renderer.setRenderBounds(bound.minX, 0, bound.minZ, bound.maxX, 1, bound.maxZ);
-            RenderHelper.instance.drawCrossedSquaresBounded(renderer, iicon, x, y, z, 1);
+            RenderHelper.instance.setRenderBounds(bound.minX, 0, bound.minZ, bound.maxX, 1, bound.maxZ);
+            RenderHelper.instance.drawCrossedSquaresBounded(iicon, x, y, z, 1);
         }
     }
 

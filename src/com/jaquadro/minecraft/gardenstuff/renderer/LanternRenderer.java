@@ -91,7 +91,7 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
                 renderer.renderFaceYPos(block, x, y, z, glass);
             }
             else
-                RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
+                RenderHelper.instance.renderEmptyPlane(x, y, z);
 
             if (tile != null && tile.getLightSource() != null) {
                 ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());
@@ -114,10 +114,8 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
         if (upperBlock instanceof IChainSingleAttachable) {
             Vec3 attach = ((IChainSingleAttachable) upperBlock).getChainAttachPoint(world, x, y + 1, z, 0);
             if (attach != null && attach != defaultAttachPoint) {
-                renderer.setRenderBounds(0, 0, 0, 1, attach.yCoord, 1);
-                renderer.setOverrideBlockTexture(ModBlocks.lightChain.getIcon(0, 4));
-                RenderHelper.instance.renderCrossedSquares(renderer, ModBlocks.heavyChain, x, y + 1, z);
-                renderer.setOverrideBlockTexture(null);
+                RenderHelper.instance.setRenderBounds(0, 0, 0, 1, attach.yCoord, 1);
+                RenderHelper.instance.renderCrossedSquares(world, ModBlocks.heavyChain, x, y + 1, z, ModBlocks.lightChain.getIcon(0, 4));
             }
         }
     }

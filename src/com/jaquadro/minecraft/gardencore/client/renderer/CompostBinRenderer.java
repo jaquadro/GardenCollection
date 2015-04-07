@@ -37,22 +37,22 @@ public class CompostBinRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.setInteriorIcon(block.getIcon(side, metadata), side);
         }
 
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
 
         boxRenderer.setUnit(0);
         boxRenderer.setInteriorIcon(block.getIcon(1, metadata));
 
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .125, .625, .9375, .875, .75, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .125, .25, .9375, .875, .375, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .125, .625, .9375, .875, .75, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .125, .25, .9375, .875, .375, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
 
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .125, .625, 0, .875, .75, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .125, .25, 0, .875, .375, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .125, .625, 0, .875, .75, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .125, .25, 0, .875, .375, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
 
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .9375, .625, .125, 1, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, .9375, .25, .125, 1, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .9375, .625, .125, 1, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, .9375, .25, .125, 1, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
 
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, 0, .625, .125, .0625, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
-        boxRenderer.renderInterior(renderer, block, 0, 0, 0, 0, .25, .125, .0625, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, 0, .625, .125, .0625, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(null, block, 0, 0, 0, 0, .25, .125, .0625, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
 
         GL11.glTranslatef(.5f, .5f, .5f);
     }
@@ -77,33 +77,33 @@ public class CompostBinRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.setInteriorIcon(block.getIcon(world, x, y, z, side), side);
         }
 
-        boxRenderer.renderBox(renderer, block, x, y, z, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(world, block, x, y, z, 0, 0, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YPOS);
 
         boxRenderer.setUnit(0);
         boxRenderer.setInteriorIcon(block.getIcon(world, x, y, z, 1));
 
-        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .625, .9375, .875, .75, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
-        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .25, .9375, .875, .375, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .125, .625, .9375, .875, .75, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .125, .25, .9375, .875, .375, 1, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
 
-        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .625, 0, .875, .75, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
-        boxRenderer.renderInterior(renderer, block, x, y, z, .125, .25, 0, .875, .375, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .125, .625, 0, .875, .75, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .125, .25, 0, .875, .375, .0625, 0, ModularBoxRenderer.CUT_ZNEG | ModularBoxRenderer.CUT_ZPOS);
 
-        boxRenderer.renderInterior(renderer, block, x, y, z, .9375, .625, .125, 1, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
-        boxRenderer.renderInterior(renderer, block, x, y, z, .9375, .25, .125, 1, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .9375, .625, .125, 1, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, .9375, .25, .125, 1, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
 
-        boxRenderer.renderInterior(renderer, block, x, y, z, 0, .625, .125, .0625, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
-        boxRenderer.renderInterior(renderer, block, x, y, z, 0, .25, .125, .0625, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, 0, .625, .125, .0625, .75, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
+        boxRenderer.renderInterior(world, block, x, y, z, 0, .25, .125, .0625, .375, .875, 0, ModularBoxRenderer.CUT_XNEG | ModularBoxRenderer.CUT_XPOS);
 
 
         TileEntityCompostBin te = (TileEntityCompostBin) world.getTileEntity(x, y, z);
         if (te != null) {
             if (te.hasInputItems()) {
                 boxRenderer.setExteriorIcon(Blocks.dirt.getIcon(1, 2));
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
+                boxRenderer.renderSolidBox(world, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
             }
             else if (te.hasOutputItems()) {
                 boxRenderer.setExteriorIcon(ModBlocks.gardenSoil.getIcon(1, 0));
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
+                boxRenderer.renderSolidBox(world, block, x, y, z, .0625, .0625, .0625, 1 - .0625, 1 - .0625, 1 - .0625);
             }
         }
 

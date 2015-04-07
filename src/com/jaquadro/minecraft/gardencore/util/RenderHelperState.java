@@ -10,6 +10,8 @@ public class RenderHelperState
     public double renderMaxZ;
 
     public boolean flipTexture;
+    public boolean renderFromInside;
+    public boolean enableAO;
 
     public float shiftU;
     public float shiftV;
@@ -20,6 +22,16 @@ public class RenderHelperState
     public float colorMultZPos;
     public float colorMultXNeg;
     public float colorMultXPos;
+
+    public int brightnessTopLeft;
+    public int brightnessBottomLeft;
+    public int brightnessBottomRight;
+    public int brightnessTopRight;
+
+    public final float[] colorTopLeft = new float[3];
+    public final float[] colorBottomLeft = new float[3];
+    public final float[] colorBottomRight = new float[3];
+    public final float[] colorTopRight = new float[3];
 
     public RenderHelperState () {
         resetColorMult();
@@ -51,5 +63,28 @@ public class RenderHelperState
     public void resetTextureOffset () {
         shiftU = 0;
         shiftV = 0;
+    }
+
+    public void setColor (float r, float g, float b) {
+        colorTopLeft[0] = r;
+        colorTopLeft[1] = g;
+        colorTopLeft[2] = b;
+
+        colorBottomLeft[0] = r;
+        colorBottomLeft[1] = g;
+        colorBottomLeft[2] = b;
+
+        colorBottomRight[0] = r;
+        colorBottomRight[1] = g;
+        colorBottomRight[2] = b;
+
+        colorTopRight[0] = r;
+        colorTopRight[1] = g;
+        colorTopRight[2] = b;
+    }
+
+    public void scaleColor (float[] color, float scale) {
+        for (int i = 0; i < color.length; i++)
+            color[i] *= scale;
     }
 }

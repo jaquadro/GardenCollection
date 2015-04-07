@@ -36,8 +36,8 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
         boxRenderer.setColor(ModularBoxRenderer.COLOR_WHITE);
         boxRenderer.setIcon(block.getIcon(0, metadata));
 
-        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 0, U7 + .01, U7 + .01, 1, U9 - .01, U9 - .01);
-        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, U7 + .01, 0, U7 + .01, U9 - .01, 1, U9 - .01);
+        boxRenderer.renderSolidBox(null, block, 0, 0, 0, 0, U7 + .01, U7 + .01, 1, U9 - .01, U9 - .01);
+        boxRenderer.renderSolidBox(null, block, 0, 0, 0, U7 + .01, 0, U7 + .01, U9 - .01, 1, U9 - .01);
 
         GL11.glTranslatef(.5f, .5f, .5f);
     }
@@ -74,31 +74,31 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
         boolean extXNeg = (connectFlags & 1024) != 0;
         boolean extXPos = (connectFlags & 2048) != 0;
 
-        boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U7, U7, U9, U9, U9);
+        boxRenderer.renderSolidBox(world, block, x, y, z, U7, U7, U7, U9, U9, U9);
 
         float yMin = extYNeg ? UN4 : (connectYNeg ? 0 : U7);
         float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
 
         if (yMin < U7)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, yMin, U7, U9, U7, U9);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U7, yMin, U7, U9, U7, U9);
         if (yMax > U9)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U9, U7, U9, yMax, U9);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U7, U9, U7, U9, yMax, U9);
 
         float zMin = extZNeg ? UN4 : (connectZNeg ? 0 : U7);
         float zMax = extZPos ? U20 : (connectZPos ? 1 : U9);
 
         if (zMin < U7)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U7, zMin, U9, U9, U7);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U7, U7, zMin, U9, U9, U7);
         if (zMax > U9)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, U7, U9, U9, U9, zMax);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U7, U7, U9, U9, U9, zMax);
 
         float xMin = extXNeg ? UN4 : (connectXNeg ? 0 : U7);
         float xMax = extXPos ? U20 : (connectXPos ? 1 : U9);
 
         if (xMin < U7)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, xMin, U7, U7, U7, U9, U9);
+            boxRenderer.renderSolidBox(world, block, x, y, z, xMin, U7, U7, U7, U9, U9);
         if (xMax > U9)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U9, U7, U7, xMax, U9, U9);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U9, U7, U7, xMax, U9, U9);
 
         IIcon vineIcon = Blocks.vine.getIcon(0, 0);
 

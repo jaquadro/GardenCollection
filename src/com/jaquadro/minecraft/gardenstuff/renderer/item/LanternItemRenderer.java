@@ -51,24 +51,22 @@ public class LanternItemRenderer implements IItemRenderer
         }
 
         block.setBlockBoundsForItemRender();
-        renderer.setRenderBoundsFromBlock(block);
-        renderHelper.renderBlock(renderer, block, item.getItemDamage());
+        renderHelper.setRenderBounds(block);
+        renderHelper.renderBlock(null, block, item.getItemDamage());
 
         if (renderType != ItemRenderType.INVENTORY) {
-            renderer.renderFromInside = true;
-            renderer.renderMinY = .005f;
-            renderHelper.renderBlock(renderer, block, item.getItemDamage());
-            renderer.renderFromInside = false;
+            renderHelper.state.renderFromInside = true;
+            renderHelper.state.renderMinY = .005f;
+            renderHelper.renderBlock(null, block, item.getItemDamage());
+            renderHelper.state.renderFromInside = false;
         }
         else {
-            renderer.renderMaxY = .005f;
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, block.getIcon(0, item.getItemDamage()), 0);
+            renderHelper.state.renderMaxY = .005f;
+            renderHelper.renderFace(RenderHelper.YPOS, null, block, block.getIcon(0, item.getItemDamage()), 0);
         }
 
-        renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
-        renderer.overrideBlockTexture = block.getIconTopCross();
-        renderHelper.renderCrossedSquares(renderer, block, item.getItemDamage());
-        renderer.overrideBlockTexture = null;
+        renderHelper.setRenderBounds(0, 0, 0, 1, 1, 1);
+        renderHelper.renderCrossedSquares(block, item.getItemDamage(), block.getIconTopCross());
 
         ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(block.getLightSource(item));
         if (lanternSource != null)
@@ -85,18 +83,18 @@ public class LanternItemRenderer implements IItemRenderer
 
             IIcon glass = block.getIconStainedGlass(item.getItemDamage());
 
-            renderer.setRenderBoundsFromBlock(block);
-            renderer.renderMinX += .01;
-            renderer.renderMinZ += .01;
-            renderer.renderMaxX -= .01;
-            renderer.renderMaxZ -= .01;
-            renderer.renderMaxY -= .01;
+            renderHelper.setRenderBounds(block);
+            renderHelper.state.renderMinX += .01;
+            renderHelper.state.renderMinZ += .01;
+            renderHelper.state.renderMaxX -= .01;
+            renderHelper.state.renderMaxZ -= .01;
+            renderHelper.state.renderMaxY -= .01;
 
-            renderHelper.renderFace(RenderHelper.XNEG, renderer, block, glass, 0);
-            renderHelper.renderFace(RenderHelper.XPOS, renderer, block, glass, 0);
-            renderHelper.renderFace(RenderHelper.ZNEG, renderer, block, glass, 0);
-            renderHelper.renderFace(RenderHelper.ZPOS, renderer, block, glass, 0);
-            renderHelper.renderFace(RenderHelper.YPOS, renderer, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.XNEG, null, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.XPOS, null, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.ZNEG, null, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.ZPOS, null, block, glass, 0);
+            renderHelper.renderFace(RenderHelper.YPOS, null, block, glass, 0);
 
             GL11.glDisable(GL11.GL_BLEND);
         }

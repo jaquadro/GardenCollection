@@ -42,7 +42,7 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
         GL11.glRotatef(90, 0, 1, 0);
         GL11.glTranslatef(-.5f, -.5f, -.5f);
 
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, .125, 0, .125, .875, .75, .875, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, .125, 0, .125, .875, .75, .875, 0, ModularBoxRenderer.CUT_YPOS);
 
         if (!blendEnabled)
             GL11.glDisable(GL11.GL_BLEND);
@@ -74,7 +74,7 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
         for (int i = 0; i < 6; i++)
             boxRenderer.setIcon(renderer.getBlockIconFromSideAndMetadata(block, i, metadata), i);
 
-        boxRenderer.renderBox(renderer, block, x, y, z, .125, 0, .125, .875, .75, .875, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(world, block, x, y, z, .125, 0, .125, .875, .75, .875, 0, ModularBoxRenderer.CUT_YPOS);
 
         TileEntityMediumPot te = block.getTileEntity(world, x, y, z);
         if (te != null && te.getSubstrate() != null && te.getSubstrate().getItem() instanceof ItemBlock) {
@@ -90,8 +90,8 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
 
                 RenderHelper.calculateBaseColor(colorScratch, color);
 
-                renderer.setRenderBounds(.125, 0, .125, .875, .6875f, .875);
-                RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
+                RenderHelper.instance.setRenderBounds(.125, 0, .125, .875, .6875f, .875);
+                RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, x, y, z, substrateIcon, colorScratch[0], colorScratch[1], colorScratch[2]);
             }
         }
 
@@ -99,7 +99,7 @@ public class MediumPotRenderer implements ISimpleBlockRenderingHandler
     }
 
     private boolean renderWorldBlockPass1 (IBlockAccess world, int x, int y, int z, BlockMediumPot block, int modelId, RenderBlocks renderer) {
-        RenderHelper.renderEmptyPlane(block, x, y, z, renderer);
+        RenderHelper.instance.renderEmptyPlane(x, y, z);
         return true;
     }
 

@@ -39,19 +39,19 @@ public class ThaumcraftCandleSource extends StandardLanternSource
     public void renderItem (RenderBlocks renderer, IItemRenderer.ItemRenderType renderType, int meta) {
         RenderHelper renderHelper = RenderHelper.instance;
 
-        renderer.setRenderBounds(0.375, 0, 0.375, 0.625, 0.5, 0.625);
-        renderHelper.renderFace(RenderHelper.ZNEG, renderer, blockCandle, blockCandle.getIcon(2, meta), meta);
-        renderHelper.renderFace(RenderHelper.ZPOS, renderer, blockCandle, blockCandle.getIcon(3, meta), meta);
-        renderHelper.renderFace(RenderHelper.XNEG, renderer, blockCandle, blockCandle.getIcon(4, meta), meta);
-        renderHelper.renderFace(RenderHelper.XPOS, renderer, blockCandle, blockCandle.getIcon(5, meta), meta);
-        renderHelper.renderFace(RenderHelper.YPOS, renderer, blockCandle, blockCandle.getIcon(1, meta), meta);
+        renderHelper.setRenderBounds(0.375, 0, 0.375, 0.625, 0.5, 0.625);
+        renderHelper.renderFace(RenderHelper.ZNEG, null, blockCandle, blockCandle.getIcon(2, meta), meta);
+        renderHelper.renderFace(RenderHelper.ZPOS, null, blockCandle, blockCandle.getIcon(3, meta), meta);
+        renderHelper.renderFace(RenderHelper.XNEG, null, blockCandle, blockCandle.getIcon(4, meta), meta);
+        renderHelper.renderFace(RenderHelper.XPOS, null, blockCandle, blockCandle.getIcon(5, meta), meta);
+        renderHelper.renderFace(RenderHelper.YPOS, null, blockCandle, blockCandle.getIcon(1, meta), meta);
 
-        renderer.setRenderBounds(0.46875, 0, 0.46875, 0.5325, 1, 0.53125);
-        renderHelper.renderFace(RenderHelper.ZNEG, renderer, Blocks.torch, Blocks.torch.getIcon(2, 0), meta);
-        renderHelper.renderFace(RenderHelper.ZPOS, renderer, Blocks.torch, Blocks.torch.getIcon(3, 0), meta);
-        renderHelper.renderFace(RenderHelper.XNEG, renderer, Blocks.torch, Blocks.torch.getIcon(4, 0), meta);
-        renderHelper.renderFace(RenderHelper.XPOS, renderer, Blocks.torch, Blocks.torch.getIcon(5, 0), meta);
-        renderer.setRenderBounds(0.46875, 0, 0.46875, 0.5325, 0.625, 0.5325);
-        renderHelper.renderFace(RenderHelper.YPOS, renderer, Blocks.torch, Blocks.torch.getIcon(1, 0), meta);
+        renderHelper.setRenderBounds(0.46875, 0, 0.46875, 0.5325, 1, 0.53125);
+        renderHelper.renderFace(RenderHelper.ZNEG, null, Blocks.torch, Blocks.torch.getIcon(2, 0), meta);
+        renderHelper.renderFace(RenderHelper.ZPOS, null, Blocks.torch, Blocks.torch.getIcon(3, 0), meta);
+        renderHelper.renderFace(RenderHelper.XNEG, null, Blocks.torch, Blocks.torch.getIcon(4, 0), meta);
+        renderHelper.renderFace(RenderHelper.XPOS, null, Blocks.torch, Blocks.torch.getIcon(5, 0), meta);
+        renderHelper.setRenderBounds(0.46875, 0, 0.46875, 0.5325, 0.625, 0.5325);
+        renderHelper.renderFace(RenderHelper.YPOS, null, Blocks.torch, Blocks.torch.getIcon(1, 0), meta);
     }
 }

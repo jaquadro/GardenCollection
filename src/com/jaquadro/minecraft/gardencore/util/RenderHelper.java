@@ -3,10 +3,11 @@ package com.jaquadro.minecraft.gardencore.util;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 public class RenderHelper
@@ -18,46 +19,7 @@ public class RenderHelper
     public static final int XNEG = 4;
     public static final int XPOS = 5;
 
-    private static final int TL = 0;
-    private static final int BL = 1;
-    private static final int BR = 2;
-    private static final int TR = 3;
-
     public static final int FULL_BRIGHTNESS = 15728880;
-
-    private static final int xyzuvMap[][][] = {
-        {       // Y-NEG
-            { 0, 2, 5, 0, 3 },
-            { 0, 2, 4, 0, 2 },
-            { 1, 2, 4, 1, 2 },
-            { 1, 2, 5, 1, 3 }
-        }, {    // Y-POS
-            { 1, 3, 5, 1, 3 },
-            { 1, 3, 4, 1, 2 },
-            { 0, 3, 4, 0, 2 },
-            { 0, 3, 5, 0, 3 }
-        }, {    // Z-NEG
-            { 0, 3, 4, 1, 2 },
-            { 1, 3, 4, 0, 2 },
-            { 1, 2, 4, 0, 3 },
-            { 0, 2, 4, 1, 3 }
-        }, {    // Z-POS
-            { 0, 3, 5, 0, 2 },
-            { 0, 2, 5, 0, 3 },
-            { 1, 2, 5, 1, 3 },
-            { 1, 3, 5, 1, 2 }
-        }, {    // X-NEG
-            { 0, 3, 5, 1, 2 },
-            { 0, 3, 4, 0, 2 },
-            { 0, 2, 4, 0, 3 },
-            { 0, 2, 5, 1, 3 }
-        }, {    // X-POS
-            { 1, 2, 5, 0, 3 },
-            { 1, 2, 4, 1, 3 },
-            { 1, 3, 4, 1, 2 },
-            { 1, 3, 5, 0, 2 }
-        },
-    };
 
     private static final float rgbMap[][] = {
         { 0.5f, 0.5f, 0.5f },
@@ -82,74 +44,9 @@ public class RenderHelper
     private RenderHelperAO aoHelper = new RenderHelperAO(state);
     private RenderHelperLL llHelper = new RenderHelperLL(state);
 
-    // u-min, u-max, v-min, v-max
-    private double[] uv = new double[4];
-
-    // x-min, x-max, y-min, y-max, z-min, z-max
-    private double[] xyz = new double[6];
-
     private float[] colorScratch = new float[3];
 
     public static RenderHelper instance = new RenderHelper();
-
-    private void setUV (IIcon icon, double uMin, double vMin, double uMax, double vMax) {
-        uv[0] = uMin + icon.getMinU();
-        uv[1] = uMax + icon.getMaxU();
-        uv[2] = vMin + icon.getMinV();
-        uv[3] = vMax + icon.getMaxV();
-    }
-
-    private void setXYZ (RenderBlocks renderer, double x, double y, double z) {
-        xyz[0] = x + renderer.renderMinX;
-        xyz[1] = x + renderer.renderMaxX;
-        xyz[2] = y + renderer.renderMinY;
-        xyz[3] = y + renderer.renderMaxY;
-        xyz[4] = z + renderer.renderMinZ;
-        xyz[5] = z + renderer.renderMaxZ;
-    }
-
-    private void setXYZ (RenderBlocks renderer) {
-        setXYZ(renderer, 0, 0, 0);
-    }
-
-    private void renderXYZUV (RenderBlocks renderer, int[][] index) {
-        Tessellator tessellator = Tessellator.instance;
-
-        int[] tl = index[TL];
-        int[] bl = index[BL];
-        int[] br = index[BR];
-        int[] tr = index[TR];
-
-        tessellator.addVertexWithUV(xyz[tl[0]], xyz[tl[1]], xyz[tl[2]], uv[tl[3]], uv[tl[4]]);
-        tessellator.addVertexWithUV(xyz[bl[0]], xyz[bl[1]], xyz[bl[2]], uv[bl[3]], uv[bl[4]]);
-        tessellator.addVertexWithUV(xyz[br[0]], xyz[br[1]], xyz[br[2]], uv[br[3]], uv[br[4]]);
-        tessellator.addVertexWithUV(xyz[tr[0]], xyz[tr[1]], xyz[tr[2]], uv[tr[3]], uv[tr[4]]);
-    }
-
-    private void renderXYZUVAO (RenderBlocks renderer, int[][] index) {
-        Tessellator tessellator = Tessellator.instance;
-
-        int[] tl = index[TL];
-        int[] bl = index[BL];
-        int[] br = index[BR];
-        int[] tr = index[TR];
-
-        tessellator.setColorOpaque_F(renderer.colorRedTopLeft, renderer.colorGreenTopLeft, renderer.colorBlueTopLeft);
-        tessellator.setBrightness(renderer.brightnessTopLeft);
-        tessellator.addVertexWithUV(xyz[tl[0]], xyz[tl[1]], xyz[tl[2]], uv[tl[3]], uv[tl[4]]);
-
-        tessellator.setColorOpaque_F(renderer.colorRedBottomLeft, renderer.colorGreenBottomLeft, renderer.colorBlueBottomLeft);
-        tessellator.setBrightness(renderer.brightnessBottomLeft);
-        tessellator.addVertexWithUV(xyz[bl[0]], xyz[bl[1]], xyz[bl[2]], uv[bl[3]], uv[bl[4]]);
-
-        tessellator.setColorOpaque_F(renderer.colorRedBottomRight, renderer.colorGreenBottomRight, renderer.colorBlueBottomRight);
-        tessellator.setBrightness(renderer.brightnessBottomRight);
-        tessellator.addVertexWithUV(xyz[br[0]], xyz[br[1]], xyz[br[2]], uv[br[3]], uv[br[4]]);
-
-        tessellator.setColorOpaque_F(renderer.colorRedTopRight, renderer.colorGreenTopRight, renderer.colorBlueTopRight);
-        tessellator.setBrightness(renderer.brightnessTopRight);
-        tessellator.addVertexWithUV(xyz[tr[0]], xyz[tr[1]], xyz[tr[2]], uv[tr[3]], uv[tr[4]]);
-    }
 
     public static void calculateBaseColor (float[] target, int color) {
         float r = (float)(color >> 16 & 255) / 255f;
@@ -181,218 +78,175 @@ public class RenderHelper
         tessellator.setColorOpaque_F(color[0], color[1], color[2]);
     }
 
-    public static void renderEmptyPlane (Block block, int x, int y, int z, RenderBlocks renderer) {
-        renderer.setRenderBounds(0, 0, 0, 0, 0, 0);
-        renderer.renderFaceYNeg(block, x, y, z, Blocks.dirt.getIcon(0, 0));
+    public void renderEmptyPlane (int x, int y, int z) {
+        state.setRenderBounds(0, 0, 0, 0, 0, 0);
+        llHelper.drawFace(RenderHelper.YNEG, x, y, z, Blocks.dirt.getIcon(0, 0));
     }
 
     public void setRenderBounds (double xMin, double yMin, double zMin, double xMax, double yMax, double zMax) {
         state.setRenderBounds(xMin, yMin, zMin, xMax, yMax, zMax);
     }
 
-    public void renderBlock (RenderBlocks renderer, Block block, int meta) {
+    public void setRenderBounds (Block block) {
+        setRenderBounds(block.getBlockBoundsMinX(), block.getBlockBoundsMinY(), block.getBlockBoundsMinZ(), block.getBlockBoundsMaxX(), block.getBlockBoundsMaxY(), block.getBlockBoundsMaxZ());
+    }
+
+    public void renderBlock (IBlockAccess blockAccess, Block block, int meta) {
         calculateBaseColor(colorScratch, block.getRenderColor(meta));
         float r = colorScratch[0];
         float g = colorScratch[1];
         float b = colorScratch[2];
 
-        renderFace(YNEG, renderer, block, block.getIcon(0, meta), r, g, b);
-        renderFace(YPOS, renderer, block, block.getIcon(1, meta), r, g, b);
-        renderFace(ZNEG, renderer, block, block.getIcon(2, meta), r, g, b);
-        renderFace(ZPOS, renderer, block, block.getIcon(3, meta), r, g, b);
-        renderFace(XNEG, renderer, block, block.getIcon(4, meta), r, g, b);
-        renderFace(XPOS, renderer, block, block.getIcon(5, meta), r, g, b);
+        renderFace(YNEG, blockAccess, block, block.getIcon(0, meta), r, g, b);
+        renderFace(YPOS, blockAccess, block, block.getIcon(1, meta), r, g, b);
+        renderFace(ZNEG, blockAccess, block, block.getIcon(2, meta), r, g, b);
+        renderFace(ZPOS, blockAccess, block, block.getIcon(3, meta), r, g, b);
+        renderFace(XNEG, blockAccess, block, block.getIcon(4, meta), r, g, b);
+        renderFace(XPOS, blockAccess, block, block.getIcon(5, meta), r, g, b);
     }
 
-    public void renderBlock (RenderBlocks renderer, Block block, int x, int y, int z) {
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
+    public void renderBlock (IBlockAccess blockAccess, Block block, int x, int y, int z) {
+        calculateBaseColor(colorScratch, block.colorMultiplier(blockAccess, x, y, z));
         float r = colorScratch[0];
         float g = colorScratch[1];
         float b = colorScratch[2];
 
-        renderFace(YNEG, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 0), r, g, b);
-        renderFace(YPOS, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 1), r, g, b);
-        renderFace(ZNEG, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 2), r, g, b);
-        renderFace(ZPOS, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 3), r, g, b);
-        renderFace(XNEG, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 4), r, g, b);
-        renderFace(XPOS, renderer, block, x, y, z, block.getIcon(renderer.blockAccess, x, y, z, 5), r, g, b);
+        renderFace(YNEG, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 0), r, g, b);
+        renderFace(YPOS, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 1), r, g, b);
+        renderFace(ZNEG, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 2), r, g, b);
+        renderFace(ZPOS, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 3), r, g, b);
+        renderFace(XNEG, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 4), r, g, b);
+        renderFace(XPOS, blockAccess, block, x, y, z, block.getIcon(blockAccess, x, y, z, 5), r, g, b);
     }
 
-    public void renderFace (int face, RenderBlocks renderer, Block block, IIcon icon, int meta) {
+    public void renderFace (int face, IBlockAccess blockAccess, Block block, IIcon icon, int meta) {
         calculateBaseColor(colorScratch, block.getRenderColor(meta));
-        renderFaceColorMult(face, renderer, block, 0, 0, 0, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
+        renderFaceColorMult(face, blockAccess, block, 0, 0, 0, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
     }
 
-    public void renderFace (int face, RenderBlocks renderer, Block block, IIcon icon, float r, float g, float b) {
-        renderFaceColorMult(face, renderer, block, 0, 0, 0, icon, r, g, b);
+    public void renderFace (int face, IBlockAccess blockAccess, Block block, IIcon icon, float r, float g, float b) {
+        renderFaceColorMult(face, blockAccess, block, 0, 0, 0, icon, r, g, b);
     }
 
-    public void renderFace (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon) {
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
-        renderFace(face, renderer, block, x, y, z, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
+    public void renderFace (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon) {
+        calculateBaseColor(colorScratch, block.colorMultiplier(blockAccess, x, y, z));
+        renderFace(face, blockAccess, block, x, y, z, icon, colorScratch[0], colorScratch[1], colorScratch[2]);
     }
 
-    public void renderFace (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
-            renderFaceAOPartial(face, renderer, block, x, y, z, icon, r, g, b);
+    public void renderFace (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
+        if (Minecraft.isAmbientOcclusionEnabled() && blockAccess != null && block.getLightValue(blockAccess, x, y, z) == 0)
+            renderFaceAOPartial(face, blockAccess, block, x, y, z, icon, r, g, b);
         else
-            renderFaceColorMult(face, renderer, block, x, y, z, icon, r, g, b);
+            renderFaceColorMult(face, blockAccess, block, x, y, z, icon, r, g, b);
     }
 
-    public void renderFaceColorMult (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        setupColorMult(face, renderer, block, x, y, z, r, g, b);
+    public void renderFaceColorMult (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
+        setupColorMult(face, blockAccess, block, x, y, z, r, g, b);
 
-        switch (face) {
-            case YNEG: renderer.renderFaceYNeg(block, x, y, z, icon); break;
-            case YPOS: renderer.renderFaceYPos(block, x, y, z, icon); break;
-            case ZNEG: renderer.renderFaceZNeg(block, x, y, z, icon); break;
-            case ZPOS: renderer.renderFaceZPos(block, x, y, z, icon); break;
-            case XNEG: renderer.renderFaceXNeg(block, x, y, z, icon); break;
-            case XPOS: renderer.renderFaceXPos(block, x, y, z, icon); break;
-        }
+        llHelper.drawFace(face, x, y, z, icon);
 
-        if (renderer.blockAccess == null)
+        if (blockAccess == null)
             Tessellator.instance.draw();
     }
-
-    private void copyAO (RenderBlocks renderer) {
-        llHelper.brightnessBottomLeft = renderer.brightnessBottomLeft;
-        llHelper.brightnessTopLeft = renderer.brightnessTopLeft;
-        llHelper.brightnessBottomRight = renderer.brightnessBottomRight;
-        llHelper.brightnessTopRight = renderer.brightnessTopRight;
-        
-        llHelper.colorBottomLeft[0] = renderer.colorRedBottomLeft;
-        llHelper.colorBottomLeft[1] = renderer.colorGreenBottomLeft;
-        llHelper.colorBottomLeft[2] = renderer.colorBlueBottomLeft;
-        llHelper.colorBottomRight[0] = renderer.colorRedBottomRight;
-        llHelper.colorBottomRight[1] = renderer.colorGreenBottomRight;
-        llHelper.colorBottomRight[2] = renderer.colorBlueBottomRight;
-        llHelper.colorTopLeft[0] = renderer.colorRedTopLeft;
-        llHelper.colorTopLeft[1] = renderer.colorGreenTopLeft;
-        llHelper.colorTopLeft[2] = renderer.colorBlueTopLeft;
-        llHelper.colorTopRight[0] = renderer.colorRedTopRight;
-        llHelper.colorTopRight[1] = renderer.colorGreenTopRight;
-        llHelper.colorTopRight[2] = renderer.colorBlueTopRight;
-    }
     
-    public void renderFaceAOPartial (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
-        renderer.enableAO = true;
-        setRenderBounds(renderer.renderMinX, renderer.renderMinY, renderer.renderMinZ, renderer.renderMaxX, renderer.renderMaxY, renderer.renderMaxZ);
-        llHelper.enableAO = renderer.enableAO;
-        state.flipTexture = renderer.flipTexture;
+    public void renderFaceAOPartial (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, float r, float g, float b) {
+        state.enableAO = true;
 
         switch (face) {
             case YNEG:
-                aoHelper.setupYNegAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceYNeg(block, x, y, z, icon);
+                aoHelper.setupYNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case YPOS:
-                aoHelper.setupYPosAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceYPos(block, x, y, z, icon);
+                aoHelper.setupYPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case ZNEG:
-                aoHelper.setupZNegAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceZNeg(block, x, y, z, icon);
+                aoHelper.setupZNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case ZPOS:
-                aoHelper.setupZPosAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceZPos(block, x, y, z, icon);
+                aoHelper.setupZPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case XNEG:
-                aoHelper.setupXNegAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceXNeg(block, x, y, z, icon);
+                aoHelper.setupXNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case XPOS:
-                aoHelper.setupXPosAOPartial(renderer, block, x, y, z, r, g, b);
-                //renderer.renderFaceXPos(block, x, y, z, icon);
+                aoHelper.setupXPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
         }
 
-        copyAO(renderer);
         llHelper.drawFace(face, x, y, z, icon);
 
-        renderer.enableAO = false;
+        state.enableAO = false;
     }
 
-    public void renderPartialFace (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
-        renderPartialFace(face, renderer, block, x, y, z, icon, uMin, vMin, uMax, vMax, colorScratch[0], colorScratch[1], colorScratch[2]);
+    public void renderPartialFace (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
+        calculateBaseColor(colorScratch, block.colorMultiplier(blockAccess, x, y, z));
+        renderPartialFace(face, blockAccess, block, x, y, z, icon, uMin, vMin, uMax, vMax, colorScratch[0], colorScratch[1], colorScratch[2]);
     }
 
-    public void renderPartialFace (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
-        if (Minecraft.isAmbientOcclusionEnabled() && renderer.blockAccess != null && block.getLightValue(renderer.blockAccess, x, y, z) == 0)
-            renderPartialFaceAOPartial(face, renderer, block, x, y, z, icon, uMin, vMin, uMax, vMax, r, g, b);
+    public void renderPartialFace (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
+        if (Minecraft.isAmbientOcclusionEnabled() && blockAccess != null && block.getLightValue(blockAccess, x, y, z) == 0)
+            renderPartialFaceAOPartial(face, blockAccess, block, x, y, z, icon, uMin, vMin, uMax, vMax, r, g, b);
         else
-            renderPartialFaceColorMult(face, renderer, block, x, y, z, icon, uMin, vMin, uMax, vMax, r, g, b);
+            renderPartialFaceColorMult(face, blockAccess, block, x, y, z, icon, uMin, vMin, uMax, vMax, r, g, b);
     }
 
-    public void renderPartialFaceColorMult (int face, RenderBlocks renderer, Block block, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
-        setupColorMult(face, renderer, block, r, g, b);
-        renderPartialFace(face, renderer, icon, uMin, vMin, uMax, vMax);
+    public void renderPartialFaceColorMult (int face, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
+        setupColorMult(face, r, g, b);
+        renderPartialFace(face, icon, uMin, vMin, uMax, vMax);
 
         Tessellator.instance.draw();
     }
 
-    public void renderPartialFaceColorMult (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
-        setupColorMult(face, renderer, block, x, y, z, r, g, b);
-        renderPartialFace(face, renderer, x, y, z, icon, uMin, vMin, uMax, vMax);
+    public void renderPartialFaceColorMult (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
+        setupColorMult(face, blockAccess, block, x, y, z, r, g, b);
+        renderPartialFace(face, x, y, z, icon, uMin, vMin, uMax, vMax);
 
-        if (renderer.blockAccess == null)
+        if (blockAccess == null)
             Tessellator.instance.draw();
     }
 
-    public void renderPartialFaceAOPartial (int face, RenderBlocks renderer, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
-        renderer.enableAO = true;
+    public void renderPartialFaceAOPartial (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon, double uMin, double vMin, double uMax, double vMax, float r, float g, float b) {
+        state.enableAO = true;
 
         switch (face) {
             case YNEG:
-                aoHelper.setupYNegAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupYNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case YPOS:
-                aoHelper.setupYPosAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupYPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case ZNEG:
-                aoHelper.setupZNegAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupZNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case ZPOS:
-                aoHelper.setupZPosAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupZPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case XNEG:
-                aoHelper.setupXNegAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupXNegAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
             case XPOS:
-                aoHelper.setupXPosAOPartial(renderer, block, x, y, z, r, g, b);
+                aoHelper.setupXPosAOPartial(blockAccess, block, x, y, z, r, g, b);
                 break;
         }
 
-        renderPartialFace(face, renderer, x, y, z, icon, uMin, vMin, uMax, vMax);
-        renderer.enableAO = false;
+        renderPartialFace(face, x, y, z, icon, uMin, vMin, uMax, vMax);
+        state.enableAO = false;
     }
 
-    public void renderPartialFace (int face, RenderBlocks renderer, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
-        if (renderer.hasOverrideBlockTexture())
-            icon = renderer.overrideBlockTexture;
-
-        setXYZ(renderer);
-        setUV(icon, uMin, vMin, uMax, vMax);
-        renderXYZUV(renderer, xyzuvMap[face]);
+    public void renderPartialFace (int face, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
+        state.enableAO = false;
+        llHelper.drawPartialFace(face, 0, 0, 0, icon, uMin, vMin, uMax, vMax);
     }
 
-    public void renderPartialFace (int face, RenderBlocks renderer, double x, double y, double z, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
-        if (renderer.hasOverrideBlockTexture())
-            icon = renderer.overrideBlockTexture;
-
-        setXYZ(renderer, x, y, z);
-        setUV(icon, uMin, vMin, uMax, vMax);
-
-        if (renderer.enableAO)
-            renderXYZUVAO(renderer, xyzuvMap[face]);
-        else
-            renderXYZUV(renderer, xyzuvMap[face]);
+    public void renderPartialFace (int face, double x, double y, double z, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
+        llHelper.drawPartialFace(face, x, y, z, icon, uMin, vMin, uMax, vMax);
     }
 
-    public void renderCrossedSquares (RenderBlocks renderer, Block block, int meta)
-    {
+    public void renderCrossedSquares (Block block, int meta) {
+        renderCrossedSquares(block, meta, getBlockIconFromSideAndMetadata(block, 0, meta));
+    }
+
+    public void renderCrossedSquares (Block block, int meta, IIcon icon) {
         Tessellator tessellator = Tessellator.instance;
         tessellator.setBrightness(FULL_BRIGHTNESS);
 
@@ -404,8 +258,7 @@ public class RenderHelper
 
         tessellator.startDrawingQuads();
 
-        IIcon iicon = renderer.getBlockIconFromSideAndMetadata(block, 0, meta);
-        drawCrossedSquares(renderer, iicon, 0, 0, 0, 1.0F);
+        drawCrossedSquares(icon, 0, 0, 0, 1.0F);
 
         tessellator.draw();
 
@@ -413,34 +266,34 @@ public class RenderHelper
             GL11.glEnable(GL11.GL_LIGHTING);
     }
 
-    public void renderCrossedSquares (RenderBlocks renderer, Block block, int x, int y, int z)
-    {
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z));
-
-        calculateBaseColor(colorScratch, block.colorMultiplier(renderer.blockAccess, x, y, z));
-        setTessellatorColor(tessellator, colorScratch);
-
-        IIcon iicon = renderer.getBlockIconFromSideAndMetadata(block, 0, renderer.blockAccess.getBlockMetadata(x, y, z));
-        drawCrossedSquares(renderer, iicon, x, y, z, 1.0F);
+    public void renderCrossedSquares (IBlockAccess blockAccess, Block block, int x, int y, int z) {
+        renderCrossedSquares(blockAccess, block, x, y, z, getBlockIconFromSideAndMetadata(block, 0, blockAccess.getBlockMetadata(x, y, z)));
     }
 
-    public void drawCrossedSquares(RenderBlocks renderer, IIcon icon, double x, double y, double z, float scale)
+    public void renderCrossedSquares (IBlockAccess blockAccess, Block block, int x, int y, int z, IIcon icon) {
+        Tessellator tessellator = Tessellator.instance;
+        tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, x, y, z));
+
+        calculateBaseColor(colorScratch, block.colorMultiplier(blockAccess, x, y, z));
+        setTessellatorColor(tessellator, colorScratch);
+
+        drawCrossedSquares(icon, x, y, z, 1.0F);
+    }
+
+    public void drawCrossedSquares(IIcon icon, double x, double y, double z, float scale)
     {
         Tessellator tessellator = Tessellator.instance;
-        if (renderer.hasOverrideBlockTexture())
-            icon = renderer.overrideBlockTexture;
 
-        double uMin = icon.getInterpolatedU(renderer.renderMinX * 16.0D);
-        double uMax = icon.getInterpolatedU(renderer.renderMaxX * 16.0D);
-        double vMin = icon.getInterpolatedV(16 - renderer.renderMaxY * 16.0D);
-        double vMax = icon.getInterpolatedV(16 - renderer.renderMinY * 16.0D);
+        double uMin = icon.getInterpolatedU(state.renderMinX * 16.0D);
+        double uMax = icon.getInterpolatedU(state.renderMaxX * 16.0D);
+        double vMin = icon.getInterpolatedV(16 - state.renderMaxY * 16.0D);
+        double vMax = icon.getInterpolatedV(16 - state.renderMinY * 16.0D);
 
         double d7 = 0.45D * (double)scale;
         double xMin = x + 0.5D - d7;
         double xMax = x + 0.5D + d7;
-        double yMin = y + renderer.renderMinY * scale;
-        double yMax = y + renderer.renderMaxY * scale;
+        double yMin = y + state.renderMinY * scale;
+        double yMax = y + state.renderMaxY * scale;
         double zMin = z + 0.5D - d7;
         double zMax = z + 0.5D + d7;
 
@@ -463,29 +316,27 @@ public class RenderHelper
         tessellator.addVertexWithUV(xMin, yMax, zMax, uMax, vMin);
     }
 
-    public void drawCrossedSquaresBounded(RenderBlocks renderer, IIcon icon, double x, double y, double z, float scale)
+    public void drawCrossedSquaresBounded(IIcon icon, double x, double y, double z, float scale)
     {
         Tessellator tessellator = Tessellator.instance;
-        if (renderer.hasOverrideBlockTexture())
-            icon = renderer.overrideBlockTexture;
 
-        double vMin = icon.getInterpolatedV(16 - renderer.renderMaxY * 16.0D);
-        double vMax = icon.getInterpolatedV(16 - renderer.renderMinY * 16.0D);
+        double vMin = icon.getInterpolatedV(16 - state.renderMaxY * 16.0D);
+        double vMax = icon.getInterpolatedV(16 - state.renderMinY * 16.0D);
 
-        double xzNN = Math.max(renderer.renderMinX, renderer.renderMinZ);
-        double xzPP = Math.min(renderer.renderMaxX, renderer.renderMaxZ);
+        double xzNN = Math.max(state.renderMinX, state.renderMinZ);
+        double xzPP = Math.min(state.renderMaxX, state.renderMaxZ);
 
         double xNN = x + .5 - (.5 - xzNN) * 0.9;
         double zNN = z + .5 - (.5 - xzNN) * 0.9;
-        double xNP = x + .5 - (.5 - Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ)) * 0.9;
-        double zNP = z + .5 - (.5 - Math.min(1 - renderer.renderMinX, renderer.renderMaxZ)) * 0.9;
-        double xPN = x + .5 - (.5 - Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ)) * 0.9;
-        double zPN = z + .5 - (.5 - Math.max(1 - renderer.renderMaxX, renderer.renderMinZ)) * 0.9;
+        double xNP = x + .5 - (.5 - Math.max(state.renderMinX, 1 - state.renderMaxZ)) * 0.9;
+        double zNP = z + .5 - (.5 - Math.min(1 - state.renderMinX, state.renderMaxZ)) * 0.9;
+        double xPN = x + .5 - (.5 - Math.min(state.renderMaxX, 1 - state.renderMinZ)) * 0.9;
+        double zPN = z + .5 - (.5 - Math.max(1 - state.renderMaxX, state.renderMinZ)) * 0.9;
         double xPP = x + .5 - (.5 - xzPP) * 0.9;
         double zPP = z + .5 - (.5 - xzPP) * 0.9;
 
-        double yMin = y + renderer.renderMinY * scale;
-        double yMax = y + renderer.renderMaxY * scale;
+        double yMin = y + state.renderMinY * scale;
+        double yMax = y + state.renderMaxY * scale;
 
         double uNN = icon.getInterpolatedU(xzNN * 16.0D);
         double uPP = icon.getInterpolatedU(xzPP * 16.0D);
@@ -503,16 +354,16 @@ public class RenderHelper
         tessellator.addVertexWithUV(xNN, yMin, zNN, uNN, vMax);
         tessellator.addVertexWithUV(xNN, yMax, zNN, uNN, vMin);
 
-        double uNP = icon.getInterpolatedU(Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ) * 16.0D);
-        double uPN = icon.getInterpolatedU(Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ) * 16.0D);
+        double uNP = icon.getInterpolatedU(Math.max(state.renderMinX, 1 - state.renderMaxZ) * 16.0D);
+        double uPN = icon.getInterpolatedU(Math.min(state.renderMaxX, 1 - state.renderMinZ) * 16.0D);
 
         tessellator.addVertexWithUV(xNP, yMax, zNP, uNP, vMin);
         tessellator.addVertexWithUV(xNP, yMin, zNP, uNP, vMax);
         tessellator.addVertexWithUV(xPN, yMin, zPN, uPN, vMax);
         tessellator.addVertexWithUV(xPN, yMax, zPN, uPN, vMin);
 
-        uNP = icon.getInterpolatedU(16 - Math.max(renderer.renderMinX, 1 - renderer.renderMaxZ) * 16.0D);
-        uPN = icon.getInterpolatedU(16 - Math.min(renderer.renderMaxX, 1 - renderer.renderMinZ) * 16.0D);
+        uNP = icon.getInterpolatedU(16 - Math.max(state.renderMinX, 1 - state.renderMaxZ) * 16.0D);
+        uPN = icon.getInterpolatedU(16 - Math.min(state.renderMaxX, 1 - state.renderMinZ) * 16.0D);
 
         tessellator.addVertexWithUV(xPN, yMax, zPN, uPN, vMin);
         tessellator.addVertexWithUV(xPN, yMin, zPN, uPN, vMax);
@@ -520,7 +371,7 @@ public class RenderHelper
         tessellator.addVertexWithUV(xNP, yMax, zNP, uNP, vMin);
     }
 
-    private void setupColorMult (int face, RenderBlocks renderer, Block block, float r, float g, float b) {
+    private void setupColorMult (int face, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         float[] rgb = rgbMap[face];
         float[] norm = normMap[face];
@@ -529,15 +380,15 @@ public class RenderHelper
         tessellator.startDrawingQuads();
         tessellator.setNormal(norm[0], norm[1], norm[2]);
 
-        renderer.enableAO = false;
+        state.enableAO = false;
     }
 
-    private void setupColorMult (int face, RenderBlocks renderer, Block block, int x, int y, int z, float r, float g, float b) {
+    private void setupColorMult (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
         float[] rgb = rgbMap[face];
         float[] norm = normMap[face];
 
-        if (renderer.blockAccess == null) {
+        if (blockAccess == null) {
             tessellator.startDrawingQuads();
             tessellator.setColorOpaque_F(r, g, b);
             tessellator.setNormal(norm[0], norm[1], norm[2]);
@@ -548,18 +399,29 @@ public class RenderHelper
             int brightZ = z;
 
             switch (face) {
-                case YNEG: brightY = (renderer.renderMinY > 0) ? y : y - 1; break;
-                case YPOS: brightY = (renderer.renderMaxY < 1) ? y : y + 1; break;
-                case ZNEG: brightZ = (renderer.renderMinZ > 0) ? z : z - 1; break;
-                case ZPOS: brightZ = (renderer.renderMaxZ < 1) ? z : z + 1; break;
-                case XNEG: brightX = (renderer.renderMinX > 0) ? x : x - 1; break;
-                case XPOS: brightX = (renderer.renderMaxX < 1) ? x : x + 1; break;
+                case YNEG: brightY = (state.renderMinY > 0) ? y : y - 1; break;
+                case YPOS: brightY = (state.renderMaxY < 1) ? y : y + 1; break;
+                case ZNEG: brightZ = (state.renderMinZ > 0) ? z : z - 1; break;
+                case ZPOS: brightZ = (state.renderMaxZ < 1) ? z : z + 1; break;
+                case XNEG: brightX = (state.renderMinX > 0) ? x : x - 1; break;
+                case XPOS: brightX = (state.renderMaxX < 1) ? x : x + 1; break;
             }
 
             tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
-            tessellator.setBrightness(block.getMixedBrightnessForBlock(renderer.blockAccess, brightX, brightY, brightZ));
+            tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, brightX, brightY, brightZ));
         }
 
-        renderer.enableAO = false;
+        state.enableAO = false;
+    }
+
+    private IIcon getBlockIconFromSideAndMetadata (Block block, int side, int meta) {
+        return getIconSafe(block.getIcon(side, meta));
+    }
+
+    private IIcon getIconSafe (IIcon icon) {
+        if (icon == null)
+            return ((TextureMap)Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture)).getAtlasSprite("missingno");
+
+        return icon;
     }
 }

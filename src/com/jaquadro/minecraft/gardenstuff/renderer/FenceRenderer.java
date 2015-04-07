@@ -54,17 +54,17 @@ public class FenceRenderer implements ISimpleBlockRenderingHandler
         boolean connectXNeg = (connectFlags & 16) != 0;
         boolean connectXPos = (connectFlags & 32) != 0;
 
-        boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, 0, U7, U9, 1, U9);
+        boxRenderer.renderSolidBox(world, block, x, y, z, U7, 0, U7, U9, 1, U9);
 
         if (block.getPostInterval(meta) == 8) {
             if (connectZNeg)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, 0, 0, U9, 1, U1);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U7, 0, 0, U9, 1, U1);
             if (connectZPos)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U7, 0, U15, U9, 1, 1);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U7, 0, U15, U9, 1, 1);
             if (connectXNeg)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, 0, 0, U7, U1, 1, U9);
+                boxRenderer.renderSolidBox(world, block, x, y, z, 0, 0, U7, U1, 1, U9);
             if (connectXPos)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U15, 0, U7, 1, 1, U9);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U15, 0, U7, 1, 1, U9);
         }
 
         boxRenderer.flipOpposite = true;
@@ -87,13 +87,13 @@ public class FenceRenderer implements ISimpleBlockRenderingHandler
         }
 
         if (connectZNeg)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, 0, U8, yP, U8);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, 0, U8, yP, U8);
         if (connectZPos)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, U8, U8, yP, 1);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, U8, U8, yP, 1);
         if (connectXNeg)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, 0, yN, U8, U8, yP, U8);
+            boxRenderer.renderSolidBox(world, block, x, y, z, 0, yN, U8, U8, yP, U8);
         if (connectXPos)
-            boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, U8, 1, yP, U8);
+            boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, U8, 1, yP, U8);
 
         if (!(abNN || abYY)) {
             if (connectYPos) {
@@ -108,13 +108,13 @@ public class FenceRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.setIcon(block.getIconTB(meta));
 
             if (connectZNeg)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, 0, U8, yP, U8);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, 0, U8, yP, U8);
             if (connectZPos)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, U8, U8, yP, 1);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, U8, U8, yP, 1);
             if (connectXNeg)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, 0, yN, U8, U8, yP, U8);
+                boxRenderer.renderSolidBox(world, block, x, y, z, 0, yN, U8, U8, yP, U8);
             if (connectXPos)
-                boxRenderer.renderSolidBox(renderer, block, x, y, z, U8, yN, U8, 1, yP, U8);
+                boxRenderer.renderSolidBox(world, block, x, y, z, U8, yN, U8, 1, yP, U8);
         }
 
         return true;

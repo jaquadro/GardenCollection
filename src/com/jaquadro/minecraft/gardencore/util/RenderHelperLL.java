@@ -53,18 +53,6 @@ public class RenderHelperLL
 
     private RenderHelperState state;
 
-    public boolean enableAO = true;
-
-    public float[] colorTopLeft = new float[3];
-    public float[] colorTopRight = new float[3];
-    public float[] colorBottomLeft = new float[3];
-    public float[] colorBottomRight = new float[3];
-
-    public int brightnessTopLeft;
-    public int brightnessTopRight;
-    public int brightnessBottomLeft;
-    public int brightnessBottomRight;
-
     private double[] minUDiv = new double[24];
     private double[] maxUDiv = new double[24];
     private double[] minVDiv = new double[24];
@@ -103,11 +91,16 @@ public class RenderHelperLL
         int rangeX = (int)(Math.ceil(state.renderMaxX + state.shiftU) - Math.floor(state.renderMinX + state.shiftU));
         int rangeZ = (int)(Math.ceil(state.renderMaxZ + state.shiftV) - Math.floor(state.renderMinZ + state.shiftV));
 
-        if (rangeX == 1 && rangeZ == 1) {
-            setXYZ(x, y, z);
+        setXYZ(x, y, z);
+        if (state.renderFromInside) {
+            xyz[MINX] = z + state.renderMaxX;
+            xyz[MAXX] = z + state.renderMinX;
+        }
+
+        if (rangeX <= 1 && rangeZ <= 1) {
             setUV(icon, state.renderMinX + state.shiftU, state.renderMinZ + state.shiftV, state.renderMaxX + state.shiftU, state.renderMaxZ + state.shiftV);
 
-            if (enableAO)
+            if (state.enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
             else
                 renderXYZUV(xyzuvMap[face]);
@@ -121,7 +114,6 @@ public class RenderHelperLL
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeZ, icon);
         setupAOBrightnessLerp(state.renderMinX, state.renderMaxX, state.renderMinZ, state.renderMaxZ, rangeX, rangeZ);
-        setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
             xyz[MAXX] = xyz[MINX] + maxUDiv[ix] - minUDiv[ix];
@@ -130,10 +122,10 @@ public class RenderHelperLL
             for (int iz = 0; iz < rangeZ; iz++) {
                 xyz[MAXZ] = xyz[MINZ] + maxVDiv[iz] - minVDiv[iz];
 
-                brightnessTopLeft = brightnessLerp[ix][iz];
-                brightnessTopRight = brightnessLerp[ix + 1][iz];
-                brightnessBottomLeft = brightnessLerp[ix][iz + 1];
-                brightnessBottomRight = brightnessLerp[ix + 1][iz + 1];
+                state.brightnessTopLeft = brightnessLerp[ix][iz];
+                state.brightnessTopRight = brightnessLerp[ix + 1][iz];
+                state.brightnessBottomLeft = brightnessLerp[ix][iz + 1];
+                state.brightnessBottomRight = brightnessLerp[ix + 1][iz + 1];
 
                 setUV(icon, minUDiv[ix], minVDiv[iz], maxUDiv[ix], maxVDiv[iz]);
                 renderXYZUVAO(xyzuvMap[face]);
@@ -148,14 +140,19 @@ public class RenderHelperLL
         int rangeX = (int)(Math.ceil(state.renderMaxX + state.shiftU) - Math.floor(state.renderMinX + state.shiftU));
         int rangeY = (int)(Math.ceil(state.renderMaxY + state.shiftV) - Math.floor(state.renderMinY + state.shiftV));
 
-        if (rangeX == 1 && rangeY == 1) {
-            setXYZ(x, y, z);
+        setXYZ(x, y, z);
+        if (state.renderFromInside) {
+            xyz[MINX] = z + state.renderMaxX;
+            xyz[MAXX] = z + state.renderMinX;
+        }
+
+        if (rangeX <= 1 && rangeY <= 1) {
             if (state.flipTexture)
                 setUV(icon, state.renderMaxX + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMinX + state.shiftU, 1 - state.renderMinY + state.shiftV);
             else
                 setUV(icon, state.renderMinX + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMaxX + state.shiftU, 1 - state.renderMinY + state.shiftV);
 
-            if (enableAO)
+            if (state.enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
             else
                 renderXYZUV(xyzuvMap[face]);
@@ -169,7 +166,6 @@ public class RenderHelperLL
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeX, rangeY, icon);
         setupAOBrightnessLerp(state.renderMinX, state.renderMaxX, state.renderMinY, state.renderMaxY, rangeX, rangeY);
-        setXYZ(x, y, z);
 
         for (int ix = 0; ix < rangeX; ix++) {
             xyz[MAXX] = xyz[MINX] + maxUDiv[ix] - minUDiv[ix];
@@ -178,10 +174,10 @@ public class RenderHelperLL
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
 
-                brightnessTopLeft = brightnessLerp[ix][iy];
-                brightnessTopRight = brightnessLerp[ix + 1][iy];
-                brightnessBottomLeft = brightnessLerp[ix][iy + 1];
-                brightnessBottomRight = brightnessLerp[ix + 1][iy + 1];
+                state.brightnessTopLeft = brightnessLerp[ix][iy];
+                state.brightnessTopRight = brightnessLerp[ix + 1][iy];
+                state.brightnessBottomLeft = brightnessLerp[ix][iy + 1];
+                state.brightnessBottomRight = brightnessLerp[ix + 1][iy + 1];
 
                 setUV(icon, minUDiv[ix], minVDiv[iy], maxUDiv[ix], maxVDiv[iy]);
                 renderXYZUVAO(xyzuvMap[face]);
@@ -196,14 +192,20 @@ public class RenderHelperLL
         int rangeZ = (int)(Math.ceil(state.renderMaxZ + state.shiftU) - Math.floor(state.renderMinZ + state.shiftU));
         int rangeY = (int)(Math.ceil(state.renderMaxY + state.shiftV) - Math.floor(state.renderMinY + state.shiftV));
 
-        if (rangeZ == 1 && rangeY == 1) {
-            setXYZ(x, y, z);
+        setXYZ(x, y, z);
+        if (state.renderFromInside) {
+            xyz[MINZ] = z + state.renderMaxZ;
+            xyz[MAXZ] = z + state.renderMinZ;
+        }
+
+        if (rangeZ <= 1 && rangeZ <= 1) {
+
             if (state.flipTexture)
                 setUV(icon, state.renderMaxZ + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMinZ + state.shiftU, 1 - state.renderMinY + state.shiftV);
             else
                 setUV(icon, state.renderMinZ + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMaxZ + state.shiftU, 1 - state.renderMinY + state.shiftV);
 
-            if (enableAO)
+            if (state.enableAO)
                 renderXYZUVAO(xyzuvMap[face]);
             else
                 renderXYZUV(xyzuvMap[face]);
@@ -217,7 +219,6 @@ public class RenderHelperLL
 
         setupUVPoints(uStart, vStart, uStop, vStop, rangeZ, rangeY, icon);
         setupAOBrightnessLerp(state.renderMinZ, state.renderMaxZ, state.renderMinY, state.renderMaxY, rangeZ, rangeY);
-        setXYZ(x, y, z);
 
         for (int iz = 0; iz < rangeZ; iz++) {
             xyz[MAXZ] = xyz[MINZ] + maxUDiv[iz] - minUDiv[iz];
@@ -226,10 +227,10 @@ public class RenderHelperLL
             for (int iy = 0; iy < rangeY; iy++) {
                 xyz[MAXY] = xyz[MINY] + maxVDiv[iy] - minVDiv[iy];
 
-                brightnessTopLeft = brightnessLerp[iz][iy];
-                brightnessTopRight = brightnessLerp[iz + 1][iy];
-                brightnessBottomLeft = brightnessLerp[iz][iy + 1];
-                brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
+                state.brightnessTopLeft = brightnessLerp[iz][iy];
+                state.brightnessTopRight = brightnessLerp[iz + 1][iy];
+                state.brightnessBottomLeft = brightnessLerp[iz][iy + 1];
+                state.brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
 
                 if (state.flipTexture)
                     setUV(1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
@@ -242,6 +243,16 @@ public class RenderHelperLL
             }
             xyz[MINZ] = xyz[MAXZ];
         }
+    }
+
+    public void drawPartialFace (int face, double x, double y, double z, IIcon icon, double uMin, double vMin, double uMax, double vMax) {
+        setXYZ(x, y, z);
+        setUV(icon, uMin, vMin, uMax, vMax);
+
+        if (state.enableAO)
+            renderXYZUVAO(xyzuvMap[face]);
+        else
+            renderXYZUV(xyzuvMap[face]);
     }
 
     private void setupUVPoints (double uStart, double vStart, double uStop, double vStop, int rangeU, int rangeV, IIcon icon) {
@@ -285,8 +296,8 @@ public class RenderHelperLL
         for (int lr = 0; lr <= rangeLR; lr++) {
             float lerpLR = (float)(posLR / diffLR);
 
-            int brightTop = RenderHelperAO.mixAOBrightness(brightnessTopLeft, brightnessTopRight, 1 - lerpLR, lerpLR);
-            int brightBottom = RenderHelperAO.mixAOBrightness(brightnessBottomLeft, brightnessBottomRight, 1 - lerpLR, lerpLR);
+            int brightTop = RenderHelperAO.mixAOBrightness(state.brightnessTopLeft, state.brightnessTopRight, 1 - lerpLR, lerpLR);
+            int brightBottom = RenderHelperAO.mixAOBrightness(state.brightnessBottomLeft, state.brightnessBottomRight, 1 - lerpLR, lerpLR);
 
             double posTB = top;
             for (int tb = 0; tb <= rangeTB; tb++) {
@@ -348,20 +359,20 @@ public class RenderHelperLL
         int[] br = index[BR];
         int[] tr = index[TR];
 
-        tessellator.setColorOpaque_F(colorTopLeft[0], colorTopLeft[1], colorTopLeft[2]);
-        tessellator.setBrightness(brightnessTopLeft);
+        tessellator.setColorOpaque_F(state.colorTopLeft[0], state.colorTopLeft[1], state.colorTopLeft[2]);
+        tessellator.setBrightness(state.brightnessTopLeft);
         tessellator.addVertexWithUV(xyz[tl[0]], xyz[tl[1]], xyz[tl[2]], uv[tl[3]], uv[tl[4]]);
 
-        tessellator.setColorOpaque_F(colorBottomLeft[0], colorBottomLeft[1], colorBottomLeft[2]);
-        tessellator.setBrightness(brightnessBottomLeft);
+        tessellator.setColorOpaque_F(state.colorBottomLeft[0], state.colorBottomLeft[1], state.colorBottomLeft[2]);
+        tessellator.setBrightness(state.brightnessBottomLeft);
         tessellator.addVertexWithUV(xyz[bl[0]], xyz[bl[1]], xyz[bl[2]], uv[bl[3]], uv[bl[4]]);
 
-        tessellator.setColorOpaque_F(colorBottomRight[0], colorBottomRight[1], colorBottomRight[2]);
-        tessellator.setBrightness(brightnessBottomRight);
+        tessellator.setColorOpaque_F(state.colorBottomRight[0], state.colorBottomRight[1], state.colorBottomRight[2]);
+        tessellator.setBrightness(state.brightnessBottomRight);
         tessellator.addVertexWithUV(xyz[br[0]], xyz[br[1]], xyz[br[2]], uv[br[3]], uv[br[4]]);
 
-        tessellator.setColorOpaque_F(colorTopRight[0], colorTopRight[1], colorTopRight[2]);
-        tessellator.setBrightness(brightnessTopRight);
+        tessellator.setColorOpaque_F(state.colorTopRight[0], state.colorTopRight[1], state.colorTopRight[2]);
+        tessellator.setBrightness(state.brightnessTopRight);
         tessellator.addVertexWithUV(xyz[tr[0]], xyz[tr[1]], xyz[tr[2]], uv[tr[3]], uv[tr[4]]);
     }
 }

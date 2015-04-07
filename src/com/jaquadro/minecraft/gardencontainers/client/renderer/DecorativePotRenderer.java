@@ -43,12 +43,12 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
         GL11.glRotatef(90, 0, 1, 0);
         GL11.glTranslatef(-.5f, -.5f, -.5f);
 
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
-        boxRenderer.renderBox(renderer, block, 0, 0, 0, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(null, block, 0, 0, 0, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
-        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
-        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
-        boxRenderer.renderSolidBox(renderer, block, 0, 0, 0, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
+        boxRenderer.renderSolidBox(null, block, 0, 0, 0, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
+        boxRenderer.renderSolidBox(null, block, 0, 0, 0, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
+        boxRenderer.renderSolidBox(null, block, 0, 0, 0, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
         GL11.glTranslatef(.5f, .5f, .5f);
     }
@@ -75,17 +75,17 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
             boxRenderer.setIcon(renderer.getBlockIconFromSideAndMetadata(block, i, data), i);
 
         boxRenderer.setColor(baseColor);
-        boxRenderer.renderBox(renderer, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(world, block, x, y, z, 0, 14 * unit, 0, 1, 1, 1, 0, ModularBoxRenderer.CUT_YNEG | ModularBoxRenderer.CUT_YPOS);
         boxRenderer.setScaledColor(baseColor, .9375f);
-        boxRenderer.renderBox(renderer, block, x, y, z, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
+        boxRenderer.renderBox(world, block, x, y, z, 1 * unit, 8 * unit, 1 * unit, 15 * unit, 16 * unit, 15 * unit, 0, ModularBoxRenderer.CUT_YPOS);
 
         boxRenderer.setScaledExteriorColor(baseColor, .875f);
-        boxRenderer.renderSolidBox(renderer, block, x, y, z, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
+        boxRenderer.renderSolidBox(world, block, x, y, z, 3 * unit, 6 * unit, 3 * unit, 13 * unit, 8 * unit, 13 * unit);
         boxRenderer.setScaledExteriorColor(baseColor, .8125f);
-        boxRenderer.renderSolidBox(renderer, block, x, y, z, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
+        boxRenderer.renderSolidBox(world, block, x, y, z, 5 * unit, 3 * unit, 5 * unit, 11 * unit, 6 * unit, 11 * unit);
         boxRenderer.setScaledExteriorColor(baseColor, .9375f);
         boxRenderer.setScaledExteriorColor(baseColor, .75f, 1);
-        boxRenderer.renderSolidBox(renderer, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
+        boxRenderer.renderSolidBox(world, block, x, y, z, 2 * unit, 0 * unit, 2 * unit, 14 * unit, 3 * unit, 14 * unit);
 
         TileEntityDecorativePot te = block.getTileEntity(world, x, y, z);
         ItemStack substrateItem = block.getGardenSubstrate(world, x, y, z, Slot2Profile.SLOT_CENTER);
@@ -100,8 +100,8 @@ public class DecorativePotRenderer implements ISimpleBlockRenderingHandler
             RenderHelper.calculateBaseColor(activeSubstrateColor, color);
             RenderHelper.scaleColor(activeSubstrateColor, activeSubstrateColor, .8f);
 
-            renderer.setRenderBounds(.0625f, 0, .0625f, 1f - .0625f, 1f - .0625f, 1f - .0625f);
-            RenderHelper.instance.renderFace(RenderHelper.YPOS, renderer, block, x, y, z, substrateIcon, activeSubstrateColor[0], activeSubstrateColor[1], activeSubstrateColor[2]);
+            RenderHelper.instance.setRenderBounds(.0625f, 0, .0625f, 1f - .0625f, 1f - .0625f, 1f - .0625f);
+            RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, x, y, z, substrateIcon, activeSubstrateColor[0], activeSubstrateColor[1], activeSubstrateColor[2]);
         }
 
         return true;
