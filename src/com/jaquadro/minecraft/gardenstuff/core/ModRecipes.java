@@ -35,6 +35,7 @@ public class ModRecipes
         ItemStack blockWroughtIron = new ItemStack(ModBlocks.metalBlock);
         ItemStack wroughtIronIngot = new ItemStack(ModItems.wroughtIronIngot);
         ItemStack wroughtIronNugget = new ItemStack(ModItems.wroughtIronNugget);
+        ItemStack blockCharcoal = new ItemStack(ModBlocks.stoneBlock);
 
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 4, 0), "xx", "xx", "xx", 'x', linkIron);
         GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.heavyChain, 4, 1), "xx", "xx", "xx", 'x', linkGold);
@@ -52,6 +53,9 @@ public class ModRecipes
 
         GameRegistry.addShapedRecipe(new ItemStack(Items.iron_ingot), "xxx", "xxx", "xxx", 'x', ironNugget);
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.ironNugget, 9), "x", 'x', new ItemStack(Items.iron_ingot));
+
+        GameRegistry.addShapedRecipe(blockCharcoal, "xxx", "xxx", "xxx", 'x', new ItemStack(Items.coal, 1, 1));
+        GameRegistry.addShapedRecipe(new ItemStack(Items.coal, 9, 1), "x", 'x', blockCharcoal);
 
         GameRegistry.addShapedRecipe(blockWroughtIron, "xxx", "xxx", "xxx", 'x', wroughtIronIngot);
         GameRegistry.addShapedRecipe(new ItemStack(ModItems.wroughtIronIngot, 9), "x", 'x', blockWroughtIron);

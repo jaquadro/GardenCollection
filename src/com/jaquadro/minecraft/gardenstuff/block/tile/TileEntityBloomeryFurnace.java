@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.block.tile;
 
 import com.jaquadro.minecraft.gardenstuff.block.BlockBloomeryFurnace;
+import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import com.jaquadro.minecraft.gardenstuff.core.ModItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -194,7 +195,8 @@ public class TileEntityBloomeryFurnace extends TileEntity implements ISidedInven
 
         if (item instanceof ItemBlock) {
             Block block = Block.getBlockFromItem(item);
-            // charcoal block
+            if (block == ModBlocks.stoneBlock && stack.getItemDamage() == 0)
+                return ModBlocks.stoneBlock.getBurnTime(stack);
         }
 
         if (item == Items.coal && stack.getItemDamage() == 1)
