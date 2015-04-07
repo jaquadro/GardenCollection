@@ -22,11 +22,15 @@ repositories {
         name = "chickenbones"
         url = "http://chickenbones.net/maven/"
     }
+    ivy {
+        name "MineTweaker3"
+        artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-[revision].[ext]"
+    }
 }
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.5.6"
+version = "1.7.10-1.6.0"
 group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GardenStuff"
 
@@ -61,6 +65,8 @@ dependencies {
     // http://chickenbones.net/maven
     compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
     compile "codechicken:NotEnoughItems:1.7.10-1.0.4.83:dev"
+
+    compile name: 'MineTweaker3', version: "Dev-1.7.10-3.0.9B", ext: 'jar'
 }
 
 processResources

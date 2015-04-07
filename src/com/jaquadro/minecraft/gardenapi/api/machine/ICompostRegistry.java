@@ -14,6 +14,12 @@ public interface ICompostRegistry
 
     void registerCompostMaterial (Class clazz, ICompostMaterial materialInfo);
 
+    void removeCompostMaterial (ItemStack itemStack);
+
+    void removeCompostMaterial (String oreDictionaryKey);
+
+    void removeCompostMaterial (Class clazz);
+
     void clear ();
 
     ICompostMaterial getCompostMaterialInfo (ItemStack itemStack);

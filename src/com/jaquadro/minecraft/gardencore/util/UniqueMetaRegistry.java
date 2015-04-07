@@ -40,6 +40,11 @@ public class UniqueMetaRegistry<E>
         return null;
     }
 
+    public void remove (UniqueMetaIdentifier id) {
+        if (id != null)
+            registry.remove(id);
+    }
+
     public Set<Map.Entry<UniqueMetaIdentifier, E>> entrySet () {
         return registry.entrySet();
     }

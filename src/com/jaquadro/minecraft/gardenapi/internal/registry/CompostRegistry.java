@@ -96,6 +96,23 @@ public class CompostRegistry implements ICompostRegistry
     }
 
     @Override
+    public void removeCompostMaterial (ItemStack itemStack) {
+        itemRegistry.remove(UniqueMetaIdentifier.createFor(itemStack));
+    }
+
+    @Override
+    public void removeCompostMaterial (String oreDictionaryKey) {
+        if (oreDictionaryKey != null)
+            oreDictRegistry.remove(oreDictionaryKey);
+    }
+
+    @Override
+    public void removeCompostMaterial (Class clazz) {
+        if (clazz != null)
+            classRegistry.remove(clazz);
+    }
+
+    @Override
     public void clear () {
         itemRegistry.clear();
         oreDictRegistry.clear();
