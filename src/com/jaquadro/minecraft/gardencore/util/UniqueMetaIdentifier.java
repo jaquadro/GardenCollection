@@ -1,9 +1,11 @@
 package com.jaquadro.minecraft.gardencore.util;
 
 import com.google.common.base.Objects;
+import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public final class UniqueMetaIdentifier
@@ -103,5 +105,13 @@ public final class UniqueMetaIdentifier
     @Override
     public String toString () {
         return String.format("%s:%s;%d", modId, name, meta);
+    }
+
+    public static UniqueMetaIdentifier createFor (ItemStack itemStack) {
+        if (itemStack.getItem() == null)
+            return null;
+
+        String name = GameData.getItemRegistry().getNameForObject(itemStack.getItem());
+        return new UniqueMetaIdentifier(name, itemStack.getItemDamage());
     }
 }

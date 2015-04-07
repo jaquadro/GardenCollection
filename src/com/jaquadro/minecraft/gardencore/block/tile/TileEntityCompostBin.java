@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardencore.block.tile;
 
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.machine.ICompostMaterial;
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
 import com.jaquadro.minecraft.gardencore.block.BlockCompostBin;
 import com.jaquadro.minecraft.gardencore.block.BlockGardenProxy;
@@ -256,65 +258,11 @@ public class TileEntityCompostBin extends TileEntity implements ISidedInventory
         if (itemStack == null)
             return 0;
 
-        Item item = itemStack.getItem();
-        if (item instanceof ItemBlock && Block.getBlockFromItem(item) != Blocks.air) {
-            Block block = Block.getBlockFromItem(item);
+        ICompostMaterial material = GardenAPI.instance().registries().compost().getCompostMaterialInfo(itemStack);
+        if (material == null)
+            return 0;
 
-            if (WoodRegistry.instance().contains(block, itemStack.getItemDamage()))
-                return 300;
-            if (block instanceof IPlantable)
-                return 100;
-            if (block instanceof IGrowable)
-                return 100;
-            if (block instanceof BlockLeavesBase)
-                return 150;
-            if (block instanceof BlockMelon)
-                return 150;
-            if (block instanceof BlockHay)
-                return 150;
-        }
-
-        if (item == Items.stick)
-            return 150;
-        if (item == Items.string)
-            return 100;
-        if (item == Items.wheat)
-            return 100;
-        if (item == Items.reeds)
-            return 100;
-        if (item == Items.feather)
-            return 100;
-        if (item == Items.leather)
-            return 150;
-        if (item == Items.rotten_flesh)
-            return 150;
-        if (item instanceof IPlantable)
-            return 100;
-        if (item instanceof ItemFood)
-            return 150;
-
-        for (int id : OreDictionary.getOreIDs(itemStack)) {
-            String entry = OreDictionary.getOreName(id);
-            if (entry == null)
-                continue;
-
-            if (entry.equals("treeSapling"))
-                return 150;
-            if (entry.equals("treeLeaves"))
-                return 150;
-            if (entry.equals("treeWood"))
-                return 300;
-            if (entry.equals("stickWood"))
-                return 150;
-            if (entry.startsWith("crop"))
-                return 100;
-            if (entry.startsWith("food"))
-                return 150;
-            if (entry.startsWith("seed"))
-                return 150;
-        }
-
-        return 0;
+        return material.getDecomposeTime();
     }
 
     public static boolean isItemDecomposable (ItemStack itemStack) {

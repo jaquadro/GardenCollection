@@ -43,4 +43,8 @@ public class UniqueMetaRegistry<E>
     public Set<Map.Entry<UniqueMetaIdentifier, E>> entrySet () {
         return registry.entrySet();
     }
+
+    public void clear () {
+        registry.clear();
+    }
 }
