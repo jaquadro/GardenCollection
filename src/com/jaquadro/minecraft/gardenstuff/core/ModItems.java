@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.item.ItemChainLink;
+import com.jaquadro.minecraft.gardenstuff.item.ItemMossPaste;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
@@ -16,17 +17,20 @@ public class ModItems
     public static Item ironNugget;
     public static Item wroughtIronIngot;
     public static Item wroughtIronNugget;
+    public static Item mossPaste;
 
     public void init () {
         chainLink = new ItemChainLink(makeName("chainLink"));
         ironNugget = new Item().setUnlocalizedName(makeName("ironNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":iron_nugget");
         wroughtIronIngot = new Item().setUnlocalizedName(makeName("wroughtIronIngot")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_ingot");
         wroughtIronNugget = new Item().setUnlocalizedName(makeName("wroughtIronNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_nugget");
+        mossPaste = new ItemMossPaste(makeName("mossPaste"));
 
         GameRegistry.registerItem(chainLink, "chain_link");
         GameRegistry.registerItem(ironNugget, "iron_nugget");
         GameRegistry.registerItem(wroughtIronIngot, "wrought_iron_ingot");
         GameRegistry.registerItem(wroughtIronNugget, "wrought_iron_nugget");
+        GameRegistry.registerItem(mossPaste, "moss_paste");
 
         OreDictionary.registerOre("nuggetIron", ironNugget);
         OreDictionary.registerOre("ingotWroughtIron", wroughtIronIngot);

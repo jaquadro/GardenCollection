@@ -92,6 +92,7 @@ item.gardenstuff.chainLink.wrought_iron=Wrought Iron Chain Link
 item.gardenstuff.ironNugget.name=Iron Nugget
 item.gardenstuff.wroughtIronIngot.name=Wrought Iron Ingot
 item.gardenstuff.wroughtIronNugget.name=Wrought Iron Nugget
+item.gardenstuff.mossPaste.name=Moss Paste
 
 nei.recipe.gardenstuff.bloomeryFurnace=Bloomery Process
 
@@ -128,6 +129,14 @@ tile.gardenstuff.fence.1.name=Wrought Iron Fence
 tile.gardenstuff.fence.2.name=Wrought Iron Fence
 tile.gardenstuff.fence.3.name=Wrought Iron Fence
 tile.gardenstuff.bloomeryFurnace.name=Bloomery Furnace
+tile.gardenstuff.mossBrick.name=Mossy Stone Bricks
+tile.gardenstuff.mossBrick.mossy_2.name=Mossy Stone Bricks
+tile.gardenstuff.mossBrick.mossy_3.name=Mossy Stone Bricks
+tile.gardenstuff.mossBrick.mossy_4.name=Mossy Stone Bricks
+tile.gardenstuff.mossBrick.cracked_mossy_1.name=Mossy Cracked Stone Bricks
+tile.gardenstuff.mossBrick.cracked_mossy_2.name=Mossy Cracked Stone Bricks
+tile.gardenstuff.mossBrick.cracked_mossy_3.name=Mossy Cracked Stone Bricks
+tile.gardenstuff.mossBrick.cracked_mossy_4.name=Mossy Cracked Stone Bricks
 
 gardenstuff.lanternSource=Contents
 gardenstuff.lanternSource.none=Empty
