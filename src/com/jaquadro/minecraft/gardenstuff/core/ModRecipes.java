@@ -86,6 +86,8 @@ public class ModRecipes
             GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.latticeWood, 8, i), " x ", "xxx", " x ", 'x', new ItemStack(Blocks.planks, 1, i));
         }
 
+        GameRegistry.addRecipe(new ItemStack(ModItems.mossPaste), "xyx", "yxy", "xyx", 'x', Blocks.vine, 'y', Items.clay_ball);
+
         GameRegistry.addSmelting(wroughtIronIngot, new ItemStack(Items.iron_ingot), 0);
     }
 }
