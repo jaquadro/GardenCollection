@@ -30,13 +30,13 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.6.0"
+version = "1.7.10-1.6.1"
 group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GardenStuff"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
-    assetDir = "../runtime/assets"
+    runDir = "runtime/assets"
 
     replace '@VERSION@', project.version
 }

@@ -11,6 +11,7 @@ import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import com.jaquadro.minecraft.gardenstuff.integration.ColoredLightsIntegration;
 import com.jaquadro.minecraft.gardenstuff.integration.TwilightForestIntegration;
 import com.jaquadro.minecraft.gardenstuff.item.ItemLantern;
+import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -32,12 +33,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import thaumcraft.api.crafting.IInfusionStabiliser;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockLantern extends BlockContainer
+@Optional.Interface(iface="thaumcraft.api.crafting.IInfusionStabiliser", modid="Thaumcraft", striprefs=true)
+public class BlockLantern extends BlockContainer implements IInfusionStabiliser
 {
     @SideOnly(Side.CLIENT)
     private IIcon iconBottom;
@@ -374,5 +377,19 @@ public class BlockLantern extends BlockContainer
     public TileEntityLantern getTileEntity (IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         return (te != null && te instanceof TileEntityLantern) ? (TileEntityLantern) te : null;
+    }
+
+    @Override
+    @Optional.Method(modid = "Thaumcraft")
+    public boolean canStabaliseInfusion (World world, int x, int y, int z) {
+        TileEntityLantern tile = getTileEntity(world, x, y, z);
+        if (tile == null)
+            return false;
+
+        ILanternSource lanternSource = Api.instance.registries().lanternSources().getLanternSource(tile.getLightSource());
+        if (lanternSource == null)
+            return false;
+
+        return lanternSource.getSourceID().equals("thaumcraftCandle");
     }
 }

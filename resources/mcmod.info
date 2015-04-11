@@ -27,7 +27,9 @@
 		"credits": "By jaquadro",
 		"logoFile": "",
 		"url": "http://www.jaquadro.com/",
-		"authors": [ "jaquadro" ]
+		"authors": [ "jaquadro" ],
+		"dependencies": [ "Thaumcraft" ],
+		"useDependencyInformation": "true"
 	},
 	{
     	"modid": "GardenTrees",
