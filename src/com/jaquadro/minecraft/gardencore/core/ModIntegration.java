@@ -19,6 +19,7 @@ public class ModIntegration
         ThaumcraftIntegration.init();
         AgriCraftIntegration.init();
         MineTweakerIntegration.init();
+        WitcheryIntegration.init();
 
         if (Loader.isModLoaded("plantmegapack"))
             PlantMegaPackIntegration.init();

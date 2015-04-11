@@ -262,7 +262,10 @@ public abstract class BlockGarden extends BlockContainer implements IGardenBlock
     }
 
     public boolean isPlantValidForSlot (World world, int x, int y, int z, int slot, PlantItem plant) {
-        if (plant != null && plant.getPlantBlock() instanceof BlockContainer)
+        if (plant == null)
+            return false;
+
+        if (plant.getPlantBlock() instanceof BlockContainer)
             return false;
 
         if (!slotProfile.isPlantValidForSlot(world, x, y, z, slot, plant))

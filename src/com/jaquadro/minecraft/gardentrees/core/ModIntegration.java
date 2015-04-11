@@ -16,5 +16,6 @@ public class ModIntegration
         ThaumcraftIntegration.init();
         ExtraBiomesXLIntegration.init();
         TinkersConstructIntegration.init();
+        WitcheryIntegration.init();
     }
 }
