@@ -10,7 +10,6 @@ public class ModIntegration
 
     public void postInit () {
         GardenCoreIntegration.init();
-        BiomesOPlentyIntegration.init();
         NaturaIntegration.init();
         TwilightForestIntegration.init();
         ThaumcraftIntegration.init();

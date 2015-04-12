@@ -1,11 +1,15 @@
-package com.jaquadro.minecraft.gardencore.integration;
+package com.jaquadro.minecraft.gardencommon.integration.mods;
 
+import com.jaquadro.minecraft.gardencommon.integration.IntegrationModule;
 import com.jaquadro.minecraft.gardencore.api.*;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
 import com.jaquadro.minecraft.gardencore.api.plant.SimplePlantInfo;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.CrossedSquaresPlantRenderer;
-import com.jaquadro.minecraft.gardencore.client.renderer.plant.GroundCoverPlantRenderer;
+import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
+import com.jaquadro.minecraft.gardentrees.GardenTrees;
+import com.jaquadro.minecraft.gardentrees.world.gen.OrnamentalTreeFactory;
+import com.jaquadro.minecraft.gardentrees.world.gen.OrnamentalTreeRegistry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -17,17 +21,25 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
-public class BiomesOPlentyIntegration
-{
-    public static final String MOD_ID = "BiomesOPlenty";
+import java.util.HashMap;
+import java.util.Map;
 
+public class BiomesOPlenty extends IntegrationModule
+{
+    private static final String MOD_ID = "BiomesOPlenty";
     private static BOPMetaResolver metaResolver = new BOPMetaResolver();
 
-    public static void init () {
-        if (!Loader.isModLoaded(MOD_ID))
-            return;
+    @Override
+    public String getModID () {
+        return MOD_ID;
+    }
 
+    @Override
+    public void init () throws Throwable {
         initWood();
+
+        if (Loader.isModLoaded(GardenTrees.MOD_ID))
+            initSmallTrees();
 
         PlantRegistry plantReg = PlantRegistry.instance();
         plantReg.registerPlantMetaResolver(MOD_ID, "foliage", metaResolver);
@@ -128,11 +140,12 @@ public class BiomesOPlentyIntegration
         plantReg.registerPlantInfo(MOD_ID, "turnip", new SimplePlantInfo(PlantType.GROUND, PlantSize.FULL));
 
         plantReg.registerPlantRenderer(MOD_ID, "turnip", PlantRegistry.CROPS_RENDERER);
-
-
     }
 
-    private static void initWood () {
+    @Override
+    public void postInit () throws Throwable { }
+
+    private void initWood () {
         Block log1 = GameRegistry.findBlock(MOD_ID, "logs1");
         Block log2 = GameRegistry.findBlock(MOD_ID, "logs2");
         Block log3 = GameRegistry.findBlock(MOD_ID, "logs3");
@@ -201,6 +214,47 @@ public class BiomesOPlentyIntegration
         saplingReg.registerSapling(sapling2, 6, log4, 3, leafc2, 2); // Mahogany Tree
     }
 
+    private void initSmallTrees () {
+        Map<String, int[]> saplingBank1 = new HashMap<String, int[]>();
+        saplingBank1.put("small_oak", new int[] { 0, 1, 3, 5, 8, 9, 10, 11, 12, 14, 15 });
+        saplingBank1.put("small_pine", new int[] { 2 });
+        saplingBank1.put("small_spruce", new int[] { 4, 6, 7 });
+
+        Map<String, int[]> saplingBank2 = new HashMap<String, int[]>();
+        saplingBank2.put("small_oak", new int[] { 1 });
+        saplingBank2.put("small_pine", new int[] { 3, 5 });
+        saplingBank2.put("small_palm", new int[] { 2 });
+        saplingBank2.put("small_willow", new int[] { 4 });
+        saplingBank2.put("small_mahogany", new int[] { 6 });
+        saplingBank2.put("large_oak", new int[] { 0 });
+
+        Map<Item, Map<String, int[]>> banks = new HashMap<Item, Map<String, int[]>>();
+        banks.put(GameRegistry.findItem(MOD_ID, "saplings"), saplingBank1);
+        banks.put(GameRegistry.findItem(MOD_ID, "colorizedSaplings"), saplingBank2);
+
+        SaplingRegistry saplingReg = SaplingRegistry.instance();
+
+        for (Map.Entry<Item, Map<String, int[]>> entry : banks.entrySet()) {
+            Item sapling = entry.getKey();
+
+            for (Map.Entry<String, int[]> bankEntry : entry.getValue().entrySet()) {
+                OrnamentalTreeFactory factory = OrnamentalTreeRegistry.getTree(bankEntry.getKey());
+                if (factory == null)
+                    continue;
+
+                for (int i : bankEntry.getValue()) {
+                    UniqueMetaIdentifier woodBlock = saplingReg.getWoodForSapling(sapling, i);
+                    UniqueMetaIdentifier leafBlock = saplingReg.getLeavesForSapling(sapling, i);
+                    if (woodBlock == null && leafBlock == null)
+                        continue;
+
+                    saplingReg.putExtendedData(sapling, i, "sm_generator",
+                        factory.create(woodBlock.getBlock(), woodBlock.meta, leafBlock.getBlock(), leafBlock.meta));
+                }
+            }
+        }
+    }
+
     private static class BOPMetaResolver implements IPlantMetaResolver
     {
         @Override
@@ -247,6 +301,4 @@ public class BiomesOPlentyIntegration
             renderer.drawCrossedSquares(hedgeTrunk, x, y, z, 1.0F);
         }
     }
-
-    //private static class BOP
 }

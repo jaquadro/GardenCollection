@@ -1,11 +1,11 @@
-package com.jaquadro.minecraft.gardencore.integration;
+package com.jaquadro.minecraft.gardencommon.integration.mods;
 
+import com.jaquadro.minecraft.gardencommon.integration.IntegrationModule;
 import com.jaquadro.minecraft.gardencore.api.*;
 import com.jaquadro.minecraft.gardencore.api.plant.*;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
 import com.jaquadro.minecraft.gardencore.block.tile.TileEntityGarden;
 import com.jaquadro.minecraft.gardencore.client.renderer.plant.DoublePlantRenderer;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -13,17 +13,20 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BotaniaIntegration
+public class Botania extends IntegrationModule
 {
     public static final String MOD_ID = "Botania";
 
     private static Block flower1;
     private static Block flower2;
 
-    public static void init () {
-        if (!Loader.isModLoaded(MOD_ID))
-            return;
+    @Override
+    public String getModID () {
+        return MOD_ID;
+    }
 
+    @Override
+    public void init () throws Throwable {
         flower1 = GameRegistry.findBlock(MOD_ID, "doubleFlower1");
         flower2 = GameRegistry.findBlock(MOD_ID, "doubleFlower2");
 
@@ -51,6 +54,11 @@ public class BotaniaIntegration
         }
 
         plantReg.registerPlantInfo(MOD_ID, "specialFlower", new SimplePlantInfo(PlantType.INVALID, PlantSize.MEDIUM));
+    }
+
+    @Override
+    public void postInit () throws Throwable {
+
     }
 
     private static class BonemealHandler implements IBonemealHandler
