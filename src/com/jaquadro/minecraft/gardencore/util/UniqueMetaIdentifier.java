@@ -114,4 +114,20 @@ public final class UniqueMetaIdentifier
         String name = GameData.getItemRegistry().getNameForObject(itemStack.getItem());
         return new UniqueMetaIdentifier(name, itemStack.getItemDamage());
     }
+
+    public static UniqueMetaIdentifier createFor (Block block, int meta) {
+        if (block == null)
+            return null;
+
+        String name = GameData.getBlockRegistry().getNameForObject(block);
+        return new UniqueMetaIdentifier(name, meta);
+    }
+
+    public static UniqueMetaIdentifier createFor (Block block) {
+        if (block == null)
+            return null;
+
+        String name = GameData.getBlockRegistry().getNameForObject(block);
+        return new UniqueMetaIdentifier(name);
+    }
 }

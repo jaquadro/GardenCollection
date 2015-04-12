@@ -1,4 +1,4 @@
-package com.jaquadro.minecraft.gardencore.api.block;
+package com.jaquadro.minecraft.gardenapi.api.connect;
 
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;

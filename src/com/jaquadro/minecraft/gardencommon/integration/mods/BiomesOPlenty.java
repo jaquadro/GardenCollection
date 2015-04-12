@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardencommon.integration.mods;
 
 import com.jaquadro.minecraft.gardencommon.integration.IntegrationModule;
+import com.jaquadro.minecraft.gardencommon.integration.SmallTreeRegistryHelper;
 import com.jaquadro.minecraft.gardencore.api.*;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantSize;
 import com.jaquadro.minecraft.gardencore.api.plant.PlantType;
@@ -37,9 +38,6 @@ public class BiomesOPlenty extends IntegrationModule
     @Override
     public void init () throws Throwable {
         initWood();
-
-        if (Loader.isModLoaded(GardenTrees.MOD_ID))
-            initSmallTrees();
 
         PlantRegistry plantReg = PlantRegistry.instance();
         plantReg.registerPlantMetaResolver(MOD_ID, "foliage", metaResolver);
@@ -212,9 +210,7 @@ public class BiomesOPlenty extends IntegrationModule
         saplingReg.registerSapling(sapling2, 4, log3, 1, leafc2, 0); // Willow Tree
         saplingReg.registerSapling(sapling2, 5, log4, 0, leafc2, 1); // Pine Tree
         saplingReg.registerSapling(sapling2, 6, log4, 3, leafc2, 2); // Mahogany Tree
-    }
 
-    private void initSmallTrees () {
         Map<String, int[]> saplingBank1 = new HashMap<String, int[]>();
         saplingBank1.put("small_oak", new int[] { 0, 1, 3, 5, 8, 9, 10, 11, 12, 14, 15 });
         saplingBank1.put("small_pine", new int[] { 2 });
@@ -232,27 +228,7 @@ public class BiomesOPlenty extends IntegrationModule
         banks.put(GameRegistry.findItem(MOD_ID, "saplings"), saplingBank1);
         banks.put(GameRegistry.findItem(MOD_ID, "colorizedSaplings"), saplingBank2);
 
-        SaplingRegistry saplingReg = SaplingRegistry.instance();
-
-        for (Map.Entry<Item, Map<String, int[]>> entry : banks.entrySet()) {
-            Item sapling = entry.getKey();
-
-            for (Map.Entry<String, int[]> bankEntry : entry.getValue().entrySet()) {
-                OrnamentalTreeFactory factory = OrnamentalTreeRegistry.getTree(bankEntry.getKey());
-                if (factory == null)
-                    continue;
-
-                for (int i : bankEntry.getValue()) {
-                    UniqueMetaIdentifier woodBlock = saplingReg.getWoodForSapling(sapling, i);
-                    UniqueMetaIdentifier leafBlock = saplingReg.getLeavesForSapling(sapling, i);
-                    if (woodBlock == null && leafBlock == null)
-                        continue;
-
-                    saplingReg.putExtendedData(sapling, i, "sm_generator",
-                        factory.create(woodBlock.getBlock(), woodBlock.meta, leafBlock.getBlock(), leafBlock.meta));
-                }
-            }
-        }
+        SmallTreeRegistryHelper.registerSaplings(banks);
     }
 
     private static class BOPMetaResolver implements IPlantMetaResolver

@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
-import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
+import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardenstuff.block.BlockHeavyChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -39,26 +41,47 @@ public class HeavyChainRenderer implements ISimpleBlockRenderingHandler
         renderer.setRenderBounds(0, 0, 0, 1, 1, 1);
         renderCrossedSquares(renderer, block, x, y, z);
 
+        double upperDepth = 0;
+        double lowerDepth = 0;
+
         Block upperBlock = world.getBlock(x, y + 1, z);
         if (upperBlock instanceof IChainSingleAttachable) {
             Vec3 attach = ((IChainSingleAttachable) upperBlock).getChainAttachPoint(world, x, y + 1, z, 0);
-            if (attach != null && attach != defaultAttachPoint[0]) {
-                renderer.setRenderBounds(0, 0, 0, 1, attach.yCoord, 1);
-                renderer.setOverrideBlockTexture(block.getIcon(world, x, y, z, 0));
-                renderCrossedSquares(renderer, block, x, y + 1, z);
-                renderer.setOverrideBlockTexture(null);
-            }
+            if (attach != null && attach != defaultAttachPoint[0])
+                upperDepth = attach.yCoord;
+        }
+
+        if (upperDepth == 0) {
+            IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(upperBlock, world.getBlockMetadata(x, y + 1, z));
+            if (attachable != null)
+                upperDepth = attachable.getAttachDepth(world, x, y + 1, z, 0);
         }
 
         Block lowerBlock = world.getBlock(x, y - 1, z);
         if (lowerBlock instanceof IChainSingleAttachable) {
-            Vec3 attach = ((IChainSingleAttachable) lowerBlock).getChainAttachPoint(world, x, y - 1, z, 0);
-            if (attach != null && attach != defaultAttachPoint[1]) {
-                renderer.setRenderBounds(0, attach.yCoord, 0, 1, 1, 1);
-                renderer.setOverrideBlockTexture(block.getIcon(world, x, y, z, 0));
-                renderCrossedSquares(renderer, block, x, y - 1, z);
-                renderer.setOverrideBlockTexture(null);
-            }
+            Vec3 attach = ((IChainSingleAttachable) lowerBlock).getChainAttachPoint(world, x, y - 1, z, 1);
+            if (attach != null && attach != defaultAttachPoint[1])
+                lowerDepth = attach.yCoord;
+        }
+
+        if (lowerDepth == 0) {
+            IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(lowerBlock, world.getBlockMetadata(x, y - 1, z));
+            if (attachable != null)
+                lowerDepth = attachable.getAttachDepth(world, x, y - 1, z, 1);
+        }
+
+        if (upperDepth > 0) {
+            renderer.setRenderBounds(0, 0, 0, 1, upperDepth, 1);
+            renderer.setOverrideBlockTexture(block.getIcon(world, x, y, z, 0));
+            renderCrossedSquares(renderer, block, x, y + 1, z);
+            renderer.setOverrideBlockTexture(null);
+        }
+
+        if (lowerDepth > 0) {
+            renderer.setRenderBounds(0, lowerDepth, 0, 1, 1, 1);
+            renderer.setOverrideBlockTexture(block.getIcon(world, x, y, z, 0));
+            renderCrossedSquares(renderer, block, x, y - 1, z);
+            renderer.setOverrideBlockTexture(null);
         }
 
         return true;

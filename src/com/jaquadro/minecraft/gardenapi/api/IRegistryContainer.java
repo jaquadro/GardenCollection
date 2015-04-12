@@ -1,6 +1,7 @@
 package com.jaquadro.minecraft.gardenapi.api;
 
 import com.jaquadro.minecraft.gardenapi.api.component.ILanternSourceRegistry;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachableRegistry;
 import com.jaquadro.minecraft.gardenapi.api.machine.ICompostRegistry;
 import com.jaquadro.minecraft.gardenapi.api.plant.IPlantRegistry;
 import com.jaquadro.minecraft.gardenapi.api.plant.ISaplingRegistry;
@@ -17,4 +18,6 @@ public interface IRegistryContainer
     ILanternSourceRegistry lanternSources ();
 
     ICompostRegistry compost ();
+
+    IAttachableRegistry attachable ();
 }

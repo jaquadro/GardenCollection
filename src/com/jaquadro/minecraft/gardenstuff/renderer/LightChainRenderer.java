@@ -1,6 +1,8 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
-import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
+import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLightChain;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -57,17 +59,24 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
         int yMin = block.findMinY(world, x, y, z);
         int yMax = block.findMaxY(world, x, y, z);
 
-        Vec3 topAttach = defaultSingleAttachPoint;
+        double upperDepth = 0;
+        double lowerDepth = 0;
 
         Block blockTop = world.getBlock(x, yMax + 1, z);
-        if (blockTop instanceof IChainSingleAttachable)
-            topAttach = ((IChainSingleAttachable) blockTop).getChainAttachPoint(world, x, yMax + 1, z, 0);
+        if (blockTop instanceof IChainSingleAttachable) {
+            Vec3 topAttach = ((IChainSingleAttachable) blockTop).getChainAttachPoint(world, x, yMax + 1, z, 0);
+            if (topAttach != null)
+                upperDepth = topAttach.yCoord;
+        }
 
-        if (topAttach == null)
-            topAttach = defaultSingleAttachPoint;
+        if (upperDepth == 0) {
+            IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(blockTop, world.getBlockMetadata(x, y + 1, z));
+            if (attachable != null)
+                upperDepth = attachable.getAttachDepth(world, x, y + 1, z, 0);
+        }
 
         for (Vec3 point : block.getAttachPoints(world, x, y, z)) {
-            float height = yMax - yMin + 2 - (float)point.yCoord + (float)topAttach.yCoord;
+            float height = yMax - yMin + 2 - (float)point.yCoord + (float)upperDepth;
 
             double cx = .5f;
             double cz = .5f;
@@ -81,7 +90,7 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
             if (y == yMin)
                 yb = y - 1 + point.yCoord;
             if (y == yMax)
-                yt = y + 1 + topAttach.yCoord;
+                yt = y + 1 + upperDepth;
 
             double lerpB = 1 - ((yb - localYMin) / height);
             double lerpT = 1 - ((yt - localYMin) / height);

@@ -1,8 +1,10 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
 import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardenapi.internal.Api;
-import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
@@ -115,6 +117,16 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
             Vec3 attach = ((IChainSingleAttachable) upperBlock).getChainAttachPoint(world, x, y + 1, z, 0);
             if (attach != null && attach != defaultAttachPoint) {
                 RenderHelper.instance.setRenderBounds(0, 0, 0, 1, attach.yCoord, 1);
+                RenderHelper.instance.renderCrossedSquares(world, ModBlocks.heavyChain, x, y + 1, z, ModBlocks.lightChain.getIcon(0, 4));
+                return;
+            }
+        }
+
+        IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(upperBlock, world.getBlockMetadata(x, y + 1, z));
+        if (attachable != null) {
+            double depth = attachable.getAttachDepth(world, x, y + 1, z, 0);
+            if (depth > 0) {
+                RenderHelper.instance.setRenderBounds(0, 0, 0, 1, depth, 1);
                 RenderHelper.instance.renderCrossedSquares(world, ModBlocks.heavyChain, x, y + 1, z, ModBlocks.lightChain.getIcon(0, 4));
             }
         }

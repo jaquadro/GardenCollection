@@ -1,10 +1,8 @@
 package com.jaquadro.minecraft.gardentrees.block;
 
 import com.jaquadro.minecraft.gardencore.api.WoodRegistry;
-import com.jaquadro.minecraft.gardencore.api.block.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
-import com.jaquadro.minecraft.gardenstuff.item.ItemLantern;
 import com.jaquadro.minecraft.gardentrees.block.tile.TileEntityWoodProxy;
 import com.jaquadro.minecraft.gardentrees.core.ClientProxy;
 import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
