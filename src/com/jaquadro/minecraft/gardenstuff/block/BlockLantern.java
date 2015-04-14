@@ -8,6 +8,7 @@ import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
+import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import com.jaquadro.minecraft.gardenstuff.integration.ColoredLightsIntegration;
 import com.jaquadro.minecraft.gardenstuff.integration.TwilightForestIntegration;
 import com.jaquadro.minecraft.gardenstuff.item.ItemLantern;
@@ -268,6 +269,13 @@ public class BlockLantern extends BlockContainer implements IInfusionStabiliser
 
         super.breakBlock(world, x, y, z, block, data);
     }
+
+    /*private void notifyPowerChange (World world, int x, int y, int z) {
+        world.notifyBlocksOfNeighborChange(x, y, z, this);
+        world.notifyBlocksOfNeighborChange(x, y - 1, z, this);
+
+        for (int i = 1; i < )
+    }*/
 
     @Override
     public void getSubBlocks (Item item, CreativeTabs tab, List list) {

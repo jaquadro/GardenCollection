@@ -46,6 +46,9 @@ public class ItemLantern extends ItemBlock
             tile.setLightSource(ModBlocks.lantern.getLightSource(stack));
         }
 
+        if (world.getBlock(x, y + 1, z) == ModBlocks.heavyChain)
+            world.notifyBlockOfNeighborChange(x, y + 1, z, world.getBlock(x, y, z));
+
         return true;
     }
 
