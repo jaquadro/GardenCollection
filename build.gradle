@@ -36,9 +36,7 @@ archivesBaseName = "GardenStuff"
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
-    runDir = "runtime/assets"
-
-    runArgs = "-XX:MaxPermSize=256m"
+    assetDir = "runtime/assets"
 
     replace '@VERSION@', project.version
 }

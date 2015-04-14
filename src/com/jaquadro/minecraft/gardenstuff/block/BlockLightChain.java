@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
@@ -147,9 +149,13 @@ public class BlockLightChain extends Block implements IPlantProxy
         int yMin = findMinY(world, x, y, z);
         Block bottomBlock = world.getBlock(x, yMin - 1, z);
 
+        IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(bottomBlock, world.getBlockMetadata(x, y - 1, z));
+
         Vec3[] attachPoints = singleAttachPoint;
         if (bottomBlock instanceof IChainAttachable)
             attachPoints = ((IChainAttachable) bottomBlock).getChainAttachPoints(1);
+        else if (attachable != null)
+            attachPoints = new Vec3[] { Vec3.createVectorHelper(.5, attachable.getAttachDepth(world, x, y - 1, z, 1), .5) };
         else if (bottomBlock instanceof IChainSingleAttachable) {
             Vec3 attachPoint = ((IChainSingleAttachable) bottomBlock).getChainAttachPoint(world, x, y, z, 1);
             if (attachPoint != null)
