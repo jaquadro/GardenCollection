@@ -1,0 +1,171 @@
+itemGroup.gardenCore=Garden Stuff
+itemGroup.gardenTrees=Garden Stuff (Arbres)
+
+# Garden Core
+
+container.gardencore.garden=Plantes arrangées
+container.gardencore.compostBin=Composteur
+
+item.gardencore.gardenTrowel.name=Transplantoir
+item.gardencore.soilTestKit.name=Kit de test du sol
+item.gardencore.soilTestKitUsed.name=Kit de test du sol utilisé
+item.gardencore.compostPile.name=Composte
+
+tile.gardencore.smallFire.name=Petit feu
+tile.gardencore.gardenSoil.name=Sol de jardin
+tile.gardencore.potteryTable.name=Table de poterie
+tile.gardencore.compostBin.name=Composteur
+tile.gardencore.gardenFarmland.name=Sol de jardin labouré
+tile.gardencore.gardenProxy.name=Procuration de jardin
+
+gardencore.soilkit.rainfall=Pluviométrie
+gardencore.soilkit.temperature=Température
+
+# Garden Containers
+
+container.gardencontainers.potteryTable=Poteries
+
+item.gardencontainers.potteryPattern.name=Tampon de modèle d'argile
+item.gardencontainers.potteryPatternDirty.name=Tampon de modèle d'argile
+item.gardencontainers.potteryPatternDirty.description=Ce tampon est rempli de terre.\nLavez-le dans un chaudron.
+
+tile.gardencontainers.largePot.default.name=Pot de fleur large
+tile.gardencontainers.largePot.raw.name=Pot de fleur large brut
+tile.gardencontainers.largePotColored.black.name=Pot de fleur large noir
+tile.gardencontainers.largePotColored.red.name=Pot de fleur large rouge
+tile.gardencontainers.largePotColored.green.name=Pot de fleur large vert
+tile.gardencontainers.largePotColored.brown.name=Pot de fleur large marron
+tile.gardencontainers.largePotColored.blue.name=Pot de fleur large bleu
+tile.gardencontainers.largePotColored.purple.name=Pot de fleur large violet
+tile.gardencontainers.largePotColored.cyan.name=Pot de fleur large cyan
+tile.gardencontainers.largePotColored.silver.name=Pot de fleur large gris clair
+tile.gardencontainers.largePotColored.gray.name=Pot de fleur large gris
+tile.gardencontainers.largePotColored.pink.name=Pot de fleur large rose
+tile.gardencontainers.largePotColored.lime.name=Pot de fleur large citron
+tile.gardencontainers.largePotColored.yellow.name=Pot de fleur large jaune
+tile.gardencontainers.largePotColored.light_blue.name=Pot de fleur large bleu clair
+tile.gardencontainers.largePotColored.magenta.name=Pot de fleur large magenta
+tile.gardencontainers.largePotColored.orange.name=Pot de fleur large orange
+tile.gardencontainers.largePotColored.white.name=Pot de fleur large blanc
+tile.gardencontainers.mediumPot.default.name=Pot de fleur moyen
+tile.gardencontainers.mediumPotColored.black.name=Pot de fleur moyen noir
+tile.gardencontainers.mediumPotColored.red.name=Pot de fleur moyen rouge
+tile.gardencontainers.mediumPotColored.green.name=Pot de fleur moyen vert
+tile.gardencontainers.mediumPotColored.brown.name=Pot de fleur moyen marron
+tile.gardencontainers.mediumPotColored.blue.name=Pot de fleur moyen bleu
+tile.gardencontainers.mediumPotColored.purple.name=Pot de fleur moyen violet
+tile.gardencontainers.mediumPotColored.cyan.name=Pot de fleur moyen cyan
+tile.gardencontainers.mediumPotColored.silver.name=Pot de fleur moyen gris clair
+tile.gardencontainers.mediumPotColored.gray.name=Pot de fleur moyen gris
+tile.gardencontainers.mediumPotColored.pink.name=Pot de fleur moyen rose
+tile.gardencontainers.mediumPotColored.lime.name=Pot de fleur moyen citron
+tile.gardencontainers.mediumPotColored.yellow.name=Pot de fleur moyen jaune
+tile.gardencontainers.mediumPotColored.light_blue.name=Pot de fleur moyen bleu clair
+tile.gardencontainers.mediumPotColored.magenta.name=Pot de fleur moyen magenta
+tile.gardencontainers.mediumPotColored.orange.name=Pot de fleur moyen orange
+tile.gardencontainers.mediumPotColored.white.name=Pot de fleur moyen blanc
+tile.gardencontainers.woodWindowBox.oak.name=Jardinière en chêne
+tile.gardencontainers.woodWindowBox.spruce.name=Jardinière en sapin
+tile.gardencontainers.woodWindowBox.birch.name=Jardinière en bouleau
+tile.gardencontainers.woodWindowBox.jungle.name=Jardinière en jungle
+tile.gardencontainers.woodWindowBox.acacia.name=Jardinière en acacia
+tile.gardencontainers.woodWindowBox.big_oak.name=Jardinière en chêne noir
+tile.gardencontainers.stoneWindowBox.stone_slab.name=Jardinière en pierre
+tile.gardencontainers.stoneWindowBox.stone_brick.name=Jardinière en briques de pierre
+tile.gardencontainers.stoneWindowBox.mossy_stone_brick.name=Jardinière en briques de pierres moussues
+tile.gardencontainers.stoneWindowBox.brick_block.name=Jardinière en briques
+tile.gardencontainers.stoneWindowBox.nether_brick.name=Jardinière en briques du nether
+tile.gardencontainers.stoneWindowBox.sandstone.name=Jardinière en grès
+tile.gardencontainers.decorativePot.default.name=Pot de fleur décoratif
+tile.gardencontainers.decorativePot.chiseled.name=Pot de fleur décoratif (Cisellé)
+tile.gardencontainers.decorativePot.lines.name=Pot de fleur décoratif (Pillier)
+tile.gardencontainers.potteryTable.name=Table de poterie
+
+# Garden Stuff
+
+container.gardenstuff.bloomeryFurnace=Four de forge
+
+item.gardenstuff.chainLink.name=Maillon de chaîne
+item.gardenstuff.chainLink.iron.name=Maillon de chaîne en fer
+item.gardenstuff.chainLink.gold.name=Maillon de chaîne en or
+item.gardenstuff.chainLink.wrought_iron=Maillon de chaîne en fer forgé
+item.gardenstuff.ironNugget.name=Pépite de fer
+item.gardenstuff.wroughtIronIngot.name=Lingot de fer forgé
+item.gardenstuff.wroughtIronNugget.name=Pépite de fer forgé
+item.gardenstuff.mossPaste.name=Pâte de mousse
+
+nei.recipe.gardenstuff.bloomeryFurnace=Processus de forge
+
+tile.gardenstuff.heavyChain.name=Chaîne lourde
+tile.gardenstuff.heavyChain.iron.name=Chaîne lourde en fer
+tile.gardenstuff.heavyChain.gold.name=Chaîne lourde en or
+tile.gardenstuff.heavyChain.rust.name=Chaîne lourde rouillée
+tile.gardenstuff.heavyChain.wrought_iron.name=Chaîne lourde en fer forgé
+tile.gardenstuff.heavyChain.moss.name=Chaîne lourde moussue
+tile.gardenstuff.lightChain.name=Chaîne légère
+tile.gardenstuff.lightChain.iron.name=Chaîne légère en fer
+tile.gardenstuff.lightChain.gold.name=Chaîne légère en or
+tile.gardenstuff.lightChain.rust.name=Chaîne légère rouillée
+tile.gardenstuff.lightChain.wrought_iron.name=Chaîne légère en fer forgé
+tile.gardenstuff.lightChain.moss.name=Chaîne légère moussue
+tile.gardenstuff.latticeMetal.name=Treillis
+tile.gardenstuff.latticeMetal.iron.name=Treillis en fer
+tile.gardenstuff.latticeMetal.rust.name=Treillis rouillés
+tile.gardenstuff.latticeMetal.wrought_iron.name=Treillis en fer forgé
+tile.gardenstuff.latticeMetal.moss.name=Treillis moussus
+tile.gardenstuff.latticeWood.name=Treillis
+tile.gardenstuff.latticeWood.oak.name=Treillis en chêne
+tile.gardenstuff.latticeWood.spruce.name=Treillis en sapin
+tile.gardenstuff.latticeWood.birch.name=Treillis en bouleau
+tile.gardenstuff.latticeWood.jungle.name=Treillis en jungle
+tile.gardenstuff.latticeWood.acacia.name=Treillis en acacia
+tile.gardenstuff.latticeWood.big_oak.name=Treillis en chêne noir
+tile.gardenstuff.lantern.name=Lanterne de jardin
+tile.gardenstuff.metalBlock.name=Bloc de fer forgé
+tile.gardenstuff.stoneBlock.name=Bloc de charbon de bois
+tile.gardenstuff.fence.name=Barrière en fer forgé
+tile.gardenstuff.fence.0.name=Barrière en fer forgé
+tile.gardenstuff.fence.1.name=Barrière en fer forgé
+tile.gardenstuff.fence.2.name=Barrière en fer forgé
+tile.gardenstuff.fence.3.name=Barrière en fer forgé
+tile.gardenstuff.bloomeryFurnace.name=Four de forge
+tile.gardenstuff.mossBrick.name=Briques de pierre moussue
+tile.gardenstuff.mossBrick.mossy_2.name=Briques de pierre moussue
+tile.gardenstuff.mossBrick.mossy_3.name=Briques de pierre moussue
+tile.gardenstuff.mossBrick.mossy_4.name=Briques de pierre moussue
+tile.gardenstuff.mossBrick.cracked_mossy_1.name=Briques de pierre moussue craquelée
+tile.gardenstuff.mossBrick.cracked_mossy_2.name=Briques de pierre moussue craquelée
+tile.gardenstuff.mossBrick.cracked_mossy_3.name=Briques de pierre moussue craquelée
+tile.gardenstuff.mossBrick.cracked_mossy_4.name=Briques de pierre moussue craquelée
+
+gardenstuff.lanternSource=Contenu
+gardenstuff.lanternSource.none=Vide
+gardenstuff.lanternSource.torch=Torche
+gardenstuff.lanternSource.redstoneTorch=Torche de pierre rouge
+gardenstuff.lanternSource.glowstone=Pierre lumineuse
+gardenstuff.lanternSource.candle=Bougie
+gardenstuff.lanternSource.firefly=Lucioles
+gardenstuff.lanternSource.thaumcraftCandle=Bougie de suif
+
+# Garden Trees
+
+tile.gardentrees.ivy.name=Liane du démon
+tile.gardentrees.strangePlant.name=Plante étrange
+tile.gardentrees.strangePlant.description=Qu'est-ce qui est contenu dans ses cosses étranges ?
+tile.gardentrees.sapling.pine.name=Pousse de pin
+tile.gardentrees.sapling.swamp.name=Pousse des marais
+tile.gardentrees.sapling.tallbirch.name=Pousse de grand bouleau
+tile.gardentrees.thinLog.name=Poteau
+tile.gardentrees.thinLog.oak.name=Poteau en chêne
+tile.gardentrees.thinLog.spruce.name=Poteau en sapin
+tile.gardentrees.thinLog.birch.name=Poteau en bouleau
+tile.gardentrees.thinLog.jungle.name=Poteau en jungle
+tile.gardentrees.thinLog.acacia.name=Poteau en acacia
+tile.gardentrees.thinLog.big_oak.name=Poteau en chêne noir
+tile.gardentrees.thinLogFence.name=Poteau de barrière
+tile.gardentrees.thinLogFence.oak.name=Poteau de barrière en chêne
+tile.gardentrees.thinLogFence.spruce.name=Poteau de barrière en sapin
+tile.gardentrees.thinLogFence.birch.name=Poteau de barrière en  bouleau
+tile.gardentrees.thinLogFence.jungle.name=Poteau de barrière en jungle
+tile.gardentrees.thinLogFence.acacia.name=Poteau de barrière en acacia
+tile.gardentrees.thinLogFence.big_oak.name=Poteau de barrière en chêne noir
