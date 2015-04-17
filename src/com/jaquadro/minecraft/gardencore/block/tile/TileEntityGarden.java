@@ -344,7 +344,7 @@ public class TileEntityGarden extends TileEntity implements IInventory
         return null;
     }
 
-    protected ItemStack getStackInSlotIsolated (int slot) {
+    public ItemStack getStackInSlotIsolated (int slot) {
         return containerStacks[slot];
     }
 

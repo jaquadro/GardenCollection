@@ -666,7 +666,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     }
 
     public Block getPlantBlockRestricted (TileEntityGarden tileEntity, int slot) {
-        ItemStack itemStack = tileEntity.getStackInSlot(slot);
+        ItemStack itemStack = tileEntity.getStackInSlotIsolated(slot);
         if (itemStack == null)
             return null;
 
