@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardencontainers.config;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,8 +27,14 @@ public class ConfigManager
     private PatternConfig[] patterns = new PatternConfig[256];
     private int patternCount;
 
+    public boolean enableVillagerTrading;
+
     public ConfigManager (File file) {
         config = new Configuration(file);
+
+        Property propEnableVillagerTrading = config.get(Configuration.CATEGORY_GENERAL, "enableVillagerStampTrading", true);
+        propEnableVillagerTrading.comment = "Allows some villagers to buy and sell pattern stamps.";
+        enableVillagerTrading = propEnableVillagerTrading.getBoolean();
 
         boolean firstGen = !config.hasCategory(CAT_PATTERNS);
 
@@ -80,9 +87,9 @@ public class ConfigManager
 
             config.getCategory(CAT_SETTINGS + ".pattern_2");
             config.get(CAT_SETTINGS + ".pattern_2", "weight", 8);
-
-            config.save();
         }
+
+        config.save();
 
         for (int i = 1; i < 256; i++) {
             if (config.hasKey(categoryPatterns.getQualifiedName(), "pattern." + i)) {

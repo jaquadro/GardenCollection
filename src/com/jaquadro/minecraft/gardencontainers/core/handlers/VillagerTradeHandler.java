@@ -20,9 +20,11 @@ public class VillagerTradeHandler implements VillagerRegistry.IVillageTradeHandl
     }
 
     public void load () {
-        VillagerRegistry.instance().registerVillageTradeHandler(1, this);
-        VillagerRegistry.instance().registerVillageTradeHandler(2, this);
-        VillagerRegistry.instance().registerVillageTradeHandler(3, this);
+        if (GardenContainers.config.enableVillagerTrading) {
+            VillagerRegistry.instance().registerVillageTradeHandler(1, this);
+            VillagerRegistry.instance().registerVillageTradeHandler(2, this);
+            VillagerRegistry.instance().registerVillageTradeHandler(3, this);
+        }
     }
 
     @Override
