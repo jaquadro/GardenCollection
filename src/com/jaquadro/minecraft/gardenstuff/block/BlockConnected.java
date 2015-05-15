@@ -52,33 +52,39 @@ public abstract class BlockConnected extends Block
         boolean flagW = this.canConnectTo(world, x - 1, y, z, WEST);
         boolean flagE = this.canConnectTo(world, x + 1, y, z, EAST);
 
+        float height = getCollisionHeight();
+
         if ((flagW | flagE | flagN | flagS) == false) {
-            this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, 1.0F, 0.5625F);
+            this.setBlockBounds(0.4375F, 0.0F, 0.4375F, 0.5625F, height, 0.5625F);
             super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
             return;
         }
 
         if (flagW || flagE) {
             if (flagW && flagE)
-                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
+                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 1.0F, height, 0.5625F);
             else if (flagW)
-                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 0.5F, 1.0F, 0.5625F);
+                this.setBlockBounds(0.0F, 0.0F, 0.4375F, 0.5F, height, 0.5625F);
             else if (flagE)
-                this.setBlockBounds(0.5F, 0.0F, 0.4375F, 1.0F, 1.0F, 0.5625F);
+                this.setBlockBounds(0.5F, 0.0F, 0.4375F, 1.0F, height, 0.5625F);
 
             super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
         }
 
         if (flagN || flagS) {
             if (flagN && flagS)
-                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 1.0F);
+                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, height, 1.0F);
             else if (flagN)
-                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, 1.0F, 0.5F);
+                this.setBlockBounds(0.4375F, 0.0F, 0.0F, 0.5625F, height, 0.5F);
             else if (flagS)
-                this.setBlockBounds(0.4375F, 0.0F, 0.5F, 0.5625F, 1.0F, 1.0F);
+                this.setBlockBounds(0.4375F, 0.0F, 0.5F, 0.5625F, height, 1.0F);
 
             super.addCollisionBoxesToList(world, x, y, z, mask, list, entity);
         }
+    }
+
+    protected float getCollisionHeight () {
+        return 1.0f;
     }
 
     @Override

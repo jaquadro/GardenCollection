@@ -41,7 +41,7 @@ public class ModBlocks
         latticeWood = new BlockLatticeWood(makeName("latticeWood"));
         rootCover = new BlockRootCover(makeName("rootCover"));
         lantern = new BlockLantern(makeName("lantern"));
-        metalBlock = new BlockCompressed(MapColor.blackColor).setBlockName(makeName("metalBlock")).setCreativeTab(ModCreativeTabs.tabGardenCore).setBlockTextureName(GardenStuff.MOD_ID + ":wrought_iron_block");
+        metalBlock = new BlockCompressed(MapColor.blackColor).setBlockName(makeName("metalBlock")).setCreativeTab(ModCreativeTabs.tabGardenCore).setBlockTextureName(GardenStuff.MOD_ID + ":wrought_iron_block").setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
         stoneBlock = new BlockStoneType(makeName("stoneBlock"));
         fence = new BlockFence(makeName("fence"));
         bloomeryFurnace = new BlockBloomeryFurnace(makeName("bloomeryFurnace"));

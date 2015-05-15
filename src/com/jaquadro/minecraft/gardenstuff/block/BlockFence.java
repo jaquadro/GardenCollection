@@ -40,6 +40,11 @@ public class BlockFence extends BlockConnected
             list.add(new ItemStack(item, 1, i));
     }
 
+    @Override
+    protected float getCollisionHeight () {
+        return 1.5f;
+    }
+
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (int side, int meta) {
