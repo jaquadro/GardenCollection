@@ -179,7 +179,11 @@ public class RenderHelperLL
                 state.brightnessBottomLeft = brightnessLerp[ix][iy + 1];
                 state.brightnessBottomRight = brightnessLerp[ix + 1][iy + 1];
 
-                setUV(icon, minUDiv[ix], minVDiv[iy], maxUDiv[ix], maxVDiv[iy]);
+                if (state.flipTexture)
+                    setUV(icon, 1 - minUDiv[ix], minVDiv[iy], 1 - maxUDiv[ix], maxVDiv[iy]);
+                else
+                    setUV(icon, minUDiv[ix], minVDiv[iy], maxUDiv[ix], maxVDiv[iy]);
+
                 renderXYZUVAO(xyzuvMap[face]);
 
                 xyz[MINY] = xyz[MAXY];
@@ -198,8 +202,7 @@ public class RenderHelperLL
             xyz[MAXZ] = z + state.renderMinZ;
         }
 
-        if (rangeZ <= 1 && rangeZ <= 1) {
-
+        if (rangeZ <= 1 && rangeY <= 1) {
             if (state.flipTexture)
                 setUV(icon, state.renderMaxZ + state.shiftU, 1 - state.renderMaxY + state.shiftV, state.renderMinZ + state.shiftU, 1 - state.renderMinY + state.shiftV);
             else
@@ -233,9 +236,9 @@ public class RenderHelperLL
                 state.brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
 
                 if (state.flipTexture)
-                    setUV(1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
+                    setUV(icon, 1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
                 else
-                    setUV(minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
+                    setUV(icon, minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
 
                 renderXYZUVAO(xyzuvMap[face]);
 
