@@ -129,6 +129,11 @@ public abstract class BlockLattice extends BlockContainer implements IChainSingl
         if (block == this)
             return true;
 
+        if (side == ForgeDirection.DOWN || side == ForgeDirection.UP) {
+            if (block instanceof BlockFence || block instanceof net.minecraft.block.BlockFence)
+                return true;
+        }
+
         return false;
     }
 
