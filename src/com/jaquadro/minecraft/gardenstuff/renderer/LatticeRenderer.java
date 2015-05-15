@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLattice;
@@ -78,6 +80,13 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
 
         float yMin = extYNeg ? UN4 : (connectYNeg ? 0 : U7);
         float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
+
+        IAttachable attachableYN = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z));
+        if (attachableYN != null)
+            yMin = (float)attachableYN.getAttachDepth(world, x, y - 1, z, 1) - 1;
+        IAttachable attachableYP = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y + 1, z), world.getBlockMetadata(x, y + 1, z));
+        if (attachableYP != null)
+            yMax = (float)attachableYP.getAttachDepth(world, x, y + 1, z, 0) + 1;
 
         if (yMin < U7)
             boxRenderer.renderSolidBox(world, block, x, y, z, U7, yMin, U7, U9, U7, U9);
