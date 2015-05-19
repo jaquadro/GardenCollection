@@ -83,6 +83,8 @@ tile.gardencontainers.potteryTable.name=陶器工作桌
 
 # Garden Stuff
 
+container.gardenstuff.bloomeryFurnace=炼铁炉
+
 item.gardenstuff.chainLink.name=链节
 item.gardenstuff.chainLink.iron.name=铁链节
 item.gardenstuff.chainLink.gold.name=金链节
@@ -90,6 +92,9 @@ item.gardenstuff.chainLink.wrought_iron=精炼铁链节
 item.gardenstuff.ironNugget.name=铁粒
 item.gardenstuff.wroughtIronIngot.name=精炼铁锭
 item.gardenstuff.wroughtIronNugget.name=精炼铁粒
+item.gardenstuff.mossPaste.name=苔藓膏
+
+nei.recipe.gardenstuff.bloomeryFurnace=炼铁
 
 tile.gardenstuff.heavyChain.name=粗吊链
 tile.gardenstuff.heavyChain.iron.name=粗铁链
@@ -117,11 +122,21 @@ tile.gardenstuff.latticeWood.acacia.name=金合欢格架
 tile.gardenstuff.latticeWood.big_oak.name=深色橡木格架
 tile.gardenstuff.lantern.name=庭院灯笼
 tile.gardenstuff.metalBlock.name=精炼铁块
+tile.gardenstuff.stoneBlock.name=木炭块
 tile.gardenstuff.fence.name=精炼铁栅栏
 tile.gardenstuff.fence.0.name=精炼铁栅栏
 tile.gardenstuff.fence.1.name=精炼铁栅栏
 tile.gardenstuff.fence.2.name=精炼铁栅栏
 tile.gardenstuff.fence.3.name=精炼铁栅栏
+tile.gardenstuff.bloomeryFurnace.name=炼铁炉
+tile.gardenstuff.mossBrick.name=苔石砖
+tile.gardenstuff.mossBrick.mossy_2.name=苔石砖
+tile.gardenstuff.mossBrick.mossy_3.name=苔石砖
+tile.gardenstuff.mossBrick.mossy_4.name=苔石砖
+tile.gardenstuff.mossBrick.cracked_mossy_1.name=布满苔藓的裂石砖
+tile.gardenstuff.mossBrick.cracked_mossy_2.name=布满苔藓的裂石砖
+tile.gardenstuff.mossBrick.cracked_mossy_3.name=布满苔藓的裂石砖
+tile.gardenstuff.mossBrick.cracked_mossy_4.name=布满苔藓的裂石砖
 
 gardenstuff.lanternSource=灯罩内
 gardenstuff.lanternSource.none=无
@@ -130,6 +145,7 @@ gardenstuff.lanternSource.redstoneTorch=红石火把
 gardenstuff.lanternSource.glowstone=萤石
 gardenstuff.lanternSource.candle=蜡烛
 gardenstuff.lanternSource.firefly=萤火虫
+gardenstuff.lanternSource.thaumcraftCandle=油脂蜡烛
 
 # Garden Trees
 
