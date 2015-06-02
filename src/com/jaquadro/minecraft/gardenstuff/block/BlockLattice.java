@@ -1,5 +1,7 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
+import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
+import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
@@ -24,6 +26,12 @@ import java.util.List;
 
 public abstract class BlockLattice extends BlockContainer implements IChainSingleAttachable
 {
+    private static final float UN4 = .0625f * -4;
+    private static final float U7 = .0625f * 7;
+    private static final float U8 = .0625f * 8;
+    private static final float U9 = .0625f * 9;
+    private static final float U20 = .0625f * 20;
+
     public BlockLattice (String blockName, Material material) {
         super(material);
 
@@ -73,8 +81,48 @@ public abstract class BlockLattice extends BlockContainer implements IChainSingl
 
     @Override
     public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB mask, List list, Entity colliding) {
-        setBlockBoundsBasedOnState(world, x, y, z);
+        int connectFlags = calcConnectionFlags(world, x, y, z);
+
+        boolean connectYNeg = (connectFlags & 1) != 0;
+        boolean connectYPos = (connectFlags & 2) != 0;
+        boolean connectZNeg = (connectFlags & 4) != 0;
+        boolean connectZPos = (connectFlags & 8) != 0;
+        boolean connectXNeg = (connectFlags & 16) != 0;
+        boolean connectXPos = (connectFlags & 32) != 0;
+
+        boolean extYNeg = (connectFlags & 64) != 0;
+        boolean extYPos = (connectFlags & 128) != 0;
+        boolean extZNeg = (connectFlags & 256) != 0;
+        boolean extZPos = (connectFlags & 512) != 0;
+        boolean extXNeg = (connectFlags & 1024) != 0;
+        boolean extXPos = (connectFlags & 2048) != 0;
+
+        float yMin = extYNeg ? UN4 : (connectYNeg ? 0 : U7);
+        float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
+
+        IAttachable attachableYN = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z));
+        if (attachableYN != null)
+            yMin = (float)attachableYN.getAttachDepth(world, x, y - 1, z, 1) - 1;
+        IAttachable attachableYP = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y + 1, z), world.getBlockMetadata(x, y + 1, z));
+        if (attachableYP != null)
+            yMax = (float)attachableYP.getAttachDepth(world, x, y + 1, z, 0) + 1;
+
+        float zMin = extZNeg ? UN4 : (connectZNeg ? 0 : U7);
+        float zMax = extZPos ? U20 : (connectZPos ? 1 : U9);
+
+        float xMin = extXNeg ? UN4 : (connectXNeg ? 0 : U7);
+        float xMax = extXPos ? U20 : (connectXPos ? 1 : U9);
+
+        setBlockBounds(U7, yMin, U7, U9, yMax, U9);
         super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+
+        setBlockBounds(xMin, U7, U7, xMax, U9, U9);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+
+        setBlockBounds(U7, U7, zMin, U9, U9, zMax);
+        super.addCollisionBoxesToList(world, x, y, z, mask, list, colliding);
+
+        setBlockBoundsBasedOnState(world, x, y, z);
     }
 
     @Override
