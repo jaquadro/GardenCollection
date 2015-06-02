@@ -180,9 +180,9 @@ public class RenderHelperLL
                 state.brightnessBottomRight = brightnessLerp[ix + 1][iy + 1];
 
                 if (state.flipTexture)
-                    setUV(icon, 1 - minUDiv[ix], minVDiv[iy], 1 - maxUDiv[ix], maxVDiv[iy]);
+                    setUV(icon, 1 - minUDiv[ix], 1 - maxVDiv[iy], 1 - maxUDiv[ix], 1 - minVDiv[iy]);
                 else
-                    setUV(icon, minUDiv[ix], minVDiv[iy], maxUDiv[ix], maxVDiv[iy]);
+                    setUV(icon, minUDiv[ix], 1 - maxVDiv[iy], maxUDiv[ix], 1 - minVDiv[iy]);
 
                 renderXYZUVAO(xyzuvMap[face]);
 
@@ -236,9 +236,9 @@ public class RenderHelperLL
                 state.brightnessBottomRight = brightnessLerp[iz + 1][iy + 1];
 
                 if (state.flipTexture)
-                    setUV(icon, 1 - minUDiv[iz], minVDiv[iy], 1 - maxUDiv[iz], maxVDiv[iy]);
+                    setUV(icon, 1 - minUDiv[iz], 1 - maxVDiv[iy], 1 - maxUDiv[iz], 1 - minVDiv[iy]);
                 else
-                    setUV(icon, minUDiv[iz], minVDiv[iy], maxUDiv[iz], maxVDiv[iy]);
+                    setUV(icon, minUDiv[iz], 1 - maxVDiv[iy], maxUDiv[iz], 1 - minVDiv[iy]);
 
                 renderXYZUVAO(xyzuvMap[face]);
 
@@ -294,7 +294,7 @@ public class RenderHelperLL
         double diffLR = right - left;
         double diffTB = bottom - top;
 
-        double posLR = left;
+        double posLR = 0;
 
         for (int lr = 0; lr <= rangeLR; lr++) {
             float lerpLR = (float)(posLR / diffLR);
@@ -302,7 +302,7 @@ public class RenderHelperLL
             int brightTop = RenderHelperAO.mixAOBrightness(state.brightnessTopLeft, state.brightnessTopRight, 1 - lerpLR, lerpLR);
             int brightBottom = RenderHelperAO.mixAOBrightness(state.brightnessBottomLeft, state.brightnessBottomRight, 1 - lerpLR, lerpLR);
 
-            double posTB = top;
+            double posTB = 0;
             for (int tb = 0; tb <= rangeTB; tb++) {
                 float lerpTB = (float)(posTB / diffTB);
 
