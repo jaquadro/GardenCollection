@@ -1,4 +1,4 @@
-package com.InfinityRaider.AgriCraft;
+package com.InfinityRaider.AgriCraft.api;
 
 //Huge thanks to HenryLoenwind for his work and patience for this api
 

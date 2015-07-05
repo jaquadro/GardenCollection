@@ -1,4 +1,4 @@
-package com.InfinityRaider.AgriCraft.v1;
+package com.InfinityRaider.AgriCraft.api.v1;
 
 
 import com.google.common.hash.Hashing;

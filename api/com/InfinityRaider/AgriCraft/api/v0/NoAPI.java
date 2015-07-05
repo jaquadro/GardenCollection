@@ -1,4 +1,4 @@
-package com.InfinityRaider.AgriCraft.v0;
+package com.InfinityRaider.AgriCraft.api.v0;
 
 import com.InfinityRaider.AgriCraft.api.APIBase;
 import com.InfinityRaider.AgriCraft.api.APIStatus;

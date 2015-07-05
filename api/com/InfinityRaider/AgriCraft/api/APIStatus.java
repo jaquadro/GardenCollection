@@ -1,4 +1,4 @@
-package com.InfinityRaider.AgriCraft;
+package com.InfinityRaider.AgriCraft.api;
 
 /**
  * Descriptive status of an API object.

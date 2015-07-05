@@ -1,4 +1,4 @@
-package com.InfinityRaider.AgriCraft.v1;
+package com.InfinityRaider.AgriCraft.api.v1;
 
 public enum RenderMethod {
     CROSSED(1),
@@ -13,7 +13,7 @@ public enum RenderMethod {
     public int renderId() {return renderId;}
 
     public static RenderMethod getRenderMethod(int renderId) {
-        for(RenderMethod renderMethod:RenderMethod.values()) {
+        for(RenderMethod renderMethod: RenderMethod.values()) {
             if(renderMethod.renderId == renderId) {
                 return renderMethod;
             }
