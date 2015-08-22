@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardencontainers.block;
 
+import com.InfinityRaider.AgriCraft.api.v1.ISoilContainer;
 import com.jaquadro.minecraft.gardencontainers.GardenContainers;
 import com.jaquadro.minecraft.gardencontainers.block.tile.TileEntityLargePot;
 import com.jaquadro.minecraft.gardencontainers.config.PatternConfig;
@@ -34,11 +35,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.common.Optional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockLargePot extends BlockGardenContainer implements IChainAttachable
+@Optional.Interface(modid = "AgriCraft", iface = "com.InfinityRaider.AgriCraft.api.v1.ISoilContainer")
+public abstract class BlockLargePot extends BlockGardenContainer implements IChainAttachable, ISoilContainer
 {
     private class LocalSlotProfile extends Slot14ProfileBounded
     {
@@ -434,5 +437,24 @@ public abstract class BlockLargePot extends BlockGardenContainer implements ICha
             if (pattern != null && pattern.getOverlay() != null)
                 iconOverlayArray[i] = iconRegister.registerIcon(GardenContainers.MOD_ID + ":" + pattern.getOverlay());
         }
+    }
+
+    /** ISoilContainer methods */
+    @Override
+    public Block getSoil(World world, int x, int y, int z) {
+        ItemStack substrate = this.getGardenSubstrate(world, x, y, z, getDefaultSlot());
+        if(substrate == null || substrate.getItem()== null || !(substrate.getItem() instanceof ItemBlock)) {
+            return null;
+        }
+        return ((ItemBlock) substrate.getItem()).field_150939_a;
+    }
+
+    @Override
+    public int getSoilMeta(World world, int x, int y, int z) {
+        ItemStack substrate = this.getGardenSubstrate(world, x, y, z, getDefaultSlot());
+        if(substrate == null || substrate.getItem()== null || !(substrate.getItem() instanceof ItemBlock)) {
+            return -1;
+        }
+        return substrate.getItemDamage();
     }
 }
