@@ -1,22 +1,15 @@
 package com.jaquadro.minecraft.gardencommon.integration.mods;
 
+import com.InfinityRaider.AgriCraft.api.API;
+import com.InfinityRaider.AgriCraft.api.APIBase;
+import com.InfinityRaider.AgriCraft.api.APIStatus;
+import com.InfinityRaider.AgriCraft.api.v1.APIv1;
+import com.InfinityRaider.AgriCraft.api.v1.BlockWithMeta;
 import com.jaquadro.minecraft.gardencommon.integration.IntegrationModule;
 import com.jaquadro.minecraft.gardencore.core.ModBlocks;
-import net.minecraft.block.Block;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.util.Set;
 
 public class AgriCraft extends IntegrationModule
 {
-    static Class classGrowthRequirements;
-    static Class classBlockWithMeta;
-
-    static Constructor constBlockWithMeta;
-
-    static Field fieldDefaultSoils;
-
     @Override
     public String getModID () {
         return "AgriCraft";
@@ -24,18 +17,14 @@ public class AgriCraft extends IntegrationModule
 
     @Override
     public void init () throws Throwable {
-        classGrowthRequirements = Class.forName("com.InfinityRaider.AgriCraft.farming.GrowthRequirements");
-        classBlockWithMeta = Class.forName("com.InfinityRaider.AgriCraft.utility.BlockWithMeta");
+        APIBase api = API.getAPI(1);
+        if (api.getStatus() == APIStatus.OK && api.getVersion() == 1) {
+            APIv1 agricraft = (APIv1)api;
 
-        constBlockWithMeta = classBlockWithMeta.getConstructor(Block.class, int.class);
-
-        fieldDefaultSoils = classGrowthRequirements.getField("defaultSoils");
+            agricraft.registerDefaultSoil(new BlockWithMeta(ModBlocks.gardenFarmland));
+        }
     }
 
     @Override
-    public void postInit () throws Throwable {
-        Set defaultSoils = (Set) fieldDefaultSoils.get(null);
-
-        defaultSoils.add(constBlockWithMeta.newInstance(ModBlocks.gardenFarmland, 0));
-    }
+    public void postInit () throws Throwable { }
 }

@@ -152,9 +152,9 @@ public class TileEntityBloomeryFurnace extends TileEntity implements ISidedInven
         if (furnaceItemStacks[SLOT_PRIMARY] == null || furnaceItemStacks[SLOT_SECONDARY] == null)
             return false;
 
-        if (furnaceItemStacks[SLOT_PRIMARY].getItem() != Items.iron_ingot && furnaceItemStacks[SLOT_PRIMARY].getItem() != Item.getItemFromBlock(Blocks.iron_ore))
+        if (!isItemPrimaryInput(furnaceItemStacks[SLOT_PRIMARY]))
             return false;
-        if (furnaceItemStacks[SLOT_SECONDARY].getItem() != Item.getItemFromBlock(Blocks.sand))
+        if (!isItemSecondaryInput(furnaceItemStacks[SLOT_SECONDARY]))
             return false;
 
         ItemStack itemOutput = new ItemStack(ModItems.wroughtIronIngot);
@@ -319,7 +319,11 @@ public class TileEntityBloomeryFurnace extends TileEntity implements ISidedInven
             return false;
         if (slot == SLOT_FUEL)
             return isItemFuel(stack);
+        if (slot == SLOT_PRIMARY)
+            return isItemPrimaryInput(stack);
+        if (slot == SLOT_SECONDARY)
+            return isItemSecondaryInput(stack);
 
-        return true;
+        return false;
     }
 }
