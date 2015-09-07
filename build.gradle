@@ -30,7 +30,7 @@ repositories {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.6.5"
+version = "1.7.10-1.6.6"
 group= "com.jaquadro.gardenstuff" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "GardenStuff"
 

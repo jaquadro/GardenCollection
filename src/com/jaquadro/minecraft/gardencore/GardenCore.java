@@ -33,7 +33,7 @@ public class GardenCore
     @Mod.Instance(MOD_ID)
     public static GardenCore instance;
 
-    @SidedProxy(clientSide = SOURCE_PATH + "core.ClientProxy", serverSide = SOURCE_PATH + "core.CommonProxy")
+    @SidedProxy(clientSide = SOURCE_PATH + "core.ClientProxy", serverSide = SOURCE_PATH + "core.ServerProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler
@@ -57,6 +57,7 @@ public class GardenCore
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
+        proxy.postInit();
         integration.postInit();
         recipes.init();
 

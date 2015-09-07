@@ -44,6 +44,7 @@ public class GardenStuff
 
     @Mod.EventHandler
     public void postInit (FMLPostInitializationEvent event) {
+        proxy.postInit();
         recipes.init();
         integration.postInit();
     }

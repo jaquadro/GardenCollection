@@ -56,8 +56,6 @@ public class BlockLantern extends BlockContainer implements IInfusionStabiliser
     @SideOnly(Side.CLIENT)
     private IIcon iconCandle;
 
-    public BindingStack binding = new BindingStack();
-
     public BlockLantern (String blockName) {
         super(Material.iron);
 

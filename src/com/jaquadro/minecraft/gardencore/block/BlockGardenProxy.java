@@ -40,7 +40,6 @@ public class BlockGardenProxy extends Block implements IPlantProxy
 
     // Scratch State
     private boolean applyingBonemeal;
-    private BindingStack binding = new BindingStack();
 
     // Reentrant Flags
     private int reeLightValue;
@@ -83,11 +82,11 @@ public class BlockGardenProxy extends Block implements IPlantProxy
         if (getPlantBlock(te, slot) != null)
             data = getPlantData(te, slot);
 
-        binding.bind(world, x, y, z, slot, data);
+        GardenCore.proxy.getBindingStack(this).bind(world, x, y, z, slot, data);
     }
 
     public void unbindSlot (World world, int x, int y, int z, TileEntityGarden te) {
-        binding.unbind(world, x, y, z);
+        GardenCore.proxy.getBindingStack(this).unbind(world, x, y, z);
     }
 
     @Override
@@ -524,7 +523,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     @SideOnly(Side.CLIENT)
     @Override
     public int colorMultiplier (IBlockAccess blockAccess, int x, int y, int z) {
-        int slot = binding.getSlot();
+        int slot = GardenCore.proxy.getBindingStack(this).getSlot();
         TileEntityGarden te = getGardenEntity(blockAccess, x, y, z);
         if (te == null || slot == -1)
             return super.colorMultiplier(blockAccess, x, y, z);
@@ -544,7 +543,7 @@ public class BlockGardenProxy extends Block implements IPlantProxy
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getIcon (IBlockAccess blockAccess, int x, int y, int z, int side) {
-        int slot = binding.getSlot();
+        int slot = GardenCore.proxy.getBindingStack(this).getSlot();
         TileEntityGarden te = getGardenEntity(blockAccess, x, y, z);
         if (te == null || slot == -1)
             return super.getIcon(blockAccess, x, y, z, side);

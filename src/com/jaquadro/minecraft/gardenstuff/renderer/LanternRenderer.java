@@ -5,7 +5,9 @@ import com.jaquadro.minecraft.gardenapi.api.component.ILanternSource;
 import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardenapi.internal.Api;
 import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
+import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
+import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.BlockLantern;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -53,8 +55,9 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
 
             TileEntityLantern tile = block.getTileEntity(world, x, y, z);
             if (tile != null) {
-                block.binding.setDefaultMeta(world.getBlockMetadata(x, y, z));
-                block.binding.bind(tile.getWorldObj(), x, y, z, 0, tile.getLightSourceMeta());
+                BindingStack binding = GardenStuff.proxy.getBindingStack(block);
+                binding.setDefaultMeta(world.getBlockMetadata(x, y, z));
+                binding.bind(tile.getWorldObj(), x, y, z, 0, tile.getLightSourceMeta());
                 Tessellator.instance.addTranslation(0, .001f, 0);
 
                 if (tile.getLightSource() != null) {
@@ -64,7 +67,7 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
                 }
 
                 Tessellator.instance.addTranslation(0, -.001f, 0);
-                block.binding.unbind(tile.getWorldObj(), x, y, z);
+                binding.unbind(tile.getWorldObj(), x, y, z);
             }
 
             renderChain(world, renderer, block, x, y, z);

@@ -1,10 +1,14 @@
 package com.jaquadro.minecraft.gardenstuff.core;
 
+import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardenstuff.renderer.*;
 import com.jaquadro.minecraft.gardenstuff.renderer.item.LanternItemRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientProxy extends CommonProxy
 {
@@ -15,6 +19,8 @@ public class ClientProxy extends CommonProxy
     public static int fenceRenderID;
 
     public static LanternRenderer lanternRenderer;
+
+    private Map<Object, BindingStack> bindingStacks = new HashMap<Object, BindingStack>();
 
     @Override
     public void registerRenderers () {
@@ -33,5 +39,10 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(fenceRenderID, new FenceRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.lantern), new LanternItemRenderer());
+    }
+
+    @Override
+    protected Map<Object, BindingStack> getBindingRegistry () {
+        return bindingStacks;
     }
 }
