@@ -20,7 +20,7 @@ public class GardenStuff
     @Mod.Instance(MOD_ID)
     public static GardenStuff instance;
 
-    @SidedProxy(clientSide = SOURCE_PATH + "core.ClientProxy", serverSide = SOURCE_PATH + "core.CommonProxy")
+    @SidedProxy(clientSide = SOURCE_PATH + "core.ClientProxy", serverSide = SOURCE_PATH + "core.ServerProxy")
     public static CommonProxy proxy;
 
     public static final ModIntegration integration = new ModIntegration();
