@@ -53,7 +53,7 @@ public class HeavyChainRenderer implements ISimpleBlockRenderingHandler
 
         if (upperDepth == 0) {
             IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(upperBlock, world.getBlockMetadata(x, y + 1, z));
-            if (attachable != null)
+            if (attachable != null && attachable.isAttachable(world, x, y + 1, z, 0))
                 upperDepth = attachable.getAttachDepth(world, x, y + 1, z, 0);
         }
 
@@ -66,7 +66,7 @@ public class HeavyChainRenderer implements ISimpleBlockRenderingHandler
 
         if (lowerDepth == 0) {
             IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(lowerBlock, world.getBlockMetadata(x, y - 1, z));
-            if (attachable != null)
+            if (attachable != null && attachable.isAttachable(world, x, y - 1, z, 1))
                 lowerDepth = attachable.getAttachDepth(world, x, y - 1, z, 1);
         }
 

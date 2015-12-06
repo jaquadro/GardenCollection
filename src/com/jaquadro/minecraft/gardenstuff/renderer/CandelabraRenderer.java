@@ -92,6 +92,8 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
             RenderHelper.instance.setRenderBounds(0, 0, .5f, .5f, 1, 1);
             RenderHelper.instance.renderFace(RenderHelper.XPOS, renderer.blockAccess, block, block.getIconArmExt(), metadata);
         }
+
+        RenderHelper.instance.state.clearRenderOffset();
     }
 
     @Override

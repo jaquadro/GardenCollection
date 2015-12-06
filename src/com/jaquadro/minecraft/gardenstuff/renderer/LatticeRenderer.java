@@ -82,10 +82,10 @@ public class LatticeRenderer implements ISimpleBlockRenderingHandler
         float yMax = extYPos ? U20 : (connectYPos ? 1 : U9);
 
         IAttachable attachableYN = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y - 1, z), world.getBlockMetadata(x, y - 1, z));
-        if (attachableYN != null)
+        if (attachableYN != null && attachableYN.isAttachable(world, x, y - 1, z, 1))
             yMin = (float)attachableYN.getAttachDepth(world, x, y - 1, z, 1) - 1;
         IAttachable attachableYP = GardenAPI.instance().registries().attachable().getAttachable(world.getBlock(x, y + 1, z), world.getBlockMetadata(x, y + 1, z));
-        if (attachableYP != null)
+        if (attachableYP != null && attachableYP.isAttachable(world, x, y + 1, z, 0))
             yMax = (float)attachableYP.getAttachDepth(world, x, y + 1, z, 0) + 1;
 
         if (yMin < U7)

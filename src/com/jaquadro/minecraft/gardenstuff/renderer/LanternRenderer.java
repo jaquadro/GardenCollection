@@ -126,7 +126,7 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
         }
 
         IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(upperBlock, world.getBlockMetadata(x, y + 1, z));
-        if (attachable != null) {
+        if (attachable != null && attachable.isAttachable(world, x, y + 1, z, 0)) {
             double depth = attachable.getAttachDepth(world, x, y + 1, z, 0);
             if (depth > 0) {
                 RenderHelper.instance.setRenderBounds(0, 0, 0, 1, depth, 1);

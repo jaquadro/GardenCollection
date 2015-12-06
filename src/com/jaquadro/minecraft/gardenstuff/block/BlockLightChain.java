@@ -155,7 +155,7 @@ public class BlockLightChain extends Block implements IPlantProxy, IChain
         Vec3[] attachPoints = singleAttachPoint;
         if (bottomBlock instanceof IChainAttachable)
             attachPoints = ((IChainAttachable) bottomBlock).getChainAttachPoints(1);
-        else if (attachable != null)
+        else if (attachable != null && attachable.isAttachable(world, x, y - 1, z, 1))
             attachPoints = new Vec3[] { Vec3.createVectorHelper(.5, attachable.getAttachDepth(world, x, y - 1, z, 1), .5) };
         else if (bottomBlock instanceof IChainSingleAttachable) {
             Vec3 attachPoint = ((IChainSingleAttachable) bottomBlock).getChainAttachPoint(world, x, y, z, 1);

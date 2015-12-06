@@ -71,7 +71,7 @@ public class LightChainRenderer implements ISimpleBlockRenderingHandler
 
         if (upperDepth == 0) {
             IAttachable attachable = GardenAPI.instance().registries().attachable().getAttachable(blockTop, world.getBlockMetadata(x, y + 1, z));
-            if (attachable != null)
+            if (attachable != null && attachable.isAttachable(world, x, y + 1, z, 0))
                 upperDepth = attachable.getAttachDepth(world, x, y + 1, z, 0);
         }
 

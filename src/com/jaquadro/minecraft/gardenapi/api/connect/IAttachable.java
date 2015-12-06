@@ -9,5 +9,7 @@ import net.minecraft.world.IBlockAccess;
  */
 public interface IAttachable
 {
+    boolean isAttachable (IBlockAccess blockAccess, int x, int y, int z, int side);
+
     double getAttachDepth (IBlockAccess blockAccess, int x, int y, int z, int side);
 }
