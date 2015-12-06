@@ -1,14 +1,10 @@
 package com.jaquadro.minecraft.gardenstuff.core;
 
-import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import com.jaquadro.minecraft.gardenstuff.renderer.*;
 import com.jaquadro.minecraft.gardenstuff.renderer.item.LanternItemRenderer;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ClientProxy extends CommonProxy
 {
@@ -17,10 +13,9 @@ public class ClientProxy extends CommonProxy
     public static int latticeRenderID;
     public static int lanternRenderID;
     public static int fenceRenderID;
+    public static int sconceRenderID;
 
     public static LanternRenderer lanternRenderer;
-
-    private Map<Object, BindingStack> bindingStacks = new HashMap<Object, BindingStack>();
 
     @Override
     public void registerRenderers () {
@@ -29,6 +24,7 @@ public class ClientProxy extends CommonProxy
         latticeRenderID = RenderingRegistry.getNextAvailableRenderId();
         lanternRenderID = RenderingRegistry.getNextAvailableRenderId();
         fenceRenderID = RenderingRegistry.getNextAvailableRenderId();
+        sconceRenderID = RenderingRegistry.getNextAvailableRenderId();
 
         lanternRenderer = new LanternRenderer();
 
@@ -37,12 +33,8 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(latticeRenderID, new LatticeRenderer());
         RenderingRegistry.registerBlockHandler(lanternRenderID, lanternRenderer);
         RenderingRegistry.registerBlockHandler(fenceRenderID, new FenceRenderer());
+        RenderingRegistry.registerBlockHandler(sconceRenderID, new CandelabraRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.lantern), new LanternItemRenderer());
-    }
-
-    @Override
-    protected Map<Object, BindingStack> getBindingRegistry () {
-        return bindingStacks;
     }
 }

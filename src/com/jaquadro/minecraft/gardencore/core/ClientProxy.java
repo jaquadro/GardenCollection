@@ -1,12 +1,8 @@
 package com.jaquadro.minecraft.gardencore.core;
 
 import com.jaquadro.minecraft.gardencore.client.renderer.*;
-import com.jaquadro.minecraft.gardencore.util.BindingStack;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ClientProxy extends CommonProxy
 {
@@ -19,8 +15,6 @@ public class ClientProxy extends CommonProxy
     public static ISimpleBlockRenderingHandler gardenProxyRenderer;
     public static ISimpleBlockRenderingHandler smallFireRenderer;
     public static ISimpleBlockRenderingHandler compostBinRenderer;
-
-    private Map<Object, BindingStack> bindingStacks = new HashMap<Object, BindingStack>();
 
     @Override
     public void registerRenderers ()
@@ -36,10 +30,5 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(gardenProxyRenderID, gardenProxyRenderer);
         RenderingRegistry.registerBlockHandler(smallFireRenderID, smallFireRenderer);
         RenderingRegistry.registerBlockHandler(compostBinRenderID, compostBinRenderer);
-    }
-
-    @Override
-    protected Map<Object, BindingStack> getBindingRegistry () {
-        return bindingStacks;
     }
 }

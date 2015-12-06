@@ -5,7 +5,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -87,6 +86,16 @@ public class ModRecipes
         }
 
         GameRegistry.addRecipe(new ItemStack(ModItems.mossPaste), "xyx", "yxy", "xyx", 'x', Blocks.vine, 'y', Items.clay_ball);
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.candle, 4, 0), "x", "y", "y", 'x', Items.string, 'y', "materialWax"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.candle, 4, 0), "x", "y", "y", 'x', Items.string, 'y', "materialPressedWax"));
+
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.candelabra, 4, 0), " x ", " y ", " z ",
+            'x', ModItems.candle, 'y', "nuggetWroughtIron", 'z', "ingotWroughtIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.candelabra, 4, 1), "x x", "y y", " z ",
+            'x', ModItems.candle, 'y', "nuggetWroughtIron", 'z', "ingotWroughtIron"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.candelabra, 4, 2), "xxx", "yyy", " z ",
+            'x', ModItems.candle, 'y', "nuggetWroughtIron", 'z', "ingotWroughtIron"));
 
         GameRegistry.addSmelting(wroughtIronIngot, new ItemStack(Items.iron_ingot), 0);
     }

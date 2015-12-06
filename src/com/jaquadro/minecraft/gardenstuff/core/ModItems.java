@@ -18,6 +18,7 @@ public class ModItems
     public static Item wroughtIronIngot;
     public static Item wroughtIronNugget;
     public static Item mossPaste;
+    public static Item candle;
 
     public void init () {
         chainLink = new ItemChainLink(makeName("chainLink"));
@@ -25,12 +26,15 @@ public class ModItems
         wroughtIronIngot = new Item().setUnlocalizedName(makeName("wroughtIronIngot")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_ingot");
         wroughtIronNugget = new Item().setUnlocalizedName(makeName("wroughtIronNugget")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":wrought_iron_nugget");
         mossPaste = new ItemMossPaste(makeName("mossPaste"));
+        candle = new Item().setUnlocalizedName(makeName("candle")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenStuff.MOD_ID + ":candle");
+
 
         GameRegistry.registerItem(chainLink, "chain_link");
         GameRegistry.registerItem(ironNugget, "iron_nugget");
         GameRegistry.registerItem(wroughtIronIngot, "wrought_iron_ingot");
         GameRegistry.registerItem(wroughtIronNugget, "wrought_iron_nugget");
         GameRegistry.registerItem(mossPaste, "moss_paste");
+        GameRegistry.registerItem(candle, "candle");
 
         OreDictionary.registerOre("nuggetIron", ironNugget);
         OreDictionary.registerOre("ingotWroughtIron", wroughtIronIngot);

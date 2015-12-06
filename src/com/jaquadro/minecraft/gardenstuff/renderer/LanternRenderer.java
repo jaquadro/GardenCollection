@@ -55,7 +55,7 @@ public class LanternRenderer implements ISimpleBlockRenderingHandler
 
             TileEntityLantern tile = block.getTileEntity(world, x, y, z);
             if (tile != null) {
-                BindingStack binding = GardenStuff.proxy.getBindingStack(block);
+                BindingStack binding = GardenStuff.proxy.getClientBindingStack(block);
                 binding.setDefaultMeta(world.getBlockMetadata(x, y, z));
                 binding.bind(tile.getWorldObj(), x, y, z, 0, tile.getLightSourceMeta());
                 Tessellator.instance.addTranslation(0, .001f, 0);

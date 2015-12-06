@@ -5,6 +5,7 @@ import com.jaquadro.minecraft.gardenapi.api.connect.IAttachableRegistry;
 import com.jaquadro.minecraft.gardenapi.api.connect.StandardAttachable;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaIdentifier;
 import com.jaquadro.minecraft.gardencore.util.UniqueMetaRegistry;
+import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -28,6 +29,8 @@ public class AttachableRegistry implements IAttachableRegistry
             registerAttachable(Blocks.stone_slab, i, StandardAttachable.createBottom(0.5));
             registerAttachable(Blocks.wooden_slab, i, StandardAttachable.createBottom(0.5));
         }
+
+        registerAttachable(ModBlocks.candelabra, StandardAttachable.createBottom(0.0625));
     }
 
     @Override

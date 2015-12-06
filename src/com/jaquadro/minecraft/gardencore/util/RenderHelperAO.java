@@ -136,25 +136,20 @@ public class RenderHelperAO
         float aoXYZPNN = (aoLightValueScratchYZIN + aoOpposingBlock + aoLightValueScratchXYZPIN + aoLightValueScratchXYPI) / 4.0F;
         float aoXYZNNN = (aoLightValueScratchXYZNIN + aoLightValueScratchXYNI + aoLightValueScratchYZIN + aoOpposingBlock) / 4.0F;
 
-        double minZ = MathHelper.clamp_double(state.renderMinZ, 0, 1);
-        double maxZ = MathHelper.clamp_double(state.renderMaxZ, 0, 1);
-        double minX = MathHelper.clamp_double(state.renderMinX, 0, 1);
-        double maxX = MathHelper.clamp_double(state.renderMaxX, 0, 1);
-        
-        float aoTR = (float)((double)aoXYZNNP * minX * (1.0D - maxZ) + (double)aoXYZPNP * minX * maxZ + (double)aoXYZPNN * (1.0D - minX) * maxZ + (double)aoXYZNNN * (1.0D - minX) * (1.0D - maxZ));
-        float aoTL = (float)((double)aoXYZNNP * minX * (1.0D - minZ) + (double)aoXYZPNP * minX * minZ + (double)aoXYZPNN * (1.0D - minX) * minZ + (double)aoXYZNNN * (1.0D - minX) * (1.0D - minZ));
-        float aoBL = (float)((double)aoXYZNNP * maxX * (1.0D - minZ) + (double)aoXYZPNP * maxX * minZ + (double)aoXYZPNN * (1.0D - maxX) * minZ + (double)aoXYZNNN * (1.0D - maxX) * (1.0D - minZ));
-        float aoBR = (float)((double)aoXYZNNP * maxX * (1.0D - maxZ) + (double)aoXYZPNP * maxX * maxZ + (double)aoXYZPNN * (1.0D - maxX) * maxZ + (double)aoXYZNNN * (1.0D - maxX) * (1.0D - maxZ));
+        float aoTR = (float)((double)aoXYZNNP * state.renderMinX * (1.0D - state.renderMaxZ) + (double)aoXYZPNP * state.renderMinX * state.renderMaxZ + (double)aoXYZPNN * (1.0D - state.renderMinX) * state.renderMaxZ + (double)aoXYZNNN * (1.0D - state.renderMinX) * (1.0D - state.renderMaxZ));
+        float aoTL = (float)((double)aoXYZNNP * state.renderMinX * (1.0D - state.renderMinZ) + (double)aoXYZPNP * state.renderMinX * state.renderMinZ + (double)aoXYZPNN * (1.0D - state.renderMinX) * state.renderMinZ + (double)aoXYZNNN * (1.0D - state.renderMinX) * (1.0D - state.renderMinZ));
+        float aoBL = (float)((double)aoXYZNNP * state.renderMaxX * (1.0D - state.renderMinZ) + (double)aoXYZPNP * state.renderMaxX * state.renderMinZ + (double)aoXYZPNN * (1.0D - state.renderMaxX) * state.renderMinZ + (double)aoXYZNNN * (1.0D - state.renderMaxX) * (1.0D - state.renderMinZ));
+        float aoBR = (float)((double)aoXYZNNP * state.renderMaxX * (1.0D - state.renderMaxZ) + (double)aoXYZPNP * state.renderMaxX * state.renderMaxZ + (double)aoXYZPNN * (1.0D - state.renderMaxX) * state.renderMaxZ + (double)aoXYZNNN * (1.0D - state.renderMaxX) * (1.0D - state.renderMaxZ));
 
         int brXYZNNP = getAOBrightness(aoBrightnessXYNI, aoBrightnessXYZNIP, aoBrightnessYZIP, blockBrightness);
         int brXYZPNP = getAOBrightness(aoBrightnessYZIP, aoBrightnessXYPI, aoBrightnessXYZPIP, blockBrightness);
         int brXYZPNN = getAOBrightness(aoBrightnessYZIN, aoBrightnessXYZPIN, aoBrightnessXYPI, blockBrightness);
         int brXYZNNN = getAOBrightness(aoBrightnessXYZNIN, aoBrightnessXYNI, aoBrightnessYZIN, blockBrightness);
 
-        state.brightnessTopRight = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, maxX * (1.0D - maxZ), (1.0D - maxX) * (1.0D - maxZ), (1.0D - maxX) * maxZ, maxX * maxZ);
-        state.brightnessTopLeft = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, maxX * (1.0D - minZ), (1.0D - maxX) * (1.0D - minZ), (1.0D - maxX) * minZ, maxX * minZ);
-        state.brightnessBottomLeft = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, minX * (1.0D - minZ), (1.0D - minX) * (1.0D - minZ), (1.0D - minX) * minZ, minX * minZ);
-        state.brightnessBottomRight = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, minX * (1.0D - maxZ), (1.0D - minX) * (1.0D - maxZ), (1.0D - minX) * maxZ, minX * maxZ);
+        state.brightnessTopRight = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, state.renderMaxX * (1.0D - state.renderMaxZ), (1.0D - state.renderMaxX) * (1.0D - state.renderMaxZ), (1.0D - state.renderMaxX) * state.renderMaxZ, state.renderMaxX * state.renderMaxZ);
+        state.brightnessTopLeft = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, state.renderMaxX * (1.0D - state.renderMinZ), (1.0D - state.renderMaxX) * (1.0D - state.renderMinZ), (1.0D - state.renderMaxX) * state.renderMinZ, state.renderMaxX * state.renderMinZ);
+        state.brightnessBottomLeft = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, state.renderMinX * (1.0D - state.renderMinZ), (1.0D - state.renderMinX) * (1.0D - state.renderMinZ), (1.0D - state.renderMinX) * state.renderMinZ, state.renderMinX * state.renderMinZ);
+        state.brightnessBottomRight = mixAOBrightness(brXYZNNP, brXYZNNN, brXYZPNN, brXYZPNP, state.renderMinX * (1.0D - state.renderMaxZ), (1.0D - state.renderMinX) * (1.0D - state.renderMaxZ), (1.0D - state.renderMinX) * state.renderMaxZ, state.renderMinX * state.renderMaxZ);
 
         state.setColor(r * state.colorMultYNeg, g * state.colorMultYNeg, b * state.colorMultYNeg);
         state.scaleColor(state.colorTopLeft, aoTL);
@@ -226,25 +221,20 @@ public class RenderHelperAO
         float aoXYZPPP = (aoOpposingBlock + aoLightValueScratchYZPN + aoLightValueScratchXYPP + aoLightValueScratchXYZPPN) / 4.0F;  // BL
         float aoXYZPPN = (aoLightValueScratchXYNP + aoLightValueScratchXYZNPN + aoOpposingBlock + aoLightValueScratchYZPN) / 4.0F;  // BR
 
-        double minZ = MathHelper.clamp_double(state.renderMinZ, 0, 1);
-        double maxZ = MathHelper.clamp_double(state.renderMaxZ, 0, 1);
-        double minX = MathHelper.clamp_double(state.renderMinX, 0, 1);
-        double maxX = MathHelper.clamp_double(state.renderMaxX, 0, 1);
-        
-        float aoTL = (float)((double)aoXYZPPP * maxX * (1.0D - maxZ) + (double)aoXYZNPP * maxX * maxZ + (double)aoXYZNPN * (1.0D - maxX) * maxZ + (double)aoXYZPPN * (1.0D - maxX) * (1.0D - maxZ));
-        float aoBL = (float)((double)aoXYZPPP * maxX * (1.0D - minZ) + (double)aoXYZNPP * maxX * minZ + (double)aoXYZNPN * (1.0D - maxX) * minZ + (double)aoXYZPPN * (1.0D - maxX) * (1.0D - minZ));
-        float aoBR = (float)((double)aoXYZPPP * minX * (1.0D - minZ) + (double)aoXYZNPP * minX * minZ + (double)aoXYZNPN * (1.0D - minX) * minZ + (double)aoXYZPPN * (1.0D - minX) * (1.0D - minZ));
-        float aoTR = (float)((double)aoXYZPPP * minX * (1.0D - maxZ) + (double)aoXYZNPP * minX * maxZ + (double)aoXYZNPN * (1.0D - minX) * maxZ + (double)aoXYZPPN * (1.0D - minX) * (1.0D - maxZ));
+        float aoTL = (float)((double)aoXYZPPP * state.renderMaxX * (1.0D - state.renderMaxZ) + (double)aoXYZNPP * state.renderMaxX * state.renderMaxZ + (double)aoXYZNPN * (1.0D - state.renderMaxX) * state.renderMaxZ + (double)aoXYZPPN * (1.0D - state.renderMaxX) * (1.0D - state.renderMaxZ));
+        float aoBL = (float)((double)aoXYZPPP * state.renderMaxX * (1.0D - state.renderMinZ) + (double)aoXYZNPP * state.renderMaxX * state.renderMinZ + (double)aoXYZNPN * (1.0D - state.renderMaxX) * state.renderMinZ + (double)aoXYZPPN * (1.0D - state.renderMaxX) * (1.0D - state.renderMinZ));
+        float aoBR = (float)((double)aoXYZPPP * state.renderMinX * (1.0D - state.renderMinZ) + (double)aoXYZNPP * state.renderMinX * state.renderMinZ + (double)aoXYZNPN * (1.0D - state.renderMinX) * state.renderMinZ + (double)aoXYZPPN * (1.0D - state.renderMinX) * (1.0D - state.renderMinZ));
+        float aoTR = (float)((double)aoXYZPPP * state.renderMinX * (1.0D - state.renderMaxZ) + (double)aoXYZNPP * state.renderMinX * state.renderMaxZ + (double)aoXYZNPN * (1.0D - state.renderMinX) * state.renderMaxZ + (double)aoXYZPPN * (1.0D - state.renderMinX) * (1.0D - state.renderMaxZ));
 
         int brXYZPPN = getAOBrightness(aoBrightnessXYNP, aoBrightnessXYZNPP, aoBrightnessYZPP, blockBrightness);
         int brXYZNPN = getAOBrightness(aoBrightnessYZPP, aoBrightnessXYPP, aoBrightnessXYZPPP, blockBrightness);
         int brXYZNPP = getAOBrightness(aoBrightnessYZPN, aoBrightnessXYZPPN, aoBrightnessXYPP, blockBrightness);
         int brXYZPPP = getAOBrightness(aoBrightnessXYZNPN, aoBrightnessXYNP, aoBrightnessYZPN, blockBrightness);
 
-        state.brightnessTopLeft = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, maxZ, maxX);
-        state.brightnessBottomLeft = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, minZ, maxX);
-        state.brightnessBottomRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, minZ, minX);
-        state.brightnessTopRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, maxZ, minX);
+        state.brightnessTopLeft = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, state.renderMaxZ, state.renderMaxX);
+        state.brightnessBottomLeft = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, state.renderMinZ, state.renderMaxX);
+        state.brightnessBottomRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, state.renderMinZ, state.renderMinX);
+        state.brightnessTopRight = mixAOBrightness(brXYZPPP, brXYZPPN, brXYZNPN, brXYZNPP, state.renderMaxZ, state.renderMinX);
 
         state.setColor(r * state.colorMultYPos, g * state.colorMultYPos, b * state.colorMultYPos);
         state.scaleColor(state.colorTopLeft, aoTL);
@@ -282,25 +272,20 @@ public class RenderHelperAO
         float aoXYZPNN = (aoLightValueScratchYZNI + aoOpposingBlock + aoLightValueScratchXYZPNI + aoLightValueScratchXZPI) / 4.0F;
         float aoXYZNNN = (aoLightValueScratchXYZNNI + aoLightValueScratchXZNI + aoLightValueScratchYZNI + aoOpposingBlock) / 4.0F;
 
-        double minY = MathHelper.clamp_double(state.renderMinY, 0, 1);
-        double maxY = MathHelper.clamp_double(state.renderMaxY, 0, 1);
-        double minX = MathHelper.clamp_double(state.renderMinX, 0, 1);
-        double maxX = MathHelper.clamp_double(state.renderMaxX, 0, 1);
-        
-        float aoTL = (float)((double)aoXYZNPN * maxY * (1.0D - minX) + (double)aoXYZPPN * maxY * minX + (double)aoXYZPNN * (1.0D - maxY) * minX + (double)aoXYZNNN * (1.0D - maxY) * (1.0D - minX));
-        float aoBL = (float)((double)aoXYZNPN * maxY * (1.0D - maxX) + (double)aoXYZPPN * maxY * maxX + (double)aoXYZPNN * (1.0D - maxY) * maxX + (double)aoXYZNNN * (1.0D - maxY) * (1.0D - maxX));
-        float aoBR = (float)((double)aoXYZNPN * minY * (1.0D - maxX) + (double)aoXYZPPN * minY * maxX + (double)aoXYZPNN * (1.0D - minY) * maxX + (double)aoXYZNNN * (1.0D - minY) * (1.0D - maxX));
-        float aoTR = (float)((double)aoXYZNPN * minY * (1.0D - minX) + (double)aoXYZPPN * minY * minX + (double)aoXYZPNN * (1.0D - minY) * minX + (double)aoXYZNNN * (1.0D - minY) * (1.0D - minX));
+        float aoTL = (float)((double)aoXYZNPN * state.renderMaxY * (1.0D - state.renderMinX) + (double)aoXYZPPN * state.renderMaxY * state.renderMinX + (double)aoXYZPNN * (1.0D - state.renderMaxY) * state.renderMinX + (double)aoXYZNNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMinX));
+        float aoBL = (float)((double)aoXYZNPN * state.renderMaxY * (1.0D - state.renderMaxX) + (double)aoXYZPPN * state.renderMaxY * state.renderMaxX + (double)aoXYZPNN * (1.0D - state.renderMaxY) * state.renderMaxX + (double)aoXYZNNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMaxX));
+        float aoBR = (float)((double)aoXYZNPN * state.renderMinY * (1.0D - state.renderMaxX) + (double)aoXYZPPN * state.renderMinY * state.renderMaxX + (double)aoXYZPNN * (1.0D - state.renderMinY) * state.renderMaxX + (double)aoXYZNNN * (1.0D - state.renderMinY) * (1.0D - state.renderMaxX));
+        float aoTR = (float)((double)aoXYZNPN * state.renderMinY * (1.0D - state.renderMinX) + (double)aoXYZPPN * state.renderMinY * state.renderMinX + (double)aoXYZPNN * (1.0D - state.renderMinY) * state.renderMinX + (double)aoXYZNNN * (1.0D - state.renderMinY) * (1.0D - state.renderMinX));
 
         int brXYZNPN = getAOBrightness(aoBrightnessXZNI, aoBrightnessXYZNPI, aoBrightnessYZPI, blockBrightness);
         int brXYZPPN = getAOBrightness(aoBrightnessYZPI, aoBrightnessXZPI, aoBrightnessXYZPPI, blockBrightness);
         int brXYZPNN = getAOBrightness(aoBrightnessYZNI, aoBrightnessXYZPNI, aoBrightnessXZPI, blockBrightness);
         int brXYZNNN = getAOBrightness(aoBrightnessXYZNNI, aoBrightnessXZNI, aoBrightnessYZNI, blockBrightness);
 
-        state.brightnessTopLeft = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, maxY * (1.0D - minX), maxY * minX, (1.0D - maxY) * minX, (1.0D - maxY) * (1.0D - minX));
-        state.brightnessBottomLeft = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, maxY * (1.0D - maxX), maxY * maxX, (1.0D - maxY) * maxX, (1.0D - maxY) * (1.0D - maxX));
-        state.brightnessBottomRight = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, minY * (1.0D - maxX), minY * maxX, (1.0D - minY) * maxX, (1.0D - minY) * (1.0D - maxX));
-        state.brightnessTopRight = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, minY * (1.0D - minX), minY * minX, (1.0D - minY) * minX, (1.0D - minY) * (1.0D - minX));
+        state.brightnessTopLeft = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, state.renderMaxY * (1.0D - state.renderMinX), state.renderMaxY * state.renderMinX, (1.0D - state.renderMaxY) * state.renderMinX, (1.0D - state.renderMaxY) * (1.0D - state.renderMinX));
+        state.brightnessBottomLeft = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, state.renderMaxY * (1.0D - state.renderMaxX), state.renderMaxY * state.renderMaxX, (1.0D - state.renderMaxY) * state.renderMaxX, (1.0D - state.renderMaxY) * (1.0D - state.renderMaxX));
+        state.brightnessBottomRight = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, state.renderMinY * (1.0D - state.renderMaxX), state.renderMinY * state.renderMaxX, (1.0D - state.renderMinY) * state.renderMaxX, (1.0D - state.renderMinY) * (1.0D - state.renderMaxX));
+        state.brightnessTopRight = mixAOBrightness(brXYZNPN, brXYZPPN, brXYZPNN, brXYZNNN, state.renderMinY * (1.0D - state.renderMinX), state.renderMinY * state.renderMinX, (1.0D - state.renderMinY) * state.renderMinX, (1.0D - state.renderMinY) * (1.0D - state.renderMinX));
 
         state.setColor(r * state.colorMultZNeg, g * state.colorMultZNeg, b * state.colorMultZNeg);
         state.scaleColor(state.colorTopLeft, aoTL);
@@ -338,25 +323,20 @@ public class RenderHelperAO
         float aoXYZPNP = (aoLightValueScratchYZNI + aoOpposingBlock + aoLightValueScratchXYZPNI + aoLightValueScratchXZPI) / 4.0F;
         float aoXYZNNP = (aoLightValueScratchXYZNNI + aoLightValueScratchXZNI + aoLightValueScratchYZNI + aoOpposingBlock) / 4.0F;
 
-        double minY = MathHelper.clamp_double(state.renderMinY, 0, 1);
-        double maxY = MathHelper.clamp_double(state.renderMaxY, 0, 1);
-        double minX = MathHelper.clamp_double(state.renderMinX, 0, 1);
-        double maxX = MathHelper.clamp_double(state.renderMaxX, 0, 1);
-
-        float aoTL = (float)((double)aoXYZNPP * maxY * (1.0D - minX) + (double)aoXYZPPP * maxY * minX + (double)aoXYZPNP * (1.0D - maxY) * minX + (double)aoXYZNNP * (1.0D - maxY) * (1.0D - minX));
-        float aoBL = (float)((double)aoXYZNPP * minY * (1.0D - minX) + (double)aoXYZPPP * minY * minX + (double)aoXYZPNP * (1.0D - minY) * minX + (double)aoXYZNNP * (1.0D - minY) * (1.0D - minX));
-        float aoBR = (float)((double)aoXYZNPP * minY * (1.0D - maxX) + (double)aoXYZPPP * minY * maxX + (double)aoXYZPNP * (1.0D - minY) * maxX + (double)aoXYZNNP * (1.0D - minY) * (1.0D - maxX));
-        float aoTR = (float)((double)aoXYZNPP * maxY * (1.0D - maxX) + (double)aoXYZPPP * maxY * maxX + (double)aoXYZPNP * (1.0D - maxY) * maxX + (double)aoXYZNNP * (1.0D - maxY) * (1.0D - maxX));
+        float aoTL = (float)((double)aoXYZNPP * state.renderMaxY * (1.0D - state.renderMinX) + (double)aoXYZPPP * state.renderMaxY * state.renderMinX + (double)aoXYZPNP * (1.0D - state.renderMaxY) * state.renderMinX + (double)aoXYZNNP * (1.0D - state.renderMaxY) * (1.0D - state.renderMinX));
+        float aoBL = (float)((double)aoXYZNPP * state.renderMinY * (1.0D - state.renderMinX) + (double)aoXYZPPP * state.renderMinY * state.renderMinX + (double)aoXYZPNP * (1.0D - state.renderMinY) * state.renderMinX + (double)aoXYZNNP * (1.0D - state.renderMinY) * (1.0D - state.renderMinX));
+        float aoBR = (float)((double)aoXYZNPP * state.renderMinY * (1.0D - state.renderMaxX) + (double)aoXYZPPP * state.renderMinY * state.renderMaxX + (double)aoXYZPNP * (1.0D - state.renderMinY) * state.renderMaxX + (double)aoXYZNNP * (1.0D - state.renderMinY) * (1.0D - state.renderMaxX));
+        float aoTR = (float)((double)aoXYZNPP * state.renderMaxY * (1.0D - state.renderMaxX) + (double)aoXYZPPP * state.renderMaxY * state.renderMaxX + (double)aoXYZPNP * (1.0D - state.renderMaxY) * state.renderMaxX + (double)aoXYZNNP * (1.0D - state.renderMaxY) * (1.0D - state.renderMaxX));
 
         int brXYZNPP = getAOBrightness(aoBrightnessXZNI, aoBrightnessXYZNPI, aoBrightnessYZPI, blockBrightness);
         int brXYZPPP = getAOBrightness(aoBrightnessYZPI, aoBrightnessXZPI, aoBrightnessXYZPPI, blockBrightness);
         int brXYZPNP = getAOBrightness(aoBrightnessYZNI, aoBrightnessXYZPNI, aoBrightnessXZPI, blockBrightness);
         int brXYZNNP = getAOBrightness(aoBrightnessXYZNNI, aoBrightnessXZNI, aoBrightnessYZNI, blockBrightness);
 
-        state.brightnessTopLeft = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, maxY * (1.0D - minX), (1.0D - maxY) * (1.0D - minX), (1.0D - maxY) * minX, maxY * minX);
-        state.brightnessBottomLeft = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, minY * (1.0D - minX), (1.0D - minY) * (1.0D - minX), (1.0D - minY) * minX, minY * minX);
-        state.brightnessBottomRight = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, minY * (1.0D - maxX), (1.0D - minY) * (1.0D - maxX), (1.0D - minY) * maxX, minY * maxX);
-        state.brightnessTopRight = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, maxY * (1.0D - maxX), (1.0D - maxY) * (1.0D - maxX), (1.0D - maxY) * maxX, maxY * maxX);
+        state.brightnessTopLeft = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, state.renderMaxY * (1.0D - state.renderMinX), (1.0D - state.renderMaxY) * (1.0D - state.renderMinX), (1.0D - state.renderMaxY) * state.renderMinX, state.renderMaxY * state.renderMinX);
+        state.brightnessBottomLeft = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, state.renderMinY * (1.0D - state.renderMinX), (1.0D - state.renderMinY) * (1.0D - state.renderMinX), (1.0D - state.renderMinY) * state.renderMinX, state.renderMinY * state.renderMinX);
+        state.brightnessBottomRight = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, state.renderMinY * (1.0D - state.renderMaxX), (1.0D - state.renderMinY) * (1.0D - state.renderMaxX), (1.0D - state.renderMinY) * state.renderMaxX, state.renderMinY * state.renderMaxX);
+        state.brightnessTopRight = mixAOBrightness(brXYZNPP, brXYZNNP, brXYZPNP, brXYZPPP, state.renderMaxY * (1.0D - state.renderMaxX), (1.0D - state.renderMaxY) * (1.0D - state.renderMaxX), (1.0D - state.renderMaxY) * state.renderMaxX, state.renderMaxY * state.renderMaxX);
 
         state.setColor(r * state.colorMultZPos, g * state.colorMultZPos, b * state.colorMultZPos);
         state.scaleColor(state.colorTopLeft, aoTL);
@@ -393,26 +373,21 @@ public class RenderHelperAO
         float aoXYZNPP = (aoOpposingBlock + aoLightValueScratchXZIP + aoLightValueScratchXYIP + aoLightValueScratchXYZIPP) / 4.0F;
         float aoXYZNPN = (aoLightValueScratchXZIN + aoOpposingBlock + aoLightValueScratchXYZIPN + aoLightValueScratchXYIP) / 4.0F;
         float aoXYZNNN = (aoLightValueScratchXYZINN + aoLightValueScratchXYIN + aoLightValueScratchXZIN + aoOpposingBlock) / 4.0F;
-        
-        double minY = MathHelper.clamp_double(state.renderMinY, 0, 1);
-        double maxY = MathHelper.clamp_double(state.renderMaxY, 0, 1);
-        double minZ = MathHelper.clamp_double(state.renderMinZ, 0, 1);
-        double maxZ = MathHelper.clamp_double(state.renderMaxZ, 0, 1);
 
-        float aoTL = (float)((double)aoXYZNPP * maxY * maxZ + (double)aoXYZNPN * maxY * (1.0D - maxZ) + (double)aoXYZNNN * (1.0D - maxY) * (1.0D - maxZ) + (double)aoXYZNNP * (1.0D - maxY) * maxZ);
-        float aoBL = (float)((double)aoXYZNPP * maxY * minZ + (double)aoXYZNPN * maxY * (1.0D - minZ) + (double)aoXYZNNN * (1.0D - maxY) * (1.0D - minZ) + (double)aoXYZNNP * (1.0D - maxY) * minZ);
-        float aoBR = (float)((double)aoXYZNPP * minY * minZ + (double)aoXYZNPN * minY * (1.0D - minZ) + (double)aoXYZNNN * (1.0D - minY) * (1.0D - minZ) + (double)aoXYZNNP * (1.0D - minY) * minZ);
-        float aoTR = (float)((double)aoXYZNPP * minY * maxZ + (double)aoXYZNPN * minY * (1.0D - maxZ) + (double)aoXYZNNN * (1.0D - minY) * (1.0D - maxZ) + (double)aoXYZNNP * (1.0D - minY) * maxZ);
+        float aoTL = (float)((double)aoXYZNPP * state.renderMaxY * state.renderMaxZ + (double)aoXYZNPN * state.renderMaxY * (1.0D - state.renderMaxZ) + (double)aoXYZNNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMaxZ) + (double)aoXYZNNP * (1.0D - state.renderMaxY) * state.renderMaxZ);
+        float aoBL = (float)((double)aoXYZNPP * state.renderMaxY * state.renderMinZ + (double)aoXYZNPN * state.renderMaxY * (1.0D - state.renderMinZ) + (double)aoXYZNNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMinZ) + (double)aoXYZNNP * (1.0D - state.renderMaxY) * state.renderMinZ);
+        float aoBR = (float)((double)aoXYZNPP * state.renderMinY * state.renderMinZ + (double)aoXYZNPN * state.renderMinY * (1.0D - state.renderMinZ) + (double)aoXYZNNN * (1.0D - state.renderMinY) * (1.0D - state.renderMinZ) + (double)aoXYZNNP * (1.0D - state.renderMinY) * state.renderMinZ);
+        float aoTR = (float)((double)aoXYZNPP * state.renderMinY * state.renderMaxZ + (double)aoXYZNPN * state.renderMinY * (1.0D - state.renderMaxZ) + (double)aoXYZNNN * (1.0D - state.renderMinY) * (1.0D - state.renderMaxZ) + (double)aoXYZNNP * (1.0D - state.renderMinY) * state.renderMaxZ);
 
         int brXYZNNP = getAOBrightness(aoBrightnessXYIN, aoBrightnessXYZINP, aoBrightnessXZIP, blockBrightness);
         int brXYZNPP = getAOBrightness(aoBrightnessXZIP, aoBrightnessXYIP, aoBrightnessXYZIPP, blockBrightness);
         int brXYZNPN = getAOBrightness(aoBrightnessXZIN, aoBrightnessXYZIPN, aoBrightnessXYIP, blockBrightness);
         int brXYZNNN = getAOBrightness(aoBrightnessXYZINN, aoBrightnessXYIN, aoBrightnessXZIN, blockBrightness);
 
-        state.brightnessTopLeft = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, maxY * maxZ, maxY * (1.0D - maxZ), (1.0D - maxY) * (1.0D - maxZ), (1.0D - maxY) * maxZ);
-        state.brightnessBottomLeft = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, maxY * minZ, maxY * (1.0D - minZ), (1.0D - maxY) * (1.0D - minZ), (1.0D - maxY) * minZ);
-        state.brightnessBottomRight = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, minY * minZ, minY * (1.0D - minZ), (1.0D - minY) * (1.0D - minZ), (1.0D - minY) * minZ);
-        state.brightnessTopRight = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, minY * maxZ, minY * (1.0D - maxZ), (1.0D - minY) * (1.0D - maxZ), (1.0D - minY) * maxZ);
+        state.brightnessTopLeft = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, state.renderMaxY * state.renderMaxZ, state.renderMaxY * (1.0D - state.renderMaxZ), (1.0D - state.renderMaxY) * (1.0D - state.renderMaxZ), (1.0D - state.renderMaxY) * state.renderMaxZ);
+        state.brightnessBottomLeft = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, state.renderMaxY * state.renderMinZ, state.renderMaxY * (1.0D - state.renderMinZ), (1.0D - state.renderMaxY) * (1.0D - state.renderMinZ), (1.0D - state.renderMaxY) * state.renderMinZ);
+        state.brightnessBottomRight = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, state.renderMinY * state.renderMinZ, state.renderMinY * (1.0D - state.renderMinZ), (1.0D - state.renderMinY) * (1.0D - state.renderMinZ), (1.0D - state.renderMinY) * state.renderMinZ);
+        state.brightnessTopRight = mixAOBrightness(brXYZNPP, brXYZNPN, brXYZNNN, brXYZNNP, state.renderMinY * state.renderMaxZ, state.renderMinY * (1.0D - state.renderMaxZ), (1.0D - state.renderMinY) * (1.0D - state.renderMaxZ), (1.0D - state.renderMinY) * state.renderMaxZ);
 
         state.setColor(r * state.colorMultXNeg, g * state.colorMultXNeg, b * state.colorMultXNeg);
         state.scaleColor(state.colorTopLeft, aoTL);
@@ -450,25 +425,20 @@ public class RenderHelperAO
         float aoXYZPPN = (aoLightValueScratchXZIN + aoOpposingBlock + aoLightValueScratchXYZIPN + aoLightValueScratchXYIP) / 4.0F;
         float aoXYZPPP = (aoOpposingBlock + aoLightValueScratchXZIP + aoLightValueScratchXYIP + aoLightValueScratchXYZIPP) / 4.0F;
 
-        double minY = MathHelper.clamp_double(state.renderMinY, 0, 1);
-        double maxY = MathHelper.clamp_double(state.renderMaxY, 0, 1);
-        double minZ = MathHelper.clamp_double(state.renderMinZ, 0, 1);
-        double maxZ = MathHelper.clamp_double(state.renderMaxZ, 0, 1);
-
-        float aoTL = (float)((double)aoXYZPNP * (1.0D - minY) * maxZ + (double)aoXYZPNN * (1.0D - minY) * (1.0D - maxZ) + (double)aoXYZPPN * minY * (1.0D - maxZ) + (double)aoXYZPPP * minY * maxZ);
-        float aoBL = (float)((double)aoXYZPNP * (1.0D - minY) * minZ + (double)aoXYZPNN * (1.0D - minY) * (1.0D - minZ) + (double)aoXYZPPN * minY * (1.0D - minZ) + (double)aoXYZPPP * minY * minZ);
-        float aoBR = (float)((double)aoXYZPNP * (1.0D - maxY) * minZ + (double)aoXYZPNN * (1.0D - maxY) * (1.0D - minZ) + (double)aoXYZPPN * maxY * (1.0D - minZ) + (double)aoXYZPPP * maxY * minZ);
-        float aoTR = (float)((double)aoXYZPNP * (1.0D - maxY) * maxZ + (double)aoXYZPNN * (1.0D - maxY) * (1.0D - maxZ) + (double)aoXYZPPN * maxY * (1.0D - maxZ) + (double)aoXYZPPP * maxY * maxZ);
+        float aoTL = (float)((double)aoXYZPNP * (1.0D - state.renderMinY) * state.renderMaxZ + (double)aoXYZPNN * (1.0D - state.renderMinY) * (1.0D - state.renderMaxZ) + (double)aoXYZPPN * state.renderMinY * (1.0D - state.renderMaxZ) + (double)aoXYZPPP * state.renderMinY * state.renderMaxZ);
+        float aoBL = (float)((double)aoXYZPNP * (1.0D - state.renderMinY) * state.renderMinZ + (double)aoXYZPNN * (1.0D - state.renderMinY) * (1.0D - state.renderMinZ) + (double)aoXYZPPN * state.renderMinY * (1.0D - state.renderMinZ) + (double)aoXYZPPP * state.renderMinY * state.renderMinZ);
+        float aoBR = (float)((double)aoXYZPNP * (1.0D - state.renderMaxY) * state.renderMinZ + (double)aoXYZPNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMinZ) + (double)aoXYZPPN * state.renderMaxY * (1.0D - state.renderMinZ) + (double)aoXYZPPP * state.renderMaxY * state.renderMinZ);
+        float aoTR = (float)((double)aoXYZPNP * (1.0D - state.renderMaxY) * state.renderMaxZ + (double)aoXYZPNN * (1.0D - state.renderMaxY) * (1.0D - state.renderMaxZ) + (double)aoXYZPPN * state.renderMaxY * (1.0D - state.renderMaxZ) + (double)aoXYZPPP * state.renderMaxY * state.renderMaxZ);
 
         int brXYZPNP = getAOBrightness(aoBrightnessXYIN, aoBrightnessXYZINP, aoBrightnessXZIP, blockBrightness);
         int brXYZPNN = getAOBrightness(aoBrightnessXZIP, aoBrightnessXYIP, aoBrightnessXYZIPP, blockBrightness);
         int brXYZPPN = getAOBrightness(aoBrightnessXZIN, aoBrightnessXYZIPN, aoBrightnessXYIP, blockBrightness);
         int brXYZPPP = getAOBrightness(aoBrightnessXYZINN, aoBrightnessXYIN, aoBrightnessXZIN, blockBrightness);
 
-        state.brightnessTopLeft = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - minY) * maxZ, (1.0D - minY) * (1.0D - maxZ), minY * (1.0D - maxZ), minY * maxZ);
-        state.brightnessBottomLeft = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - minY) * minZ, (1.0D - minY) * (1.0D - minZ), minY * (1.0D - minZ), minY * minZ);
-        state.brightnessBottomRight = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - maxY) * minZ, (1.0D - maxY) * (1.0D - minZ), maxY * (1.0D - minZ), maxY * minZ);
-        state.brightnessTopRight = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - maxY) * maxZ, (1.0D - maxY) * (1.0D - maxZ), maxY * (1.0D - maxZ), maxY * maxZ);
+        state.brightnessTopLeft = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - state.renderMinY) * state.renderMaxZ, (1.0D - state.renderMinY) * (1.0D - state.renderMaxZ), state.renderMinY * (1.0D - state.renderMaxZ), state.renderMinY * state.renderMaxZ);
+        state.brightnessBottomLeft = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - state.renderMinY) * state.renderMinZ, (1.0D - state.renderMinY) * (1.0D - state.renderMinZ), state.renderMinY * (1.0D - state.renderMinZ), state.renderMinY * state.renderMinZ);
+        state.brightnessBottomRight = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - state.renderMaxY) * state.renderMinZ, (1.0D - state.renderMaxY) * (1.0D - state.renderMinZ), state.renderMaxY * (1.0D - state.renderMinZ), state.renderMaxY * state.renderMinZ);
+        state.brightnessTopRight = mixAOBrightness(brXYZPNP, brXYZPPP, brXYZPPN, brXYZPNN, (1.0D - state.renderMaxY) * state.renderMaxZ, (1.0D - state.renderMaxY) * (1.0D - state.renderMaxZ), state.renderMaxY * (1.0D - state.renderMaxZ), state.renderMaxY * state.renderMaxZ);
 
         state.setColor(r * state.colorMultXPos, g * state.colorMultXPos, b * state.colorMultXPos);
         state.scaleColor(state.colorTopLeft, aoTL);

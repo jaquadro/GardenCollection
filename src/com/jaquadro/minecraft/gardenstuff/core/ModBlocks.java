@@ -3,19 +3,13 @@ package com.jaquadro.minecraft.gardenstuff.core;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.block.*;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityBloomeryFurnace;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLantern;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeMetal;
-import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityLatticeWood;
+import com.jaquadro.minecraft.gardenstuff.block.tile.*;
 import com.jaquadro.minecraft.gardenstuff.item.*;
-import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCompressed;
-import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ModBlocks
@@ -32,6 +26,7 @@ public class ModBlocks
     public static BlockFence fence;
     public static BlockBloomeryFurnace bloomeryFurnace;
     public static BlockMossBrick mossBrick;
+    public static BlockCandelabra candelabra;
 
     public void init () {
         heavyChain = new BlockHeavyChain(makeName("heavyChain"));
@@ -46,6 +41,7 @@ public class ModBlocks
         fence = new BlockFence(makeName("fence"));
         bloomeryFurnace = new BlockBloomeryFurnace(makeName("bloomeryFurnace"));
         mossBrick = new BlockMossBrick(makeName("mossBrick"));
+        candelabra = new BlockCandelabra(makeName("candelabra"));
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -58,12 +54,14 @@ public class ModBlocks
         GameRegistry.registerBlock(fence, ItemFence.class, "fence");
         GameRegistry.registerBlock(bloomeryFurnace, "bloomery_furnace");
         GameRegistry.registerBlock(mossBrick, ItemMossBrick.class, "moss_brick");
+        GameRegistry.registerBlock(candelabra, ItemCandelabra.class, "candelabra");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));
         GameRegistry.registerTileEntity(TileEntityLatticeWood.class, ModBlocks.getQualifiedName(latticeWood));
         GameRegistry.registerTileEntity(TileEntityLantern.class, ModBlocks.getQualifiedName(lantern));
         GameRegistry.registerTileEntity(TileEntityBloomeryFurnace.class, ModBlocks.getQualifiedName(bloomeryFurnace));
+        GameRegistry.registerTileEntity(TileEntityCandelabra.class, ModBlocks.getQualifiedName(candelabra));
 
         OreDictionary.registerOre("blockWroughtIron", metalBlock);
         OreDictionary.registerOre("blockCharcoal", stoneBlock);

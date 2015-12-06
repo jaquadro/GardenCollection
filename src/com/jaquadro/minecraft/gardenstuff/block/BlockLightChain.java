@@ -3,6 +3,7 @@ package com.jaquadro.minecraft.gardenstuff.block;
 import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
 import com.jaquadro.minecraft.gardenapi.api.connect.IAttachable;
 import com.jaquadro.minecraft.gardencore.api.IPlantProxy;
+import com.jaquadro.minecraft.gardencore.api.block.IChain;
 import com.jaquadro.minecraft.gardencore.api.block.IChainAttachable;
 import com.jaquadro.minecraft.gardenapi.api.connect.IChainSingleAttachable;
 import com.jaquadro.minecraft.gardencore.block.BlockGarden;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockLightChain extends Block implements IPlantProxy
+public class BlockLightChain extends Block implements IPlantProxy, IChain
 {
     public static final String[] types = new String[] { "iron", "gold", "rope", "rust", "wrought_iron", "moss" };
 
@@ -218,5 +219,10 @@ public class BlockLightChain extends Block implements IPlantProxy
             return null;
 
         return (BlockGarden) underBlock;
+    }
+
+    @Override
+    public boolean isMultiAttach () {
+        return true;
     }
 }

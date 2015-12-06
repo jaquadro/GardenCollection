@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.gardenstuff.block;
 
+import com.jaquadro.minecraft.gardencore.api.block.IChain;
 import com.jaquadro.minecraft.gardencore.core.ModCreativeTabs;
 import com.jaquadro.minecraft.gardenstuff.GardenStuff;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BlockHeavyChain extends Block
+public class BlockHeavyChain extends Block implements IChain
 {
     public static final String[] types = new String[] { "iron", "gold", "rope", "rust", "wrought_iron", "moss" };
 
@@ -126,5 +127,10 @@ public class BlockHeavyChain extends Block
 
         for (int i = 0; i < types.length; i++)
             icons[i] = register.registerIcon(getTextureName() + "_" + types[i]);
+    }
+
+    @Override
+    public boolean isMultiAttach () {
+        return false;
     }
 }

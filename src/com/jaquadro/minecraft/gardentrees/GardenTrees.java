@@ -1,12 +1,10 @@
 package com.jaquadro.minecraft.gardentrees;
 
 import com.jaquadro.minecraft.gardentrees.config.ConfigManager;
-import com.jaquadro.minecraft.gardentrees.core.ModIntegration;
-import com.jaquadro.minecraft.gardentrees.core.CommonProxy;
-import com.jaquadro.minecraft.gardentrees.core.ModBlocks;
-import com.jaquadro.minecraft.gardentrees.core.ModRecipes;
+import com.jaquadro.minecraft.gardentrees.core.*;
 import com.jaquadro.minecraft.gardentrees.core.handlers.ForgeEventHandler;
 import com.jaquadro.minecraft.gardentrees.core.handlers.FuelHandler;
+import com.jaquadro.minecraft.gardentrees.world.gen.feature.WorldGenCandelilla;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -28,6 +26,7 @@ public class GardenTrees
 
     public static final ModIntegration integration = new ModIntegration();
     public static final ModBlocks blocks = new ModBlocks();
+    public static final ModItems items = new ModItems();
     public static final ModRecipes recipes = new ModRecipes();
 
     public static ConfigManager config;
@@ -43,6 +42,7 @@ public class GardenTrees
         config = new ConfigManager(new File(event.getModConfigurationDirectory(), "GardenStuff/" + MOD_ID + ".cfg"));
 
         blocks.init();
+        items.init();
     }
 
     @Mod.EventHandler
@@ -54,6 +54,7 @@ public class GardenTrees
         FMLCommonHandler.instance().bus().register(new ForgeEventHandler());
 
         GameRegistry.registerFuelHandler(new FuelHandler());
+        GameRegistry.registerWorldGenerator(new WorldGenCandelilla(ModBlocks.candelilla), 10);
     }
 
     @Mod.EventHandler

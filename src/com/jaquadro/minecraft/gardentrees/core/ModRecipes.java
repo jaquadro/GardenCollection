@@ -57,6 +57,8 @@ public class ModRecipes
 
         GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.ivy), new ItemStack(Blocks.vine), enrichedSoil);
 
+        GameRegistry.addSmelting(com.jaquadro.minecraft.gardentrees.core.ModItems.candelilla, new ItemStack(ModItems.wax), 0);
+
         addExtraWoodRecipes();
     }
 

@@ -10,6 +10,7 @@ import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModItems
 {
@@ -17,17 +18,23 @@ public class ModItems
     public static ItemSoilKit soilTestKit;
     public static ItemUsedSoilKit usedSoilTestKit;
     public static Item compostPile;
+    public static Item wax;
 
     public void init () {
         gardenTrowel = new ItemTrowel(makeName("gardenTrowel"), Item.ToolMaterial.IRON);
         soilTestKit = new ItemSoilKit(makeName("soilTestKit"));
         usedSoilTestKit = new ItemUsedSoilKit(makeName("soilTestKitUsed"));
         compostPile = new ItemCompost(makeName("compostPile"));
+        wax = new Item().setUnlocalizedName(makeName("wax")).setCreativeTab(ModCreativeTabs.tabGardenCore).setTextureName(GardenCore.MOD_ID + ":wax");
 
         GameRegistry.registerItem(gardenTrowel, "garden_trowel");
         GameRegistry.registerItem(compostPile, "compost_pile");
         GameRegistry.registerItem(soilTestKit, "soil_test_kit");
         GameRegistry.registerItem(usedSoilTestKit, "soil_test_kit_used");
+        GameRegistry.registerItem(wax, "wax");
+
+        OreDictionary.registerOre("materialWax", wax);
+        OreDictionary.registerOre("materialPressedWax", wax);
     }
 
     public static String makeName (String name) {
