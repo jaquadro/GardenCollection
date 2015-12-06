@@ -88,7 +88,7 @@ public class ModRecipes
         GameRegistry.addRecipe(new ItemStack(ModItems.mossPaste), "xyx", "yxy", "xyx", 'x', Blocks.vine, 'y', Items.clay_ball);
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.candle, 4, 0), "x", "y", "y", 'x', Items.string, 'y', "materialWax"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.candle, 4, 0), "x", "y", "y", 'x', Items.string, 'y', "materialPressedWax"));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModItems.candle, 4, 0), "x", "y", "y", 'x', Items.string, 'y', "materialPressedwax"));
 
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.candelabra, 4, 0), " x ", " y ", " z ",
             'x', ModItems.candle, 'y', "nuggetWroughtIron", 'z', "ingotWroughtIron"));

@@ -42,6 +42,12 @@ public class BlockCandelabra extends BlockContainer
     private IIcon iconBase;
     @SideOnly(Side.CLIENT)
     private IIcon iconHang;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconCandleSide;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconCandleTop;
+    @SideOnly(Side.CLIENT)
+    private IIcon iconHolderSide;
 
     public BlockCandelabra (String blockName) {
         super(Material.iron);
@@ -118,19 +124,21 @@ public class BlockCandelabra extends BlockContainer
         int level = tile.getLevel();
         int dir = tile.getDirection();
 
+        float flameDepth = 0.96875f;
+
         if (tile.isSconce()) {
             if (level == 0) {
-                RenderHelper.instance.state.transformCoord(.5f, 1, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.5f, flameDepth, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
             if (level == 1 || level == 2) {
-                RenderHelper.instance.state.transformCoord(.25f, 1, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.25f, flameDepth, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
-                RenderHelper.instance.state.transformCoord(.75f, 1, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.75f, flameDepth, .25f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
             if (level == 2) {
-                RenderHelper.instance.state.transformCoord(.5f, 1, .375f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.5f, flameDepth, .375f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
         }
@@ -139,19 +147,19 @@ public class BlockCandelabra extends BlockContainer
             boolean hanging = level > 0 && (blockUpper instanceof IChain || blockUpper.isSideSolid(world, x, y + 1, z, ForgeDirection.DOWN));
 
             if (level >= 0 && !hanging) {
-                RenderHelper.instance.state.transformCoord(.5f, 1.0625f, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.5f, flameDepth + .0625f, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
             if (level >= 1) {
-                RenderHelper.instance.state.transformCoord(.15625f, 1, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.15625f, flameDepth, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
-                RenderHelper.instance.state.transformCoord(.84375, 1, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.84375, flameDepth, .5f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
             if (level >= 2) {
-                RenderHelper.instance.state.transformCoord(.5f, 1, .15625f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.5f, flameDepth, .15625f, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
-                RenderHelper.instance.state.transformCoord(.5f, 1, .84375, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
+                RenderHelper.instance.state.transformCoord(.5f, flameDepth, .84375, c, RenderHelperState.ROTATION_BY_FACE_FACE[2][dir]);
                 renderParticleAt(world, x + c[0], y + c[1], z + c[2]);
             }
         }
@@ -222,6 +230,21 @@ public class BlockCandelabra extends BlockContainer
     }
 
     @SideOnly(Side.CLIENT)
+    public IIcon getIconCandleSide () {
+        return iconCandleSide;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconCandleTop () {
+        return iconCandleTop;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconHolderSide () {
+        return iconHolderSide;
+    }
+
+    @SideOnly(Side.CLIENT)
     @Override
     public void registerBlockIcons (IIconRegister register) {
         iconCandle = register.registerIcon(getTextureName() + "_candle");
@@ -229,5 +252,8 @@ public class BlockCandelabra extends BlockContainer
         iconArmExt = register.registerIcon(getTextureName() + "_arm_ext");
         iconBase = register.registerIcon(getTextureName() + "_base");
         iconHang = register.registerIcon(getTextureName() + "_hang");
+        iconCandleSide = register.registerIcon(getTextureName() + "_candle_side");
+        iconCandleTop = register.registerIcon(getTextureName() + "_candle_top");
+        iconHolderSide = register.registerIcon(getTextureName() + "_holder_side");
     }
 }

@@ -34,7 +34,7 @@ public class ModItems
         GameRegistry.registerItem(wax, "wax");
 
         OreDictionary.registerOre("materialWax", wax);
-        OreDictionary.registerOre("materialPressedWax", wax);
+        OreDictionary.registerOre("materialPressedwax", wax);
     }
 
     public static String makeName (String name) {

@@ -98,6 +98,15 @@ public class RenderHelperState
         renderOffsetZ = 0;
     }
 
+    public void setColorMult (float yPos, float z, float x, float yNeg) {
+        colorMultYNeg = yNeg;
+        colorMultYPos = yPos;
+        colorMultZNeg = z;
+        colorMultZPos = z;
+        colorMultXNeg = x;
+        colorMultXPos = x;
+    }
+
     public void resetColorMult () {
         colorMultYNeg = 0.5f;
         colorMultYPos = 1.0f;
@@ -105,6 +114,18 @@ public class RenderHelperState
         colorMultZPos = 0.8f;
         colorMultXNeg = 0.6f;
         colorMultXPos = 0.6f;
+    }
+
+    public float getColorMult (int side) {
+        switch (side) {
+            case 0: return colorMultYNeg;
+            case 1: return colorMultYPos;
+            case 2: return colorMultZNeg;
+            case 3: return colorMultZPos;
+            case 4: return colorMultXNeg;
+            case 5: return colorMultXPos;
+            default: return 0;
+        }
     }
 
     public void setTextureOffset (float u, float v) {

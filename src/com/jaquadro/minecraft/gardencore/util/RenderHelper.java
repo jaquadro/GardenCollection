@@ -21,15 +21,6 @@ public class RenderHelper
 
     public static final int FULL_BRIGHTNESS = 15728880;
 
-    private static final float rgbMap[][] = {
-        { 0.5f, 0.5f, 0.5f },
-        { 1.0f, 1.0f, 1.0f },
-        { 0.8f, 0.8f, 0.8f },
-        { 0.8f, 0.8f, 0.8f },
-        { 0.6f, 0.6f, 0.6f },
-        { 0.6f, 0.6f, 0.6f },
-    };
-
     private static final float normMap[][] = {
         { 0, -1, 0 },
         { 0, 1, 0 },
@@ -394,10 +385,10 @@ public class RenderHelper
 
     private void setupColorMult (int face, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        float[] rgb = rgbMap[face];
         float[] norm = normMap[face];
+        float scale = state.getColorMult(face);
 
-        tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
+        tessellator.setColorOpaque_F(scale * r, scale * g, scale * b);
         tessellator.startDrawingQuads();
         tessellator.setNormal(norm[0], norm[1], norm[2]);
 
@@ -406,8 +397,8 @@ public class RenderHelper
 
     private void setupColorMult (int face, IBlockAccess blockAccess, Block block, int x, int y, int z, float r, float g, float b) {
         Tessellator tessellator = Tessellator.instance;
-        float[] rgb = rgbMap[face];
         float[] norm = normMap[face];
+        float scale = state.getColorMult(face);
 
         if (blockAccess == null) {
             tessellator.startDrawingQuads();
@@ -428,7 +419,7 @@ public class RenderHelper
                 case XPOS: brightX = (state.renderMaxX < 1) ? x : x + 1; break;
             }
 
-            tessellator.setColorOpaque_F(rgb[0] * r, rgb[1] * g, rgb[2] * b);
+            tessellator.setColorOpaque_F(scale * r, scale * g, scale * b);
             tessellator.setBrightness(block.getMixedBrightnessForBlock(blockAccess, brightX, brightY, brightZ));
         }
 

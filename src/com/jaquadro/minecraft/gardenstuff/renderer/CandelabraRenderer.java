@@ -1,8 +1,8 @@
 package com.jaquadro.minecraft.gardenstuff.renderer;
 
 import com.jaquadro.minecraft.gardencore.api.block.IChain;
+import com.jaquadro.minecraft.gardencore.client.renderer.support.ModularBoxRenderer;
 import com.jaquadro.minecraft.gardencore.util.RenderHelper;
-import com.jaquadro.minecraft.gardencore.util.RenderHelperState;
 import com.jaquadro.minecraft.gardenstuff.block.BlockCandelabra;
 import com.jaquadro.minecraft.gardenstuff.block.tile.TileEntityCandelabra;
 import com.jaquadro.minecraft.gardenstuff.core.ClientProxy;
@@ -10,7 +10,6 @@ import com.jaquadro.minecraft.gardenstuff.core.ModBlocks;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -18,6 +17,8 @@ import org.lwjgl.opengl.GL11;
 
 public class CandelabraRenderer implements ISimpleBlockRenderingHandler
 {
+    private ModularBoxRenderer boxrender = new ModularBoxRenderer();
+
     @Override
     public void renderInventoryBlock (Block block, int metadata, int modelId, RenderBlocks renderer) {
         if (!(block instanceof BlockCandelabra))
@@ -37,19 +38,19 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
         // Candelsticks
         RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
         RenderHelper.instance.state.setRenderOffset(0, 0, 0);
-        RenderHelper.instance.renderCrossedSquares(block, metadata, block.getIconCandle());
+        renderCandle(renderer.blockAccess, block, metadata);
 
         if (level >= 1) {
             RenderHelper.instance.state.setRenderOffset(-.34375f, 0, 0);
-            RenderHelper.instance.renderCrossedSquares(block, metadata, block.getIconCandle());
+            renderCandle(renderer.blockAccess, block, metadata);
             RenderHelper.instance.state.setRenderOffset(.34375f, 0, 0);
-            RenderHelper.instance.renderCrossedSquares(block, metadata, block.getIconCandle());
+            renderCandle(renderer.blockAccess, block, metadata);
         }
         if (level >= 2) {
             RenderHelper.instance.state.setRenderOffset(0, 0, -.34375f);
-            RenderHelper.instance.renderCrossedSquares(block, metadata, block.getIconCandle());
+            renderCandle(renderer.blockAccess, block, metadata);
             RenderHelper.instance.state.setRenderOffset(0, 0, .34375f);
-            RenderHelper.instance.renderCrossedSquares(block, metadata, block.getIconCandle());
+            renderCandle(renderer.blockAccess, block, metadata);
         }
 
         // Base
@@ -96,6 +97,39 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
         RenderHelper.instance.state.clearRenderOffset();
     }
 
+    private void renderCandle (IBlockAccess world, BlockCandelabra block, int meta) {
+        float unit = 0.0625f;
+
+        RenderHelper.instance.state.setColorMult(1, .9f, .8f, .5f);
+
+        boxrender.setUnit(0);
+        boxrender.setColor(ModularBoxRenderer.COLOR_WHITE);
+        boxrender.setIcon(block.getIconCandleTop(), 1);
+        for (int i = 2; i < 6; i++)
+            boxrender.setIcon(block.getIconCandleSide(), i);
+
+        int x = 0;
+        int y = 0;
+        int z = 0;
+
+        // Candle
+        boxrender.renderExterior(null, block, x, y, z, unit * 6.5f, unit * 7, unit * 6.5f, unit * 9.5f, unit * 13, unit * 9.5f, 0, ModularBoxRenderer.CUT_YNEG);
+
+        RenderHelper.instance.state.resetColorMult();
+
+        RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
+        RenderHelper.instance.renderCrossedSquares(block, meta, block.getIconCandleSide());
+
+        // Holder
+        RenderHelper.instance.setRenderBounds(unit * 5.75f, 0, unit * 5.75f, unit * 10.25f, unit * 7, unit * 10.25f);
+        RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, ModBlocks.metalBlock.getIcon(0, 0), meta);
+        RenderHelper.instance.setRenderBounds(unit * 5.75f, unit * 7, unit * 5.75f, unit * 10.25f, 1, unit * 10.25f);
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, world, block, ModBlocks.metalBlock.getIcon(0, 0), meta);
+
+        RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
+        RenderHelper.instance.renderCrossedSquares(block, meta, block.getIconHolderSide());
+    }
+
     @Override
     public boolean renderWorldBlock (IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
         if (!(block instanceof BlockCandelabra))
@@ -122,6 +156,35 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
         return true;
     }
 
+    private void renderCandle (IBlockAccess world, BlockCandelabra block, int x, int y, int z) {
+        float unit = 0.0625f;
+
+        RenderHelper.instance.state.setColorMult(1, .9f, .8f, .5f);
+
+        boxrender.setUnit(0);
+        boxrender.setColor(ModularBoxRenderer.COLOR_WHITE);
+        boxrender.setIcon(block.getIconCandleTop(), 1);
+        for (int i = 2; i < 6; i++)
+            boxrender.setIcon(block.getIconCandleSide(), i);
+
+        // Candle
+        boxrender.renderExterior(world, block, x, y, z, unit * 6.5f, unit * 7, unit * 6.5f, unit * 9.5f, unit * 13, unit * 9.5f, 0, ModularBoxRenderer.CUT_YNEG);
+
+        RenderHelper.instance.state.resetColorMult();
+
+        RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
+        RenderHelper.instance.renderCrossedSquares(world, block, x, y, z, block.getIconCandleSide());
+
+        // Holder
+        RenderHelper.instance.setRenderBounds(unit * 5.75f, 0, unit * 5.75f, unit * 10.25f, unit * 7, unit * 10.25f);
+        RenderHelper.instance.renderFace(RenderHelper.YPOS, world, block, x, y, z, ModBlocks.metalBlock.getIcon(0, 0));
+        RenderHelper.instance.setRenderBounds(unit * 5.75f, unit * 7, unit * 5.75f, unit * 10.25f, 1, unit * 10.25f);
+        RenderHelper.instance.renderFace(RenderHelper.YNEG, world, block, x, y, z, ModBlocks.metalBlock.getIcon(0, 0));
+
+        RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
+        RenderHelper.instance.drawCrossedSquares(block.getIconHolderSide(), x, y, z, 1);
+    }
+
     private void renderCandelabra (IBlockAccess world, int x, int y, int z, BlockCandelabra block, int level) {
         Block blockUpper = world.getBlock(x, y + 1, z);
         boolean hanging = level > 0 && (blockUpper instanceof IChain || blockUpper.isSideSolid(world, x, y + 1, z, ForgeDirection.DOWN));
@@ -131,31 +194,30 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
 
         if (!hanging) {
             RenderHelper.instance.state.setRenderOffset(0, .0625f, 0);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
         }
 
         if (level >= 1) {
             RenderHelper.instance.state.setRenderOffset(-.34375f, 0, 0);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
             RenderHelper.instance.state.setRenderOffset(.34375f, 0, 0);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
         }
         if (level >= 2) {
             RenderHelper.instance.state.setRenderOffset(0, 0, -.34375f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
             RenderHelper.instance.state.setRenderOffset(0, 0, .34375f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
         }
 
         // Hanger / Base
-        if (hanging) {
-            RenderHelper.instance.state.setRenderOffset(0, 0, 0);
+        RenderHelper.instance.setRenderBounds(0, 0, 0, 1, 1, 1);
+        RenderHelper.instance.state.setRenderOffset(0, 0, 0);
+
+        if (hanging)
             RenderHelper.instance.drawCrossedSquares(block.getIconHang(), x, y, z, 1);
-        }
-        else {
-            RenderHelper.instance.state.setRenderOffset(0, 0, 0);
+        else
             RenderHelper.instance.drawCrossedSquares(block.getIconBase(), x, y, z, 1);
-        }
 
         // Arms
         if (level >= 1) {
@@ -204,18 +266,18 @@ public class CandelabraRenderer implements ISimpleBlockRenderingHandler
 
         // Candlesticks
         if (level == 0) {
-            RenderHelper.instance.state.setRenderOffset(0, 0, -.25f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            RenderHelper.instance.state.setRenderOffset(0, -.005f, -.25f);
+            renderCandle(world, block, x, y, z);
         }
         if (level == 1 || level == 2) {
-            RenderHelper.instance.state.setRenderOffset(-.25f, 0, -.25f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
-            RenderHelper.instance.state.setRenderOffset(.25f, 0, -.25f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            RenderHelper.instance.state.setRenderOffset(-.25f, -.005f, -.25f);
+            renderCandle(world, block, x, y, z);
+            RenderHelper.instance.state.setRenderOffset(.25f, -.005f, -.25f);
+            renderCandle(world, block, x, y, z);
         }
         if (level == 2) {
             RenderHelper.instance.state.setRenderOffset(0, 0, -.125f);
-            RenderHelper.instance.drawCrossedSquares(block.getIconCandle(), x, y, z, 1);
+            renderCandle(world, block, x, y, z);
         }
 
         // Angled arms
