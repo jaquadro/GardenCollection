@@ -14,6 +14,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -82,8 +83,79 @@ public class BlockCandelabra extends BlockContainer
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool (World world, int x, int y, int z) {
-        return null;
+    public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
+        TileEntityCandelabra tile = getTileEntity(world, x, y, z);
+
+        float yMin = 0;
+        float yMax = 1;
+        float xMin = 0;
+        float xMax = 1;
+        float zMin = 0;
+        float zMax = 1;
+
+        float depth = (tile.getLevel() == 2) ? .5f : .390625f;
+        float hwidth = (tile.getLevel() == 0) ? .125f : .390625f;
+
+        if (tile.isSconce()) {
+            yMin = .0625f;
+            yMax = .875f;
+            switch (tile.getDirection()) {
+                case 2:
+                    zMax = depth;
+                    xMin = .5f - hwidth;
+                    xMax = .5f + hwidth;
+                    break;
+                case 3:
+                    zMin = 1 - depth;
+                    xMin = .5f - hwidth;
+                    xMax = .5f + hwidth;
+                    break;
+                case 4:
+                    xMax = depth;
+                    zMin = .5f - hwidth;
+                    zMax = .5f + hwidth;
+                    break;
+                case 5:
+                    xMin = 1 - depth;
+                    zMin = .5f - hwidth;
+                    zMax = .5f + hwidth;
+                    break;
+            }
+        }
+        else {
+            yMax = .0625f * 15f;
+            xMin = zMin = .0625f * 5.75f;
+            xMax = zMax = .0625f * 10.25f;
+
+            switch (tile.getLevel()) {
+                case 0:
+                    yMax = .0625f * 15f;
+                    break;
+                case 1:
+                    if (tile.getDirection() == 2 || tile.getDirection() == 3) {
+                        xMin = .0625f * .5f;
+                        xMax = .0625f * 15.5f;
+                    }
+                    else {
+                        zMin = .0625f * .5f;
+                        zMax = .0625f * 15.5f;
+                    }
+                    break;
+                case 2:
+                    xMin = zMin = .0625f * .5f;
+                    xMax = zMax = .0625f * 15.5f;
+                    break;
+            }
+        }
+
+        setBlockBounds(xMin, yMin, zMin, xMax, yMax, zMax);
+    }
+
+    @Override
+    public void addCollisionBoxesToList (World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+        setBlockBoundsBasedOnState(world, x, y, z);
+        setBlockBounds((float)minX, (float)minY, (float)minZ, (float)maxX, (float)maxY - (.0625f * 1.5f), (float)maxZ);
+        super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
     }
 
     @Override

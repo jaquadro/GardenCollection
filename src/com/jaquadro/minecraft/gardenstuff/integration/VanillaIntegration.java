@@ -2,6 +2,7 @@ package com.jaquadro.minecraft.gardenstuff.integration;
 
 import com.jaquadro.minecraft.gardenapi.api.GardenAPI;
 import com.jaquadro.minecraft.gardenapi.api.component.ILanternSourceRegistry;
+import com.jaquadro.minecraft.gardenstuff.integration.lantern.CandleLanternSource;
 import com.jaquadro.minecraft.gardenstuff.integration.lantern.VanillaLanternSource;
 
 public class VanillaIntegration
@@ -12,5 +13,7 @@ public class VanillaIntegration
         registry.registerLanternSource(new VanillaLanternSource.TorchLanternSource());
         registry.registerLanternSource(new VanillaLanternSource.RedstoneTorchSource());
         registry.registerLanternSource(new VanillaLanternSource.GlowstoneSource());
+
+        registry.registerLanternSource(new CandleLanternSource());
     }
 }

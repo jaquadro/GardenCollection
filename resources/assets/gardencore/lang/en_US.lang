@@ -10,6 +10,7 @@ item.gardencore.gardenTrowel.name=Garden Trowel
 item.gardencore.soilTestKit.name=Soil Test Kit
 item.gardencore.soilTestKitUsed.name=Used Soil Test Kit
 item.gardencore.compostPile.name=Compost
+item.gardencore.wax.name=Wax
 
 tile.gardencore.smallFire.name=Small Fire
 tile.gardencore.gardenSoil.name=Garden Soil
@@ -93,6 +94,7 @@ item.gardenstuff.ironNugget.name=Iron Nugget
 item.gardenstuff.wroughtIronIngot.name=Wrought Iron Ingot
 item.gardenstuff.wroughtIronNugget.name=Wrought Iron Nugget
 item.gardenstuff.mossPaste.name=Moss Paste
+item.gardenstuff.candle.name=Candle
 
 nei.recipe.gardenstuff.bloomeryFurnace=Bloomery Process
 
@@ -137,6 +139,7 @@ tile.gardenstuff.mossBrick.cracked_mossy_1.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.mossBrick.cracked_mossy_2.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.mossBrick.cracked_mossy_3.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.mossBrick.cracked_mossy_4.name=Mossy Cracked Stone Bricks
+tile.gardenstuff.candelabra.name=Candelabra
 
 gardenstuff.lanternSource=Contents
 gardenstuff.lanternSource.none=Empty
@@ -148,6 +151,9 @@ gardenstuff.lanternSource.firefly=Fireflies
 gardenstuff.lanternSource.thaumcraftCandle=Tallow Candle
 
 # Garden Trees
+
+item.gardentrees.candelillaSeeds.name=Candelilla Seeds
+item.gardentrees.candelilla.name=Candelilla
 
 tile.gardentrees.ivy.name=Devil's Ivy
 tile.gardentrees.strangePlant.name=Strange Plant
@@ -169,3 +175,4 @@ tile.gardentrees.thinLogFence.birch.name=Birch Wood Post Fence
 tile.gardentrees.thinLogFence.jungle.name=Jungle Wood Post Fence
 tile.gardentrees.thinLogFence.acacia.name=Acacia Wood Post Fence
 tile.gardentrees.thinLogFence.big_oak.name=Dark Oak Wood Post Fence
+tile.gardentrees.candelilla.name=Candelilla

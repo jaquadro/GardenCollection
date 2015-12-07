@@ -32,7 +32,7 @@ public class WorldGenCandelilla extends WorldGenerator implements IWorldGenerato
             int x1 = x + rand.nextInt(range) - rand.nextInt(range);
             int y1 = y + rand.nextInt(4) - rand.nextInt(4);
             int z1 = z + rand.nextInt(range) - rand.nextInt(range);
-            int level = 1 + rand.nextInt(6);
+            int level = 1 + rand.nextInt(7);
 
             if (world.isAirBlock(x1, y1, z1) && (!world.provider.hasNoSky || y1 < 255) && plantBlock.canBlockStay(world, x1, y1, z1))
                 world.setBlock(x1, y1, z1, plantBlock, level, 2);
@@ -47,12 +47,14 @@ public class WorldGenCandelilla extends WorldGenerator implements IWorldGenerato
         int z = chunkZ * 16;
 
         BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
-        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.COLD))
+        if (BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.COLD)
+            || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.NETHER)
+            || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.WET)
+            || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.WASTELAND)
+            || BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SNOWY))
             return;
 
-        if (!BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SAVANNA)
-            && !BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.DRY)
-            && !BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SANDY))
+        if (!BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.SANDY))
             return;
 
         if (random.nextInt(10) > 0)
