@@ -14,6 +14,7 @@ public class ClientProxy extends CommonProxy
     public static int lanternRenderID;
     public static int fenceRenderID;
     public static int sconceRenderID;
+    public static int hoopRenderID;
 
     public static LanternRenderer lanternRenderer;
 
@@ -25,6 +26,7 @@ public class ClientProxy extends CommonProxy
         lanternRenderID = RenderingRegistry.getNextAvailableRenderId();
         fenceRenderID = RenderingRegistry.getNextAvailableRenderId();
         sconceRenderID = RenderingRegistry.getNextAvailableRenderId();
+        hoopRenderID = RenderingRegistry.getNextAvailableRenderId();
 
         lanternRenderer = new LanternRenderer();
 
@@ -34,6 +36,7 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerBlockHandler(lanternRenderID, lanternRenderer);
         RenderingRegistry.registerBlockHandler(fenceRenderID, new FenceRenderer());
         RenderingRegistry.registerBlockHandler(sconceRenderID, new CandelabraRenderer());
+        RenderingRegistry.registerBlockHandler(hoopRenderID, new HoopRenderer());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.lantern), new LanternItemRenderer());
     }

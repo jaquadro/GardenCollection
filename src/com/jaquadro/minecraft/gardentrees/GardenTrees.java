@@ -54,7 +54,9 @@ public class GardenTrees
         FMLCommonHandler.instance().bus().register(new ForgeEventHandler());
 
         GameRegistry.registerFuelHandler(new FuelHandler());
-        GameRegistry.registerWorldGenerator(new WorldGenCandelilla(ModBlocks.candelilla), 10);
+
+        if (config.generateCandelilla)
+            GameRegistry.registerWorldGenerator(new WorldGenCandelilla(ModBlocks.candelilla), 10);
     }
 
     @Mod.EventHandler

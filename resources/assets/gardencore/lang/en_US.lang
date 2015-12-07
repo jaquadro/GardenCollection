@@ -140,6 +140,7 @@ tile.gardenstuff.mossBrick.cracked_mossy_2.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.mossBrick.cracked_mossy_3.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.mossBrick.cracked_mossy_4.name=Mossy Cracked Stone Bricks
 tile.gardenstuff.candelabra.name=Candelabra
+tile.gardenstuff.hoop.name=Wrought Iron Hoop
 
 gardenstuff.lanternSource=Contents
 gardenstuff.lanternSource.none=Empty

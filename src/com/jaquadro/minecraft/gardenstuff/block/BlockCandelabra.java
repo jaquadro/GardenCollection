@@ -83,6 +83,11 @@ public class BlockCandelabra extends BlockContainer
     }
 
     @Override
+    public int damageDropped (int meta) {
+        return meta;
+    }
+
+    @Override
     public void setBlockBoundsBasedOnState (IBlockAccess world, int x, int y, int z) {
         TileEntityCandelabra tile = getTileEntity(world, x, y, z);
 

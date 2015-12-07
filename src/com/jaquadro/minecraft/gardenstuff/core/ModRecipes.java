@@ -97,6 +97,9 @@ public class ModRecipes
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.candelabra, 4, 2), "xxx", "yyy", " z ",
             'x', ModItems.candle, 'y', "nuggetWroughtIron", 'z', "ingotWroughtIron"));
 
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.hoop, 2, 0), "xyx", "y y", "xyx",
+            'x', "nuggetWroughtIron", 'y', "ingotWroughtIron"));
+
         GameRegistry.addSmelting(wroughtIronIngot, new ItemStack(Items.iron_ingot), 0);
     }
 }

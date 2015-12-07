@@ -27,6 +27,7 @@ public class ModBlocks
     public static BlockBloomeryFurnace bloomeryFurnace;
     public static BlockMossBrick mossBrick;
     public static BlockCandelabra candelabra;
+    public static BlockHoop hoop;
 
     public void init () {
         heavyChain = new BlockHeavyChain(makeName("heavyChain"));
@@ -42,6 +43,7 @@ public class ModBlocks
         bloomeryFurnace = new BlockBloomeryFurnace(makeName("bloomeryFurnace"));
         mossBrick = new BlockMossBrick(makeName("mossBrick"));
         candelabra = new BlockCandelabra(makeName("candelabra"));
+        hoop = new BlockHoop(makeName("hoop"));
 
         GameRegistry.registerBlock(heavyChain, ItemHeavyChain.class, "heavy_chain");
         GameRegistry.registerBlock(lightChain, ItemLightChain.class, "light_chain");
@@ -55,6 +57,7 @@ public class ModBlocks
         GameRegistry.registerBlock(bloomeryFurnace, "bloomery_furnace");
         GameRegistry.registerBlock(mossBrick, ItemMossBrick.class, "moss_brick");
         GameRegistry.registerBlock(candelabra, ItemCandelabra.class, "candelabra");
+        GameRegistry.registerBlock(hoop, "hoop");
         //GameRegistry.registerBlock(largeMountingPlate, "large_mounting_plate");
 
         GameRegistry.registerTileEntity(TileEntityLatticeMetal.class, ModBlocks.getQualifiedName(latticeMetal));

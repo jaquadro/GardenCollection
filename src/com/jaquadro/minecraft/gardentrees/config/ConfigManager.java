@@ -24,6 +24,7 @@ public class ConfigManager
     public int strangePlantDropMax;
 
     public boolean compostGrowsOrnamentalTrees;
+    public boolean generateCandelilla;
 
     public ConfigManager (File file) {
         config = new Configuration(file);
@@ -46,6 +47,10 @@ public class ConfigManager
         Property propCompostGrowsOrnamentalTrees = config.get(Configuration.CATEGORY_GENERAL, "compostGrowsOrnamentalTrees", true);
         propCompostGrowsOrnamentalTrees.comment = "Using compost on saplings will grow ornamental (miniature) trees instead of normal trees.";
         compostGrowsOrnamentalTrees = propCompostGrowsOrnamentalTrees.getBoolean();
+
+        Property propGenerateCandelilla = config.get(Configuration.CATEGORY_GENERAL, "generateCandelilla", true);
+        propGenerateCandelilla.comment = "Generates clusters of candelilla shrub in warm, sandy biomes.";
+        generateCandelilla = propGenerateCandelilla.getBoolean();
 
         config.save();
     }
