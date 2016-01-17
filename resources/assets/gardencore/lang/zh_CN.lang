@@ -11,12 +11,12 @@ item.gardencore.soilTestKit.name=土壤检测试剂
 item.gardencore.soilTestKitUsed.name=土壤检测试剂 <已使用>
 item.gardencore.compostPile.name=富硒土壤
 
-tile.gardencore.smallFire.name=Small Fire
+tile.gardencore.smallFire.name=小型火焰
 tile.gardencore.gardenSoil.name=园艺土
 tile.gardencore.potteryTable.name=陶器工作桌
 tile.gardencore.compostBin.name=堆肥桶
 tile.gardencore.gardenFarmland.name=园艺耕植土
-tile.gardencore.gardenProxy.name=Garden Proxy
+tile.gardencore.gardenProxy.name=园艺代理
 
 gardencore.soilkit.rainfall=湿度
 gardencore.soilkit.temperature=温度
@@ -137,6 +137,8 @@ tile.gardenstuff.mossBrick.cracked_mossy_1.name=布满苔藓的裂石砖
 tile.gardenstuff.mossBrick.cracked_mossy_2.name=布满苔藓的裂石砖
 tile.gardenstuff.mossBrick.cracked_mossy_3.name=布满苔藓的裂石砖
 tile.gardenstuff.mossBrick.cracked_mossy_4.name=布满苔藓的裂石砖
+tile.gardenstuff.candelabra.name=枝状大烛台
+tile.gardenstuff.hoop.name=锻铁环
 
 gardenstuff.lanternSource=灯罩内
 gardenstuff.lanternSource.none=无
@@ -148,6 +150,9 @@ gardenstuff.lanternSource.firefly=萤火虫
 gardenstuff.lanternSource.thaumcraftCandle=油脂蜡烛
 
 # Garden Trees
+
+item.gardentrees.candelillaSeeds.name=Candelilla Seeds烛木种子
+item.gardentrees.candelilla.name=烛木
 
 tile.gardentrees.ivy.name=魔鬼藤
 tile.gardentrees.strangePlant.name=怪异的植物
@@ -169,3 +174,4 @@ tile.gardentrees.thinLogFence.birch.name=白桦木围栏
 tile.gardentrees.thinLogFence.jungle.name=丛林木围栏
 tile.gardentrees.thinLogFence.acacia.name=金合欢木围栏
 tile.gardentrees.thinLogFence.big_oak.name=深色橡木围栏
+tile.gardentrees.candelilla.name=烛木
